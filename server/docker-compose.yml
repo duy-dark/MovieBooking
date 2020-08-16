@@ -1,0 +1,29 @@
+version: '3'
+services:
+  nodejs:
+    build: .
+    container_name: node_server
+    ports:
+      - '1000:1000'
+    depends_on:
+      - mongo
+    links: 
+      - mongo
+    environment:
+      - MONGO_URL: mongodb+srv://root:root@cluster0.10g9w.mongodb.net/moviebookingdb?retryWrites=true&w=majority
+    networks:
+      - network
+
+  mongo:
+    container_name: node_mongo
+    image: mongo
+    ports:
+      - '27017:27017'
+    environment:
+      - MONGO_URL: mongodb+srv://root:root@cluster0.10g9w.mongodb.net/moviebookingdb?retryWrites=true&w=majority
+    networks:
+      - network
+
+networks:
+  network:
+    driver: bridge
