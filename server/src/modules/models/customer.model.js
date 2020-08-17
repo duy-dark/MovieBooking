@@ -7,9 +7,9 @@ var customerSchema = new mongoose.Schema(
     date_of_birth: Date,
     email: String,
     password: String,
-    type: String,
+    genre: String,
     avatar: String,
-    adress: String,
+    address: String,
     is_deleted: Boolean,
     updated_at: Date
   },
@@ -24,7 +24,8 @@ module.exports = {
     return customers;
   },
   createByLamda: async function (lamda) {
-    await Customer.insertMany(lamda);
+    let customer = await Customer.insertMany(lamda);
+    return customer;
   },
   updateByLamda: async function (id, lamda) {
     await Customer.updateOne(id, lamda);

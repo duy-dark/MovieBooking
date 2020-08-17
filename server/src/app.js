@@ -1,7 +1,10 @@
 const express = require('express'),
   cors = require('cors'),
   bodyParser = require('body-parser'),
-  ConnectDB = require('./db');
+  ConnectDB = require('./db'),
+  errorHandler = require('./modules/middleware/error.middleware');
+
+const resFail = require('./modules/response/res-fail')
 
 const config = require('./config');
 
@@ -16,10 +19,12 @@ app.get('/', (req, res) => {
   res.json('hello world');
 });
 
-app.get('/user', require('./modules/customers/users'));
+app.use('/user', require('./modules/customers/users'));
+
+app.use(errorHandler);
 
 app.use((req, res) => {
-  res.status(404).json({message: 'ko co api nha con'});
+  res.status(404).json(resFail());
 });
 // app.use() error
 

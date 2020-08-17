@@ -1,5 +1,7 @@
 module.exports = {
-  0: 'api not found',
-  1: 'đã có user',
-  2: 'đã có movies'
+  'err0': 'api not found',
+  'err1': 'customer not created',
+  'err2': 'đã có user',
+  'err3': 'đã có movies',
+  'err404': ''
 };

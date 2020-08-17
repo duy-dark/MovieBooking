@@ -1,9 +1,12 @@
 // viết function xử lý tại
-const login = () => {};
+const modelCustomer = require('./../../models/customer.model')
+const insertUser = (user) => {
+  return modelCustomer.createByLamda(user)
+}
 
-const register = (user) => {};
+const register = async (user) => {};
 
 module.exports = {
-  login,
+  insertUser,
   register
 };
