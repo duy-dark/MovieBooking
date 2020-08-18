@@ -11,25 +11,27 @@ router.get('/', (req, res, next) => {
   res.json('here is user');
 });
 
-router.post('/create', validator.validateRegisterCustomer(), (req, res, next) => {
-  const errors = validationResult(req);
+router.post('/create', validator.validateRegisterCustomer(), async (req, res, next) => {
+  try {
+    const errors = validationResult(req);
 
-  if (!errors.isEmpty()) {
-    res.status(402).json(resFail(1, errors.array()));
-    return;
+    if (!errors.isEmpty()) {
+      throw {
+        status: 402,
+        errCode: 1,
+        detail: errors.array()
+      }
+    }
+
+    let user = req.body
+    user.password = sha256(req.body.password)
+    let insertUser = await handler.insertUser(user)
+    res.json(resSuccess({
+      user: insertUser[0]
+    }))
+  } catch (error) {
+    next(error);
   }
-
-  let user = req.body
-  user.password = sha256(req.body.password)
-  return handler
-    .insertUser(user)
-    .then(rows => {
-      console.log(rows[0])
-      res.status(200).json(resSuccess({
-        user: rows[0]
-      }));
-    })
-    .catch((err) => next(err));
 });
 
 module.exports = router;
