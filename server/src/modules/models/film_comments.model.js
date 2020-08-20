@@ -24,12 +24,12 @@ module.exports = {
     return film_comments;
   },
   createByLamda: async function (lamda) {
-    await Film_comment.insertMany(lamda);
+    return await Film_comment.insertMany(lamda);
   },
   updateByLamda: async function (id, lamda) {
-    await Film_comment.updateOne(id, lamda);
+    return await Film_comment.updateOne(id, lamda);
   },
   deleteByLamda: async function (lamda) {
-    await Film_comment.deleteOne(lamda);
+    return await Film_comment.deleteOne(lamda);
   }
 };

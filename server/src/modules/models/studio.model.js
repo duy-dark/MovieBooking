@@ -23,12 +23,12 @@ module.exports = {
     return studios;
   },
   createByLamda: async function (lamda) {
-    await Studio.insertMany(lamda);
+    return await Studio.insertMany(lamda);
   },
   updateByLamda: async function (id, lamda) {
-    await Studio.updateOne(id, lamda);
+    return await Studio.updateOne(id, lamda);
   },
   deleteByLamda: async function (lamda) {
-    await Studio.deleteOne(lamda);
+    return await Studio.deleteOne(lamda);
   }
 };

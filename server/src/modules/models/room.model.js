@@ -22,12 +22,12 @@ module.exports = {
     return rooms;
   },
   createByLamda: async function (lamda) {
-    await Room.insertMany(lamda);
+    return await Room.insertMany(lamda);
   },
   updateByLamda: async function (id, lamda) {
-    await Room.updateOne(id, lamda);
+    return await Room.updateOne(id, lamda);
   },
   deleteByLamda: async function (lamda) {
-    await Room.deleteOne(lamda);
+    return await Room.deleteOne(lamda);
   }
 };

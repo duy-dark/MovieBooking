@@ -22,12 +22,12 @@ module.exports = {
     return notifications;
   },
   createByLamda: async function (lamda) {
-    await Notification.insertMany(lamda);
+    return await Notification.insertMany(lamda);
   },
   updateByLamda: async function (id, lamda) {
-    await Notification.updateOne(id, lamda);
+    return await Notification.updateOne(id, lamda);
   },
   deleteByLamda: async function (lamda) {
-    await Notification.deleteOne(lamda);
+    return await Notification.deleteOne(lamda);
   }
 };

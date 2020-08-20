@@ -20,12 +20,12 @@ module.exports = {
     return type_seats;
   },
   createByLamda: async function (lamda) {
-    await Type_seat.insertMany(lamda);
+    return await Type_seat.insertMany(lamda);
   },
   updateByLamda: async function (id, lamda) {
-    await Type_seat.updateOne(id, lamda);
+    return await Type_seat.updateOne(id, lamda);
   },
   deleteByLamda: async function (lamda) {
-    await Type_seat.deleteOne(lamda);
+    return await Type_seat.deleteOne(lamda);
   }
 };
