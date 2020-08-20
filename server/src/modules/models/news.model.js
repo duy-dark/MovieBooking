@@ -2,7 +2,12 @@ var mongoose = require('mongoose');
 
 var newsSchema = new mongoose.Schema(
   {
-    content: String,
+    list_contents: [
+      {
+        title: String,
+        content: String
+      }
+    ],
     hastag: Array,
     public_date: Date,
     is_deleted: Boolean,
