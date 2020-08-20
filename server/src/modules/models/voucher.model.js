@@ -18,12 +18,12 @@ module.exports = {
     return vouchers;
   },
   createByLamda: async function (lamda) {
-    await Voucher.insertMany(lamda);
+    return await Voucher.insertMany(lamda);
   },
   updateByLamda: async function (id, lamda) {
-    await Voucher.updateOne(id, lamda);
+    return await Voucher.updateOne(id, lamda);
   },
   deleteByLamda: async function (lamda) {
-    await Voucher.deleteOne(lamda);
+    return await Voucher.deleteOne(lamda);
   }
 };

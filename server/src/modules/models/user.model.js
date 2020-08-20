@@ -24,12 +24,12 @@ module.exports = {
     return users;
   },
   createByLamda: async function (lamda) {
-    await User.insertMany(lamda);
+    return await User.insertMany(lamda);
   },
   updateByLamda: async function (id, lamda) {
-    await User.updateOne(id, lamda);
+    return await User.updateOne(id, lamda);
   },
   deleteByLamda: async function (lamda) {
-    await User.deleteOne(lamda);
+    return await User.deleteOne(lamda);
   }
 };

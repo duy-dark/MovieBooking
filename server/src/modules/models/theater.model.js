@@ -22,12 +22,12 @@ module.exports = {
     return theaters;
   },
   createByLamda: async function (lamda) {
-    await Theater.insertMany(lamda);
+    return await Theater.insertMany(lamda);
   },
   updateByLamda: async function (id, lamda) {
-    await Theater.updateOne(id, lamda);
+    return await Theater.updateOne(id, lamda);
   },
   deleteByLamda: async function (lamda) {
-    await Theater.deleteOne(lamda);
+    return await Theater.deleteOne(lamda);
   }
 };

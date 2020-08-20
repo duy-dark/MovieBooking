@@ -20,12 +20,12 @@ module.exports = {
     return films;
   },
   createByLamda: async function (lamda) {
-    await Film.insertMany(lamda);
+    return await Film.insertMany(lamda);
   },
   updateByLamda: async function (id, lamda) {
-    await Film.updateOne(id, lamda);
+    return await Film.updateOne(id, lamda);
   },
   deleteByLamda: async function (lamda) {
-    await Film.deleteOne(lamda);
+    return await Film.deleteOne(lamda);
   }
 };

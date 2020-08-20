@@ -22,12 +22,12 @@ module.exports = {
     return ticket_queues;
   },
   createByLamda: async function (lamda) {
-    await Ticket_queue.insertMany(lamda);
+    return await Ticket_queue.insertMany(lamda);
   },
   updateByLamda: async function (id, lamda) {
-    await Ticket_queue.updateOne(id, lamda);
+    return await Ticket_queue.updateOne(id, lamda);
   },
   deleteByLamda: async function (lamda) {
-    await Ticket_queue.deleteOne(lamda);
+    return await Ticket_queue.deleteOne(lamda);
   }
 };
