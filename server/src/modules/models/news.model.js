@@ -2,9 +2,13 @@ var mongoose = require('mongoose');
 
 var newsSchema = new mongoose.Schema(
   {
-    content: String,
+    list_contents: [
+      {
+        title: String,
+        content: String
+      }
+    ],
     hastag: Array,
-    date_of_birth: Date,
     public_date: Date,
     is_deleted: Boolean,
     updated_at: Date
@@ -20,12 +24,12 @@ module.exports = {
     return news;
   },
   createByLamda: async function (lamda) {
-    await News.insertMany(lamda);
+    return await News.insertMany(lamda);
   },
   updateByLamda: async function (id, lamda) {
-    await News.updateOne(id, lamda);
+    return await News.updateOne(id, lamda);
   },
   deleteByLamda: async function (lamda) {
-    await News.deleteOne(lamda);
+    return await News.deleteOne(lamda);
   }
 };

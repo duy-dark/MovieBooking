@@ -18,12 +18,12 @@ module.exports = {
     return event_infos;
   },
   createByLamda: async function (lamda) {
-    await Event_info.insertMany(lamda);
+    return await Event_info.insertMany(lamda);
   },
   updateByLamda: async function (id, lamda) {
-    await Event_info.updateOne(id, lamda);
+    return await Event_info.updateOne(id, lamda);
   },
   deleteByLamda: async function (lamda) {
-    await Event_info.deleteOne(lamda);
+    return await Event_info.deleteOne(lamda);
   }
 };
