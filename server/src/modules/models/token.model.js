@@ -1,20 +1,22 @@
 var mongoose = require('mongoose');
 
-var tokens = new mongoose.Schema(
+var tokenSchema = new mongoose.Schema(
   {
     user_id: String,
     token: String,
-    expires_in: int64 
+    expires_in: Number,
+    updated_at: Date,
+    is_deleted: Boolean
   },
   {versionKey: false}
 );
 
-var Tokens = mongoose.model('Tokens', ticketSchema, 'tokens');
+var Tokens = mongoose.model('Tokens', tokenSchema, 'tokens');
 
 module.exports = {
   findByLamda: async function (lamda) {
-    var Tokens = await Tokens.find(lamda);
-    return Tokens;
+    var Token = await Tokens.find(lamda);
+    return Token;
   },
   createByLamda: async function (lamda) {
     return await Tokens.insertMany(lamda);
