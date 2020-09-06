@@ -4,7 +4,7 @@ const express = require('express'),
   ConnectDB = require('./db'),
   errorHandler = require('./modules/middleware/error.middleware');
 
-const resFail = require('./modules/response/res-fail')
+const resFail = require('./modules/response/res-fail');
 
 const config = require('./config');
 
@@ -20,6 +20,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/user', require('./modules/customers/users'));
+app.use('/admin', require('./modules/admin/users/admin'));
 
 app.use(errorHandler);
 
@@ -30,7 +31,7 @@ app.use((req, res) => {
 
 const startSever = async () => {
   app.listen(port, async () => {
-    console.log(`QLBH API is running on port ${port}`);
+    console.log(`QLBH API is running on port ${port} http://localhost:${port}`);
   });
 };
 startSever();

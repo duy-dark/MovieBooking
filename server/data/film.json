@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Kẻ Cắp Nhân Dạng - Simon's Got a Gift",
+    "film_info_id": "String",
+    "theater_id": "Array",
+    "comment": "Array",
+    "is_deleted": "Boolean",
+    "updated_at": "Date"
+  },
+  {
+    "name": "Kẻ Cắp Nhân Dạng - Simon's Got a Gift",
+    "film_info_id": "String",
+    "theater_id": "Array",
+    "comment": "Array",
+    "is_deleted": "Boolean",
+    "updated_at": "Date"
+  }
+]

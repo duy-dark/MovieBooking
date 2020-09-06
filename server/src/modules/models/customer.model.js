@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var customerSchema = new mongoose.Schema(
+let customerSchema = new mongoose.Schema(
   {
     name: String,
     phone: String,
@@ -16,20 +16,16 @@ var customerSchema = new mongoose.Schema(
   {versionKey: false}
 );
 
-var Customer = mongoose.model('Customer', customerSchema, 'customers');
+let Customer = mongoose.model('Customer', customerSchema, 'customers');
 
 module.exports = {
   findByLamda: async function (lamda) {
-    var customers = await Customer.find(lamda);
-    return customers;
+    return await Customer.find(lamda);
   },
   createByLamda: async function (lamda) {
     return await Customer.insertMany(lamda);
   },
   updateByLamda: async function (id, lamda) {
     return await Customer.updateOne(id, lamda);
-  },
-  deleteByLamda: async function (lamda) {
-    return await Customer.deleteOne(lamda);
   }
 };

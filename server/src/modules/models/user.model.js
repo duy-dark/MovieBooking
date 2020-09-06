@@ -1,13 +1,12 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var userSchema = new mongoose.Schema(
+let userSchema = new mongoose.Schema(
   {
     name: String,
     phone: String,
     date_of_birth: Date,
     email: String,
     password: String,
-    permission: String,
     avatar: String,
     adress: String,
     is_deleted: Boolean,
@@ -16,20 +15,16 @@ var userSchema = new mongoose.Schema(
   {versionKey: false}
 );
 
-var User = mongoose.model('User', userSchema, 'users');
+let User = mongoose.model('User', userSchema, 'users');
 
 module.exports = {
   findByLamda: async function (lamda) {
-    var users = await User.find(lamda);
-    return users;
+    return await User.find(lamda);
   },
   createByLamda: async function (lamda) {
     return await User.insertMany(lamda);
   },
   updateByLamda: async function (id, lamda) {
     return await User.updateOne(id, lamda);
-  },
-  deleteByLamda: async function (lamda) {
-    return await User.deleteOne(lamda);
   }
 };
