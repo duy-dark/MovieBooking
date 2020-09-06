@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var ticketSchema = new mongoose.Schema(
+let ticketSchema = new mongoose.Schema(
   {
     customer_id: String,
     film_id: String,
@@ -15,20 +15,16 @@ var ticketSchema = new mongoose.Schema(
   {versionKey: false}
 );
 
-var Ticket = mongoose.model('Ticket', ticketSchema, 'tickets');
+let Ticket = mongoose.model('Ticket', ticketSchema, 'tickets');
 
 module.exports = {
   findByLamda: async function (lamda) {
-    var tickets = await Ticket.find(lamda);
-    return tickets;
+    return await Ticket.find(lamda);
   },
   createByLamda: async function (lamda) {
     return await Ticket.insertMany(lamda);
   },
   updateByLamda: async function (id, lamda) {
     return await Ticket.updateOne(id, lamda);
-  },
-  deleteByLamda: async function (lamda) {
-    return await Ticket.deleteOne(lamda);
   }
 };
