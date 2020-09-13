@@ -13,13 +13,13 @@ let eventSchema = new mongoose.Schema(
 let Event = mongoose.model('Event', eventSchema, 'events');
 
 module.exports = {
-  findByLamda: async function (lamda) {
-    return await Event.find(lamda);
+  findByLambda: async function (lambda) {
+    return await Event.find(lambda);
   },
-  createByLamda: async function (lamda) {
-    return await Event.insertMany(lamda);
+  createByLambda: async function (lambda) {
+    return await Event.insertMany(lambda);
   },
-  updateByLamda: async function (id, lamda) {
-    return await Event.updateOne(id, lamda);
+  updateByLambda: async function (id, lambda) {
+    return await Event.updateOne(id, lambda);
   }
 };

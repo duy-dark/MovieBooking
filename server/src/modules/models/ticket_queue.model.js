@@ -17,13 +17,13 @@ let Ticket_queue = mongoose.model(
 );
 
 module.exports = {
-  findByLamda: async function (lamda) {
-    return await Ticket_queue.find(lamda);
+  findByLambda: async function (lambda) {
+    return await Ticket_queue.find(lambda);
   },
-  createByLamda: async function (lamda) {
-    return await Ticket_queue.insertMany(lamda);
+  createByLambda: async function (lambda) {
+    return await Ticket_queue.insertMany(lambda);
   },
-  updateByLamda: async function (id, lamda) {
-    return await Ticket_queue.updateOne(id, lamda);
+  updateByLambda: async function (id, lambda) {
+    return await Ticket_queue.updateOne(id, lambda);
   }
 };

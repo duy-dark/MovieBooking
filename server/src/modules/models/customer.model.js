@@ -19,13 +19,13 @@ let customerSchema = new mongoose.Schema(
 let Customer = mongoose.model('Customer', customerSchema, 'customers');
 
 module.exports = {
-  findByLamda: async function (lamda) {
-    return await Customer.find(lamda);
+  findByLambda: async function (lambda) {
+    return await Customer.find(lambda);
   },
-  createByLamda: async function (lamda) {
-    return await Customer.insertMany(lamda);
+  createByLambda: async function (lambda) {
+    return await Customer.insertMany(lambda);
   },
-  updateByLamda: async function (id, lamda) {
-    return await Customer.updateOne(id, lamda);
+  updateByLambda: async function (id, lambda) {
+    return await Customer.updateOne(id, lambda);
   }
 };

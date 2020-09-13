@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 // validator no insert row when table has had theater_id and time_start
 let userPermissionSchema = new mongoose.Schema(
   {
-    user_id: String,
+    user_id: require('mongodb').ObjectID,
     permission_id: String,
     is_deleted: Boolean,
     updated_at: Date
@@ -17,13 +17,13 @@ let UserPermissions = mongoose.model(
 );
 
 module.exports = {
-  findByLamda: async function (lamda) {
-    return await UserPermissions.find(lamda);
+  findByLambda: async function (lambda) {
+    return await UserPermissions.find(lambda);
   },
-  createByLamda: async function (lamda) {
-    return await UserPermissions.insertMany(lamda);
+  createByLambda: async function (lambda) {
+    return await UserPermissions.insertMany(lambda);
   },
-  updateByLamda: async function (id, lamda) {
-    return await UserPermissions.updateOne(id, lamda);
+  updateByLambda: async function (id, lambda) {
+    return await UserPermissions.updateOne(id, lambda);
   }
 };
