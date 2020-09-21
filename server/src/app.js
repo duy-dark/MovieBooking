@@ -7,8 +7,8 @@ const express = require('express'),
   GoogleStrategy = require('passport-google-oauth20').Strategy,
   errorHandler = require('./modules/middleware/error.middleware');
 
-const resFail = require('./modules/response/res-fail');
-
+const resFail = require('./modules/response/res-fail')
+const verifyToken = require('./modules/middleware/auth.middleware')
 const config = require('./config');
 
 const {port} = config;
@@ -20,8 +20,8 @@ app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/', (req, res) => {
-  res.json('hello world');
+app.get('/', verifyToken, (req, res) => {
+  res.json(req.token_payload);
 });
 
 app.use('/user', require('./modules/customers/users'));
