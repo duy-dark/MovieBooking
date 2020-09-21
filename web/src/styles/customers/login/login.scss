@@ -1,0 +1,15 @@
+/* ---------------login scss ------------------- */
+@charset "utf-8";
+
+@import "../../mixin";
+@import "../../color";
+
+/* media query */
+
+@include bp(pc) {
+  @import "login_pc.scss";
+}
+
+@include bp(pc) {
+  @import "login_sp.scss";
+}
