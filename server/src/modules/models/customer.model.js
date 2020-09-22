@@ -11,7 +11,7 @@ let customerSchema = new mongoose.Schema(
     avatar: String,
     address: String,
     is_deleted: Boolean,
-    updated_at: Date
+    updated_at: Date,
   },
   {versionKey: false}
 );
