@@ -16,13 +16,13 @@ let FilmCategory = mongoose.model(
 );
 
 module.exports = {
-  findByLamda: async function (lamda) {
-    return await FilmCategory.find(lamda);
+  findByLambda: async function (lambda) {
+    return await FilmCategory.find(lambda);
   },
-  createByLamda: async function (lamda) {
-    return await FilmCategory.insertMany(lamda);
+  createByLambda: async function (lambda) {
+    return await FilmCategory.insertMany(lambda);
   },
-  updateByLamda: async function (id, lamda) {
-    return await FilmCategory.updateOne(id, lamda);
+  updateByLambda: async function (id, lambda) {
+    return await FilmCategory.updateOne(id, lambda);
   }
 };

@@ -17,13 +17,13 @@ let Notification = mongoose.model(
 );
 
 module.exports = {
-  findByLamda: async function (lamda) {
-    return await Notification.find(lamda);
+  findByLambda: async function (lambda) {
+    return await Notification.find(lambda);
   },
-  createByLamda: async function (lamda) {
-    return await Notification.insertMany(lamda);
+  createByLambda: async function (lambda) {
+    return await Notification.insertMany(lambda);
   },
-  updateByLamda: async function (id, lamda) {
-    return await Notification.updateOne(id, lamda);
+  updateByLambda: async function (id, lambda) {
+    return await Notification.updateOne(id, lambda);
   }
 };

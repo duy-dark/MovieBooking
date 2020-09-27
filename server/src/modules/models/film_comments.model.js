@@ -19,13 +19,13 @@ let FilmComment = mongoose.model(
 );
 
 module.exports = {
-  findByLamda: async function (lamda) {
-    return await FilmComment.find(lamda);
+  findByLambda: async function (lambda) {
+    return await FilmComment.find(lambda);
   },
-  createByLamda: async function (lamda) {
-    return await FilmComment.insertMany(lamda);
+  createByLambda: async function (lambda) {
+    return await FilmComment.insertMany(lambda);
   },
-  updateByLamda: async function (id, lamda) {
-    return await FilmComment.updateOne(id, lamda);
+  updateByLambda: async function (id, lambda) {
+    return await FilmComment.updateOne(id, lambda);
   }
 };

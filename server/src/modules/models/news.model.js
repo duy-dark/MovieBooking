@@ -16,13 +16,13 @@ let newsSchema = new mongoose.Schema(
 let News = mongoose.model('News', newsSchema, 'news');
 
 module.exports = {
-  findByLamda: async function (lamda) {
-    return await News.find(lamda);
+  findByLambda: async function (lambda) {
+    return await News.find(lambda);
   },
-  createByLamda: async function (lamda) {
-    return await News.insertMany(lamda);
+  createByLambda: async function (lambda) {
+    return await News.insertMany(lambda);
   },
-  updateByLamda: async function (id, lamda) {
-    return await News.updateOne(id, lamda);
+  updateByLambda: async function (id, lambda) {
+    return await News.updateOne(id, lambda);
   }
 };

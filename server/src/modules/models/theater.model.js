@@ -15,13 +15,13 @@ let theaterSchema = new mongoose.Schema(
 let Theater = mongoose.model('Theater', theaterSchema, 'theaters');
 
 module.exports = {
-  findByLamda: async function (lamda) {
-    return await Theater.find(lamda);
+  findByLambda: async function (lambda) {
+    return await Theater.find(lambda);
   },
-  createByLamda: async function (lamda) {
-    return await Theater.insertMany(lamda);
+  createByLambda: async function (lambda) {
+    return await Theater.insertMany(lambda);
   },
-  updateByLamda: async function (id, lamda) {
-    return await Theater.updateOne(id, lamda);
+  updateByLambda: async function (id, lambda) {
+    return await Theater.updateOne(id, lambda);
   }
 };
