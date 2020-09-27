@@ -9,7 +9,6 @@ let userSchema = new mongoose.Schema(
     password: String,
     avatar: String,
     adress: String,
-    permissions_id: [require('mongodb').ObjectID],
     is_deleted: Boolean,
     updated_at: Date
   },
@@ -19,31 +18,13 @@ let userSchema = new mongoose.Schema(
 let User = mongoose.model('User', userSchema, 'users');
 
 module.exports = {
-  findByLambda: async function (lambda) {
-    return await User.find(lambda);
+  findByLamda: async function (lamda) {
+    return await User.find(lamda);
   },
-  findByEmailPassword: async function (lambda) {
-    return await User.aggregate([
-      {
-        $match: {
-          email: lambda.email,
-          password: lambda.password
-        }
-      },
-      {
-        $lookup: {
-          from: 'permissions',
-          localField: 'permissions_id',
-          foreignField: '_id',
-          as: 'permissions'
-        }
-      }
-    ]);
+  createByLamda: async function (lamda) {
+    return await User.insertMany(lamda);
   },
-  createByLambda: async function (lambda) {
-    return await User.insertMany(lambda);
-  },
-  updateByLambda: async function (id, lambda) {
-    return await User.updateOne(id, lambda);
+  updateByLamda: async function (id, lamda) {
+    return await User.updateOne(id, lamda);
   }
 };

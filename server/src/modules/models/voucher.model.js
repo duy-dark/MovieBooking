@@ -13,13 +13,13 @@ let voucherSchema = new mongoose.Schema(
 let Voucher = mongoose.model('Voucher', voucherSchema, 'vouchers');
 
 module.exports = {
-  findByLambda: async function (lambda) {
-    return await Voucher.find(lambda);
+  findByLamda: async function (lamda) {
+    return await Voucher.find(lamda);
   },
-  createByLambda: async function (lambda) {
-    return await Voucher.insertMany(lambda);
+  createByLamda: async function (lamda) {
+    return await Voucher.insertMany(lamda);
   },
-  updateByLambda: async function (id, lambda) {
-    return await Voucher.updateOne(id, lambda);
+  updateByLamda: async function (id, lamda) {
+    return await Voucher.updateOne(id, lamda);
   }
 };

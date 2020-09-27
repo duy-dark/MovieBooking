@@ -20,13 +20,13 @@ let TheaterRoom = mongoose.model(
 );
 
 module.exports = {
-  findByLambda: async function (lambda) {
-    return await TheaterRoom.find(lambda);
+  findByLamda: async function (lamda) {
+    return await TheaterRoom.find(lamda);
   },
-  createByLambda: async function (lambda) {
-    return await TheaterRoom.insertMany(lambda);
+  createByLamda: async function (lamda) {
+    return await TheaterRoom.insertMany(lamda);
   },
-  updateByLambda: async function (id, lambda) {
-    return await TheaterRoom.updateOne(id, lambda);
+  updateByLamda: async function (id, lamda) {
+    return await TheaterRoom.updateOne(id, lamda);
   }
 };

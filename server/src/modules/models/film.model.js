@@ -21,13 +21,13 @@ let filmSchema = new mongoose.Schema(
 let Film = mongoose.model('Film', filmSchema, 'films');
 
 module.exports = {
-  findByLambda: async function (lambda) {
-    return await Film.find(lambda);
+  findByLamda: async function (lamda) {
+    return await Film.find(lamda);
   },
-  createByLambda: async function (lambda) {
-    return await Film.insertMany(lambda);
+  createByLamda: async function (lamda) {
+    return await Film.insertMany(lamda);
   },
-  updateByLambda: async function (id, lambda) {
-    return await Film.updateOne(id, lambda);
+  updateByLamda: async function (id, lamda) {
+    return await Film.updateOne(id, lamda);
   }
 };

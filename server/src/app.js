@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/user', require('./modules/customers/users'));
-app.use('/login', require('./modules/admin/login'));
+app.use('/admin', require('./modules/admin/users/admin'));
 
 app.use(errorHandler);
 

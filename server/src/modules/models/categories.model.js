@@ -12,13 +12,13 @@ let categorySchema = new mongoose.Schema(
 let Category = mongoose.model('Category', categorySchema, 'categories');
 
 module.exports = {
-  findByLambda: async function (lambda) {
-    return await Category.find(lambda);
+  findByLamda: async function (lamda) {
+    return await Category.find(lamda);
   },
-  createByLambda: async function (lambda) {
-    return await Category.insertMany(lambda);
+  createByLamda: async function (lamda) {
+    return await Category.insertMany(lamda);
   },
-  updateByLambda: async function (id, lambda) {
-    return await Category.updateOne(id, lambda);
+  updateByLamda: async function (id, lamda) {
+    return await Category.updateOne(id, lamda);
   }
 };

@@ -15,13 +15,13 @@ let type_seatSchema = new mongoose.Schema(
 let Type_seat = mongoose.model('Type_seat', type_seatSchema, 'type_seats');
 
 module.exports = {
-  findByLambda: async function (lambda) {
-    return await Type_seat.find(lambda);
+  findByLamda: async function (lamda) {
+    return await Type_seat.find(lamda);
   },
-  createByLambda: async function (lambda) {
-    return await Type_seat.insertMany(lambda);
+  createByLamda: async function (lamda) {
+    return await Type_seat.insertMany(lamda);
   },
-  updateByLambda: async function (id, lambda) {
-    return await Type_seat.updateOne(id, lambda);
+  updateByLamda: async function (id, lamda) {
+    return await Type_seat.updateOne(id, lamda);
   }
 };

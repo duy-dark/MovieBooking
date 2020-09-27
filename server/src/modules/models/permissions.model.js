@@ -17,13 +17,13 @@ let Permissions = mongoose.model(
 );
 
 module.exports = {
-  findByLambda: async function (lambda) {
-    return await Permissions.find(lambda);
+  findByLamda: async function (lamda) {
+    return await Permissions.find(lamda);
   },
-  createByLambda: async function (lambda) {
-    return await Permissions.insertMany(lambda);
+  createByLamda: async function (lamda) {
+    return await Permissions.insertMany(lamda);
   },
-  updateByLambda: async function (id, lambda) {
-    return await Permissions.updateOne(id, lambda);
+  updateByLamda: async function (id, lamda) {
+    return await Permissions.updateOne(id, lamda);
   }
 };

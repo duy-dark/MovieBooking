@@ -19,13 +19,13 @@ let FilmShedules = mongoose.model(
 );
 
 module.exports = {
-  findByLambda: async function (lambda) {
-    return await FilmShedules.find(lambda);
+  findByLamda: async function (lamda) {
+    return await FilmShedules.find(lamda);
   },
-  createByLambda: async function (lambda) {
-    return await FilmShedules.insertMany(lambda);
+  createByLamda: async function (lamda) {
+    return await FilmShedules.insertMany(lamda);
   },
-  updateByLambda: async function (id, lambda) {
-    return await FilmShedules.updateOne(id, lambda);
+  updateByLamda: async function (id, lamda) {
+    return await FilmShedules.updateOne(id, lamda);
   }
 };

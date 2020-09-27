@@ -18,13 +18,13 @@ let ticketSchema = new mongoose.Schema(
 let Ticket = mongoose.model('Ticket', ticketSchema, 'tickets');
 
 module.exports = {
-  findByLambda: async function (lambda) {
-    return await Ticket.find(lambda);
+  findByLamda: async function (lamda) {
+    return await Ticket.find(lamda);
   },
-  createByLambda: async function (lambda) {
-    return await Ticket.insertMany(lambda);
+  createByLamda: async function (lamda) {
+    return await Ticket.insertMany(lamda);
   },
-  updateByLambda: async function (id, lambda) {
-    return await Ticket.updateOne(id, lambda);
+  updateByLamda: async function (id, lamda) {
+    return await Ticket.updateOne(id, lamda);
   }
 };
