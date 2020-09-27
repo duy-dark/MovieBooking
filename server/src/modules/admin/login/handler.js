@@ -19,7 +19,7 @@ var postLogin = async (req, res, next) => {
         detail: errors.array()
       };
     }
-
+    console.log('body:' + req.body);
     let email = req.body.email;
     console.log('email: ' + email);
     let password = sha256(req.body.password).toString();
