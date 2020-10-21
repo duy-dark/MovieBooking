@@ -1,4 +1,5 @@
 const {check} = require('express-validator');
+
 const validateRegisterCustomer = () => {
   return [
     check('email', 'Invalid does not Empty').not().isEmpty(),
