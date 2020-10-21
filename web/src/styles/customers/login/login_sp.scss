@@ -1,3 +1,101 @@
+
 .login {
-  background-color: #fff;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../../../assets/bg-login.jpg');
+  background-size: contain;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .login-background {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border-radius: 6px;
+
+    .login-form {
+      width: 100%;
+      height: 100%;
+      border-radius: 6px;
+      background: linear-gradient(to bottom,rgba(20,50,93,.5),rgba(8,22,48,.9));
+      position: relative;
+
+      .login-form__logo {
+        margin-top: 32px;
+        display: flex;
+        justify-content: center;
+        img {
+          width: 209px;
+          height: auto;
+        }
+      }
+
+      .login-form__groups {
+        position: absolute;
+        width: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        .login-form__groups__title {
+          color: #FFF;
+          text-align: center;
+          padding: 0 20px;
+        }
+        .groups-btn {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+
+          .btn {
+            width: 310px;
+            height: 56px;
+            border-radius: 6px;
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: 500;
+            color: #FFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-decoration: none;
+            transform: scale(1);
+            transition: all .3s ease-in-out;
+
+            &:hover {
+              transform: scale(1.05);
+            }
+
+            &.btn-facebook {
+              background-color: #3B5998;
+
+              &:hover {
+                background-color: rgba( #3B5998, .9)
+              }
+            }
+            &.btn-google {
+              background-color: #dd4b39;
+
+              &:hover {
+                background-color: rgba( #dd4b39, .9)
+              }
+            }
+            &.btn-zalo {
+              background-color: #45bbff;
+
+              &:hover {
+                background-color: rgba( #45bbff, .9)
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }

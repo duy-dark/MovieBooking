@@ -1,4 +1,3 @@
-import { useHistory  } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { clearToken } from '../redux/modules/actions/users';
 import { showSpinner, hideSpinner } from '../redux/modules/actions/layout';
