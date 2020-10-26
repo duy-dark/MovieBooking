@@ -1,5 +1,5 @@
 import React from 'react'
-import Home from './views/customers/Home'
+import AppCustomer from './views/customers/AppCustomer'
 import LayoutAdmin from './views/admin/LayoutAdmin'
 import Login from './views/customers/Login'
 
@@ -7,7 +7,7 @@ const routes = [
   {
     path: '/',
     exact: true,
-    component: () => <Home />
+    component: () => <AppCustomer />
   },
   {
     path: '/admin',
