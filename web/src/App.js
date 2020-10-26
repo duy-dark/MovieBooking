@@ -4,20 +4,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './styles/styles.scss';
 // import CustomScrollbar from './components/CustomScrollbar'
 
+
 class App extends Component {
-  render() {
-    return (
-      <Router>
-        <div className="app">
-          {/* <CustomScrollbar> */}
-            <Switch>
-              { this.showRouteComponent(routes) }
-            </Switch>
-          {/* </CustomScrollbar> */}
-        </div>
-      </Router>
-    );
-  }
 
   showRouteComponent = (routes) => {
     let result = null;
@@ -29,6 +17,20 @@ class App extends Component {
       });
     }
     return result;
+  }
+  render() {
+    return (
+      <Router>
+        <div className="app">
+          {/* <CustomScrollbar> */}
+            <Switch>
+              { this.showRouteComponent(routes) }
+
+            </Switch>
+          {/* </CustomScrollbar> */}
+        </div>
+      </Router>
+    );
   }
 }
 
