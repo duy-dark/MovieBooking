@@ -29,16 +29,16 @@ module.exports = {
       }
 
       let entity = {
-        name: req.body.name || '',
-        content: req.body.content || '',
-        countries: req.body.countries || '',
-        long_time: req.body.long_time || '',
-        start_date: req.body.start_date || '',
-        directors: req.body.directors || '',
-        rates: req.body.rates || '',
-        rate_count: req.body.rate_count || '',
-        actors: req.body.actors || '',
-        digitals: req.body.digitals || '',
+        name: req.body.name || undefined,
+        content: req.body.content || undefined,
+        countries: req.body.countries || undefined,
+        long_time: req.body.long_time || undefined,
+        start_date: req.body.start_date || undefined,
+        directors: req.body.directors || undefined,
+        rates: req.body.rates || undefined,
+        rate_count: req.body.rate_count || undefined,
+        actors: req.body.actors || undefined,
+        digitals: req.body.digitals || undefined,
         is_deleted: false,
         updated_at: moment().now()
       };
@@ -53,16 +53,16 @@ module.exports = {
     try {
       let id = req.params.id;
       let entity = {
-        name: req.body.name || '',
-        content: req.body.content || '',
-        countries: req.body.countries || '',
-        long_time: req.body.long_time || '',
-        start_date: req.body.start_date || '',
-        directors: req.body.directors || '',
-        rates: req.body.rates || '',
-        rate_count: req.body.rate_count || '',
-        actors: req.body.actors || '',
-        digitals: req.body.digitals || '',
+        name: req.body.name || undefined,
+        content: req.body.content || undefined,
+        countries: req.body.countries || undefined,
+        long_time: req.body.long_time || undefined,
+        start_date: req.body.start_date || undefined,
+        directors: req.body.directors || undefined,
+        rates: req.body.rates || undefined,
+        rate_count: req.body.rate_count || undefined,
+        actors: req.body.actors || undefined,
+        digitals: req.body.digitals || undefined,
         updated_at: moment().now()
       };
 

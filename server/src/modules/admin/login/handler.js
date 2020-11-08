@@ -1,4 +1,5 @@
 const User = require('../../models/user.model');
+const Token = require('./../../models/token.model');
 const resSuccess = require('./../../response/res-success');
 const {validationResult} = require('express-validator');
 
@@ -28,18 +29,21 @@ var postLogin = async (req, res, next) => {
       email: email,
       password: password
     });
+    console.log('user: ' + JSON.stringify(user));
     if (user.length === 0 || user[0].isDeleted === true) {
       throw {
         status: 402,
-        errCode: 4,
-        detail: 'user is not exist'
+        errCode: 5,
+        detail: 'Invalid login'
       };
     }
-
-    delete user[0].password;
+    let token = await Token.findByLamda({user_id: user[0]._id});
+    console.log('token:' + JSON.stringify(token));
+    delete user[0]['password'];
     res.json(
       resSuccess({
-        user: user
+        user: user[0],
+        token: token[0].token
       })
     );
   } catch (error) {

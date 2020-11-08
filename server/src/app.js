@@ -7,13 +7,8 @@ const express = require('express'),
   GoogleStrategy = require('passport-google-oauth20').Strategy,
   errorHandler = require('./modules/middleware/error.middleware');
 
-<<<<<<< HEAD
 const resFail = require('./modules/response/res-fail');
-
-=======
-const resFail = require('./modules/response/res-fail')
-const verifyToken = require('./modules/middleware/auth.middleware')
->>>>>>> d45231a88ae431ff8733feafe992527d40633617
+const verifyToken = require('./modules/middleware/auth.middleware');
 const config = require('./config');
 
 const {port} = config;
@@ -30,7 +25,8 @@ app.get('/', verifyToken, (req, res) => {
 });
 
 app.use('/user', require('./modules/customers/users'));
-app.use('/login', require('./modules/admin/login'));
+app.use('/admin', require('./modules/admin/users'));
+app.use('/adminlogin', require('./modules/admin/login'));
 
 const {Authenticator, authenticate} = require('passport');
 
