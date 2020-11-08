@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 import store from './redux/store'
 import { BrowserRouter as Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const history = createBrowserHistory();
 
