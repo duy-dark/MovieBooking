@@ -24,5 +24,6 @@ module.exports = {
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "prettier/prettier": ["error"],
+    "no-shadow": ["error", { "builtinGlobals": false, "hoist": "all", "allow": [] }
   },
 };
