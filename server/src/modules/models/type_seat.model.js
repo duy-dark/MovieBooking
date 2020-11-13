@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var type_seatSchema = new mongoose.Schema(
+let type_seatSchema = new mongoose.Schema(
   {
     room_id: String,
     seats: Array,
@@ -12,20 +12,16 @@ var type_seatSchema = new mongoose.Schema(
   {versionKey: false}
 );
 
-var Type_seat = mongoose.model('Type_seat', type_seatSchema, 'type_seats');
+let Type_seat = mongoose.model('Type_seat', type_seatSchema, 'type_seats');
 
 module.exports = {
-  findByLamda: async function (lamda) {
-    var type_seats = await Type_seat.find(lamda);
-    return type_seats;
+  findByLambda: async function (lambda) {
+    return await Type_seat.find(lambda);
   },
-  createByLamda: async function (lamda) {
-    return await Type_seat.insertMany(lamda);
+  createByLambda: async function (lambda) {
+    return await Type_seat.insertMany(lambda);
   },
-  updateByLamda: async function (id, lamda) {
-    return await Type_seat.updateOne(id, lamda);
-  },
-  deleteByLamda: async function (lamda) {
-    return await Type_seat.deleteOne(lamda);
+  updateByLambda: async function (id, lambda) {
+    return await Type_seat.updateOne(id, lambda);
   }
 };
