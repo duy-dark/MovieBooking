@@ -1,35 +1,49 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var userSchema = new mongoose.Schema(
+let userSchema = new mongoose.Schema(
   {
     name: String,
     phone: String,
     date_of_birth: Date,
     email: String,
     password: String,
-    permission: String,
     avatar: String,
     adress: String,
+    permissions_id: [require('mongodb').ObjectID],
     is_deleted: Boolean,
     updated_at: Date
   },
   {versionKey: false}
 );
 
-var User = mongoose.model('User', userSchema, 'users');
+let User = mongoose.model('User', userSchema, 'users');
 
 module.exports = {
-  findByLamda: async function (lamda) {
-    var users = await User.find(lamda);
-    return users;
+  findByLambda: async function (lambda) {
+    return await User.find(lambda);
   },
-  createByLamda: async function (lamda) {
-    return await User.insertMany(lamda);
+  findByEmailPassword: async function (lambda) {
+    return await User.aggregate([
+      {
+        $match: {
+          email: lambda.email,
+          password: lambda.password
+        }
+      },
+      {
+        $lookup: {
+          from: 'permissions',
+          localField: 'permissions_id',
+          foreignField: '_id',
+          as: 'permissions'
+        }
+      }
+    ]);
   },
-  updateByLamda: async function (id, lamda) {
-    return await User.updateOne(id, lamda);
+  createByLambda: async function (lambda) {
+    return await User.insertMany(lambda);
   },
-  deleteByLamda: async function (lamda) {
-    return await User.deleteOne(lamda);
+  updateByLambda: async function (id, lambda) {
+    return await User.updateOne(id, lambda);
   }
 };

@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var eventSchema = new mongoose.Schema(
+let eventSchema = new mongoose.Schema(
   {
     name: String,
     event_info_id: String,
@@ -10,20 +10,16 @@ var eventSchema = new mongoose.Schema(
   {versionKey: false}
 );
 
-var Event = mongoose.model('Event', eventSchema, 'events');
+let Event = mongoose.model('Event', eventSchema, 'events');
 
 module.exports = {
-  findByLamda: async function (lamda) {
-    var events = await Event.find(lamda);
-    return events;
+  findByLambda: async function (lambda) {
+    return await Event.find(lambda);
   },
-  createByLamda: async function (lamda) {
-    return await Event.insertMany(lamda);
+  createByLambda: async function (lambda) {
+    return await Event.insertMany(lambda);
   },
-  updateByLamda: async function (id, lamda) {
-    return await Event.updateOne(id, lamda);
-  },
-  deleteByLamda: async function (lamda) {
-    return await Event.deleteOne(lamda);
+  updateByLambda: async function (id, lambda) {
+    return await Event.updateOne(id, lambda);
   }
 };

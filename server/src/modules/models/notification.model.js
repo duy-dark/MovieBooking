@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var notificationSchema = new mongoose.Schema(
+let notificationSchema = new mongoose.Schema(
   {
     content: String,
     type: String,
@@ -10,24 +10,20 @@ var notificationSchema = new mongoose.Schema(
   {versionKey: false}
 );
 
-var Notification = mongoose.model(
+let Notification = mongoose.model(
   'Notification',
   notificationSchema,
   'notifications'
 );
 
 module.exports = {
-  findByLamda: async function (lamda) {
-    var notifications = await Notification.find(lamda);
-    return notifications;
+  findByLambda: async function (lambda) {
+    return await Notification.find(lambda);
   },
-  createByLamda: async function (lamda) {
-    return await Notification.insertMany(lamda);
+  createByLambda: async function (lambda) {
+    return await Notification.insertMany(lambda);
   },
-  updateByLamda: async function (id, lamda) {
-    return await Notification.updateOne(id, lamda);
-  },
-  deleteByLamda: async function (lamda) {
-    return await Notification.deleteOne(lamda);
+  updateByLambda: async function (id, lambda) {
+    return await Notification.updateOne(id, lambda);
   }
 };
