@@ -1,0 +1,50 @@
+@import "../mixin";
+@import "../color";
+
+@media only screen and (min-width: $breakpoint_sm) {
+  .header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #FFF;
+    height: 60px;
+    padding: 0 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,.3);
+
+    .header__icon {
+      display: flex;
+      align-items: center;
+      img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    .header__info {
+
+      .header__customer {
+        .header__login {
+          display: flex;
+          align-items: center;
+          padding-right: 10px;
+          border-right: 1px solid $font_grey_01;
+
+          img {
+            width: 30px;
+            height: 30px;
+            border-radius:  50%;
+            margin-right: 10px;
+          }
+        }
+      }
+
+      .header__position {
+
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $breakpoint_sm - 1px) {
+}

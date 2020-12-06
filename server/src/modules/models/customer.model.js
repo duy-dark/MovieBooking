@@ -12,6 +12,10 @@ let customerSchema = new mongoose.Schema(
     address: String,
     is_deleted: Boolean,
     updated_at: Date,
+    token_gg:{
+      access: String,
+      google_id: String,
+    },
   },
   {versionKey: false}
 );
