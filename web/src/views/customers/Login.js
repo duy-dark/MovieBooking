@@ -24,7 +24,7 @@ export default function Login(props) {
             </div>
           </div>
         </div>
-        <div className="login-animation"></div>
+        <div className="login-animation" />
       </div>
     </div>
   );

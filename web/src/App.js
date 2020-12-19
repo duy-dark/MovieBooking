@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import routes from "./router";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import routes from "./router";
 import "./styles/styles.scss";
 // import CustomScrollbar from './components/CustomScrollbar'
 

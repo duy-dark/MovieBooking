@@ -21,7 +21,7 @@ export default function Header(props) {
           </div>
         </div>
         <div className="header__position">
-          <div className="select-position"></div>
+          
         </div>
       </div>
     </div>
