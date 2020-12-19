@@ -25,9 +25,7 @@ const postCreate = async (params) => {
   try {
     let entity = {
       film_id: params.film_id || undefined,
-      customer_id: params.customer_id || undefined,
-      content: params.content || undefined,
-      rate: params.rate || undefined,
+      category_id: params.category_id || undefined,
       is_deleted: false,
       created_at: moment.now(),
       updated_at: moment.now()
@@ -43,9 +41,7 @@ const putUpdate = async (id, params) => {
   try {
     let entity = {
       film_id: params.film_id || undefined,
-      customer_id: params.customer_id || undefined,
-      content: params.content || undefined,
-      rate: params.rate || undefined,
+      category_id: params.category_id || undefined,
       updated_at: moment.now()
     };
     entity = omitBy(entity, isNil);

@@ -1,11 +1,11 @@
-let Film = require('./model');
+let Model = require('./model');
 const resSuccess = require('../../responses/res-success');
 const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
 
 const getAll = async () => {
   try {
-    let data = await Film.findByLambda();
+    let data = await Model.findByLambda();
     return resSuccess(data);
   } catch (error) {
     return error;
@@ -14,7 +14,7 @@ const getAll = async () => {
 
 const findById = async (id) => {
   try {
-    let data = await Film.findByLambda({_id: id});
+    let data = await Model.findByLambda({_id: id});
     return resSuccess(data[0]);
   } catch (error) {
     return error;
@@ -38,7 +38,7 @@ const postCreate = async (params) => {
       created_at: moment.now(),
       updated_at: moment.now()
     };
-    let data = await Film.createByLambda(entity);
+    let data = await Model.createByLambda(entity);
 
     return resSuccess(data);
   } catch (error) {
@@ -64,7 +64,7 @@ const putUpdate = async (id, params) => {
 
     entity = omitBy(entity, isNil);
 
-    let data = await Film.updateByLambda({_id: id}, entity);
+    let data = await Model.updateByLambda({_id: id}, entity);
     return resSuccess(data);
   } catch (error) {
     return error;
@@ -76,7 +76,7 @@ const deleteData = async (id) => {
     let entity = {
       is_deleted: true
     };
-    let data = await Film.updateByLambda({_id: id}, entity);
+    let data = await Model.updateByLambda({_id: id}, entity);
     return resSuccess(data);
   } catch (error) {
     return error;
