@@ -24,9 +24,10 @@ app.get('/', verifyToken, (req, res) => {
   res.json(req.token_payload);
 });
 
-app.use('/user', require('./modules/customers/users'));
-app.use('/admin', require('./modules/admin/users'));
-app.use('/adminlogin', require('./modules/admin/login'));
+app.use('/api/user', require('./modules/customers/users'));
+app.use('/api/admin', require('./modules/admin/users'));
+app.use('/api/adminlogin', require('./modules/admin/login'));
+app.use('/api/film', require('./modules/films'));
 
 const {Authenticator, authenticate} = require('passport');
 

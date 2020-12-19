@@ -13,6 +13,7 @@ let filmSchema = new mongoose.Schema(
     actors: String,
     digitals: String,
     is_deleted: Boolean,
+    created_at: Date,
     updated_at: Date
   },
   {versionKey: false}
@@ -25,6 +26,7 @@ module.exports = {
     return await Film.find(lambda);
   },
   createByLambda: async function (lambda) {
+    console.log('lambda: ', lambda);
     return await Film.insertMany(lambda);
   },
   updateByLambda: async function (id, lambda) {
