@@ -31,6 +31,7 @@ app.use('/api/film', require('./modules/films'));
 app.use('/api/film_comment', require('./modules/film_comments'));
 app.use('/api/film_category', require('./modules/film_category'));
 app.use('/api/film_schedule', require('./modules/film_schedules'));
+app.use('/api/categories', require('./modules/categories'));
 
 const {Authenticator, authenticate} = require('passport');
 
