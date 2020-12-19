@@ -1,31 +1,32 @@
 const mongoose = require('mongoose');
 
-let filmCommentSchema = new mongoose.Schema(
+let schema = new mongoose.Schema(
   {
     film_id: String,
     customer_id: String,
     content: String,
     rate: Number,
     is_deleted: Boolean,
+    created_at: Date,
     updated_at: Date
   },
   {versionKey: false}
 );
 
-let FilmComment = mongoose.model(
-  'FilmComment',
-  filmCommentSchema,
-  'film_comments'
-);
+let Collection = mongoose.model('FilmComment', schema, 'film_comments');
 
 module.exports = {
   findByLambda: async function (lambda) {
-    return await FilmComment.find(lambda);
+    lambda = {
+      ...lambda,
+      is_deleted: false
+    };
+    return await Collection.find(lambda);
   },
   createByLambda: async function (lambda) {
-    return await FilmComment.insertMany(lambda);
+    return await Collection.insertMany(lambda);
   },
   updateByLambda: async function (id, lambda) {
-    return await FilmComment.updateOne(id, lambda);
+    return await Collection.updateOne(id, lambda);
   }
 };

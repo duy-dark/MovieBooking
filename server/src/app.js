@@ -28,6 +28,7 @@ app.use('/api/user', require('./modules/customers/users'));
 app.use('/api/admin', require('./modules/admin/users'));
 app.use('/api/adminlogin', require('./modules/admin/login'));
 app.use('/api/film', require('./modules/films'));
+app.use('/api/film_comment', require('./modules/film_comments'));
 
 const {Authenticator, authenticate} = require('passport');
 
