@@ -1,7 +1,7 @@
 const User = require('../../models/user.model');
 const Token = require('./../../models/token.model');
 const {createToken, intDate} = require('./../../../util');
-const resSuccess = require('./../../response/res-success');
+const resSuccess = require('../../../response/res-success');
 const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
 const {validationResult} = require('express-validator');
@@ -21,6 +21,7 @@ module.exports = {
 
   postCreate: async function (req, res, next) {
     try {
+      console.log('Chaaaaaaaaaaaaaaaaaayyyyyyyyyyyyyyyyyyy');
       const errors = validationResult(req);
 
       if (!errors.isEmpty()) {

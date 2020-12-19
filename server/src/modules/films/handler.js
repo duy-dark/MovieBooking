@@ -1,5 +1,5 @@
-let Film = require('../../models/film.model');
-const resSuccess = require('./../../response/res-success');
+let Film = require('../models/film.model');
+const resSuccess = require('../../response/res-success');
 const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
 const {validationResult} = require('express-validator');

@@ -1,12 +1,12 @@
-import React from 'react';
-import Home from './Home'
+import React from "react";
+import Home from "./Home";
 
 const routes = [
   {
-    path: '/',
+    path: "/",
     exact: true,
-    component: () => <Home />
-  }
+    component: () => <Home />,
+  },
 ];
 
 export default routes;

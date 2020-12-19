@@ -1,9 +1,8 @@
-import React from 'react';
-import '../../styles/customers/header.scss';
-import Navbar from './Navbar';
-import logoWeb from '../../assets/web-logo.png'
-import avatar from '../../assets/avatar.png'
-
+import React from "react";
+import "../../styles/customers/header.scss";
+import Navbar from "./Navbar";
+import logoWeb from "../../assets/web-logo.png";
+import avatar from "../../assets/avatar.png";
 
 export default function Header(props) {
   // const [ position, setPosition ] = useState(0);
@@ -11,13 +10,13 @@ export default function Header(props) {
   return (
     <div className="header">
       <div className="header__icon">
-        <img src={logoWeb} alt=""/>
+        <img src={logoWeb} alt="" />
       </div>
-      <Navbar/>
+      <Navbar />
       <div className="header__info">
         <div className="header__customer">
           <div className="header__login">
-            <img src={avatar} alt="avatar"/>
+            <img src={avatar} alt="avatar" />
             Đăng nhập
           </div>
         </div>
@@ -26,5 +25,5 @@ export default function Header(props) {
         </div>
       </div>
     </div>
-  )
+  );
 }
