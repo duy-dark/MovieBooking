@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const {secret_key} = require('./../../config');
-const resFail = require('../../response/res-fail');
+const resFail = require('../../responses/res-fail');
 
 module.exports = async (req, res, next) => {
   let token =

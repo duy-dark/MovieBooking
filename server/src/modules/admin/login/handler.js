@@ -1,6 +1,6 @@
 const User = require('../../models/user.model');
 const Token = require('./../../models/token.model');
-const resSuccess = require('../../../response/res-success');
+const resSuccess = require('../../../responses/res-success');
 const {validationResult} = require('express-validator');
 
 const sha256 = require('crypto-js/sha256');

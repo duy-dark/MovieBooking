@@ -3,7 +3,7 @@ const modelCustomer = require('./../../models/customer.model');
 const modelToken = require('./../../models/token.model');
 
 const {validationResult} = require('express-validator');
-const resSuccess = require('../../../response/res-success');
+const resSuccess = require('../../../responses/res-success');
 const {createToken, intDate} = require('./../../../util');
 var sha256 = require('crypto-js/sha256');
 const moment = require('moment');

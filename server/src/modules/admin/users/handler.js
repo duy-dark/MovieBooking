@@ -1,7 +1,7 @@
 const User = require('../../models/user.model');
 const Token = require('./../../models/token.model');
 const {createToken, intDate} = require('./../../../util');
-const resSuccess = require('../../../response/res-success');
+const resSuccess = require('../../../responses/res-success');
 const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
 const {validationResult} = require('express-validator');
