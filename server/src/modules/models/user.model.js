@@ -25,10 +25,7 @@ module.exports = {
   findByEmailPassword: async function (lambda) {
     return await User.aggregate([
       {
-        $match: {
-          email: lambda.email,
-          password: lambda.password
-        }
+        $match: lambda
       },
       {
         $lookup: {

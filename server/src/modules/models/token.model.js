@@ -15,8 +15,7 @@ var Tokens = mongoose.model('Tokens', tokenSchema, 'tokens');
 
 module.exports = {
   findByLamda: async function (lamda) {
-    var Token = await Tokens.find(lamda);
-    return Token;
+    return await Tokens.find(lamda);
   },
   createByLamda: async function (lamda) {
     return await Tokens.insertMany(lamda);

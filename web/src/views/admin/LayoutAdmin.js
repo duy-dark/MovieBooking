@@ -6,11 +6,9 @@ class LayoutAdmin extends Component {
   render() {
     return (
       <Router>
-        <div className="app">
-          <Switch>
-            { this.showRouteComponent(routes) }
-          </Switch>
-        </div>
+        <Switch>
+          { this.showRouteComponent(routes) }
+        </Switch>
       </Router>
     );
   }
