@@ -7,8 +7,9 @@ const express = require('express'),
   GoogleStrategy = require('passport-google-oauth20').Strategy,
   errorHandler = require('./modules/middleware/error.middleware');
 
-const resFail = require('./modules/response/res-fail')
 const verifyToken = require('./modules/middleware/auth.middleware')
+const resFail = require('./modules/response/res-fail');
+
 const config = require('./config');
 
 const {port} = config;
