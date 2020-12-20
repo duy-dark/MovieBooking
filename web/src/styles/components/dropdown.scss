@@ -1,0 +1,26 @@
+.dropdown {
+  .dropdown-toggle {
+    position: relative;
+    background-color: transparent;
+    border: none;
+    color: #9b9b9b;
+    cursor: pointer;
+    width: 100%;
+    padding: 2%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 13px;
+    padding-right: 25px;
+    padding-left: 30px;
+    text-align: left;
+
+    &::after {
+      display: absolute;
+    }
+  }
+
+  &.dropdown-position {
+    
+  }
+}
