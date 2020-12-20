@@ -1,90 +1,42 @@
 let Film = require('../../models/film.model');
+let Film_schedules = require('../../models/film_schedules');
 const resSuccess = require('./../../response/res-success');
 const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
-const {validationResult} = require('express-validator');
+
+const createFilm = async (movie) => {
+  try {
+    let entity = {
+      name: movie.name,
+      content: movie.content,
+      countries: movie.countries,
+      long_time: movie.long_time,
+      start_date: movie.start_date,
+      directors: movie.directors,
+      actors: movie.actors ,
+      digitals: movie.digitals,
+      is_deleted: false
+      // updated_at: moment().format('DD/MM/YYYY HH:mm:ss')
+    };
+    let films = await Film.createByLambda(entity);
+
+    let entityschedule = {
+      film_id: films[0]._id,
+      time_start: movie.time_start,
+      time_end: movie.time_end,
+      theater_id: movie.theater_id,
+    }
+    let s = await Film_schedules.createByLambda(entityschedule);
+    
+    return {
+      id: films[0]._id,
+      ...movie
+    };
+  } catch (error) {
+    return error;
+  }
+};
 
 module.exports = {
-  listFilm: async function (req, res) {
-    let films = await Film.findByLambda();
-    res.json(resSuccess({data: films[0]}));
-  },
-
-  findById: async function (req, res) {
-    let id = req.params.id;
-    let films = await Film.findByLambda({_id: id});
-    res.json(resSuccess({data: films[0]}));
-  },
-
-  postCreate: async function (req, res, next) {
-    try {
-      const errors = validationResult(req);
-
-      if (!errors.isEmpty()) {
-        throw {
-          status: 402,
-          errCode: 1,
-          detail: errors.array()
-        };
-      }
-
-      let entity = {
-        name: req.body.name || '',
-        content: req.body.content || '',
-        countries: req.body.countries || '',
-        long_time: req.body.long_time || '',
-        start_date: req.body.start_date || '',
-        directors: req.body.directors || '',
-        rates: req.body.rates || '',
-        rate_count: req.body.rate_count || '',
-        actors: req.body.actors || '',
-        digitals: req.body.digitals || '',
-        is_deleted: false,
-        updated_at: moment().now()
-      };
-      let film = await Film.createByLambda(entity);
-      res.json(resSuccess({data: film}));
-    } catch (error) {
-      next(error);
-    }
-  },
-
-  patchUpdate: async function (req, res, next) {
-    try {
-      let id = req.params.id;
-      let entity = {
-        name: req.body.name || '',
-        content: req.body.content || '',
-        countries: req.body.countries || '',
-        long_time: req.body.long_time || '',
-        start_date: req.body.start_date || '',
-        directors: req.body.directors || '',
-        rates: req.body.rates || '',
-        rate_count: req.body.rate_count || '',
-        actors: req.body.actors || '',
-        digitals: req.body.digitals || '',
-        updated_at: moment().now()
-      };
-
-      let result = omitBy(entity, isNil);
-
-      let film = await Film.updateByLambda({_id: id}, result);
-      res.json(resSuccess({data: film}));
-    } catch (error) {
-      next(error);
-    }
-  },
-
-  delete: async function (req, res) {
-    try {
-      let id = req.params.id;
-      let entity = {
-        isDeleted: true
-      };
-      let film = await Film.updateByLambda({_id: id}, entity);
-      res.json(resSuccess({data: film}));
-    } catch (error) {
-      next(error);
-    }
-  }
+  createFilm
 };

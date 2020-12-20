@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const ObjectId = require('mongodb').ObjectID;
 let theaterSchema = new mongoose.Schema(
   {
     name: String,
@@ -17,6 +17,9 @@ let Theater = mongoose.model('Theater', theaterSchema, 'theaters');
 module.exports = {
   findByLambda: async function (lambda) {
     return await Theater.find(lambda);
+  },
+  findByIdLambda: async function (lambda) {
+    return await Theater.find({"_id": new ObjectId(lambda)});
   },
   createByLambda: async function (lambda) {
     return await Theater.insertMany(lambda);

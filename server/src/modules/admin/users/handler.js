@@ -7,7 +7,7 @@ const {validationResult} = require('express-validator');
 module.exports = {
   listUser: async function (req, res) {
     let users = await User.findByLambda();
-    res.json(resSuccess({data: user}));
+    res.json(resSuccess({data: users}));
   },
 
   findById: async function (req, res) {

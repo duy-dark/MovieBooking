@@ -4,7 +4,7 @@ let filmScheduleSchema = new mongoose.Schema(
   {
     film_id: String,
     time_start: Date,
-    end_time: Date,
+    time_end: Date,
     theater_id: String,
     is_deleted: Boolean,
     updated_at: Date

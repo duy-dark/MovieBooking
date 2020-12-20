@@ -20,10 +20,13 @@ app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/', verifyToken, (req, res) => {
-  res.json(req.token_payload);
+app.get('/', (req, res) => {
+  res.json('ạhsjs');
 });
 
+
+app.use('/admin', require('./modules/admin/users'));
+app.use('/admin/films', require('./modules/admin/films'));
 app.use('/user', require('./modules/customers/users'));
 
 const {Authenticator, authenticate} = require('passport');
