@@ -1,0 +1,75 @@
+.ng-scope {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  cursor: auto;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333;
+  font-family: "SF Text Regular";
+  box-sizing: border-box;
+}
+
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+
+  @media only screen and (min-width: 1200px) {
+    width: 1140px;
+  }
+
+  @media only screen and (min-width: 768px) {
+    width: 700px;
+  }
+
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+
+    .col-sm-12 {
+      @media (min-width: 768px) {
+        width: 100%;
+      }
+
+      @media (min-width: 768px) {
+        float: left;
+      }
+
+      p.ng-binding {
+        max-width: 800px;
+        text-align: center;
+        margin: auto;
+        margin-top: auto;
+        margin-right: auto;
+        margin-bottom: auto;
+        margin-left: auto;
+        font-family: "Roboto Slab";
+        font-size: 48px;
+      }
+
+      .author {
+        position: absolute;
+        -moz-transform: rotate(-90deg);
+        -o-transform: rotate(-90deg);
+        -webkit-transform: rotate(-90deg);
+        color: #737576 !important;
+        font-size: 12px;
+        top: 86%;
+        right: -29%;
+
+        span.ng-binding {
+          color: #000;
+          font-family: "SF Medium";
+        }
+      }
+    }
+    .title {
+      position: relative;
+      margin-top: 9%;
+    }
+  }
+}

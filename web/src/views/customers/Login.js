@@ -1,7 +1,6 @@
 import React from "react";
 import "../../styles/customers/login/login.scss";
 import logo from "../../assets/group@2x.png";
-
 export default function Login(props) {
   return (
     <div className="login">

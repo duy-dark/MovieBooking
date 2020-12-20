@@ -7,7 +7,7 @@ const {validateUser} = require('./validated');
 router.get('/Users', handler.listUser);
 router.get('/Users/:id', handler.findById);
 
-router.post('/Users', validateUser(), handler.postCreate);
+router.post('/Users', handler.postCreate);
 router.patch('/Users/:id', validateUser(), handler.patchUpdate);
 router.delete('/Users/:id', handler.delete);
 

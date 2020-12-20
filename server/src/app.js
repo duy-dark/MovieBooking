@@ -7,9 +7,8 @@ const express = require('express'),
   GoogleStrategy = require('passport-google-oauth20').Strategy,
   errorHandler = require('./modules/middleware/error.middleware');
 
-const verifyToken = require('./modules/middleware/auth.middleware')
-const resFail = require('./modules/response/res-fail');
-
+const resFail = require('./responses/res-fail');
+const verifyToken = require('./modules/middleware/auth.middleware');
 const config = require('./config');
 
 const {port} = config;
@@ -25,8 +24,16 @@ app.get('/', verifyToken, (req, res) => {
   res.json(req.token_payload);
 });
 
-app.use('/user', require('./modules/customers/users'));
-app.use('/login', require('./modules/admin/login'));
+app.use('/api/user', require('./modules/customers/users'));
+app.use('/api/admin', require('./modules/admin/users'));
+app.use('/api/adminlogin', require('./modules/admin/login'));
+app.use('/api/film', require('./modules/films'));
+app.use('/api/film_comment', require('./modules/film_comments'));
+app.use('/api/film_category', require('./modules/film_category'));
+app.use('/api/film_schedule', require('./modules/film_schedules'));
+app.use('/api/category', require('./modules/categories'));
+app.use('/api/event', require('./modules/events'));
+app.use('/api/event_info', require('./modules/event_infos'));
 
 const {Authenticator, authenticate} = require('passport');
 

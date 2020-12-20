@@ -1,4 +1,4 @@
-const errorsmessage = require('../../config/errorsmessage');
+const errorsmessage = require('../config/errorsmessage');
 
 module.exports = (code = 0, detail = 'No detail') => {
   const message_id = 'err' + code;
