@@ -3,25 +3,16 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import routes from "./router";
 import "./styles/styles.scss";
 // import CustomScrollbar from './components/CustomScrollbar'
-
+import AppCustomer from './views/customers/AppCustomer'
+import LayoutAdmin from './views/admin/LayoutAdmin'
+import Login from './views/customers/Login'
 class App extends Component {
-  showRouteComponent = (routes) => {
-    let result = null;
-    if (routes.length > 0) {
-      result = routes.map((route, index) => {
-        return <Route key={index} path={route.path} exact={route.exact} component={route.component} />;
-      });
-    }
-    return result;
-  };
   render() {
     return (
       <Router>
-        <div className="app">
-          {/* <CustomScrollbar> */}
-          <Switch>{this.showRouteComponent(routes)}</Switch>
-          {/* </CustomScrollbar> */}
-        </div>
+        <Route path="/" exact component={AppCustomer} />
+        <Route path="/login" component={Login} />
+        <Route path="/admin" exact component={LayoutAdmin} />
       </Router>
     );
   }

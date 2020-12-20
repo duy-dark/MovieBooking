@@ -22,6 +22,8 @@
     }
 
     .header__info {
+      display: flex;
+      flex-direction: row;
 
       .header__customer {
         .header__login {
