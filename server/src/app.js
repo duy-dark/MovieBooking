@@ -40,6 +40,7 @@ app.use('/api/ticket', require('./modules/tickets'));
 app.use('/api/ticket_queue', require('./modules/ticket_queues'));
 app.use('/api/type_seat', require('./modules/type_seats'));
 app.use('/api/theaters', require('./modules/theaters'));
+app.use('/api/theater_room', require('./modules/theater_rooms'));
 
 const {Authenticator, authenticate} = require('passport');
 
