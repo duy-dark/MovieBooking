@@ -36,6 +36,7 @@ app.use('/api/event', require('./modules/events'));
 app.use('/api/event_info', require('./modules/event_infos'));
 app.use('/api/news', require('./modules/news'));
 app.use('/api/notification', require('./modules/notifications'));
+app.use('/api/ticket', require('./modules/tickets'));
 
 const {Authenticator, authenticate} = require('passport');
 
