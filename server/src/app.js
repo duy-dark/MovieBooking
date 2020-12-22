@@ -39,6 +39,7 @@ app.use('/api/notification', require('./modules/notifications'));
 app.use('/api/ticket', require('./modules/tickets'));
 app.use('/api/ticket_queue', require('./modules/ticket_queues'));
 app.use('/api/type_seat', require('./modules/type_seats'));
+app.use('/api/theaters', require('./modules/theaters'));
 
 const {Authenticator, authenticate} = require('passport');
 
