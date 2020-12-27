@@ -20,8 +20,8 @@ app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/', verifyToken, (req, res) => {
-  res.json(req.token_payload);
+app.get('/', (req, res) => {
+  res.json('ạhsjs');
 });
 
 app.use('/api/user', require('./modules/customers/users'));
@@ -111,7 +111,7 @@ app.use((req, res) => {
 
 const startSever = async () => {
   app.listen(port, async () => {
-    console.log(`QLBH API is running on port ${port} http://localhost:${port}`);
+    console.log(`QLBH API is running on port ${port}`);
   });
 };
 startSever();

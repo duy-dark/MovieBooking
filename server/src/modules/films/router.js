@@ -1,6 +1,25 @@
 const express = require('express');
 const router = express.Router();
 const handler = require('./handler');
+const moment = require('moment');
+router.get('/getnow1', (req, res, next) => {
+  let gte_match = new Date(moment('01/01/2000', 'MM/DD/YYYY').format());
+  let lte_match = new Date(moment('01/01/2030', 'MM/DD/YYYY').format());
+  // let gte_end = new Date(moment('01/01/2000', 'MM/DD/YYYY').format());
+  // let lte_end = new Date(moment('09/09/9999', 'MM/DD/YYYY').format());
+  console.log('oke');
+  let params = {
+    gte_match: gte_match,
+    lte_match: lte_match
+    // gte_end: gte_end,
+    // lte_end: lte_end
+  };
+
+  handler
+    .getNowShowing(params)
+    .then((val) => res.json(val))
+    .catch((err) => next(err));
+});
 
 router.get('/', (req, res, next) => {
   handler
