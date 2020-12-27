@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 let schema = new mongoose.Schema(
   {
-    film_id: String,
+    film_id: mongoose.Types.ObjectId,
     time_start: Date,
     time_end: Date,
     theater_id: String,
@@ -30,14 +30,22 @@ module.exports = {
     return await Collection.updateOne(id, lambda);
   },
   getNowShowing: async function (lambda) {
-    return await Film.aggregate([
+    return await Collection.aggregate([
+      {
+        $lookup: {
+          from: 'films',
+          localField: 'film_id',
+          foreignField: '_id',
+          as: 'film_result'
+        }
+      },
       {
         $match: {
           time_start: {
             $gte: lambda.gte_match,
             $lte: lambda.lte_match
           },
-          end_time: {$gte: lambda.gte_end, $lte: lambda.lte_end}
+          time_end: {$gte: lambda.gte_end, $lte: lambda.lte_end}
         }
       }
     ]);
