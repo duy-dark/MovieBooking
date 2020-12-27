@@ -34,6 +34,16 @@ app.use('/api/film_schedule', require('./modules/film_schedules'));
 app.use('/api/category', require('./modules/categories'));
 app.use('/api/event', require('./modules/events'));
 app.use('/api/event_info', require('./modules/event_infos'));
+app.use('/api/news', require('./modules/news'));
+app.use('/api/notification', require('./modules/notifications'));
+app.use('/api/ticket', require('./modules/tickets'));
+app.use('/api/ticket_queue', require('./modules/ticket_queues'));
+app.use('/api/type_seat', require('./modules/type_seats'));
+app.use('/api/theaters', require('./modules/theaters'));
+app.use('/api/theater_room', require('./modules/theater_rooms'));
+app.use('/api/permission', require('./modules/permissions'));
+app.use('/api/user_permission', require('./modules/users_permissions'));
+app.use('/api/voucher', require('./modules/vouchers'));
 
 const {Authenticator, authenticate} = require('passport');
 
