@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {getComingSoon} = require('./handler');
 
 let schema = new mongoose.Schema(
   {
@@ -8,12 +9,9 @@ let schema = new mongoose.Schema(
     long_time: String,
     start_date: Date,
     directors: String,
-    rates: Number,
-    rate_count: Number,
     actors: String,
     digitals: String,
     is_deleted: Boolean,
-    created_at: Date,
     updated_at: Date
   },
   {versionKey: false}
@@ -34,5 +32,41 @@ module.exports = {
   },
   updateByLambda: async function (id, lambda) {
     return await Collection.updateOne(id, lambda);
+  },
+  getComingSoon: async function (lambda) {
+    return await Collection.aggregate([
+      {
+        // $match: {
+        //   time_start: {
+        //     $gte: new Date(moment(timezone).format()),
+        //     $lte: new Date(moment('31/12/9999').format())
+        //   }
+        // }
+
+        $lookup: {
+          from: 'FilmSchedules',
+          localField: 'start_date',
+          foreignField: 'time_start',
+          as: 'films_schedule'
+        }
+      }
+    ]);
+  },
+
+  getNowShowing: async function (lambda) {
+    return await Film.aggregate([
+      {
+        $match: {
+          start_date: {
+            $gte: new Date(moment('01/01/2000', 'MM/DD/YYYY').format()),
+            $lte: new Date(moment('01/01/2030', 'MM/DD/YYYY').format())
+          }
+          // end_time: {
+          //   $gte: new Date(moment('01/01/2001', 'MM/DD/YYYY').format()),
+          //   $lte: new Date(moment('09/09/9999', 'MM/DD/YYYY').format())
+          // }
+        }
+      }
+    ]);
   }
 };
