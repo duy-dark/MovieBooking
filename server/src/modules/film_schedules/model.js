@@ -4,7 +4,7 @@ let schema = new mongoose.Schema(
   {
     film_id: String,
     time_start: Date,
-    end_time: Date,
+    time_end: Date,
     theater_id: String,
     is_deleted: Boolean,
     created_at: Date,
@@ -28,5 +28,18 @@ module.exports = {
   },
   updateByLambda: async function (id, lambda) {
     return await Collection.updateOne(id, lambda);
+  },
+  getNowShowing: async function (lambda) {
+    return await Film.aggregate([
+      {
+        $match: {
+          time_start: {
+            $gte: lambda.gte_match,
+            $lte: lambda.lte_match
+          },
+          end_time: {$gte: lambda.gte_end, $lte: lambda.lte_end}
+        }
+      }
+    ]);
   }
 };
