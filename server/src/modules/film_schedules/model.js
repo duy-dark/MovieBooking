@@ -28,5 +28,18 @@ module.exports = {
   },
   updateByLambda: async function (id, lambda) {
     return await Collection.updateOne(id, lambda);
+  },
+  getNowShowing: async function (lambda) {
+    return await Film.aggregate([
+      {
+        $match: {
+          time_start: {
+            $gte: lambda.gte_match,
+            $lte: lambda.lte_match
+          },
+          end_time: {$gte: lambda.gte_end, $lte: lambda.lte_end}
+        }
+      }
+    ]);
   }
 };
