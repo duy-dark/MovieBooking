@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 let schema = new mongoose.Schema(
   {
-    film_id: String,
+    film_id: mongoose.Types.ObjectId,
     customer_id: String,
     content: String,
     rate: Number,
