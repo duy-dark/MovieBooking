@@ -5,7 +5,6 @@ const moment = require('moment');
 
 const getNowShowing = async (params) => {
   try {
-    console.log('helloworld: ', params);
     let data = await Model.getNowShowing(params);
     return resSuccess(data);
   } catch (error) {
@@ -13,6 +12,14 @@ const getNowShowing = async (params) => {
   }
 };
 
+const getComingSoon = async (params) => {
+  try {
+    let data = await Model.getComingSoon(params);
+    return resSuccess(data);
+  } catch (error) {
+    return error;
+  }
+};
 const getAll = async () => {
   try {
     let data = await Model.findByLambda();
@@ -84,5 +91,6 @@ module.exports = {
   postCreate,
   putUpdate,
   deleteData,
-  getNowShowing
+  getNowShowing,
+  getComingSoon
 };

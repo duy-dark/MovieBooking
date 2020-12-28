@@ -49,5 +49,17 @@ module.exports = {
         }
       }
     ]);
+  },
+  getComingSoon: async function (lambda) {
+    return await Collection.aggregate([
+      {
+        $match: {
+          time_start: {
+            $gte: lambda.gte_match,
+            $lte: lambda.lte_match
+          }
+        }
+      }
+    ]);
   }
 };
