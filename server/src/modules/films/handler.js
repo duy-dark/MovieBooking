@@ -30,10 +30,14 @@ const postCreate = async (params) => {
       long_time: params.long_time || undefined,
       start_date: params.start_date || undefined,
       directors: params.directors || undefined,
+      actors: params.actors || undefined,
       rates: params.rates || undefined,
       rate_count: params.rate_count || undefined,
-      actors: params.actors || undefined,
+      imdb: params.imdb || undefined,
       digitals: params.digitals || undefined,
+      url_avatar: params.url_avatar || undefined,
+      url_background: params.url_background || undefined,
+      is_blockbuster: params.is_blockbuster || false,
       is_deleted: false,
       created_at: moment.now(),
       updated_at: moment.now()
@@ -55,10 +59,14 @@ const putUpdate = async (id, params) => {
       long_time: params.long_time || undefined,
       start_date: params.start_date || undefined,
       directors: params.directors || undefined,
+      actors: params.actors || undefined,
       rates: params.rates || undefined,
       rate_count: params.rate_count || undefined,
-      actors: params.actors || undefined,
+      imdb: params.imdb || undefined,
       digitals: params.digitals || undefined,
+      url_avatar: params.url_avatar || undefined,
+      url_background: params.url_background || undefined,
+      is_blockbuster: params.is_blockbuster || false,
       updated_at: moment.now()
     };
 
@@ -83,38 +91,20 @@ const deleteData = async (id) => {
   }
 };
 
-const getComingSoon = async function (lamda) {
-  var Film = mongoose.model('Film', filmSchema, 'films');
-  var timezone = Date.now();
-  var timeZ = new Date(moment(timezone).format());
-
-  return await Film.aggregate([
-    {
-      $match: {
-        start_date: {
-          $gte: new Date(moment(timezone).format()),
-          $lte: new Date(moment('31/12/9999').format())
-        }
-      }
-    }
-  ]);
-};
-
-const getNowShowing = async (params) => {
+let getFilmInPeriod = async (params) => {
   try {
+    console.log('helloworld: ', params);
     let data = await Model.getNowShowing(params);
     return resSuccess(data);
   } catch (error) {
     return error;
   }
 };
-
 module.exports = {
   getAll,
   findById,
   postCreate,
   putUpdate,
   deleteData,
-  getComingSoon,
-  getNowShowing
+  getFilmInPeriod
 };
