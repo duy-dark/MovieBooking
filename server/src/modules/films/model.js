@@ -39,38 +39,15 @@ module.exports = {
   updateByLambda: async function (id, lambda) {
     return await Collection.updateOne(id, lambda);
   },
-  getComingSoon: async function (lambda) {
-    return await Collection.aggregate([
-      {
-        // $match: {
-        //   time_start: {
-        //     $gte: new Date(moment(timezone).format()),
-        //     $lte: new Date(moment('31/12/9999').format())
-        //   }
-        // }
-
-        $lookup: {
-          from: 'FilmSchedules',
-          localField: 'start_date',
-          foreignField: 'time_start',
-          as: 'films_schedule'
-        }
-      }
-    ]);
-  },
 
   getNowShowing: async function (lambda) {
-    return await Film.aggregate([
+    return await Collection.aggregate([
       {
         $match: {
           start_date: {
-            $gte: new Date(moment('01/01/2000', 'MM/DD/YYYY').format()),
-            $lte: new Date(moment('01/01/2030', 'MM/DD/YYYY').format())
+            $gte: lambda.gte_start_date,
+            $lte: lambda.lte_start_date
           }
-          // end_time: {
-          //   $gte: new Date(moment('01/01/2001', 'MM/DD/YYYY').format()),
-          //   $lte: new Date(moment('09/09/9999', 'MM/DD/YYYY').format())
-          // }
         }
       }
     ]);

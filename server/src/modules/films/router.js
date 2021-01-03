@@ -2,21 +2,35 @@ const express = require('express');
 const router = express.Router();
 const handler = require('./handler');
 const moment = require('moment');
-router.get('/getnow1', (req, res, next) => {
-  let gte_match = new Date(moment('01/01/2000', 'MM/DD/YYYY').format());
-  let lte_match = new Date(moment('01/01/2030', 'MM/DD/YYYY').format());
-  // let gte_end = new Date(moment('01/01/2000', 'MM/DD/YYYY').format());
-  // let lte_end = new Date(moment('09/09/9999', 'MM/DD/YYYY').format());
+
+router.get('/nowshowing', (req, res, next) => {
+  console.log('oke');
+  let gte_start_date = new Date(moment('2020-01-01', moment.ISO_8601));
+  let lte_start_date = new Date(moment.now());
   console.log('oke');
   let params = {
-    gte_match: gte_match,
-    lte_match: lte_match
-    // gte_end: gte_end,
-    // lte_end: lte_end
+    gte_start_date: gte_start_date,
+    lte_start_date: lte_start_date
   };
 
   handler
-    .getNowShowing(params)
+    .getFilmInPeriod(params)
+    .then((val) => res.json(val))
+    .catch((err) => next(err));
+});
+
+router.get('/commingson', (req, res, next) => {
+  console.log('oke');
+  let gte_start_date = new Date(moment.now());
+  let lte_start_date = new Date(moment('2030-01-01', moment.ISO_8601));
+  console.log('oke');
+  let params = {
+    gte_start_date: gte_start_date,
+    lte_start_date: lte_start_date
+  };
+
+  handler
+    .getFilmInPeriod(params)
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });
