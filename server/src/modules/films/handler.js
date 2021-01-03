@@ -30,10 +30,14 @@ const postCreate = async (params) => {
       long_time: params.long_time || undefined,
       start_date: params.start_date || undefined,
       directors: params.directors || undefined,
+      actors: params.actors || undefined,
       rates: params.rates || undefined,
       rate_count: params.rate_count || undefined,
-      actors: params.actors || undefined,
+      imdb: params.imdb || undefined,
       digitals: params.digitals || undefined,
+      url_avatar: params.url_avatar || undefined,
+      url_background: params.url_background || undefined,
+      is_blockbuster: params.is_blockbuster || false,
       is_deleted: false,
       created_at: moment.now(),
       updated_at: moment.now()
@@ -55,10 +59,14 @@ const putUpdate = async (id, params) => {
       long_time: params.long_time || undefined,
       start_date: params.start_date || undefined,
       directors: params.directors || undefined,
+      actors: params.actors || undefined,
       rates: params.rates || undefined,
       rate_count: params.rate_count || undefined,
-      actors: params.actors || undefined,
+      imdb: params.imdb || undefined,
       digitals: params.digitals || undefined,
+      url_avatar: params.url_avatar || undefined,
+      url_background: params.url_background || undefined,
+      is_blockbuster: params.is_blockbuster || false,
       updated_at: moment.now()
     };
 
