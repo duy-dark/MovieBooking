@@ -3,6 +3,16 @@ const resSuccess = require('../../responses/res-success');
 const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
 
+const getNowShowing = async (params) => {
+  try {
+    console.log('helloworld: ', params);
+    let data = await Model.getNowShowing(params);
+    return resSuccess(data);
+  } catch (error) {
+    return error;
+  }
+};
+
 const getAll = async () => {
   try {
     let data = await Model.findByLambda();
@@ -26,7 +36,7 @@ const postCreate = async (params) => {
     let entity = {
       film_id: params.film_id || undefined,
       time_start: params.time_start || undefined,
-      end_time: params.end_time || undefined,
+      time_end: params.time_end || undefined,
       theater_id: params.theater_id || undefined,
       is_deleted: false,
       created_at: moment.now(),
@@ -44,7 +54,7 @@ const putUpdate = async (id, params) => {
     let entity = {
       film_id: params.film_id || undefined,
       time_start: params.time_start || undefined,
-      end_time: params.end_time || undefined,
+      time_end: params.time_end || undefined,
       theater_id: params.theater_id || undefined,
       updated_at: moment.now()
     };
@@ -73,5 +83,6 @@ module.exports = {
   findById,
   postCreate,
   putUpdate,
-  deleteData
+  deleteData,
+  getNowShowing
 };

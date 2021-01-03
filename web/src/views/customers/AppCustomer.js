@@ -1,7 +1,9 @@
-import React from "react";
-import routes from "./router";
-import { BrowserRouter as Route, Switch } from "react-router-dom";
-import Header from "../../components/customer/Header";
+
+import React from 'react';
+import routes from './router';
+import { BrowserRouter as Route, Switch } from 'react-router-dom';
+import Header from '../../components/customer/Header';
+import Footer from "../../components/customer/Footer";
 import NewsCustomer from "./NewsCustomer";
 import NewsDetail from "./NewsDetail";
 
@@ -26,9 +28,13 @@ export default function AppCustomer(props) {
 
   return (
     <>
-      <Header />
+
+      <Header/>
       <NewsDetail />
-      <Switch>{showRouteComponent(routes)}</Switch>
+      <Switch>
+        { showRouteComponent(routes) }
+      </Switch>
+      <Footer/>
     </>
   );
 }

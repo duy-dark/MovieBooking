@@ -91,10 +91,38 @@ const deleteData = async (id) => {
   }
 };
 
+const getComingSoon = async function (lamda) {
+  var Film = mongoose.model('Film', filmSchema, 'films');
+  var timezone = Date.now();
+  var timeZ = new Date(moment(timezone).format());
+
+  return await Film.aggregate([
+    {
+      $match: {
+        start_date: {
+          $gte: new Date(moment(timezone).format()),
+          $lte: new Date(moment('31/12/9999').format())
+        }
+      }
+    }
+  ]);
+};
+
+const getNowShowing = async (params) => {
+  try {
+    let data = await Model.getNowShowing(params);
+    return resSuccess(data);
+  } catch (error) {
+    return error;
+  }
+};
+
 module.exports = {
   getAll,
   findById,
   postCreate,
   putUpdate,
-  deleteData
+  deleteData,
+  getComingSoon,
+  getNowShowing
 };
