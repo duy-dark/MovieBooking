@@ -13,9 +13,9 @@ const getNowShowing = async (params) => {
   }
 };
 
-const getAll = async () => {
+const getList = async (params) => {
   try {
-    let data = await Model.findByLambda();
+    let data = await Model.findByLambda(params);
     return resSuccess(data);
   } catch (error) {
     return error;
@@ -79,7 +79,7 @@ const deleteData = async (id) => {
 };
 
 module.exports = {
-  getAll,
+  getList,
   findById,
   postCreate,
   putUpdate,

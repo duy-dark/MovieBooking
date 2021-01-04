@@ -4,21 +4,19 @@ const {getComingSoon} = require('./handler');
 let schema = new mongoose.Schema(
   {
     name: String,
-    content: String,
-    countries: String,
-    long_time: Number,
-    start_date: Date,
-    directors: String,
-    actors: String,
-    rates: Number,
-    rate_count: Number,
-    imdb: Number,
-    digitals: String,
-    url_avatar: String,
-    url_background: String,
-    is_blockbuster: Boolean,
-    is_deleted: Boolean,
+    phone: String,
+    date_of_birth: Date,
+    email: String,
+    password: String,
+    genre: String,
+    avatar: String,
+    address: String,
+    token_gg: {
+      access: String,
+      google_id: String
+    },
     created_at: Date,
+    is_deleted: Boolean,
     updated_at: Date
   },
   {versionKey: false}
@@ -39,18 +37,5 @@ module.exports = {
   },
   updateByLambda: async function (id, lambda) {
     return await Collection.updateOne(id, lambda);
-  },
-
-  getNowShowing: async function (lambda) {
-    return await Collection.aggregate([
-      {
-        $match: {
-          start_date: {
-            $gte: lambda.gte_start_date,
-            $lte: lambda.lte_start_date
-          }
-        }
-      }
-    ]);
   }
 };

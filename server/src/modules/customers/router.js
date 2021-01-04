@@ -3,9 +3,8 @@ const router = express.Router();
 const handler = require('./handler');
 
 router.get('/', (req, res, next) => {
-  let params = {...req.query};
   handler
-    .getList(params)
+    .getAll()
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });
