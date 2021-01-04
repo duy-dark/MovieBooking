@@ -7,8 +7,7 @@ let schema = new mongoose.Schema(
     phone: String,
     date_of_birth: Date,
     email: String,
-    password: String,
-    genre: String,
+    gender: String,
     avatar: String,
     address: String,
     token_gg: {
@@ -22,7 +21,7 @@ let schema = new mongoose.Schema(
   {versionKey: false}
 );
 
-let Collection = mongoose.model('Film', schema, 'films');
+let Collection = mongoose.model('Customer', schema, 'customers');
 
 module.exports = {
   findByLambda: async function (lambda) {

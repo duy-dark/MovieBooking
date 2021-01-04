@@ -5,10 +5,10 @@ const express = require('express'),
   passport = require('passport'),
   key = require('./config/keys.json'),
   GoogleStrategy = require('passport-google-oauth20').Strategy,
-  errorHandler = require('./modules/middleware/error.middleware');
+  errorHandler = require('./middlewares/errors.middleware');
 
 const resFail = require('./responses/res-fail');
-const verifyToken = require('./modules/middleware/auth.middleware');
+const verifyToken = require('./middlewares/auth.admin.middleware');
 const config = require('./config');
 
 const {port} = config;
@@ -24,9 +24,9 @@ app.get('/', (req, res) => {
   res.json('ạhsjs');
 });
 
-app.use('/api/user', require('./modules/customers/users'));
-app.use('/api/admin', require('./modules/admin/users'));
-app.use('/api/adminlogin', require('./modules/admin/login'));
+app.use('/api/customer', require('./modules/customers'));
+app.use('/api/admin', require('./modules/admins'));
+// app.use('/api/adminlogin', require('./modules/admin/login'));
 app.use('/api/film', require('./modules/films'));
 app.use('/api/film_comment', require('./modules/film_comments'));
 app.use('/api/film_category', require('./modules/film_category'));
