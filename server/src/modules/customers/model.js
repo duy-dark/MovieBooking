@@ -7,8 +7,7 @@ let schema = new mongoose.Schema(
     phone: String,
     date_of_birth: Date,
     email: String,
-    password: String,
-    genre: String,
+    gender: String,
     avatar: String,
     address: String,
     token_gg: {

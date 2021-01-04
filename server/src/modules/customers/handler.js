@@ -3,9 +3,9 @@ const resSuccess = require('../../responses/res-success');
 const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
 
-const getAll = async () => {
+const getList = async (params) => {
   try {
-    let data = await Model.findByLambda();
+    let data = await Model.findByLambda(params);
     return resSuccess(data);
   } catch (error) {
     return error;
@@ -25,19 +25,13 @@ const postCreate = async (params) => {
   try {
     let entity = {
       name: params.name || undefined,
-      content: params.content || undefined,
-      countries: params.countries || undefined,
-      long_time: params.long_time || undefined,
-      start_date: params.start_date || undefined,
-      directors: params.directors || undefined,
-      actors: params.actors || undefined,
-      rates: params.rates || undefined,
-      rate_count: params.rate_count || undefined,
-      imdb: params.imdb || undefined,
-      digitals: params.digitals || undefined,
-      url_avatar: params.url_avatar || undefined,
-      url_background: params.url_background || undefined,
-      is_blockbuster: params.is_blockbuster || false,
+      phone: params.phone || undefined,
+      date_of_birth: params.date_of_birth || undefined,
+      email: params.email || undefined,
+      gender: params.gender || undefined,
+      avatar: params.avatar || undefined,
+      address: params.address || undefined,
+      token_gg: params.token_gg || undefined,
       is_deleted: false,
       created_at: moment.now(),
       updated_at: moment.now()
@@ -54,19 +48,13 @@ const putUpdate = async (id, params) => {
   try {
     let entity = {
       name: params.name || undefined,
-      content: params.content || undefined,
-      countries: params.countries || undefined,
-      long_time: params.long_time || undefined,
-      start_date: params.start_date || undefined,
-      directors: params.directors || undefined,
-      actors: params.actors || undefined,
-      rates: params.rates || undefined,
-      rate_count: params.rate_count || undefined,
-      imdb: params.imdb || undefined,
-      digitals: params.digitals || undefined,
-      url_avatar: params.url_avatar || undefined,
-      url_background: params.url_background || undefined,
-      is_blockbuster: params.is_blockbuster || false,
+      phone: params.phone || undefined,
+      date_of_birth: params.date_of_birth || undefined,
+      email: params.email || undefined,
+      gender: params.gender || undefined,
+      avatar: params.avatar || undefined,
+      address: params.address || undefined,
+      token_gg: params.token_gg || undefined,
       updated_at: moment.now()
     };
 
@@ -91,20 +79,10 @@ const deleteData = async (id) => {
   }
 };
 
-let getFilmInPeriod = async (params) => {
-  try {
-    console.log('helloworld: ', params);
-    let data = await Model.getNowShowing(params);
-    return resSuccess(data);
-  } catch (error) {
-    return error;
-  }
-};
 module.exports = {
-  getAll,
+  getList,
   findById,
   postCreate,
   putUpdate,
-  deleteData,
-  getFilmInPeriod
+  deleteData
 };

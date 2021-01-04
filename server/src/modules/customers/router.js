@@ -3,8 +3,9 @@ const router = express.Router();
 const handler = require('./handler');
 
 router.get('/', (req, res, next) => {
+  let params = {...req.query};
   handler
-    .getAll()
+    .getList(params)
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });
@@ -38,6 +39,14 @@ router.delete('/:id', (req, res, next) => {
   let id = req.params.id;
   handler
     .deleteData(id)
+    .then((val) => res.json(val))
+    .catch((err) => next(err));
+});
+
+router.post('/login', (req, res, next) => {
+  let params = {...req.body};
+  handler
+    .postLogin(params)
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });
