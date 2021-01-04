@@ -22,8 +22,9 @@ router.get('/getnow', (req, res, next) => {
 });
 
 router.get('/', (req, res, next) => {
+  let params = {...req.query};
   handler
-    .getAll()
+    .getList(params)
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });

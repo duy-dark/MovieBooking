@@ -3,9 +3,9 @@ const resSuccess = require('../../responses/res-success');
 const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
 
-const getList = async (params) => {
+const getAll = async () => {
   try {
-    let data = await Model.findByLambda(params);
+    let data = await Model.findByLambda();
     return resSuccess(data);
   } catch (error) {
     return error;
@@ -101,7 +101,7 @@ let getFilmInPeriod = async (params) => {
   }
 };
 module.exports = {
-  getList,
+  getAll,
   findById,
   postCreate,
   putUpdate,
