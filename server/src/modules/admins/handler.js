@@ -14,11 +14,22 @@ const getList = async (params) => {
         status: 204,
         detail: "Doesn't exist any admin"
       };
+    let result = [];
     data.forEach((item) => {
-      delete item.password;
+      let temp = {
+        name: item.name,
+        phone: item.phone,
+        date_of_birth: item.date_of_birth,
+        email: item.email,
+        permission: item.permission,
+        avatar: item.avatar,
+        adress: item.adress
+      };
+      result.push(temp);
+      console.log('result ', result);
     });
 
-    return resSuccess(data);
+    return resSuccess(result);
   } catch (error) {
     throw {
       status: 400,
@@ -35,8 +46,16 @@ const findById = async (id) => {
         status: 204,
         detail: 'Admin not found'
       };
-    delete data[0].password;
-    return resSuccess(data[0]);
+    let result = {
+      name: data[0].name,
+      phone: data[0].phone,
+      date_of_birth: data[0].date_of_birth,
+      email: data[0].email,
+      permission: data[0].permission,
+      avatar: data[0].avatar,
+      adress: data[0].adress
+    };
+    return resSuccess(result);
   } catch (error) {
     return error;
   }
