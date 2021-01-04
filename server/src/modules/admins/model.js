@@ -1,35 +1,36 @@
 const mongoose = require('mongoose');
 
-let customerSchema = new mongoose.Schema(
+let schema = new mongoose.Schema(
   {
     name: String,
     phone: String,
     date_of_birth: Date,
     email: String,
     password: String,
-    genre: String,
+    permission: String,
     avatar: String,
-    address: String,
+    adress: String,
     is_deleted: Boolean,
-    updated_at: Date,
-    token_gg:{
-      access: String,
-      google_id: String,
-    },
+    created_at: Date,
+    updated_at: Date
   },
   {versionKey: false}
 );
 
-let Customer = mongoose.model('Customer', customerSchema, 'customers');
+let Collection = mongoose.model('Admin', schema, 'admins');
 
 module.exports = {
   findByLambda: async function (lambda) {
-    return await Customer.find(lambda);
+    lambda = {
+      ...lambda,
+      is_deleted: false
+    };
+    return await Collection.find(lambda);
   },
   createByLambda: async function (lambda) {
-    return await Customer.insertMany(lambda);
+    return await Collection.insertMany(lambda);
   },
   updateByLambda: async function (id, lambda) {
-    return await Customer.updateOne(id, lambda);
+    return await Collection.updateOne(id, lambda);
   }
 };

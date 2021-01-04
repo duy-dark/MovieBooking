@@ -21,7 +21,7 @@ let schema = new mongoose.Schema(
   {versionKey: false}
 );
 
-let Collection = mongoose.model('Film', schema, 'films');
+let Collection = mongoose.model('Customer', schema, 'customers');
 
 module.exports = {
   findByLambda: async function (lambda) {

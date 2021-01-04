@@ -30,7 +30,7 @@ module.exports = {
     return await Collection.updateOne(id, lambda);
   },
   getNowShowing: async function (lambda) {
-    return await Film.aggregate([
+    return await Collection.aggregate([
       {
         $match: {
           time_start: {
