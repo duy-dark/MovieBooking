@@ -30,5 +30,30 @@ module.exports = {
   },
   updateByLambda: async function (id, lambda) {
     return await Collection.updateOne(id, lambda);
+  },
+  getDetail: async function (lambda) {
+    return await Collection.aggregate([
+      {
+        $lookup: {
+          from: 'permissions',
+          localField: 'permission_id',
+          foreignField: '_id',
+          as: 'permisson'
+        }
+      },
+      {
+        $lookup: {
+          from: 'admins',
+          localField: 'admin_id',
+          foreignField: '_id',
+          as: 'admin'
+        }
+      },
+      {
+        $match: {
+          permission_id: require('mongodb').ObjectID(lambda._id)
+        }
+      }
+    ]);
   }
 };

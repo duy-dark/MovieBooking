@@ -2,6 +2,14 @@ const express = require('express');
 const router = express.Router();
 const handler = require('./handler');
 
+router.get('/getdetail', (req, res, next) => {
+  let params = {...req.query};
+  handler
+    .getDetail(params)
+    .then((val) => res.json(val))
+    .catch((err) => next(err));
+});
+
 router.get('/', (req, res, next) => {
   let params = {...req.query};
   handler

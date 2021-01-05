@@ -3,6 +3,15 @@ const resSuccess = require('../../responses/res-success');
 const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
 
+const getDetail = async (params) => {
+  try {
+    let data = await Model.getDetail(params);
+    return resSuccess(data);
+  } catch (error) {
+    return error;
+  }
+};
+
 const getList = async (params) => {
   try {
     let data = await Model.findByLambda(params);
@@ -65,6 +74,7 @@ const deleteData = async (id) => {
 };
 
 module.exports = {
+  getDetail,
   getList,
   findById,
   postCreate,
