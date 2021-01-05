@@ -12,6 +12,6 @@ module.exports = async (req, res, next) => {
     req.payload = payload;
     next();
   } else {
-    res.status(403).json(resFail(1, 'do not send token'));
+    res.status(403).json(resFail(1, 'Do not send token'));
   }
 };

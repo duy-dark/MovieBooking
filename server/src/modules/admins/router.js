@@ -4,7 +4,7 @@ const handler = require('./handler');
 
 const verifyAdminToken = require('../../middlewares/auth.admin.middleware');
 
-router.get('/', (req, res, next) => {
+router.get('/', verifyAdminToken.requireGetList('admin'), (req, res, next) => {
   let params = {...req.query};
   handler
     .getList(params)
@@ -12,7 +12,7 @@ router.get('/', (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id', verifyAdminToken.requireGetPerson, (req, res, next) => {
   let id = req.params.id;
   handler
     .findById(id)
@@ -37,7 +37,7 @@ router.put('/:id', (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.delete('/:id', verifyAdminToken, (req, res, next) => {
+router.delete('/:id', (req, res, next) => {
   let id = req.params.id;
   handler
     .deleteData(id)
@@ -45,7 +45,7 @@ router.delete('/:id', verifyAdminToken, (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.patch('/', verifyAdminToken, (req, res, next) => {
+router.patch('/', (req, res, next) => {
   let id = req.params.id;
   let params = {...req.body};
   let adminOld = req.payload;

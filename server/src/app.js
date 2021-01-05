@@ -26,7 +26,6 @@ app.get('/', (req, res) => {
 
 app.use('/api/customer', require('./modules/customers'));
 app.use('/api/admin', require('./modules/admins'));
-// app.use('/api/adminlogin', require('./modules/admin/login'));
 app.use('/api/film', require('./modules/films'));
 app.use('/api/film_comment', require('./modules/film_comments'));
 app.use('/api/film_category', require('./modules/film_category'));
@@ -42,7 +41,7 @@ app.use('/api/type_seat', require('./modules/type_seats'));
 app.use('/api/theaters', require('./modules/theaters'));
 app.use('/api/theater_room', require('./modules/theater_rooms'));
 app.use('/api/permission', require('./modules/permissions'));
-app.use('/api/user_permission', require('./modules/users_permissions'));
+app.use('/api/admin_permission', require('./modules/admins_permissions'));
 app.use('/api/voucher', require('./modules/vouchers'));
 
 const {Authenticator, authenticate} = require('passport');
