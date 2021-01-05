@@ -8,28 +8,26 @@ const moment = require('moment');
 
 const getList = async (params) => {
   try {
-    let data = await Model.findByLambda(params);
+    let lambda = {
+      query: {...params, is_deleted: false},
+      views: {
+        _id: 0,
+        name: 1,
+        phone: 1,
+        date_of_birth: 1,
+        email: 1,
+        permission: 1,
+        avatar: 1,
+        adress: 1
+      }
+    };
+    let data = await Model.findByLambda(lambda);
     if (data.length === 0)
       throw {
         status: 204,
         detail: "Doesn't exist any admin"
       };
-    let result = [];
-    data.forEach((item) => {
-      let temp = {
-        name: item.name,
-        phone: item.phone,
-        date_of_birth: item.date_of_birth,
-        email: item.email,
-        permission: item.permission,
-        avatar: item.avatar,
-        adress: item.adress
-      };
-      result.push(temp);
-      console.log('result ', result);
-    });
-
-    return resSuccess(result);
+    return resSuccess(data);
   } catch (error) {
     throw {
       status: 400,
@@ -40,22 +38,26 @@ const getList = async (params) => {
 
 const findById = async (id) => {
   try {
-    let data = await Model.findByLambda({_id: id});
+    let lambda = {
+      params: {_id: id, is_deleted: false},
+      views: {
+        _id: 0,
+        name: 1,
+        phone: 1,
+        date_of_birth: 1,
+        email: 1,
+        permission: 1,
+        avatar: 1,
+        adress: 1
+      }
+    };
+    let data = await Model.findByLambda(lambda);
     if (data.length === 0)
       throw {
         status: 204,
         detail: 'Admin not found'
       };
-    let result = {
-      name: data[0].name,
-      phone: data[0].phone,
-      date_of_birth: data[0].date_of_birth,
-      email: data[0].email,
-      permission: data[0].permission,
-      avatar: data[0].avatar,
-      adress: data[0].adress
-    };
-    return resSuccess(result);
+    return resSuccess(data);
   } catch (error) {
     return error;
   }
@@ -63,15 +65,16 @@ const findById = async (id) => {
 
 const postCreate = async (params) => {
   try {
-    let adminExisted = await Model.findByLambda({email: params.email});
+    let adminExisted = await Model.findByLambda({query: {email: params.email}});
     if (adminExisted && adminExisted.length) {
+      console.log('adminExisted: ', adminExisted);
       throw {
         status: 204,
         detail: 'This email is registered! Please pick other email!'
       };
     }
     params.password = await bcrypt.hash(params.password, saltRounds);
-    let entity = {
+    let lambda = {
       name: params.name || undefined,
       phone: params.phone || undefined,
       date_of_birth: params.date_of_birth || undefined,
@@ -84,8 +87,8 @@ const postCreate = async (params) => {
       created_at: moment.now(),
       updated_at: moment.now()
     };
-    console.log(entity);
-    let data = await Model.createByLambda(entity);
+    console.log(lambda);
+    let data = await Model.createByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
     throw {status: 400, detail: error};
@@ -95,7 +98,7 @@ const postCreate = async (params) => {
 const putUpdate = async (id, params) => {
   try {
     params.password = await bcrypt.hash(params.password, saltRounds);
-    let entity = {
+    let lambda = {
       name: params.name || undefined,
       phone: params.phone || undefined,
       date_of_birth: params.date_of_birth || undefined,
@@ -106,8 +109,8 @@ const putUpdate = async (id, params) => {
       adress: params.adress || undefined,
       updated_at: moment.now()
     };
-    entity = omitBy(entity, isNil);
-    let data = await Model.updateByLambda({_id: id}, entity);
+    lambda = omitBy(lambda, isNil);
+    let data = await Model.updateByLambda({_id: id}, lambda);
     return resSuccess(data);
   } catch (error) {
     throw {
@@ -119,10 +122,10 @@ const putUpdate = async (id, params) => {
 
 const deleteData = async (id) => {
   try {
-    let entity = {
+    let lambda = {
       is_deleted: true
     };
-    let data = await Model.updateByLambda({_id: id}, entity);
+    let data = await Model.updateByLambda({_id: id}, lambda);
     return resSuccess(data);
   } catch (error) {
     throw {

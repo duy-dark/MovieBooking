@@ -5,9 +5,9 @@ const handler = require('./handler');
 const verifyAdminToken = require('../../middlewares/auth.admin.middleware');
 
 router.get('/', verifyAdminToken.requireGetList('admin'), (req, res, next) => {
-  let params = {...req.query};
+  let query = {...req.query};
   handler
-    .getList(params)
+    .getList(query)
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });

@@ -21,11 +21,7 @@ let Collection = mongoose.model('Admin', schema, 'admins');
 
 module.exports = {
   findByLambda: async function (lambda) {
-    lambda = {
-      ...lambda,
-      is_deleted: false
-    };
-    return await Collection.find(lambda);
+    return await Collection.find(lambda.query, lambda.views);
   },
   createByLambda: async function (lambda) {
     return await Collection.insertMany(lambda);
