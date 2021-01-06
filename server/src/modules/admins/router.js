@@ -1,16 +1,47 @@
 const express = require('express');
 const router = express.Router();
 const handler = require('./handler');
+const {omitBy, isNil} = require('lodash');
 
 const verifyAdminToken = require('../../middlewares/auth.admin.middleware');
 
 router.get('/', verifyAdminToken.requireGetList('admin'), (req, res, next) => {
-  let query = {...req.query};
+  let conditions = {
+    _id: req.query._id,
+    name: req.query.name,
+    phone: req.query.phone,
+    date_of_birth: req.query.date_of_birth,
+    email: req.query.email,
+    permission: req.query.permission,
+    adress: req.query.adress
+  };
+  conditions = omitBy(conditions, isNil);
   handler
-    .getList(query)
+    .getList(conditions)
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });
+
+router.get(
+  '/getdetail',
+  verifyAdminToken.requireGetList('admin'),
+  (req, res, next) => {
+    let conditions = {
+      _id: req.query._id,
+      name: req.query.name,
+      phone: req.query.phone,
+      date_of_birth: req.query.date_of_birth,
+      email: req.query.email,
+      permission: req.query.permission,
+      adress: req.query.adress
+    };
+    conditions = omitBy(conditions, isNil);
+    handler
+      .getDetail(conditions)
+      .then((val) => res.json(val))
+      .catch((err) => next(err));
+  }
+);
 
 router.get('/:id', verifyAdminToken.requireGetPerson, (req, res, next) => {
   let id = req.params.id;
@@ -31,6 +62,7 @@ router.post('/', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
   let id = req.params.id;
   let params = {...req.body};
+  console.log('params: ', params);
   handler
     .putUpdate(id, params)
     .then((val) => res.json(val))
@@ -45,15 +77,16 @@ router.delete('/:id', (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.patch('/', (req, res, next) => {
-  let id = req.params.id;
-  let params = {...req.body};
-  let adminOld = req.payload;
-  handler
-    .patchUpdateBySelf(id, params, adminOld)
-    .then((val) => res.json(val))
-    .catch((err) => next(err));
-});
+//patchUpdateBySelf
+// router.patch('/', (req, res, next) => {
+//   let id = req.params.id;
+//   let params = {...req.body};
+//   let adminOld = req.payload;
+//   handler
+//     .patchUpdateBySelf(id, params, adminOld)
+//     .then((val) => res.json(val))
+//     .catch((err) => next(err));
+// });
 
 router.post('/login', (req, res, next) => {
   let params = {...req.body};
