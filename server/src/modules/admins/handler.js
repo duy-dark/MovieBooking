@@ -29,10 +29,7 @@ const getList = async (params) => {
       };
     return resSuccess(data);
   } catch (error) {
-    throw {
-      status: 400,
-      detail: error
-    };
+    throw {status: 400, detail: error};
   }
 };
 
@@ -59,10 +56,7 @@ const getDetail = async (params) => {
       };
     return resSuccess(data);
   } catch (error) {
-    throw {
-      status: 400,
-      detail: error
-    };
+    throw {status: 400, detail: error};
   }
 };
 
@@ -89,7 +83,7 @@ const findById = async (id) => {
       };
     return resSuccess(data);
   } catch (error) {
-    return error;
+    throw {status: 400, detail: error};
   }
 };
 
@@ -150,10 +144,7 @@ const putUpdate = async (id, params) => {
     let data = await Model.updateByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
-    throw {
-      status: 400,
-      message: error
-    };
+    throw {status: 400, detail: error};
   }
 };
 
@@ -169,10 +160,7 @@ const deleteData = async (id) => {
     let data = await Model.updateByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
-    throw {
-      status: 400,
-      message: error
-    };
+    throw {status: 400, detail: error};
   }
 };
 
@@ -231,10 +219,7 @@ const postLogin = async (params) => {
     delete data[0].password;
     return resSuccess({token: jwt.encode(data[0]), admin: data[0]});
   } catch (error) {
-    throw {
-      status: 400,
-      detail: error
-    };
+    throw {status: 400, detail: error};
   }
 };
 
