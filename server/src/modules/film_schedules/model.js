@@ -18,7 +18,6 @@ let Collection = mongoose.model('FilmSchedules', schema, 'film_schedules');
 
 module.exports = {
   findByLambda: async function (lambda) {
-    console.log('lambda: ', lambda);
     return await Collection.find(lambda.conditions, lambda.views);
   },
   createByLambda: async function (lambda) {

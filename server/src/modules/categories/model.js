@@ -14,7 +14,6 @@ let Collection = mongoose.model('Category', schema, 'categories');
 
 module.exports = {
   findByLambda: async function (lambda) {
-    console.log('lambda: ', lambda);
     return await Collection.find(lambda.conditions, lambda.views);
   },
   createByLambda: async function (lambda) {

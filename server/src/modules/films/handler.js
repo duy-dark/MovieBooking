@@ -22,7 +22,8 @@ const getList = async (params) => {
         digitals: 1,
         url_avatar: 1,
         url_background: 1,
-        is_blockbuster: 1
+        is_blockbuster: 1,
+        categories_id: 1
       }
     };
     let data = await Model.findByLambda(lambda);
@@ -51,7 +52,8 @@ const findById = async (id) => {
         digitals: 1,
         url_avatar: 1,
         url_background: 1,
-        is_blockbuster: 1
+        is_blockbuster: 1,
+        categories_id: 1
       }
     };
     let data = await Model.findByLambda(lambda);
@@ -78,6 +80,7 @@ const postCreate = async (params) => {
       url_avatar: params.url_avatar || undefined,
       url_background: params.url_background || undefined,
       is_blockbuster: params.is_blockbuster || false,
+      categories_id: params.categories_id || undefined,
       is_deleted: false,
       created_at: moment.now(),
       updated_at: moment.now()
@@ -109,6 +112,7 @@ const putUpdate = async (id, params) => {
         url_avatar: params.url_avatar || undefined,
         url_background: params.url_background || undefined,
         is_blockbuster: params.is_blockbuster || false,
+        categories_id: params.categories_id || undefined,
         updated_at: moment.now()
       }
     };

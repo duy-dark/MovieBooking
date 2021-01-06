@@ -51,7 +51,8 @@ router.get('/', (req, res, next) => {
     digitals: req.query.digitals,
     url_avatar: req.query.url_avatar,
     url_background: req.query.url_background,
-    is_blockbuster: req.query.is_blockbuster
+    is_blockbuster: req.query.is_blockbuster,
+    categories_id: req.query.categories_id
   };
   conditions = omitBy(conditions, isNil);
   handler

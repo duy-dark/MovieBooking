@@ -7,9 +7,9 @@ let schema = new mongoose.Schema(
     date_of_birth: Date,
     email: String,
     password: String,
-    permission_id: [require('mongodb').ObjectID],
     avatar: String,
     adress: String,
+    permission_id: [require('mongodb').ObjectID],
     is_deleted: Boolean,
     created_at: Date,
     updated_at: Date

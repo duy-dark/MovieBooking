@@ -16,6 +16,7 @@ let schema = new mongoose.Schema(
     url_avatar: String,
     url_background: String,
     is_blockbuster: Boolean,
+    categories_id: [require('mongodb').ObjectId],
     is_deleted: Boolean,
     created_at: Date,
     updated_at: Date
@@ -27,7 +28,6 @@ let Collection = mongoose.model('Film', schema, 'films');
 
 module.exports = {
   findByLambda: async function (lambda) {
-    console.log('lambda: ', lambda);
     return await Collection.find(lambda.conditions, lambda.views);
   },
   createByLambda: async function (lambda) {
