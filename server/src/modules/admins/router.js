@@ -5,26 +5,30 @@ const {omitBy, isNil} = require('lodash');
 
 const verifyAdminToken = require('../../middlewares/auth.admin.middleware');
 
-router.get('/', verifyAdminToken.requireGetList('admin'), (req, res, next) => {
-  let conditions = {
-    _id: req.query._id,
-    name: req.query.name,
-    phone: req.query.phone,
-    date_of_birth: req.query.date_of_birth,
-    email: req.query.email,
-    permission: req.query.permission,
-    adress: req.query.adress
-  };
-  conditions = omitBy(conditions, isNil);
-  handler
-    .getList(conditions)
-    .then((val) => res.json(val))
-    .catch((err) => next(err));
-});
+router.get(
+  '/',
+  verifyAdminToken.requireByPermission('read_admin'),
+  (req, res, next) => {
+    let conditions = {
+      _id: req.query._id,
+      name: req.query.name,
+      phone: req.query.phone,
+      date_of_birth: req.query.date_of_birth,
+      email: req.query.email,
+      permission: req.query.permission,
+      adress: req.query.adress
+    };
+    conditions = omitBy(conditions, isNil);
+    handler
+      .getList(conditions)
+      .then((val) => res.json(val))
+      .catch((err) => next(err));
+  }
+);
 
 router.get(
   '/getdetail',
-  verifyAdminToken.requireGetList('admin'),
+  verifyAdminToken.requireByPermission('read_admin'),
   (req, res, next) => {
     let conditions = {
       _id: req.query._id,
