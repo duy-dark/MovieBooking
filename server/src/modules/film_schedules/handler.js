@@ -68,7 +68,7 @@ const postCreate = async (params) => {
     let data = await Model.createByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
-    return error;
+    throw {status: 400, detail: error};
   }
 };
 
