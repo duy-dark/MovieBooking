@@ -1,11 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const handler = require('./handler');
+const {omitBy, isNil} = require('lodash');
 
 router.get('/', (req, res, next) => {
-  let params = {...req.query};
+  let conditions = {
+    _id: req.query._id,
+    title: req.query.title,
+    content: req.query.content,
+    hastag: req.query.hastag,
+    public_date: req.query.public_date,
+    film_id: req.query.film_id
+  };
+  conditions = omitBy(conditions, isNil);
   handler
-    .getList(params)
+    .getList(conditions)
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });
