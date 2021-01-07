@@ -11,7 +11,7 @@ const getList = async (params) => {
     let lambda = {
       conditions: {...params, is_deleted: false},
       views: {
-        _id: 0,
+        _id: 1,
         name: 1,
         phone: 1,
         date_of_birth: 1,
@@ -38,7 +38,7 @@ const getDetail = async (params) => {
     let lambda = {
       conditions: {...params, is_deleted: false},
       views: {
-        _id: 0,
+        _id: 1,
         name: '$name',
         phone: '$phone',
         date_of_birth: '$date_of_birth',
