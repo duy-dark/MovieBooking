@@ -16,7 +16,7 @@ let schema = new mongoose.Schema(
     url_avatar: String,
     url_background: String,
     is_blockbuster: Boolean,
-    categories_id: [require('mongodb').ObjectId],
+    category_ids: [require('mongodb').ObjectId],
     is_deleted: Boolean,
     created_at: Date,
     updated_at: Date
