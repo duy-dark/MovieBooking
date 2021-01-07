@@ -5,72 +5,105 @@ const moment = require('moment');
 
 const getList = async (params) => {
   try {
-    let data = await Model.findByLambda(params);
+    let lambda = {
+      conditions: {...params, is_deleted: false},
+      views: {
+        _id: 1,
+        count: 1,
+        booking_time: 1,
+        cost: 1,
+        customer_id: 1,
+        film_schedule_id: 1,
+        voucher_id: 1,
+        seat_ids: 1
+      }
+    };
+    let data = await Model.findByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
-    return error;
+    throw {status: 400, detail: error};
   }
 };
 
 const findById = async (id) => {
   try {
-    let data = await Model.findByLambda({_id: id});
+    let lambda = {
+      conditions: {_id: id, is_deleted: false},
+      views: {
+        _id: 1,
+        count: 1,
+        booking_time: 1,
+        cost: 1,
+        customer_id: 1,
+        film_schedule_id: 1,
+        voucher_id: 1,
+        seat_ids: 1
+      }
+    };
+    let data = await Model.findByLambda(lambda);
     return resSuccess(data[0]);
   } catch (error) {
-    return error;
+    throw {status: 400, detail: error};
   }
 };
 
 const postCreate = async (params) => {
   try {
-    let entity = {
-      customer_id: params.customer_id || undefined,
-      film_id: params.film_id || undefined,
+    let lambda = {
       count: params.count || undefined,
-      voucher_id: params.voucher_id || undefined,
-      seat: params.seat || undefined,
       booking_time: params.booking_time || undefined,
       cost: params.cost || undefined,
+      customer_id: params.customer_id || undefined,
+      film_schedule_id: params.film_schedule_id || undefined,
+      voucher_id: params.voucher_id || undefined,
+      seat_ids: params.seat_ids || undefined,
       is_deleted: false,
       created_at: moment.now(),
       updated_at: moment.now()
     };
-    let data = await Model.createByLambda(entity);
+    let data = await Model.createByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
-    return error;
+    throw {status: 400, detail: error};
   }
 };
 
 const putUpdate = async (id, params) => {
   try {
-    let entity = {
-      customer_id: params.customer_id || undefined,
-      film_id: params.film_id || undefined,
-      count: params.count || undefined,
-      voucher_id: params.voucher_id || undefined,
-      seat: params.seat || undefined,
-      booking_time: params.booking_time || undefined,
-      cost: params.cost || undefined,
-      updated_at: moment.now()
+    let lambda = {
+      conditions: {_id: id, is_deleted: false},
+      params: {
+        count: params.count || undefined,
+        booking_time: params.booking_time || undefined,
+        cost: params.cost || undefined,
+        customer_id: params.customer_id || undefined,
+        film_schedule_id: params.film_schedule_id || undefined,
+        voucher_id: params.voucher_id || undefined,
+        seat_ids: params.seat_ids || undefined,
+        updated_at: moment.now()
+      }
     };
-    entity = omitBy(entity, isNil);
-    let data = await Model.updateByLambda({_id: id}, entity);
+    lambda.params = omitBy(lambda.params, isNil);
+    let data = await Model.updateByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
-    return error;
+    throw {status: 400, detail: error};
   }
 };
 
 const deleteData = async (id) => {
   try {
-    let entity = {
-      is_deleted: true
+    let lambda = {
+      conditions: {_id: id, is_deleted: false},
+      params: {
+        is_deleted: true,
+        updated_at: moment.now()
+      }
     };
-    let data = await Model.updateByLambda({_id: id}, entity);
+    let data = await Model.updateByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
-    return error;
+    throw {status: 400, detail: error};
   }
 };
 
