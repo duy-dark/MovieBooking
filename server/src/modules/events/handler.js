@@ -39,14 +39,14 @@ const findById = async (id) => {
 
 const postCreate = async (params) => {
   try {
-    let entity = {
+    let lambda = {
       name: params.name || undefined,
       event_info_id: params.event_info_id || undefined,
       is_deleted: false,
       created_at: moment.now(),
       updated_at: moment.now()
     };
-    let data = await Model.createByLambda(entity);
+    let data = await Model.createByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
     throw {status: 400, detail: error};
