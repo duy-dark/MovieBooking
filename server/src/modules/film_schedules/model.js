@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 
 let schema = new mongoose.Schema(
   {
+    time_start: Date,
+    time_end: Date,
     film_id: require('mongodb').ObjectId,
     theater_id: require('mongodb').ObjectId,
     room_id: require('mongodb').ObjectId,
-    time_start: Date,
-    time_end: Date,
     is_deleted: Boolean,
     created_at: Date,
     updated_at: Date

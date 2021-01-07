@@ -21,14 +21,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get('/', (req, res) => {
-  res.json('ạhsjs');
+  res.json('Hello world :)))');
 });
 
 app.use('/api/customer', require('./modules/customers'));
 app.use('/api/admin', require('./modules/admins'));
 app.use('/api/film', require('./modules/films'));
 app.use('/api/film_comment', require('./modules/film_comments'));
-app.use('/api/film_category', require('./modules/film_category'));
+// app.use('/api/film_category', require('./modules/old.film_category'));
 app.use('/api/film_schedule', require('./modules/film_schedules'));
 app.use('/api/category', require('./modules/categories'));
 app.use('/api/event', require('./modules/events'));
@@ -36,12 +36,12 @@ app.use('/api/event_info', require('./modules/event_infos'));
 app.use('/api/news', require('./modules/news'));
 app.use('/api/notification', require('./modules/notifications'));
 app.use('/api/ticket', require('./modules/tickets'));
-app.use('/api/ticket_queue', require('./modules/ticket_queues'));
-app.use('/api/type_seat', require('./modules/type_seats'));
+// app.use('/api/ticket_queue', require('./modules/ticket_queues'));
+app.use('/api/seat', require('./modules/seats'));
 app.use('/api/theaters', require('./modules/theaters'));
-app.use('/api/theater_room', require('./modules/theater_rooms'));
+app.use('/api/room', require('./modules/rooms'));
 app.use('/api/permission', require('./modules/permissions'));
-app.use('/api/admin_permission', require('./modules/admins_permissions'));
+// app.use('/api/admin_permission', require('./modules/admins_permissions'));
 app.use('/api/voucher', require('./modules/vouchers'));
 
 const {Authenticator, authenticate} = require('passport');

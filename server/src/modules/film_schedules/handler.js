@@ -19,11 +19,11 @@ const getList = async (params) => {
       conditions: {...params, is_deleted: false},
       views: {
         _id: 1,
+        time_start: 1,
+        time_end: 1,
         film_id: 1,
         theater_id: 1,
-        room_id: 1,
-        time_start: 1,
-        time_end: 1
+        room_id: 1
       }
     };
     let data = await Model.findByLambda(lambda);
@@ -39,11 +39,11 @@ const findById = async (id) => {
       conditions: {_id: id, is_deleted: false},
       views: {
         _id: 1,
+        time_start: 1,
+        time_end: 1,
         film_id: 1,
         theater_id: 1,
-        room_id: 1,
-        time_start: 1,
-        time_end: 1
+        room_id: 1
       }
     };
     let data = await Model.findByLambda(lambda);
@@ -56,11 +56,11 @@ const findById = async (id) => {
 const postCreate = async (params) => {
   try {
     let lambda = {
+      time_start: params.time_start || undefined,
+      time_end: params.time_end || undefined,
       film_id: params.film_id || undefined,
       theater_id: params.theater_id || undefined,
       room_id: params.room_id || undefined,
-      time_start: params.time_start || undefined,
-      time_end: params.time_end || undefined,
       is_deleted: false,
       created_at: moment.now(),
       updated_at: moment.now()
@@ -77,11 +77,11 @@ const putUpdate = async (id, params) => {
     let lambda = {
       conditions: {_id: id, is_deleted: false},
       params: {
+        time_start: params.time_start || undefined,
+        time_end: params.time_end || undefined,
         film_id: params.film_id || undefined,
         theater_id: params.theater_id || undefined,
         room_id: params.room_id || undefined,
-        time_start: params.time_start || undefined,
-        time_end: params.time_end || undefined,
         updated_at: moment.now()
       }
     };
