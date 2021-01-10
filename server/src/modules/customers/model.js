@@ -14,8 +14,12 @@ let schema = new mongoose.Schema(
       access: String,
       google_id: String
     },
-    created_at: Date,
+    token_zalo: {
+      access: String,
+      google_id: String
+    },
     is_deleted: Boolean,
+    created_at: Date,
     updated_at: Date
   },
   {versionKey: false}
@@ -25,16 +29,12 @@ let Collection = mongoose.model('Customer', schema, 'customers');
 
 module.exports = {
   findByLambda: async function (lambda) {
-    lambda = {
-      ...lambda,
-      is_deleted: false
-    };
-    return await Collection.find(lambda);
+    return await Collection.find(lambda.conditions, lambda.views);
   },
   createByLambda: async function (lambda) {
     return await Collection.insertMany(lambda);
   },
-  updateByLambda: async function (id, lambda) {
-    return await Collection.updateOne(id, lambda);
+  updateByLambda: async function (lambda) {
+    return await Collection.updateOne(lambda.conditions, lambda.params);
   }
 };
