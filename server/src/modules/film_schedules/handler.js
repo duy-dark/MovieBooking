@@ -12,85 +12,113 @@ const getNowShowing = async (params) => {
   }
 };
 
-const getComingSoon = async (params) => {
+const getList = async (params) => {
   try {
-    let data = await Model.getComingSoon(params);
+    let lambda = {
+      conditions: {...params, is_deleted: false},
+      views: {
+        _id: 1,
+        time_start: 1,
+        time_end: 1,
+        film_id: 1,
+        theater_id: 1,
+        room_id: 1
+      }
+    };
+    let data = await Model.findByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
-    return error;
-  }
-};
-const getAll = async () => {
-  try {
-    let data = await Model.findByLambda();
-    return resSuccess(data);
-  } catch (error) {
-    return error;
+    throw {status: 400, detail: error};
   }
 };
 
 const findById = async (id) => {
   try {
-    let data = await Model.findByLambda({_id: id});
+    let lambda = {
+      conditions: {_id: id, is_deleted: false},
+      views: {
+        _id: 1,
+        time_start: 1,
+        time_end: 1,
+        film_id: 1,
+        theater_id: 1,
+        room_id: 1
+      }
+    };
+    let data = await Model.findByLambda(lambda);
     return resSuccess(data[0]);
   } catch (error) {
-    return error;
+    throw {status: 400, detail: error};
   }
 };
 
 const postCreate = async (params) => {
   try {
-    let entity = {
-      film_id: params.film_id || undefined,
+    let lambda = {
       time_start: params.time_start || undefined,
       time_end: params.time_end || undefined,
+      film_id: params.film_id || undefined,
       theater_id: params.theater_id || undefined,
+      room_id: params.room_id || undefined,
       is_deleted: false,
       created_at: moment.now(),
       updated_at: moment.now()
     };
-    let data = await Model.createByLambda(entity);
+    let data = await Model.createByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
-    return error;
+    throw {status: 400, detail: error};
   }
 };
 
 const putUpdate = async (id, params) => {
   try {
-    let entity = {
-      film_id: params.film_id || undefined,
-      time_start: params.time_start || undefined,
-      time_end: params.time_end || undefined,
-      theater_id: params.theater_id || undefined,
-      updated_at: moment.now()
+    let lambda = {
+      conditions: {_id: id, is_deleted: false},
+      params: {
+        time_start: params.time_start || undefined,
+        time_end: params.time_end || undefined,
+        film_id: params.film_id || undefined,
+        theater_id: params.theater_id || undefined,
+        room_id: params.room_id || undefined,
+        updated_at: moment.now()
+      }
     };
-    entity = omitBy(entity, isNil);
-    let data = await Model.updateByLambda({_id: id}, entity);
+    lambda.params = omitBy(lambda.params, isNil);
+    let data = await Model.updateByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
-    return error;
+    throw {status: 400, detail: error};
   }
 };
 
 const deleteData = async (id) => {
   try {
-    let entity = {
-      is_deleted: true
+    let lambda = {
+      conditions: {_id: id, is_deleted: false},
+      params: {
+        is_deleted: true,
+        updated_at: moment.now()
+      }
     };
-    let data = await Model.updateByLambda({_id: id}, entity);
+    let data = await Model.updateByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
-    return error;
+    throw {status: 400, detail: error};
   }
 };
 
 module.exports = {
-  getAll,
+  getNowShowing,
+  getList,
   findById,
   postCreate,
   putUpdate,
+<<<<<<< HEAD
   deleteData,
   getNowShowing,
   getComingSoon
+=======
+  deleteData
+>>>>>>> 60a95bf598a70b06a1e2ea6c8d4da7ca4f5ade5b
 };

@@ -3,67 +3,88 @@ const resSuccess = require('../../responses/res-success');
 const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
 
-const getAll = async () => {
+const getList = async (params) => {
   try {
-    let data = await Model.findByLambda();
+    let lambda = {
+      conditions: {...params, is_deleted: false},
+      views: {
+        _id: 1,
+        name: 1
+      }
+    };
+    let data = await Model.findByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
-    return error;
+    throw {status: 400, detail: error};
   }
 };
 
 const findById = async (id) => {
   try {
-    let data = await Model.findByLambda({_id: id});
+    let lambda = {
+      conditions: {_id: id, is_deleted: false},
+      views: {
+        _id: 1,
+        name: 1
+      }
+    };
+    let data = await Model.findByLambda(lambda);
     return resSuccess(data[0]);
   } catch (error) {
-    return error;
+    throw {status: 400, detail: error};
   }
 };
 
 const postCreate = async (params) => {
   try {
-    let entity = {
+    let lambda = {
       name: params.name || undefined,
       is_deleted: false,
       created_at: moment.now(),
       updated_at: moment.now()
     };
-    let data = await Model.createByLambda(entity);
+    let data = await Model.createByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
-    return error;
+    throw {status: 400, detail: error};
   }
 };
 
 const putUpdate = async (id, params) => {
   try {
-    let entity = {
-      name: params.name || undefined,
-      updated_at: moment.now()
+    let lambda = {
+      conditions: {_id: id, is_deleted: false},
+      params: {
+        name: params.name || undefined,
+        updated_at: moment.now()
+      }
     };
-    entity = omitBy(entity, isNil);
-    let data = await Model.updateByLambda({_id: id}, entity);
+    lambda.params = omitBy(lambda.params, isNil);
+    let data = await Model.updateByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
-    return error;
+    throw {status: 400, detail: error};
   }
 };
 
 const deleteData = async (id) => {
   try {
-    let entity = {
-      is_deleted: true
+    let lambda = {
+      conditions: {_id: id, is_deleted: false},
+      params: {
+        is_deleted: true,
+        updated_at: moment.now()
+      }
     };
-    let data = await Model.updateByLambda({_id: id}, entity);
+    let data = await Model.updateByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
-    return error;
+    throw {status: 400, detail: error};
   }
 };
 
 module.exports = {
-  getAll,
+  getList,
   findById,
   postCreate,
   putUpdate,
