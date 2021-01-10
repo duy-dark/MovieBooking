@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import '../../styles/customers/navbar.scss'
+import React, { Component } from "react";
+import "../../styles/customers/navbar.scss";
 
 export default class Navbar extends Component {
   render() {
@@ -10,6 +10,6 @@ export default class Navbar extends Component {
         <div className="narbar__item">Tin Tức</div>
         <div className="narbar__item">Ứng Dụng</div>
       </div>
-    )
+    );
   }
 }

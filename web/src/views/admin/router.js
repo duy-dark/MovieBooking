@@ -1,19 +1,18 @@
-import React from 'react'
-import Dashboard from './Dashboard'
-import Login from './Login'
+import React from "react";
+import Dashboard from "./Dashboard";
+import Login from "./Login";
 
 const routes = [
   {
-    path: '/admin',
+    path: "/admin",
     exact: true,
-    component: () => <Dashboard />
+    component: () => <Dashboard />,
   },
   {
-    path: '/admin/login',
+    path: "/admin/login",
     exact: true,
-    component: () => <Login />
-  }
+    component: () => <Login />,
+  },
 ];
 
 export default routes;
-
