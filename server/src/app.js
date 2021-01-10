@@ -14,6 +14,10 @@ const config = require('./config');
 const {port} = config;
 
 const app = express();
+const swaggerDocument = require('./swagger.json');
+const swaggerUI = require('swagger-ui-express');
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+
 // app.use(authen) check token
 app.use(bodyParser.json());
 app.use(cors());
