@@ -3,90 +3,157 @@ const resSuccess = require('../../responses/res-success');
 const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
 
-const getAll = async () => {
+const getList = async (params) => {
   try {
-    let data = await Model.findByLambda();
+    let lambda = {
+      conditions: {...params, is_deleted: false},
+      views: {
+        _id: 1,
+        name: 1,
+        content: 1,
+        countries: 1,
+        long_time: 1,
+        start_date: 1,
+        directors: 1,
+        actors: 1,
+        rates: 1,
+        rate_count: 1,
+        imdb: 1,
+        digitals: 1,
+        url_avatar: 1,
+        url_background: 1,
+        is_blockbuster: 1,
+        category_ids: 1
+      }
+    };
+    let data = await Model.findByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
-    return error;
+    throw {status: 400, detail: error};
   }
 };
 
 const findById = async (id) => {
   try {
-    let data = await Model.findByLambda({_id: id});
+    let lambda = {
+      conditions: {_id: id, is_deleted: false},
+      views: {
+        _id: 1,
+        name: 1,
+        content: 1,
+        countries: 1,
+        long_time: 1,
+        start_date: 1,
+        directors: 1,
+        actors: 1,
+        rates: 1,
+        rate_count: 1,
+        imdb: 1,
+        digitals: 1,
+        url_avatar: 1,
+        url_background: 1,
+        is_blockbuster: 1,
+        category_ids: 1
+      }
+    };
+    let data = await Model.findByLambda(lambda);
     return resSuccess(data[0]);
   } catch (error) {
-    return error;
+    throw {status: 400, detail: error};
   }
 };
 
 const postCreate = async (params) => {
   try {
-    let entity = {
+    let lambda = {
       name: params.name || undefined,
       content: params.content || undefined,
       countries: params.countries || undefined,
       long_time: params.long_time || undefined,
       start_date: params.start_date || undefined,
       directors: params.directors || undefined,
+      actors: params.actors || undefined,
       rates: params.rates || undefined,
       rate_count: params.rate_count || undefined,
-      actors: params.actors || undefined,
+      imdb: params.imdb || undefined,
       digitals: params.digitals || undefined,
+      url_avatar: params.url_avatar || undefined,
+      url_background: params.url_background || undefined,
+      is_blockbuster: params.is_blockbuster || false,
+      category_ids: params.category_ids || undefined,
       is_deleted: false,
       created_at: moment.now(),
       updated_at: moment.now()
     };
-    let data = await Model.createByLambda(entity);
+    let data = await Model.createByLambda(lambda);
 
     return resSuccess(data);
   } catch (error) {
-    return error;
+    throw {status: 400, detail: error};
   }
 };
 
 const putUpdate = async (id, params) => {
   try {
-    let entity = {
-      name: params.name || undefined,
-      content: params.content || undefined,
-      countries: params.countries || undefined,
-      long_time: params.long_time || undefined,
-      start_date: params.start_date || undefined,
-      directors: params.directors || undefined,
-      rates: params.rates || undefined,
-      rate_count: params.rate_count || undefined,
-      actors: params.actors || undefined,
-      digitals: params.digitals || undefined,
-      updated_at: moment.now()
+    let lambda = {
+      conditions: {_id: id, is_deleted: false},
+      params: {
+        name: params.name || undefined,
+        content: params.content || undefined,
+        countries: params.countries || undefined,
+        long_time: params.long_time || undefined,
+        start_date: params.start_date || undefined,
+        directors: params.directors || undefined,
+        actors: params.actors || undefined,
+        rates: params.rates || undefined,
+        rate_count: params.rate_count || undefined,
+        imdb: params.imdb || undefined,
+        digitals: params.digitals || undefined,
+        url_avatar: params.url_avatar || undefined,
+        url_background: params.url_background || undefined,
+        is_blockbuster: params.is_blockbuster || false,
+        category_ids: params.category_ids || undefined,
+        updated_at: moment.now()
+      }
     };
-
-    entity = omitBy(entity, isNil);
-
-    let data = await Model.updateByLambda({_id: id}, entity);
+    lambda.params = omitBy(lambda.params, isNil);
+    let data = await Model.updateByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
-    return error;
+    throw {status: 400, detail: error};
   }
 };
 
 const deleteData = async (id) => {
   try {
-    let entity = {
-      is_deleted: true
+    let lambda = {
+      conditions: {_id: id, is_deleted: false},
+      params: {
+        is_deleted: true,
+        updated_at: moment.now()
+      }
     };
-    let data = await Model.updateByLambda({_id: id}, entity);
+    let data = await Model.updateByLambda(lambda);
+    return resSuccess(data);
+  } catch (error) {
+    throw {status: 400, detail: error};
+  }
+};
+
+let getFilmInPeriod = async (params) => {
+  try {
+    console.log('helloworld: ', params);
+    let data = await Model.getNowShowing(params);
     return resSuccess(data);
   } catch (error) {
     return error;
   }
 };
-
 module.exports = {
-  getAll,
+  getList,
   findById,
   postCreate,
   putUpdate,
-  deleteData
+  deleteData,
+  getFilmInPeriod
 };

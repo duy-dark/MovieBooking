@@ -3,6 +3,8 @@ import routes from "./router";
 import { BrowserRouter as Route, Switch } from "react-router-dom";
 import Header from "../../components/customer/Header";
 
+import Footer from "../../components/customer/Footer";
+
 export default function AppCustomer(props) {
   let showRouteComponent = (routes) => {
     let result = null;
@@ -14,18 +16,13 @@ export default function AppCustomer(props) {
     return result;
   };
 
-  // return (
-  //   <>
-  //     <Header />
-  //     <NewsCustomer />
-  //     <Switch>{showRouteComponent(routes)}</Switch>
-  //   </>
-  // );
-
   return (
     <>
-      <Header />
-      <Switch>{showRouteComponent(routes)}</Switch>
+      <Header/>
+      <Switch>
+        { showRouteComponent(routes) }
+      </Switch>
+      <Footer/>
     </>
   );
 }
