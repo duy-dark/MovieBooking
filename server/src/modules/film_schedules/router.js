@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const handler = require('./handler');
+const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
 
 router.get('/getnow', (req, res, next) => {
@@ -22,9 +23,17 @@ router.get('/getnow', (req, res, next) => {
 });
 
 router.get('/', (req, res, next) => {
-  let params = {...req.query};
+  let conditions = {
+    _id: req.query._id,
+    time_start: req.query.time_start,
+    time_end: req.query.time_end,
+    film_id: req.query.film_id,
+    theater_id: req.query.theater_id,
+    room_id: req.query.room_id
+  };
+  conditions = omitBy(conditions, isNil);
   handler
-    .getList(params)
+    .getList(conditions)
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });

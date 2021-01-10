@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const handler = require('./handler');
 const moment = require('moment');
+const {omitBy, isNil} = require('lodash');
 
 router.get('/nowshowing', (req, res, next) => {
   console.log('oke');
@@ -36,9 +37,27 @@ router.get('/commingson', (req, res, next) => {
 });
 
 router.get('/', (req, res, next) => {
-  let params = {...req.query};
+  let conditions = {
+    _id: req.query._id,
+    name: req.query.name,
+    content: req.query.content,
+    countries: req.query.countries,
+    long_time: req.query.long_time,
+    start_date: req.query.start_date,
+    directors: req.query.directors,
+    actors: req.query.actors,
+    rates: req.query.rates,
+    rate_count: req.query.rate_count,
+    imdb: req.query.imdb,
+    digitals: req.query.digitals,
+    url_avatar: req.query.url_avatar,
+    url_background: req.query.url_background,
+    is_blockbuster: req.query.is_blockbuster,
+    category_ids: req.query.category_ids
+  };
+  conditions = omitBy(conditions, isNil);
   handler
-    .getList(params)
+    .getList(conditions)
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });

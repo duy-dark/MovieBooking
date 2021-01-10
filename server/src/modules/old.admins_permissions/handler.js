@@ -3,6 +3,15 @@ const resSuccess = require('../../responses/res-success');
 const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
 
+const getDetail = async (params) => {
+  try {
+    let data = await Model.getDetail(params);
+    return resSuccess(data);
+  } catch (error) {
+    return error;
+  }
+};
+
 const getList = async (params) => {
   try {
     let data = await Model.findByLambda(params);
@@ -24,7 +33,7 @@ const findById = async (id) => {
 const postCreate = async (params) => {
   try {
     let entity = {
-      user_id: params.user_id || undefined,
+      admin_id: params.admin_id || undefined,
       permission_id: params.permission_id || undefined,
       is_deleted: false,
       created_at: moment.now(),
@@ -40,7 +49,7 @@ const postCreate = async (params) => {
 const putUpdate = async (id, params) => {
   try {
     let entity = {
-      user_id: params.user_id || undefined,
+      admin_id: params.admin_id || undefined,
       permission_id: params.permission_id || undefined,
       updated_at: moment.now()
     };
@@ -65,6 +74,7 @@ const deleteData = async (id) => {
 };
 
 module.exports = {
+  getDetail,
   getList,
   findById,
   postCreate,

@@ -9,8 +9,9 @@ const getList = async (params) => {
       conditions: {...params, is_deleted: false},
       views: {
         _id: 1,
-        content: 1,
-        type: 1
+        column: 1,
+        rows: 1,
+        status: 1
       }
     };
     let data = await Model.findByLambda(lambda);
@@ -26,8 +27,9 @@ const findById = async (id) => {
       conditions: {_id: id, is_deleted: false},
       views: {
         _id: 1,
-        content: 1,
-        type: 1
+        column: 1,
+        rows: 1,
+        status: 1
       }
     };
     let data = await Model.findByLambda(lambda);
@@ -40,8 +42,9 @@ const findById = async (id) => {
 const postCreate = async (params) => {
   try {
     let lambda = {
-      type: params.type || undefined,
-      content: params.content || undefined,
+      column: params.column || undefined,
+      rows: params.rows || undefined,
+      status: params.status || undefined,
       is_deleted: false,
       created_at: moment.now(),
       updated_at: moment.now()
@@ -58,8 +61,9 @@ const putUpdate = async (id, params) => {
     let lambda = {
       conditions: {_id: id, is_deleted: false},
       params: {
-        type: params.type || undefined,
-        content: params.content || undefined,
+        column: params.column || undefined,
+        rows: params.rows || undefined,
+        status: params.status || undefined,
         updated_at: moment.now()
       }
     };
