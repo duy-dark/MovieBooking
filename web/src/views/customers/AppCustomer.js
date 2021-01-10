@@ -2,8 +2,6 @@ import React from "react";
 import routes from "./router";
 import { BrowserRouter as Route, Switch } from "react-router-dom";
 import Header from "../../components/customer/Header";
-import NewsCustomer from "./NewsCustomer";
-import NewsDetail from "./NewsDetail";
 
 export default function AppCustomer(props) {
   let showRouteComponent = (routes) => {
@@ -27,7 +25,6 @@ export default function AppCustomer(props) {
   return (
     <>
       <Header />
-      <NewsDetail />
       <Switch>{showRouteComponent(routes)}</Switch>
     </>
   );

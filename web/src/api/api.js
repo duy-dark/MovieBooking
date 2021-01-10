@@ -1,5 +1,5 @@
 import axios from "axios";
-import interceptors from "./interceptors";
+// import interceptors from "./interceptors";
 
 const Api = axios.create({
   baseUrl: process.env.REACT_APP_BASE_URL,
@@ -10,10 +10,10 @@ const Api = axios.create({
   },
 });
 
-interceptors.setup(Api);
-interceptors.checkToken(Api);
-interceptors.checkError(Api);
-interceptors.showSpinnerRequest(Api);
-interceptors.hideSpinnerRequest(Api);
+// interceptors.setup(Api);
+// interceptors.checkToken(Api);
+// interceptors.checkError(Api);
+// interceptors.showSpinnerRequest(Api);
+// interceptors.hideSpinnerRequest(Api);
 
 export default Api;
