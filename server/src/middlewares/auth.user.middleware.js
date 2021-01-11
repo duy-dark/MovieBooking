@@ -9,7 +9,8 @@ module.exports = {
         req.body.token ||
         req.query.token ||
         req.headers.authorization ||
-        req.session.passport.user.token;
+        req.session.passport.user.data.token;
+      console.log('token:', token);
       if (token && token.startsWith('Bearer ')) {
         token = token.slice(7, token.length).trimLeft();
       }
@@ -32,7 +33,7 @@ module.exports = {
         req.body.token ||
         req.query.token ||
         req.headers.authorization ||
-        req.session.passport.user.token;
+        req.session.passport.user.data.token;
       if (token && token.startsWith('Bearer ')) {
         token = token.slice(7, token.length).trimLeft();
       }
@@ -40,7 +41,7 @@ module.exports = {
         let payload = jwt.decode(token);
         req.payload = payload;
         console.log('payload.account: ', payload.account);
-        if (payload.account[0]._id === req.params.id) {
+        if (payload.account._id === req.params.id) {
           next();
         } else {
           res.status(403).json(resFail(1, 'Invaild token'));
