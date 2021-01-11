@@ -23,7 +23,7 @@ router.get(
 router.get(
   '/auth/facebook/callback',
   passport.authenticate('facebook', {
-    successRedirect: '/api/customer/list/',
+    successRedirect: '/api/customer/auth/response',
     failureRedirect: '/'
   })
 );
@@ -39,10 +39,15 @@ router.get(
 router.get(
   '/auth/google/callback',
   passport.authenticate('google', {
-    successRedirect: '/api/customer/list/',
+    successRedirect: '/api/customer/auth/response',
     failureRedirect: '/'
   })
 );
+
+router.get('/auth/response', (req, res, next) => {
+  console.log('req.session.passport:', req.session.passport.user);
+  res.json(req.session.passport.user);
+});
 
 router.get('/auth/logout', function (req, res) {
   console.log('logout');
@@ -52,7 +57,7 @@ router.get('/auth/logout', function (req, res) {
 });
 
 router.get('/list', verifyUser.requireByUser, (req, res, next) => {
-  console.log('req.session.passport:', req.session.passport.user.data);
+  console.log('req.session.passport111:', req.session.passport.user.data);
   // console.log(
   //   'passport.Authenticator.prototype.deserializeUser.arguments[0]:',
   //   passport.Authenticator.prototype.deserializeUser.arguments[0].data[0]._id
