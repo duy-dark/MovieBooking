@@ -7,6 +7,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 const key = require('../../config/keys.json');
+const {google} = require('googleapis');
 
 const getList = async (params) => {
   try {
@@ -145,6 +146,65 @@ const postLoginFacebook = async (req, res, next) => {
   next();
 };
 
+const postLoginGoogle = async (req, res, next) => {
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: key.google.client_id,
+        clientSecret: key.google.client_secret,
+        callbackURL: '/api/customer/auth/google/callback'
+      },
+      function (accessToken, refreshToken, profile, done) {
+        process.nextTick(async function () {
+          // console.log('google:', profile);
+          let customerExisted = await Model.findByLambda({
+            conditions: {
+              google_id: profile.id
+            }
+          });
+          if (customerExisted && customerExisted.length) {
+            console.log('customerExisted: ', customerExisted);
+            return done(null, {
+              token: jwt.encode(customerExisted),
+              data: customerExisted
+            });
+          } else {
+            let lambda = {
+              google_id: profile.id || undefined,
+              name:
+                profile.name.familyName + ' ' + profile.name.givenName ||
+                undefined,
+              phone: profile.phone || undefined,
+              date_of_birth: profile.date_of_birth || undefined,
+              email: profile.emails[0].value || undefined,
+              gender: profile.gender || undefined,
+              avatar: profile.photos[0].value || undefined,
+              adress: profile.address || undefined,
+              account_type: profile.provider || undefined,
+              is_deleted: false,
+              created_at: moment.now(),
+              updated_at: moment.now()
+            };
+
+            console.log('lambda', lambda);
+            let data = await Model.createByLambda(lambda)
+              .then((data) => {
+                console.log('data:', data);
+                return done(null, {token: jwt.encode(data), data: data});
+              })
+              .catch((error) => {
+                return done(error);
+              });
+          }
+
+          return done(null, profile);
+        });
+      }
+    )
+  );
+  next();
+};
+
 const deleteData = async (id) => {
   try {
     let lambda = {
@@ -166,5 +226,6 @@ module.exports = {
   findById,
   putUpdate,
   deleteData,
-  postLoginFacebook
+  postLoginFacebook,
+  postLoginGoogle
 };

@@ -39,8 +39,8 @@ module.exports = {
       if (token) {
         let payload = jwt.decode(token);
         req.payload = payload;
-        // console.log('payload.account: ', payload.account);
-        if (payload.account._id === req.params.id) {
+        console.log('payload.account: ', payload.account);
+        if (payload.account[0]._id === req.params.id) {
           next();
         } else {
           res.status(403).json(resFail(1, 'Invaild token'));

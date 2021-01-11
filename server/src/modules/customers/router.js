@@ -28,6 +28,22 @@ router.get(
   })
 );
 
+router.get(
+  '/auth/google',
+  handler.postLoginGoogle,
+  passport.authenticate('google', {
+    scope: ['https://www.googleapis.com/auth/userinfo.profile email openid']
+  })
+);
+
+router.get(
+  '/auth/google/callback',
+  passport.authenticate('google', {
+    successRedirect: '/api/customer/list/',
+    failureRedirect: '/'
+  })
+);
+
 router.get('/auth/logout', function (req, res) {
   console.log('logout');
   req.session = null;
@@ -36,7 +52,7 @@ router.get('/auth/logout', function (req, res) {
 });
 
 router.get('/list', verifyUser.requireByUser, (req, res, next) => {
-  // console.log('req.session.passport:', req.session.passport);
+  console.log('req.session.passport:', req.session.passport.user.data);
   // console.log(
   //   'passport.Authenticator.prototype.deserializeUser.arguments[0]:',
   //   passport.Authenticator.prototype.deserializeUser.arguments[0].data[0]._id
@@ -57,7 +73,7 @@ router.get('/list', verifyUser.requireByUser, (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.get('/list/:id', (req, res, next) => {
+router.get('/list/:id', verifyUser.requireGetPerson, (req, res, next) => {
   let id = req.params.id;
   handler
     .findById(id)
