@@ -1,23 +1,16 @@
 const mongoose = require('mongoose');
-const {getComingSoon} = require('./handler');
 
 let schema = new mongoose.Schema(
   {
     name: String,
     phone: String,
     date_of_birth: Date,
+    account_type: String,
+    facebook_id: String,
     email: String,
     gender: String,
     avatar: String,
     address: String,
-    token_gg: {
-      access: String,
-      google_id: String
-    },
-    token_zalo: {
-      access: String,
-      google_id: String
-    },
     is_deleted: Boolean,
     created_at: Date,
     updated_at: Date
