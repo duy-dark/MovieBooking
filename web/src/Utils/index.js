@@ -1,5 +1,3 @@
-import showRouteComponent from './showRouteComponent'
+import showRouteComponent from "./showRouteComponent";
 
-export {
-  showRouteComponent
-}
+export { showRouteComponent };

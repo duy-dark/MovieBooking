@@ -1,13 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class Dashboard extends Component {
   render() {
-
-    return (
-      <div>
-        dashboard
-      </div>
-    );
+    return <div>dashboard</div>;
   }
 }
 

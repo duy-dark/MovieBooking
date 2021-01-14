@@ -3,13 +3,11 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   ConnectDB = require('./db'),
   passport = require('passport'),
-  key = require('./config/keys.json'),
-  GoogleStrategy = require('passport-google-oauth20').Strategy,
-  errorHandler = require('./middlewares/errors.middleware');
-
-const resFail = require('./responses/res-fail');
-const verifyToken = require('./middlewares/auth.admin.middleware');
-const config = require('./config');
+  errorHandler = require('./middlewares/errors.middleware'),
+  cookieParser = require('cookie-parser'),
+  session = require('express-session'),
+  resFail = require('./responses/res-fail'),
+  config = require('./config');
 
 const {port} = config;
 
@@ -20,6 +18,14 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 // app.use(authen) check token
 app.use(bodyParser.json());
+app.use(cookieParser('login123123'));
+app.use(
+  session({
+    secret: 'Insert randomized text here',
+    resave: false,
+    saveUninitialized: false
+  })
+);
 app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -57,32 +63,6 @@ app.use('/api/permission', require('./modules/permissions'));
 // app.use('/api/admin_permission', require('./modules/admins_permissions'));
 app.use('/api/voucher', require('./modules/vouchers'));
 
-// login google
-
-// app.get(
-//   '/auth/google',
-//   passport.authenticate(
-//     'google',
-
-//     {scope: ['https://www.googleapis.com/auth/userinfo.profile email openid']}
-//   )
-// );
-// const {google} = require('googleapis');
-// app.get(
-//   '/auth/google/callback',
-//   passport.authenticate('google', {
-//     successRedirect: '/',
-//     failureRedirect: '/'
-//   })
-// );
-
-// log out google
-// app.get('/logout', (req, res) => {
-//   req.session = null;
-//   req.logOut();
-//   res.redirect('https://google.com.vn');
-// });
-
 app.use(errorHandler);
 
 app.use((req, res) => {
@@ -96,8 +76,12 @@ const startSever = async () => {
     console.log(`QLBH API is running on port ${port}`);
   });
 };
-startSever();
 
-ConnectDB().then(() => {
-  console.log('MongoDb connected');
-});
+ConnectDB()
+  .then(() => {
+    console.log('MongoDb connected');
+    startSever();
+  })
+  .catch((err) => {
+    console.log('err: ', err);
+  });
