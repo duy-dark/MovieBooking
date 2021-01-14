@@ -28,17 +28,6 @@ module.exports = {
   },
   getNowShowing: async function (lambda) {
     return await Collection.aggregate([
-<<<<<<< HEAD
-      {
-        $lookup: {
-          from: 'films',
-          localField: 'film_id',
-          foreignField: '_id',
-          as: 'film_result'
-        }
-      },
-=======
->>>>>>> 60a95bf598a70b06a1e2ea6c8d4da7ca4f5ade5b
       {
         $match: {
           time_start: {

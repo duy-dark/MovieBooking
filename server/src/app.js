@@ -24,6 +24,15 @@ app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
 
+const {Authenticator, authenticate} = require('passport');
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+  console.log(user);
+  done(null, user);
+});
 app.get('/', (req, res) => {
   res.json('Hello world :)))');
 });
@@ -48,61 +57,31 @@ app.use('/api/permission', require('./modules/permissions'));
 // app.use('/api/admin_permission', require('./modules/admins_permissions'));
 app.use('/api/voucher', require('./modules/vouchers'));
 
-const {Authenticator, authenticate} = require('passport');
-
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
-
-passport.deserializeUser((user, done) => {
-  done(null, user);
-});
-
-passport.use(
-  new GoogleStrategy(
-    {
-      clientID: key.web.client_id,
-      clientSecret: key.web.client_secret,
-      callbackURL: '/auth/google/callback'
-    },
-
-    (accessToken, refreshToken, profile, done) => {
-      console.log('access_token', accessToken);
-      console.log('refeshToken', refreshToken);
-      console.log('profile', profile);
-      console.log('email_address', profile._json.email);
-      console.log('user name', profile.displayName);
-      console.log('avatar', profile._json.picture);
-      console.log('done', done);
-      return done(null, profile);
-    }
-  )
-);
-
 // login google
-app.get(
-  '/auth/google',
-  passport.authenticate(
-    'google',
 
-    {scope: ['https://www.googleapis.com/auth/userinfo.profile email openid']}
-  )
-);
-const {google} = require('googleapis');
-app.get(
-  '/auth/google/callback',
-  passport.authenticate('google', {
-    successRedirect: '/',
-    failureRedirect: '/'
-  })
-);
+// app.get(
+//   '/auth/google',
+//   passport.authenticate(
+//     'google',
+
+//     {scope: ['https://www.googleapis.com/auth/userinfo.profile email openid']}
+//   )
+// );
+// const {google} = require('googleapis');
+// app.get(
+//   '/auth/google/callback',
+//   passport.authenticate('google', {
+//     successRedirect: '/',
+//     failureRedirect: '/'
+//   })
+// );
 
 // log out google
-app.get('/logout', (req, res) => {
-  req.session = null;
-  req.logOut();
-  res.redirect('https://google.com.vn');
-});
+// app.get('/logout', (req, res) => {
+//   req.session = null;
+//   req.logOut();
+//   res.redirect('https://google.com.vn');
+// });
 
 app.use(errorHandler);
 

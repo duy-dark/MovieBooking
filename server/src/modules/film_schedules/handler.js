@@ -114,11 +114,5 @@ module.exports = {
   findById,
   postCreate,
   putUpdate,
-<<<<<<< HEAD
-  deleteData,
-  getNowShowing,
-  getComingSoon
-=======
   deleteData
->>>>>>> 60a95bf598a70b06a1e2ea6c8d4da7ca4f5ade5b
 };

@@ -2,6 +2,13 @@ const Model = require('./model');
 const resSuccess = require('../../responses/res-success');
 const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
+const bodyParser = require('body-parser');
+const passport = require('passport');
+const session = require('express-session');
+const cookieParser = require('cookie-parser');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
+const key = require('../../config/keys.json');
 
 const getList = async (params) => {
   try {
@@ -103,7 +110,30 @@ const putUpdate = async (id, params) => {
     throw {status: 400, detail: error};
   }
 };
+const postLoginGoogle = async (req, res, next) => {
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: key.web.client_id,
+        clientSecret: key.web.client_secret,
+        callbackURL: '/api/customer/auth/google/callback'
+      },
 
+      (accessToken, refreshToken, profile, done) => {
+        console.log('access_token', accessToken);
+        // console.log('refeshToken', refreshToken);
+        // console.log('profile', profile);
+        // console.log('email_address', profile._json.email);
+        // console.log('user name', profile.displayName);
+        // console.log('avatar', profile._json.picture);
+        // console.log('done', done);
+        return done(null, profile);
+      }
+    )
+  );
+
+  next();
+};
 const deleteData = async (id) => {
   try {
     let lambda = {
@@ -125,5 +155,6 @@ module.exports = {
   findById,
   postCreate,
   putUpdate,
-  deleteData
+  deleteData,
+  postLoginGoogle
 };

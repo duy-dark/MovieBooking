@@ -10,9 +10,13 @@ let schema = new mongoose.Schema(
     gender: String,
     avatar: String,
     address: String,
-    token_gg: {
-      access: String,
-      google_id: String
+    profile_gg: {
+      access_token: String,
+      id: String,
+      familyName: String,
+      givenName: String,
+      email: String,
+      photo: String
     },
     token_zalo: {
       access: String,

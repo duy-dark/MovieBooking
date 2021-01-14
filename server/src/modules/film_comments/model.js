@@ -2,13 +2,8 @@ const mongoose = require('mongoose');
 
 let schema = new mongoose.Schema(
   {
-<<<<<<< HEAD
-    film_id: mongoose.Types.ObjectId,
-    customer_id: String,
-=======
     film_id: require('mongodb').ObjectId,
     customer_id: require('mongodb').ObjectID,
->>>>>>> 60a95bf598a70b06a1e2ea6c8d4da7ca4f5ade5b
     content: String,
     rate: Number,
     is_deleted: Boolean,
