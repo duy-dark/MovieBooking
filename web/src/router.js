@@ -1,18 +1,12 @@
 import React from "react";
-import AppCustomer from "./views/customers/AppCustomer";
-import LayoutAdmin from "./views/admin/LayoutAdmin";
 import Login from "./views/customers/Login";
+import Home from "./views/customers/Home";
 
 const routes = [
   {
     path: "/",
     exact: true,
-    component: () => <AppCustomer />,
-  },
-  {
-    path: "/admin",
-    exact: false,
-    component: () => <LayoutAdmin />,
+    component: () => <Home />,
   },
   {
     path: "/login",

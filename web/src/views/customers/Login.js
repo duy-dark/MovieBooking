@@ -1,13 +1,12 @@
 import React from "react";
 import "../../styles/customers/login/login.scss";
-import logo from "../../assets/group@2x.png";
 export default function Login(props) {
   return (
     <div className="login">
       <div className="login-background">
         <div className="login-form">
           <div className="login-form__logo">
-            <img src={logo} alt="" />
+            <img src={`/assets/group@2x.png`} alt="" />
           </div>
           <div className="login-form__groups">
             <p className="login-form__groups__title">Đăng nhập để được nhiều ưu đãi, mua vé và bảo mật thông tin!</p>
