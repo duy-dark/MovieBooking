@@ -269,6 +269,194 @@
           }
         }
       },
+      "/api/customer/list": {
+        "get": {
+          "summary": "Get all user",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all user",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all user Success!",
+              "schema": {
+                "$ref": "#/definitions/Customer"
+              }
+            },
+            "404":{
+              "description": "Error Get all user!"
+            }
+          }
+        }
+      },
+      "/api/customer/:id": {
+        "get": {
+          "summary": "Get user by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Get user by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Get user by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get user by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Customer"
+              }
+            },
+            "404":{
+              "description": "Error Get user by id!"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update user by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Update user by id",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Update user by id",
+              "schema": {
+                "$ref": "#/definitions/Customer"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Update user by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Customer"
+              }
+            },
+            "404":{
+              "description": "Error Update user by id film!"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete user by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Delete user by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Delete user by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Delete user by id Success!"              
+            },
+            "404":{
+              "description": "Error Delete user by id!"
+            }
+          }
+        }
+      },
+      "/api/customer/auth/facebook": {
+        "get": {
+          "summary": "Load page login facebook",
+          "tags": [
+            "User"
+          ],
+          "description": "Load page login facebook",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Load page login facebook Success!",
+              "schema": {
+                "$ref": "http://localhost:1000/api/customer/auth/facebook"
+              }
+            },
+            "404":{
+              "description": "Load page login facebook user!"
+            }
+          }
+        }
+      },
+        "/api/customer/auth/google": {
+          "get": {
+            "summary": "Load page login google",
+            "tags": [
+              "User"
+            ],
+            "description": "Load page login google",
+            "parameters": [
+            ],
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "200": {
+                "description": "Load page login google Success!",
+                "schema": {
+                  "$ref": "http://localhost:1000/api/customer/auth/google"
+                }
+              },
+              "404":{
+                "description": "Load page login google error!"
+              }
+            }
+          }
+        },
+          "/api/customer/auth/logout": {
+            "get": {
+              "summary": "Logout user",
+              "tags": [
+                "User"
+              ],
+              "description": "Logout user",
+              "parameters": [
+              ],
+              "produces": [
+                "application/json"
+              ],
+              "responses": {
+                "200": {
+                  "description": "Logout user Success!",
+                  "schema": {
+                    "$ref": "http://localhost:1000/"
+                  }
+                },
+                "404":{
+                  "description": "Logout user error!"
+                }
+              }
+            }
+          },
       "/api/film": {
         "get": {
           "summary": "Get all film",
@@ -2623,7 +2811,7 @@
             }
           }
         }
-      }
+      }     
     },
 
     "definitions": {
@@ -2633,6 +2821,23 @@
             "is_deleted":{"type":"boolean"},
             "created_at":{"type":"string"," format":"date"},
             "updated_at":{"type":"string"," format":"date"}   
+        }
+      },
+      "Customer":{
+        "properties":{
+          "name":{"type":"string"},
+          "phone":{"type":"string"},
+          "date_of_birth":{"type":"string"," format":"date"},
+          "email":{"type":"string"},
+          "account_type": {"type":"string"},
+          "facebook_id": {"type":"string"},
+          "google_id": {"type":"string"},
+          "genre":{"type":"string"},
+          "avatar":{"type":"string"},
+          "address":{"type":"string"},
+          "is_deleted":{"type":"boolean"},
+          "created_at":{"type":"string"," format":"date"},
+          "updated_at":{"type":"string"," format":"date"}       
         }
       },
       "Event_info":{
@@ -2698,24 +2903,7 @@
           "updated_at":{"type":"string"," format":"date"}
         }
       },
-      "Customer":{
-        "properties":{
-          "name":{"type":"string"},
-          "phone":{"type":"string"},
-          "date_of_birth":{"type":"string"," format":"date"},
-          "email":{"type":"string"},
-          "password":{"type":"string"},
-          "genre":{"type":"string"},
-          "avatar":{"type":"string"},
-          "address":{"type":"string"},
-          "is_deleted":{"type":"boolean"},
-          "updated_at":{"type":"string"," format":"date"},
-          "token_gg":{"type":{
-            "access":"string",
-            "google_id":"string"
-          }}
-        }
-      },
+
       "News":{
         "properties":{
           "title":{"type":"string"},
