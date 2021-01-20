@@ -60,7 +60,9 @@ app.use((req, res) => {
 
 const startSever = async () => {
   app.listen(port, async () => {
-    console.log(`QLBH API is running on port ${port}`);
+    console.log(
+      `QLBH API is running on port ${port} - http://localhost:${port}`
+    );
   });
 };
 
