@@ -63,10 +63,25 @@ router.get('/', (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.get('/:id', (req, res, next) => {
+router.get('/detail/:id', (req, res, next) => {
   let id = req.params.id;
   handler
     .findById(id)
+    .then((val) => res.json(val))
+    .catch((err) => next(err));
+});
+
+router.get('/getfilmtoday', (req, res, next) => {
+  handler
+    .getFilmToDay()
+    .then((val) => res.json(val))
+    .catch((err) => next(err));
+});
+
+router.get('/getfilm7day/:film_id', (req, res, next) => {
+  let film_id = req.params.film_id;
+  handler
+    .getFilm7Day(film_id)
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });

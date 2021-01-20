@@ -33,13 +33,14 @@ const getList = async (params) => {
   }
 };
 
-const findById = async (id) => {
+const getDetail = async (params) => {
   try {
     let lambda = {
-      conditions: {_id: id, is_deleted: false},
+      conditions: {...params, is_deleted: false},
       views: {
         _id: 1,
         name: 1,
+        trailer: 1,
         content: 1,
         countries: 1,
         long_time: 1,
@@ -53,10 +54,103 @@ const findById = async (id) => {
         url_avatar: 1,
         url_background: 1,
         is_blockbuster: 1,
-        category_ids: 1
+        categories: 1,
+        film_schedules: 1
       }
     };
-    let data = await Model.findByLambda(lambda);
+    let days = [
+      'chủ nhật',
+      'thứ 2',
+      'thứ 3',
+      'thứ 4',
+      'thứ 5',
+      'thứ 6',
+      'thứ 7'
+    ];
+
+    let arr = [];
+    let now = moment();
+    for (let i = 0; i < 7; i++) {
+      arr.push({
+        name: days[moment(now).add(i, 'days').day()],
+        date: moment(now).add(i, 'days').format('DD/MM/YYYY'),
+        day: moment(now).add(i, 'days').format('DD'),
+        dateISO_8601: moment(now, moment.ISO_8601).add(i, 'days')
+      });
+    }
+
+    let data = await Model.getDetail(lambda);
+    // data.forEach((element) => {
+    //   element = {...element, listday: arr};
+    // });
+
+    data = data.map((item) => ({...item, listday: arr}));
+    // let data = await Model.getDetail(lambda);
+    return resSuccess(data);
+  } catch (error) {
+    throw {status: 400, detail: error};
+  }
+};
+
+const findById = async (id) => {
+  try {
+    let lambda = {
+      conditions: {_id: id, is_deleted: false},
+      views: {
+        _id: 1,
+        name: 1,
+        trailer: 1,
+        content: 1,
+        countries: 1,
+        long_time: 1,
+        start_date: 1,
+        directors: 1,
+        actors: 1,
+        rates: 1,
+        rate_count: 1,
+        imdb: 1,
+        digitals: 1,
+        url_avatar: 1,
+        url_background: 1,
+        is_blockbuster: 1,
+        categories: 1,
+        film_schedules: 1
+      }
+    };
+    let data = await Model.getDetail(lambda);
+    // let now = moment.now();
+
+    // let arrayDay = [];
+    // arrayDay.push(now);
+    // for (let i = 1; i < 7; i++) {
+    //   let day = moment(now, 'DD-MM-YYYY').add(i, 'days');
+    //   arrayDay.push(day);
+    // }
+
+    let days = [
+      'chủ nhật',
+      'thứ 2',
+      'thứ 3',
+      'thứ 4',
+      'thứ 5',
+      'thứ 6',
+      'thứ 7'
+    ];
+    let arr = [];
+    let now = moment();
+    for (let i = 0; i < 7; i++) {
+      arr.push({
+        name: days[moment(now).add(i, 'days').day()],
+        date: moment(now).add(i, 'days').format('DD/MM/YYYY'),
+        day: moment(now).add(i, 'days').format('DD'),
+        dateISO_8601: moment(now, moment.ISO_8601).add(i, 'days')
+      });
+    }
+
+    console.log('arr:', arr);
+    // let data = await Model.getDetail(lambda);
+    data[0] = {...data[0], listday: arr};
+
     return resSuccess(data[0]);
   } catch (error) {
     throw {status: 400, detail: error};
@@ -151,6 +245,7 @@ let getFilmInPeriod = async (params) => {
 };
 module.exports = {
   getList,
+  getDetail,
   findById,
   postCreate,
   putUpdate,

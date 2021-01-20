@@ -62,8 +62,35 @@ router.get('/', (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.get('/:id', (req, res, next) => {
-  let id = req.params.id;
+router.get('/detail', (req, res, next) => {
+  let conditions = {
+    _id: req.query._id,
+    name: req.query.name,
+    trailer: req.query.trailer,
+    content: req.query.content,
+    countries: req.query.countries,
+    long_time: req.query.long_time,
+    start_date: req.query.start_date,
+    directors: req.query.directors,
+    actors: req.query.actors,
+    rates: req.query.rates,
+    rate_count: req.query.rate_count,
+    imdb: req.query.imdb,
+    digitals: req.query.digitals,
+    url_avatar: req.query.url_avatar,
+    url_background: req.query.url_background,
+    is_blockbuster: req.query.is_blockbuster,
+    category_ids: req.query.category_ids
+  };
+  conditions = omitBy(conditions, isNil);
+  handler
+    .getDetail(conditions)
+    .then((val) => res.json(val))
+    .catch((err) => next(err));
+});
+
+router.get('/detail/:id', (req, res, next) => {
+  let id = require('mongodb').ObjectId(req.params.id);
   handler
     .findById(id)
     .then((val) => res.json(val))

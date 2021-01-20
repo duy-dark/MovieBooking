@@ -22,7 +22,7 @@ const getList = async (params) => {
         time_end: 1,
         film_id: 1,
         theater_id: 1,
-        room_id: 1
+        room: 1
       }
     };
     let data = await Model.findByLambda(lambda);
@@ -42,11 +42,79 @@ const findById = async (id) => {
         time_end: 1,
         film_id: 1,
         theater_id: 1,
-        room_id: 1
+        room: 1
       }
     };
     let data = await Model.findByLambda(lambda);
     return resSuccess(data[0]);
+  } catch (error) {
+    throw {status: 400, detail: error};
+  }
+};
+
+const getFilmToDay = async () => {
+  try {
+    let time_start = new Date(moment().add(7, 'hour'));
+
+    let date = new Date(moment().add(7, 'hour').add(1, 'days')).getDate();
+    let month = new Date(moment().add(7, 'hour').add(1, 'days')).getMonth();
+    let year = new Date(moment().add(7, 'hour').add(1, 'days')).getFullYear();
+
+    let time_end = new Date(
+      moment(
+        `${year}-${month > 8 ? month + 1 : '0' + (month + 1)}-${
+          date > 9 ? date : '0' + date
+        }`,
+        moment.ISO_8601
+      ).add(7, 'hour')
+    );
+
+    console.log('time_start: ', time_start);
+    console.log('time_end:   ', time_end);
+    console.log('date:       ', date);
+    console.log('month:      ', month + 1);
+    console.log('year:       ', year);
+
+    let lambda = {
+      conditions: {
+        time_start: time_start,
+        time_end: time_end,
+        is_deleted: false
+      },
+      views: {
+        _id: 1,
+        time_start: 1,
+        time_end: 1,
+        // film_id: 1,
+        films: 1,
+        // theater_id: 1,
+        theater: 1
+        // room: 1
+      }
+    };
+
+    let data = await Model.getFilmToDay(lambda);
+    return resSuccess(data);
+  } catch (error) {
+    throw {status: 400, detail: error};
+  }
+};
+
+const getFilm7Day = async (film_id) => {
+  try {
+    let lambda = {
+      conditions: {film_id: film_id, is_deleted: false},
+      views: {
+        _id: 1,
+        time_start: 1,
+        time_end: 1,
+        film_id: 1,
+        theater_id: 1,
+        room: 1
+      }
+    };
+    let data = await Model.findByLambda(lambda);
+    return resSuccess(data);
   } catch (error) {
     throw {status: 400, detail: error};
   }
@@ -59,7 +127,7 @@ const postCreate = async (params) => {
       time_end: params.time_end || undefined,
       film_id: params.film_id || undefined,
       theater_id: params.theater_id || undefined,
-      room_id: params.room_id || undefined,
+      room: params.room || undefined,
       is_deleted: false,
       created_at: moment.now(),
       updated_at: moment.now()
@@ -80,7 +148,7 @@ const putUpdate = async (id, params) => {
         time_end: params.time_end || undefined,
         film_id: params.film_id || undefined,
         theater_id: params.theater_id || undefined,
-        room_id: params.room_id || undefined,
+        room: params.room || undefined,
         updated_at: moment.now()
       }
     };
@@ -112,6 +180,8 @@ module.exports = {
   getNowShowing,
   getList,
   findById,
+  getFilmToDay,
+  getFilm7Day,
   postCreate,
   putUpdate,
   deleteData
