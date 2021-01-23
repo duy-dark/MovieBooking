@@ -1,0 +1,307 @@
+@import "../../mixin";
+@import "../../color";
+
+.blog {
+    max-width: 870px;
+    padding-top: 40px;
+    margin: auto;
+    clear: both;
+    .blog__theaters {            
+        height: 703px;
+        float: left;
+        width: calc(35% - 1px);
+        border: 1px solid #ebebec;
+        border-right: none;
+        min-height: 605px;
+        overflow-y: hidden;
+        div.blog__theaters__theater {
+            opacity: 0.2;
+            padding: 20px;
+            color: #555;
+            text-decoration: none;
+            display: block;
+            float: left;
+            width: 100%; 
+            box-sizing: border-box;
+            position: relative;
+            cursor: pointer;
+            transition: all .2s;
+            span {
+                line-height: 1.4;
+            }
+            img {
+                float: left;
+                width: 50px;
+                height: 50px;
+            }
+            .theater__name {
+                padding-left: 10px; 
+                display: block;
+                font-size: 16px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden; 
+                &.highlight {
+                    color: #8bc541;
+                    display: inline;
+                    padding-left: 0;
+                }                       
+            }
+            .theater__location {
+                display: block;
+                padding-left: 10px;
+                font-size: 13px;
+                color: #b7b7b7;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;                    
+            }
+            a {
+                padding-left: 10px;
+                font-size: 13px;
+                color: #fb4226;
+                text-decoration: none;
+            }
+            &.active {
+                opacity: 1;
+            }  
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: calc(100% - 40px);
+                transform: translateX(-50%);
+                border-bottom: 1px solid #fff;
+                border-color: rgba(238,238,238,.88);
+            }
+            &:hover {
+                opacity: 1;
+            }         
+        }
+        a.blog__theaters__theater {
+            opacity: 0.2;
+            padding: 20px;
+            color: #555;
+            text-decoration: none;
+            display: block;
+            float: left;
+            width: 100%; 
+            box-sizing: border-box;
+            position: relative;
+            cursor: pointer;
+            transition: all .2s;
+            span {
+                line-height: 1.8;
+            }
+            img {
+                float: left;
+                width: 50px;
+                height: 50px;
+            }
+            .theater__name {
+                padding-left: 10px; 
+                display: block;
+                font-size: 16px;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;                       
+            }
+            .theater__location {
+                display: block;
+                padding-left: 10px;
+                font-size: 13px;
+                color: #b7b7b7;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                overflow: hidden;                    
+            }               
+            &.active {
+                opacity: 1;
+            }  
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: calc(100% - 40px);
+                transform: translateX(-50%);
+                border-bottom: 1px solid #fff;
+                border-color: rgba(238,238,238,.88);
+            }      
+        }       
+    }
+    .blog__datePanel {
+        float: left;
+        width: calc(65% - 2px); 
+        border: 1px solid #ebebec;
+        border-bottom: none;
+        height: 90px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        box-sizing: border-box;
+        background-color: #fff;
+        &.sub {
+            width: 100%;
+        }
+        &::-webkit-scrollbar {
+            height: 5px;
+            background-color: #ebebec;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: silver;
+        }
+        .blog__datePanel__dayOfWeek {
+            width: 200%;
+            display: inline-flex;
+            line-height: 1.4;
+            .dayOfWeek__date {
+                cursor: pointer;
+                width: 7.16%;
+                display: inline-block;
+                text-align: center;
+                font-size: 18px;
+                &.active {
+                    color: #fb4226;                       
+                }               
+            }   
+        }
+    }
+    .blog__movies {
+        height: 615px;
+        width: calc(65% - 2px);
+        float: left;
+        border: 1px solid #ebebec;
+        position: relative;
+        overflow-y: auto;
+        overflow-x: hidden;
+        box-sizing: border-box;
+        background-color: #fff;
+        &.sub {
+            float: none;
+            width: 100%;
+            margin: auto;
+        }
+        &::-webkit-scrollbar {
+            width: 5px;
+            background-color: #ebebec;
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: silver;
+        }
+        .blog__movies__wrapMovie{
+            float: left;
+            clear: both;
+            padding-bottom: 17px;
+            padding-top: 20px;
+            padding-right: 25px;
+            padding-left: 30px;
+            position: relative;
+            margin-bottom: 0;
+            width: -webkit-fill-available;
+            &::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                width: calc(100% - 40px);
+                transform: translateX(-50%);
+                border-bottom: 1px solid #ccc;
+                border-color: #ebebec;
+            } 
+            .wrapMovie__infoMovie {
+                cursor: pointer;
+                width: 100%;
+                img {
+                    float: left;
+                    width: 50px;
+                    height: 50px;
+                }
+                .wrapMovie__infoMovie__wrapInfo{
+                    padding-left: 65px;
+                    padding-top: 6px;
+                    padding-right: 20px;
+                    p {
+                        line-height: 1.7;
+                    }
+                    .wrapInfo__age {
+                        background-color: red;
+                        color: white;
+                        border-radius: 4px;
+                        padding: 0 5px;
+                        float: left;
+                        margin-right: 10px;
+                        font-size: 13px;
+                        min-width: 30px;
+                        text-align: center;
+                        &.green {
+                            background-color: #00ac4d;
+                        }
+                    }
+                    .wrapInfo__title {
+                        font-size: 15px;
+                        display: block;
+                        font-weight: bold;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                    .wrapInfo__time {
+                        margin: 0;
+                        font-size: 14px;
+                        color: #9b9b9b;
+                    }
+
+                }
+            }
+            .wrapMovie__sessions {
+                float: left;
+                width: 100%;
+                .wrapMovie__sessions__listTypeTime {
+                    float: left;
+                    padding-top: 15px;
+                    width: 100%;
+                    .listTypeTime__version {
+                        float: left;
+                        width: 100%;
+                        font-weight: bold;
+                        font-size: 16px;
+                        margin-bottom: 5px;
+                    }
+                    .listTypeTime__session {
+                        width: calc(25% - 12px);
+                        float: left;
+                        font-size: 14px;
+                        margin: 0 10px 10px 0;
+                        padding: 5px 0;
+                        transition: all .2s;
+                        text-decoration: none;
+                        display: block;
+                        text-align: center;
+                        background-color: rgba(246,246,246,.5);
+                        border-radius: 7px;
+                        color: #9b9b9b;
+                        border: 1px solid #e4e4e4;
+                        .listTypeTime__session__startTime {
+                            font-size: 18px;
+                            color: #108f3e;
+                            &:hover {
+                                cursor: pointer;
+                                color: red;
+                            }
+                        }                               
+                    }
+                }
+            }
+        }
+    }
+    &::after{
+        display: table;
+        content: "";
+        clear: both;
+        height: 50px;
+    }
+}
+
+
