@@ -1,6 +1,6 @@
 import UsersTypes from "./types";
 
-export function signup(user, history) {
+export function signIn(user, history) {
   return {
     type: UsersTypes.LOGIN,
     payload: user,
@@ -21,15 +21,31 @@ export function updateStatusFriend(user) {
   };
 }
 
-export function getUserInfo() {
+export function getUserInfo(payload) {
   return {
+    payload: payload,
     type: UsersTypes.USER_INFO,
   };
 }
 
-export function signout(history) {
+export function signOut(history) {
   return {
     type: UsersTypes.LOGOUT,
     history: history,
+  };
+}
+
+export function signTest(user, history) {
+  return {
+    type: UsersTypes.LOGIN_TEST,
+    user: user,
+    history: history,
+  };
+}
+
+export function updateHeaderFooter(status) {
+  return {
+    type: UsersTypes.UPDATE_HF,
+    status: status,
   };
 }

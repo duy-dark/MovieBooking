@@ -31,6 +31,8 @@
           align-items: center;
           padding-right: 10px;
           border-right: 1px solid $font_grey_01;
+          text-decoration: none;
+          color: black;
 
           img {
             width: 30px;
@@ -42,7 +44,20 @@
       }
 
       .header__position {
+        display: flex;
+        position: relative;
 
+        .header__position__name {
+          padding-left: 10px;
+          display: flex;
+          align-items: center;
+        }
+
+        .header__dropdown {
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+        }
       }
     }
   }
