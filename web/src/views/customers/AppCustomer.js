@@ -2,7 +2,10 @@ import React from 'react';
 import routes from './router';
 import { BrowserRouter as Route, Switch } from 'react-router-dom';
 import Header from '../../components/customer/Header';
-
+// import MainBlog from '../../views/customers/blog/MainBlog';
+// import SubBlog from '../../views/customers/blog/SubBlog';
+// import DetailBlog from '../../views/customers/blog/DetailBlog';
+// import Film from './film/Film';
 export default function AppCustomer(props) {
 
   let showRouteComponent = (routes) => {

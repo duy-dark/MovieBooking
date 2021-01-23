@@ -1,0 +1,444 @@
+@import "../../mixin";
+@import "../../color";
+* {
+    box-sizing: border-box;
+}
+.film {
+    background-color: #0a2029;
+   .film__info {
+      position: relative;
+      color: #e9e9e9;
+      >img {
+          width: 100%;
+          filter: blur(15px);
+          opacity: 0.5;
+      }
+      .film__info__btnHidden {
+        display: none;
+      }    
+      .film__info__detail {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 100%;
+          transform: translate3d(-50%,-50%,0);
+          max-width: 870px;
+          .detail__poster {
+              float: left;
+              width: 25%;            
+              background-repeat: no-repeat;
+              background-size: 100% auto;
+              background-position: center;
+              height: 318px;
+              border-radius: 4px;
+              position: relative;
+              button {
+                  position: absolute;
+                  top: 50%;
+                  left: 50%;
+                  transform: translate(-50%,-50%);
+                  border: none;
+                  background: 0 0;
+                  cursor: pointer;
+                  visibility: hidden;                     
+                  opacity: 0;
+                  transition: all .2s;
+                  &:focus {
+                    outline: none;
+                  }
+              }
+              &:hover button {
+                  visibility: visible;
+                  opacity: 1;
+              }
+              
+          }
+          .detail__content {
+              float: left;
+              width: 40%;
+              padding: 60px 15px; 
+             
+              font-size: 15px;
+              line-height: 1.42;
+              .detail__content__title {
+                font-size: 24px;
+                .title__highlight {
+                  background-color: #fb4226;
+                  color: #fff;
+                  border-radius: 4px;
+                  font-size: 16px;
+                  display: block;
+                  float: left;      
+                  padding: 0 5px;
+                  margin-right: 6px;
+                  margin-top: 6px;
+                  min-width: 33px;
+                  text-align: center;
+                  &.green {
+                    background-color: #00ac4d;
+                  }
+                }
+              }
+              .detail__content__btnbuyticket {
+                  border-radius: 4px;
+                  border: none;
+                  background-color: #fb4226;
+                  color: #fff;
+                  margin-top: 25px;
+                  padding: 7px 25px;
+                  font-size: 16px;
+                  cursor: pointer;
+                  &:hover {
+                    background-color: #b42a14;
+                  }
+                  &:focus {
+                      outline: none;
+                  }
+                }
+            }
+          .detail__review {
+            float: right;
+            width: 17%;
+            text-align: center;
+            padding: 60px 0px;
+            .detail__review__circle {
+                transform: rotate(-90deg);
+                transform-origin: center;
+            }
+            .detail__review__star {
+                margin-top: 10px;
+                img {
+                    width: 100%;
+                    max-width: 25px;
+                    vertical-align: middle;
+                }
+            }
+          }
+      }
+      &::after {
+          content: "";
+          display: table;
+          clear: both;
+      }
+    }
+    .film__nav {
+        max-width: 870px;
+        margin: auto;          
+        border-bottom: none;
+        justify-content: center;
+        .film__nav__tab {
+            color: #fff;
+            font-size: 20px;
+            background-color: transparent;
+            transition: all .2s;
+            border: none;
+            &.active {
+                color: #fb4226;
+                background-color: transparent;
+                border: none;
+                cursor: default;
+                font-size: 22px;
+            }
+            &:hover {
+                border: none;
+                font-size: 22px;
+            }
+        }
+          
+      
+      &::after {
+          content: "";
+          display: table;
+          clear: both;
+      }
+    }
+    .film__fullInfo{           
+        color: #e9e9e9;
+        max-width: 870px;
+        margin: auto;
+        padding-top: 40px;
+        line-height: 1.42;
+        font-size: 14px;
+        font-family: Arial, Helvetica, sans-serif;
+        transition: all .2s;  
+        .film__fullInfo__col{
+            width: 50%;
+            float: left;
+            padding: 0 7px;
+            p {
+                margin: 0 0 10px;
+            }
+            .col__row {
+                margin-bottom: 10px;
+                .col__row__contentTitle {
+                    width: 35%;
+                    float: left;
+                    font-weight: bold;
+                }
+                .col__row__contentInfo {
+                    width: 40%;
+                    float: left;
+                }
+                &::after {
+                    display: table;
+                    content: "";
+                    clear: both;
+                }
+            } 
+        }
+        &::after {
+            display: table;
+            content: "";
+            clear: both;
+        }
+    }
+    .film__review {
+        max-width: 810px;
+        margin: auto;
+        padding-top: 40px;
+        color: #e9e9e9;   
+        .film__review__comment{
+            max-width: 580px;
+            margin: auto;
+            cursor: pointer;
+            position: relative;
+            .review__comment__imgReview {
+              position: absolute;
+              top: 20%;
+              left: 3%;
+              img {
+                width: 36px;
+                height: 36px;
+                border-radius: 25px;
+              }
+            }
+            input {
+              padding: 10px 10px 10px 55px;
+              width: 100%;
+              height: 60px;
+              border-radius: 4px;
+              border: 1px solid #e8e8e9;
+              background-color: #fff;
+              color: #9b9b9b;
+              font-size: 14px;
+              cursor: pointer;
+              outline: none;
+            }
+            .review__comment_imgReviewStar {                   
+                position: absolute;
+                top: 30%;
+                right: 3%;
+                img {
+                  width: auto;
+                  height: 24px;
+                }
+            }
+        }
+        .film__review__listComment {
+            max-width: 580px;
+            margin: auto;
+            .listComment__comment {                   
+                padding: 20px 20px 12px;
+                width: 100%;
+                border: 1px solid #e6e6e6;
+                border-radius: 3px;
+                margin-top: 15px;
+                background-color: #fff;        
+                .listComment__comment__info {
+                    &::after {
+                        display: table;
+                        content: "";
+                        clear: both;
+                    }                     
+                    .comment__info__reviewer {
+                        float: left;
+                         .info__reviewer__icon {
+                             float: left;                                                     
+                             position: relative;
+                             img {
+                                 height: 32px;
+                                 width: 32px;
+                                 border-radius: 25px;
+                             }
+                             .icon {
+                                 position: absolute;
+                                 height: 18px;                                    
+                                 right: -30%;
+                                 bottom: 0;
+                             }
+                         }
+                         .info__reviewer__name {
+                             float: left;
+                             margin-left: 10px;
+                             color: #000;
+                             .reviewer__name__time {
+                                color: #9b9b9b;
+                                font-size: 11px;
+                                margin: 0 0 10px;                                    
+                             }
+                         }                        
+                    }
+                    .comment__info__star {
+                        float: right;
+                        .info__star__core {
+                            color: #91d25a;
+                            font-size: 16px;
+                            margin: auto;
+                            p {
+                                text-align: center;
+                            }
+                        }
+                        .info__star__amount {
+                            img {
+                                max-width: 8px;
+                                height: auto;                                    
+                            }
+                        }
+                    }
+                }
+                .listComment__comment__content {
+                    p {
+                        padding: 20px 0;
+                        font-size: 14px;
+                        line-height: 1.42;
+                        color: #4a4a4a;
+                    }
+                }
+                .listComment__comment__like {
+                    padding-top: 10px;
+                    border-top: 1px solid #e6e6e6;
+                    text-align: left;
+                    img {
+                      cursor: pointer;
+                      width: 16px;
+                      height: auto;
+                      margin-right: 10px;
+                    }
+                    span {
+                      color: #737576;
+                      cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+    .film__window {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.9);
+      .film__window__signIn {
+        position: relative;
+        top: 50%;
+        transform: translate(0,-50%);
+        background-color: #fff;
+        border: 1px solid #000;
+        width: 270px;
+        margin: auto;
+        padding: 20px;
+        text-align: center;
+        .signIn__close {
+          position: absolute;
+          right: 2%; 
+          top: 2%;
+          font-size: 25px;
+          cursor: pointer;
+        }
+        a:link, a:visited {
+          display: block;
+          background-color: silver;
+          border: 1px solid silver;
+          width: 50%;
+          margin: auto;
+          padding: 10px;
+          margin-top: 10px;
+          text-decoration: none;
+          color:#000;
+        }
+        a:hover, a:active {
+          border: 1px solid #000;
+        }
+        
+      }
+    }
+}
+@media only screen and (max-width: $breakpoint_sm) {
+  .film {
+    .film__info {
+      >img { 
+        filter: none;
+      }
+      .film__info__btnHidden {
+          display: initial;
+          position: absolute;
+          top: 25%;
+          left: calc(50% - 48px);
+          background-color: transparent;
+          border-color: transparent;
+          outline: transparent;
+      }
+      .film__info__detail {
+        position: static;
+        transform: none;
+        .detail__poster {
+          display: none;
+        }
+        .detail__content {
+          width: 100%;
+          padding: 10px 15px;
+          color: #9b9b9b;
+          .detail__content__title {
+            color: #e9e9e9
+          }
+          .detail__content__btnbuyticket {
+            display: none;
+          }
+        }
+        .detail__review {
+          display: none;
+        }
+      }
+    }
+    .film__fullInfo {
+      margin: 0 8px;
+      .film__fullInfo__col {
+        width: 100%; 
+      }
+    }
+    .film__review {
+      .film__review__comment {
+        padding: 0 15px;
+        .review__comment__imgReview {
+          left: 6%;
+        }
+        .review__comment_imgReviewStar {
+          right: 6%;
+          img {
+            height: 20px;
+          }
+        }
+      }
+      .film__review__listComment {
+        .listComment__comment {
+          margin: 15px 15px 0;
+          width: auto;
+        }
+      }
+    }
+  }  
+}
+@media only screen and (max-width: $breakpoint_xs) {
+  .film {
+    .film__review {
+      .film__review__comment {
+        .review__comment_imgReviewStar {
+          display: none;
+        }
+      }
+    }
+  }
+}
