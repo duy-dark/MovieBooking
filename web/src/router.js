@@ -1,25 +1,24 @@
-import React from 'react'
-import AppCustomer from './views/customers/AppCustomer'
-import LayoutAdmin from './views/admin/LayoutAdmin'
-import Login from './views/customers/Login'
+import React from "react";
+import AppCustomer from "./views/customers/AppCustomer";
+import LayoutAdmin from "./views/admin/LayoutAdmin";
+import Login from "./views/customers/Login";
 
 const routes = [
   {
-    path: '/',
+    path: "/",
     exact: true,
-    component: () => <AppCustomer />
+    component: () => <AppCustomer />,
   },
   {
-    path: '/admin',
+    path: "/admin",
     exact: false,
-    component: () => <LayoutAdmin />
+    component: () => <LayoutAdmin />,
   },
   {
-    path: '/login',
+    path: "/login",
     exact: true,
-    component: () => <Login />
-  }
+    component: () => <Login />,
+  },
 ];
 
 export default routes;
-
