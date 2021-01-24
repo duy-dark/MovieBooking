@@ -12,7 +12,6 @@ export default function Home() {
   useEffect(() => {
     dispatch(getListFilmNow());
   }, []);
-
   return (
     <div className="home">
       <div className="home__slider">
