@@ -1,5 +1,5 @@
-import React , { Component } from 'react';
-import { Scrollbars } from 'react-custom-scrollbars';
+import React, { Component } from "react";
+import { Scrollbars } from "react-custom-scrollbars";
 
 export default class CustomScrollbar extends Component {
   constructor(props) {
@@ -18,6 +18,6 @@ export default class CustomScrollbar extends Component {
         onScroll={this.props.onScroll}
         onScrollFrame={this.props.onScrollFrame}
       />
-    )
+    );
   }
 }

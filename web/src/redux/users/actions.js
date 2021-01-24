@@ -1,35 +1,35 @@
-import UsersTypes from './types';
+import UsersTypes from "./types";
 
 export function signup(user, history) {
   return {
     type: UsersTypes.LOGIN,
     payload: user,
-    history: history
+    history: history,
   };
 }
 
 export function getListFriend() {
   return {
-    type: UsersTypes.LIST_FRIEND
+    type: UsersTypes.LIST_FRIEND,
   };
 }
 
 export function updateStatusFriend(user) {
   return {
     type: UsersTypes.UDS_FRIEND,
-    payload: user
+    payload: user,
   };
 }
 
 export function getUserInfo() {
   return {
-    type: UsersTypes.USER_INFO
+    type: UsersTypes.USER_INFO,
   };
 }
 
 export function signout(history) {
   return {
     type: UsersTypes.LOGOUT,
-    history: history
+    history: history,
   };
 }
