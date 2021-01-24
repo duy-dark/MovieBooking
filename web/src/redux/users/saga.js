@@ -5,13 +5,13 @@ import httpUser from "../../api/customers";
 function* fetchLogin(action) {
   try {
     let { history } = action;
-    const data = yield call(httpUser.login, action.payload);
-    const { status, data: newData } = data;
-    if (status === "ok") {
-      yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: newData });
+    const res = yield call(httpUser.login, action.payload);
+    if (res.status === "ok") {
+      yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: res.data });
       history.push("/");
     }
   } catch (err) {
+    console.log(err);
     throw err;
   }
 }
@@ -28,12 +28,12 @@ function* fetchListFriend() {
   }
 }
 
-function* fetchUserInfo() {
+function* fetchUserInfo(action) {
   try {
-    const data = yield call(httpUser.getUserInfo, {});
-    const { status, data: newData } = data;
-    if (status === "ok") {
-      yield put({ type: UsersTypes.USER_INFO_SUCCESS, payload: newData });
+    const res = yield call(httpUser.getUserInfo, action.payload);
+
+    if (res.status === "ok") {
+      yield put({ type: UsersTypes.USER_INFO_SUCCESS, payload: res.data });
     }
   } catch (err) {
     throw err;
@@ -58,7 +58,26 @@ function* fetchLogout(action) {
   }
 }
 
-function* signup() {
+function* fetchUpdateHF(action) {
+  try {
+    let { status } = action;
+    yield put({ type: UsersTypes.UPDATE_HF_SUCCESS, payload: status });
+  } catch (err) {
+    throw err;
+  }
+}
+
+function* fetchLoginTest(action) {
+  try {
+    let { user, history } = action;
+    yield put({ type: UsersTypes.LOGIN_TEST_SUCCESS, payload: user });
+    history.push("/");
+  } catch (err) {
+    throw err;
+  }
+}
+
+function* signIn() {
   yield takeEvery(UsersTypes.LOGIN, fetchLogin);
 }
 
@@ -74,10 +93,26 @@ function* updateStatusFriend() {
   yield takeEvery(UsersTypes.UDS_FRIEND, fetchUDSFriend);
 }
 
-function* signout() {
+function* signOut() {
   yield takeEvery(UsersTypes.LOGOUT, fetchLogout);
 }
 
+function* signTest() {
+  yield takeEvery(UsersTypes.LOGIN_TEST, fetchLoginTest);
+}
+
+function* updateHF() {
+  yield takeEvery(UsersTypes.UPDATE_HF, fetchUpdateHF);
+}
+
 export default function* usersSaga() {
-  yield all([signup(), getListFriend(), getUserInfo(), updateStatusFriend(), signout()]);
+  yield all([
+    signIn(),
+    getListFriend(),
+    getUserInfo(),
+    updateStatusFriend(),
+    signOut(),
+    signTest(),
+    updateHF(),
+  ]);
 }
