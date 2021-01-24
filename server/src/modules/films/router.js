@@ -20,6 +20,13 @@ router.get('/nowshowing', (req, res, next) => {
     .catch((err) => next(err));
 });
 
+router.get('/:id/getcomment', (req, res, next) => {
+  //let id = require('mongodb').ObjectId(req.params.id);
+  handler
+    .getcomment(req.params.id)
+    .then((val) => res.json(val))
+    .catch((err) => next(err));
+});
 router.get('/commingson', (req, res, next) => {
   console.log('oke');
   let gte_start_date = new Date(moment.now());
