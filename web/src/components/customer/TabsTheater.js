@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Collapse } from 'react-collapse';
 import '../../styles/films/film.scss';
+import CardTime from './CardTime';
 
 export default function TabsTheater(props) {
   const [activeIndex, setActiveIndex] = useState([1, 2, 3]);
@@ -54,16 +55,8 @@ export default function TabsTheater(props) {
           <Collapse isOpened={activeIndex.includes(1)}>
             <div className="tab-theater__item__title">2D Digital</div>
             <div className="tab-theater__item__schedules">
-              <div className="time-film">
-                <span>19:00</span>
-                <span>~</span>
-                <span>20:00</span>
-              </div>
-              <div className="time-film">
-                <span>19:00</span>
-                <span>~</span>
-                <span>20:00</span>
-              </div>
+              <CardTime/>
+              <CardTime/>
             </div>
           </Collapse>
         </div>
@@ -82,16 +75,8 @@ export default function TabsTheater(props) {
           <Collapse isOpened={activeIndex.includes(2)}>
             <div className="tab-theater__item__title">2D Digital</div>
             <div className="tab-theater__item__schedules">
-              <div className="time-film">
-                <span>19:00</span>
-                <span>~</span>
-                <span>20:00</span>
-              </div>
-              <div className="time-film">
-                <span>19:00</span>
-                <span>~</span>
-                <span>20:00</span>
-              </div>
+              <CardTime/>
+              <CardTime/>
             </div>
           </Collapse>
         </div>
@@ -112,16 +97,8 @@ export default function TabsTheater(props) {
           <Collapse isOpened={activeIndex.includes(3)}>
             <div className="tab-theater__item__title">2D Digital</div>
             <div className="tab-theater__item__schedules">
-              <div className="time-film">
-                <span>19:00</span>
-                <span>~</span>
-                <span>20:00</span>
-              </div>
-              <div className="time-film">
-                <span>19:00</span>
-                <span>~</span>
-                <span>20:00</span>
-              </div>
+              <CardTime/>
+              <CardTime/>
             </div>
           </Collapse>
         </div>

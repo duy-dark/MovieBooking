@@ -292,15 +292,17 @@ $wContainer: 940px;
         flex-flow: row wrap;
       }
 
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        width: calc(100% - 40px);
-        transform: translateX(-50%);
-        border-bottom: 1px solid #ccc;
-        border-color: rgba(238,238,238,.88);
+      &:not(:last-child) {
+        .tab-theater__item::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 50%;
+          width: calc(100% - 40px);
+          transform: translateX(-50%);
+          border-bottom: 1px solid #ccc;
+          border-color: rgba(238,238,238,.88);
+        }
       }
     }
   }

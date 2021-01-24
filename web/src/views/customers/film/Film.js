@@ -3,9 +3,8 @@ import SubBlog from '../blog/SubBlog';
 import '../../../styles/customers/film/film.scss';
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
-import 'bootstrap/dist/css/bootstrap.min.css';
 
-const data = 
+const data =
     {
     id: 1,
     name: "Phù thủy, Phù thủy - The Witches",
@@ -65,7 +64,7 @@ function FullInfo(props) {
 
 function Review(props) {
     return (
-        <div className="film__review">           
+        <div className="film__review">
             <div className="film__review__listComment">
                 <div className="listComment__comment">
                     <div className="listComment__comment__info">
@@ -135,8 +134,8 @@ function Review(props) {
                         <span><strong>0 </strong>Thích</span>
                     </div>
                 </div>
-            
-            </div>           
+
+            </div>
         </div>
     );
 }
@@ -145,7 +144,7 @@ class Film extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: data      
+            data: data
         };
     }
     handleClickComment() {
@@ -160,11 +159,11 @@ class Film extends React.Component {
         const theater = this.state.data;
         return (
             <div className="film">
-               <div className="film__info">                 
+               <div className="film__info">
                     <img src={theater.background} alt="background"/>
                     <button className="film__info__btnHidden">
                         <img src="https://tix.vn/app/assets/img/icons/play-video.png" alt="play"/>
-                    </button>           
+                    </button>
                     <div className="film__info__detail">
                         <div className="detail__poster" style={{backgroundImage: "url(" + theater.img +")"}}>
                             <button>
@@ -173,7 +172,7 @@ class Film extends React.Component {
                         </div>
                         <div className="detail__content">
                             <div>
-                                <span>{theater.start_date}</span>                               
+                                <span>{theater.start_date}</span>
                             </div>
                             <div>
                                 <span className="detail__content__title">
@@ -189,12 +188,12 @@ class Film extends React.Component {
                         <div className="detail__review">
                             <svg height="126" width="126" viewBox="0 0 33.83098862 33.83098862">
                                 <circle cx="16.91549431" cy="16.91549431" r="15.91549431" stroke="#3a3a3a" stroke-width="2" fill="rgba(0,0,0,.4)"/>
-                                <circle cx="16.91549431" cy="16.91549431" r="15.91549431" stroke="#7ed321" stroke-width="2" fill="none" strokeDasharray="88,100" strokeLinecap="round" 
+                                <circle cx="16.91549431" cy="16.91549431" r="15.91549431" stroke="#7ed321" stroke-width="2" fill="none" strokeDasharray="88,100" strokeLinecap="round"
                                 className="detail__review__circle"/>
                                 <g>
                                     <text x="16.91549431" y="15.5" alignmentBaseline="central" textAnchor="middle" font-size="16" fill="#fff">8.8</text>
                                 </g>
-                            </svg>                              
+                            </svg>
                             <div className="detail__review__star">
                                 <img src="https://tix.vn/app/assets/img/icons/star1.png" alt="star"/>
                                 <img src="https://tix.vn/app/assets/img/icons/star1.png" alt="star"/>
@@ -202,7 +201,7 @@ class Film extends React.Component {
                             </div>
                             <div style={{margin: "20px 0"}}>0 người đánh giá</div>
                         </div>
-                    </div>                                   
+                    </div>
                </div>
                <Tabs defaultActiveKey="showtimes" id="controlled"  className="film__nav">
                     <Tab eventKey="showtimes" title="Lịch chiếu" tabClassName="film__nav__tab">
@@ -224,10 +223,10 @@ class Film extends React.Component {
                             countries = {theater.countries}
                             content = {theater.content}
                             time_start = {theater.time_start}
-                            time_end = {theater.time_end}                            
+                            time_end = {theater.time_end}
                         />
                     </Tab >
-                    <Tab eventKey="review" title="Đánh giá" tabClassName="film__nav__tab">                       
+                    <Tab eventKey="review" title="Đánh giá" tabClassName="film__nav__tab">
                         <div className="film__review">
                             <div className="film__review__comment" onClick={()=>this.handleClickComment()}>
                                 <span className="review__comment__imgReview"><img src="https://tix.vn/app/assets/img/avatar.png" alt="avatar"/></span>
@@ -237,7 +236,7 @@ class Film extends React.Component {
                             <Review />
                         </div>
                     </Tab >
-                </Tabs>               
+                </Tabs>
                <div className="film__window" id="window" onClick={() => this.handleClickClose()}>
                     <div className="film__window__signIn">
                         <span className="signIn__close" onClick={() => this.handleClickClose()}>&times;</span>
@@ -246,7 +245,7 @@ class Film extends React.Component {
                     </div>
                </div>
             </div>
-            
+
         );
     }
 }

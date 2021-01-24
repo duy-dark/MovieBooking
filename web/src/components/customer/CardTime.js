@@ -8,8 +8,8 @@ export default function CardTime(props) {
 
   }
   return (
-    <div className="card-time" onClick={clickTime}>
-      <span className="card-time__highlight">19:00</span>~<span>20:45</span>
+    <div className="time-film" onClick={clickTime}>
+      <span>19:00</span>~<span>20:45</span>
     </div>
   )
 }

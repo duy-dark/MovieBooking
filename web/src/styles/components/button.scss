@@ -6,6 +6,7 @@
 
   &.btn--default {
     background: linear-gradient(to left,#fb4226,#ce3017 100%);
+    transition: all 0.3 ease-in-out;
 
     &:hover {
       background: #fb4226;
