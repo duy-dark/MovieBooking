@@ -171,7 +171,7 @@ const findById = async (id) => {
 const getFilm7Day = async (id) => {
   try {
     // let time_start = new Date(moment().add(7, 'hour'));
-    let time_start = new Date(moment().subtract(1, 'days'));
+    let time_start = new Date(moment().add(7, 'hour'));
 
     let hour = new Date(moment()).getHours();
     let date = new Date(moment().add(7, 'hour').add(8, 'days')).getDate();
@@ -209,8 +209,7 @@ const getFilm7Day = async (id) => {
     let dayOfWeek = [[], [], [], [], [], [], []];
 
     console.log('dayOfWeek:', dayOfWeek);
-    let dataTemp = data[0];
-    dataTemp.theaters.map((theater) => {});
+    return resSuccess(data);
 
     return resSuccess({detail: data[0], dayOfWeek: dayOfWeek});
   } catch (error) {
