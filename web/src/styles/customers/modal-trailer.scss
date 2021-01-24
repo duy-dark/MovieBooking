@@ -1,9 +1,15 @@
 .modal--trailer {
+  
   .modal-dialog {
-    max-width: 1045px;
+    max-width: 624px;
 
     .modal-content {
       background-color: transparent;
+      border: none;
+      &>div {
+        display: flex;
+        justify-content: center;
+      }
     }
   }
 }

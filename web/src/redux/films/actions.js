@@ -11,6 +11,11 @@ export function getListFilmFuture() {
     type: FilmTypes.LIST_FILM_FUTURE
   };
 }
+export function getListFilmToday() {
+  return {
+    type: FilmTypes.LIST_FILM_TODAY
+  }
+}
 
 export function postBookingInfo(bookingInfo, history) {
   return {

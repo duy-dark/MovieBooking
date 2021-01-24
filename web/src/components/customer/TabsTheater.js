@@ -16,93 +16,53 @@ export default function TabsTheater(props) {
       setActiveIndex([...arr, index])
     }
   }
+  const [tabSelect, setTabSelect] = useState(0);
 
   return (
-    <Tabs className="tab-theater">
-      <TabList className="tab-theater__header">
-        <Tab className="tab-theater__header__item">
-          <div className="tab-theater__header__item__image">
-            <img src={`/assets/film/theater1.jpg`} alt=""/>
-          </div>
-          <div className="tab-theater__header__item__content">
-            <div className="tab-theater__header__item-name">BHD Star - Bitexco</div>
-            <div className="tab-theater__header__item-address">L3-Bitexco Icon 68, 2 Hải Triều, Q.1</div>
-          </div>
-        </Tab>
-        <Tab className="tab-theater__header__item">
-          <div className="tab-theater__header__item__image">
-            <img src={`/assets/film/theater2.jpg`} alt=""/>
-          </div>
-          <div className="tab-theater__header__item__content">
-            <div className="tab-theater__header__item-name">BHD Star - Bitexco</div>
-            <div className="tab-theater__header__item-address">L3-Bitexco Icon 68, 2 Hải Triều, Q.1</div>
-          </div>
-        </Tab>
+    <Tabs className="tab-theater" selectedIndex={tabSelect} onSelect={tab => setTabSelect(tab)}>
+      <TabList className="tab-theater__header" >
+        {props.theaters.map((theater,index) => 
+          <Tab key={index} className="tab-theater__header__item">
+            <div className="tab-theater__header__item__image">
+              <img src={theater.url_image} alt=""/>
+            </div>
+            <div className="tab-theater__header__item__content">
+              <div className="tab-theater__header__item-name">{theater.name}</div>
+              <div className="tab-theater__header__item-address">{theater.address}</div>
+            </div>
+          </Tab>
+        )}
       </TabList>
-      <TabPanel className="tab-theater__content">
-        <div className="tab-theater__item">
-          <div className="tab-theater__item__film"
-            onClick={() => changeCollapse(1)}
-          >
-            <div className="tab-theater__item__film-image">
-              <img src={`/assets/film/film1.png`} alt=""/>
-            </div>
-            <div className="tab-theater__item__film-content">
-              <span>Nữ Thần Chiến Binh 1984 - Wonder Woman 1984 (C13)</span>
-              <span>100 min - IMDb0</span>
-            </div>
-          </div>
-          <Collapse isOpened={activeIndex.includes(1)}>
-            <div className="tab-theater__item__title">2D Digital</div>
-            <div className="tab-theater__item__schedules">
-              <CardTime/>
-              <CardTime/>
-            </div>
-          </Collapse>
-        </div>
-        <div className="tab-theater__item">
-          <div className="tab-theater__item__film"
-            onClick={() => changeCollapse(2)}
-          >
-            <div className="tab-theater__item__film-image">
-              <img src={`/assets/film/film1.png`} alt=""/>
-            </div>
-            <div className="tab-theater__item__film-content">
-              <span>Nữ Thần Chiến Binh 1984 - Wonder Woman 1984 (C13)</span>
-              <span>100 min - IMDb0</span>
-            </div>
-          </div>
-          <Collapse isOpened={activeIndex.includes(2)}>
-            <div className="tab-theater__item__title">2D Digital</div>
-            <div className="tab-theater__item__schedules">
-              <CardTime/>
-              <CardTime/>
-            </div>
-          </Collapse>
-        </div>
-      </TabPanel>
-      <TabPanel className="tab-theater__content">
-        <div className="tab-theater__item">
-          <div className="tab-theater__item__film"
-            onClick={() => changeCollapse(3)}
-          >
-            <div className="tab-theater__item__film-image">
-              <img src={`/assets/film/film1.png`} alt=""/>
-            </div>
-            <div className="tab-theater__item__film-content">
-              <span>Nữ Thần Chiến Binh 1984 - Wonder Woman 1984 (C13)</span>
-              <span>100 min - IMDb0</span>
-            </div>
-          </div>
-          <Collapse isOpened={activeIndex.includes(3)}>
-            <div className="tab-theater__item__title">2D Digital</div>
-            <div className="tab-theater__item__schedules">
-              <CardTime/>
-              <CardTime/>
-            </div>
-          </Collapse>
-        </div>
-      </TabPanel>
+      {
+        props.theaters.map((theater, index) => {
+        return (
+          <TabPanel className="tab-theater__content" key={index}>
+            { theater.films.map((film, i) => {
+              return (
+                <div className="tab-theater__item" key={i}>
+                  <div className="tab-theater__item__film"
+                    onClick={() => changeCollapse(film._id)}
+                  >
+                    <div className="tab-theater__item__film-image">
+                      <img src={film.url_avatar} alt=""/>
+                    </div>
+                    <div className="tab-theater__item__film-content">
+                      <span>{film.name}</span>
+                      <span>{`${film.long_time} min`}</span>
+                    </div>
+                  </div>
+                  <Collapse isOpened={activeIndex.includes(film._id)}>
+                    <div className="tab-theater__item__title">2D Digital</div>
+                    <div className="tab-theater__item__schedules">
+                      {film.film_schedules.map((schedule, i) => <CardTime schedule={schedule} key={i} />)}
+                    </div>
+                  </Collapse>
+                </div>)
+            })}
+          </TabPanel>
+        )
+        })
+      }
     </Tabs>
   )
 }
