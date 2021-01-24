@@ -228,7 +228,7 @@ const getFilm7Day = async (id) => {
     //       })
     //   };
     // });
-    return resSuccess(data);
+    return resSuccess({detail: data[0]});
   } catch (error) {
     // throw {status: 400, detail: error};
     throw {status: 400, detail: error};
