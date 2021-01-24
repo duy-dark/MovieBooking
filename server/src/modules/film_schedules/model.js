@@ -71,26 +71,6 @@ module.exports = {
         }
       },
       {
-<<<<<<< HEAD
-        //$addFields: {
-        // theaters: {
-        //   $map: {
-        //     input: '$theaters',
-        //     in: {
-        //       theater_id: '$$this._id'
-        //       //name: '$$this.name'
-        //     }
-        //   }
-        // }
-
-        $lookup: {
-          from: 'theaters',
-          localField: 'theater_id',
-          foreignField: '_id',
-          as: 'theater&schedule'
-        }
-        //}
-=======
         $addFields: {
           films: {
             $map: {
@@ -147,7 +127,6 @@ module.exports = {
             }
           }
         }
->>>>>>> caa021805793b3e1523e1b85bfc777a2fe97b900
       }
 
       // {
@@ -237,39 +216,12 @@ module.exports = {
       //     theater: '$theater',
       //     films: {
       //       $push: {
-<<<<<<< HEAD
-      //         filmss: '$$ROOT.films',
-      //         schedules: {
-      //           time_start: '$$ROOT.time_start',
-      //           time_end: '$$ROOT.time_end'
-      //         },
-      //         $group: {
-      //           _id: '$_id.filmss',
-      //           schedules: {
-      //             $push: {
-      //               time_start: '$$ROOT.time_start',
-      //               time_end: '$$ROOT.time_end'
-      //             }
-      //           }
-      //         }
-      //       }
-      //     }
-      //   }
-      // }
-      // {
-      //   $group: {
-      //     _id: '$_id.films.filmss',
-      //     schedule: {
-      //       $push: {
-      //         schedule: '$_id.schedule'
-=======
       //         films: '$films'
       //         // schedules: [
       //         //   {
       //         //     schedules: '$$ROOT._id.schedules'
       //         //   }
       //         // ]
->>>>>>> caa021805793b3e1523e1b85bfc777a2fe97b900
       //       }
       //     }
       //   }
