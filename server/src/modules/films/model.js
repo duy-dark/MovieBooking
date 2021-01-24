@@ -54,7 +54,6 @@ module.exports = {
       }
     ]);
   },
-<<<<<<< HEAD
   getcomment: async function (lambda) {
     return await Collection.aggregate([
       {
@@ -93,10 +92,8 @@ module.exports = {
       {$unwind: {path: '$name', preserveNullAndEmptyArrays: true}}
     ]);
   },
-  getDetail: async function (lambda) {
-=======
+
   getFilm7Day: async function (lambda) {
->>>>>>> caa021805793b3e1523e1b85bfc777a2fe97b900
     return await Collection.aggregate([
       {$match: {_id: lambda.conditions._id}},
       {

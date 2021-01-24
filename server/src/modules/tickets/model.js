@@ -31,7 +31,6 @@ module.exports = {
   updateByLambda: async function (lambda) {
     return await Collection.updateOne(lambda.conditions, lambda.params);
   },
-<<<<<<< HEAD
   getticket: async function (lambda) {
     //return await Collection.find();
     return await Collection.aggregate([
@@ -44,7 +43,9 @@ module.exports = {
         $project: {
           seat_ids: 1
         }
-=======
+      }
+    ]);
+  },
   getDetail: async function (lambda) {
     return await Collection.aggregate([
       {$match: lambda.conditions},
@@ -92,7 +93,6 @@ module.exports = {
       },
       {
         $project: lambda.views
->>>>>>> caa021805793b3e1523e1b85bfc777a2fe97b900
       }
     ]);
   }
