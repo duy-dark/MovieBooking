@@ -5,7 +5,7 @@ const getListFilmShowing = (params) => {
 };
 
 const getListFilmNow = () => {
-  return Api.get("/api/film/getdetail").then((res) => res.data);
+  return Api.get("/api/film/nowshowing").then((res) => res.data);
 };
 
 const getListFilmFuture = () => {
