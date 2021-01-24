@@ -17,7 +17,7 @@ const routes = [
     component: () => <Login />,
   },
   {
-    path: "/movie/detail",
+    path: "/:id/detail",
     exact: true,
     component: () => <MovieDetail />,
   },
