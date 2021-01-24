@@ -97,16 +97,21 @@ module.exports = {
     return await Collection.aggregate([
       {$match: {_id: lambda.conditions._id}},
       {
+        $unset: ['is_deleted', 'created_at', 'updated_at']
+      },
+      {
+        $lookup: {
+          from: 'categories',
+          localField: 'category_ids',
+          foreignField: '_id',
+          as: 'categories'
+        }
+      },
+      {
         $unset: [
-          'content',
-          'directors',
-          'actors',
-          'imdb',
-          'digitals',
-          'is_deleted',
-          'created_at',
-          'updated_at',
-          'category_ids'
+          'categories.is_deleted',
+          'categories.created_at',
+          'categories.updated_at'
         ]
       },
       {
@@ -154,6 +159,10 @@ module.exports = {
           trailer: {
             $first: '$trailer'
           },
+
+          categories: {
+            $first: '$categories'
+          },
           long_time: {
             $first: '$long_time'
           },
@@ -166,11 +175,29 @@ module.exports = {
           rate_count: {
             $first: '$rate_count'
           },
+          content: {
+            $first: '$content'
+          },
+          imdb: {
+            $first: '$imdb'
+          },
+          directors: {
+            $first: '$directors'
+          },
+          actors: {
+            $first: '$actors'
+          },
+          digitals: {
+            $first: '$digitals'
+          },
+          countries: {
+            $first: '$countries'
+          },
           url_avatar: {
-            $first: '$rates'
+            $first: '$url_avatar'
           },
           url_background: {
-            $first: '$rate_count'
+            $first: '$url_background'
           },
           is_blockbuster: {
             $first: '$is_blockbuster'
@@ -249,11 +276,17 @@ module.exports = {
           trailer: {
             $first: '$trailer'
           },
+          categories: {
+            $first: '$categories'
+          },
           long_time: {
             $first: '$long_time'
           },
           start_date: {
             $first: '$start_date'
+          },
+          content: {
+            $first: '$content'
           },
           rates: {
             $first: '$rates'
@@ -261,11 +294,26 @@ module.exports = {
           rate_count: {
             $first: '$rate_count'
           },
+          imdb: {
+            $first: '$imdb'
+          },
+          directors: {
+            $first: '$directors'
+          },
+          actors: {
+            $first: '$actors'
+          },
+          digitals: {
+            $first: '$digitals'
+          },
+          countries: {
+            $first: '$countries'
+          },
           url_avatar: {
-            $first: '$rates'
+            $first: '$url_avatar'
           },
           url_background: {
-            $first: '$rate_count'
+            $first: '$url_background'
           },
           is_blockbuster: {
             $first: '$is_blockbuster'

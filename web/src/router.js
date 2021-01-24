@@ -11,7 +11,6 @@ const routes = [
     exact: true,
     component: () => <Home />,
   },
-
   {
     path: "/login",
     exact: true,
@@ -23,10 +22,10 @@ const routes = [
     component: () => <MovieDetail />,
   },
   {
-    path: "/:id/booking",
+    path: "/booking",
     exact: true,
     component: () => <Booking />,
-  }
+  },
 ];
 
 export default routes;

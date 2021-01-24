@@ -174,12 +174,12 @@ const getFilm7Day = async (id) => {
     let time_start = new Date(moment().subtract(1, 'days'));
 
     let hour = new Date(moment()).getHours();
-    let date = new Date(moment().add(7, 'hour').add(7, 'days')).getDate();
+    let date = new Date(moment().add(7, 'hour').add(8, 'days')).getDate();
     if (hour > 17) {
       date -= 1;
     }
-    let month = new Date(moment().add(7, 'hour').add(7, 'days')).getMonth();
-    let year = new Date(moment().add(7, 'hour').add(7, 'days')).getFullYear();
+    let month = new Date(moment().add(7, 'hour').add(8, 'days')).getMonth();
+    let year = new Date(moment().add(7, 'hour').add(8, 'days')).getFullYear();
 
     let time_end = new Date(
       moment(
@@ -206,29 +206,13 @@ const getFilm7Day = async (id) => {
     };
 
     let data = await Model.getFilm7Day(lambda);
+    let dayOfWeek = [[], [], [], [], [], [], []];
 
-    // data = data.map((theater) => {
-    //   return {
-    //     ...theater,
-    //     films:
-    //       theater.films &&
-    //       theater.films.map((film) => {
-    //         return {
-    //           ...film,
-    //           film_schedules:
-    //             film.film_schedules.length > 0 &&
-    //             film.film_schedules.filter((schedule) => {
-    //               let timeStart = moment(schedule.time_start);
-    //               return (
-    //                 timeStart.diff(moment(time_start)) >= 0 &&
-    //                 timeStart.diff(moment(time_end)) <= 0
-    //               );
-    //             })
-    //         };
-    //       })
-    //   };
-    // });
-    return resSuccess({detail: data[0]});
+    console.log('dayOfWeek:', dayOfWeek);
+    let dataTemp = data[0];
+    dataTemp.theaters.map((theater) => {});
+
+    return resSuccess({detail: data[0], dayOfWeek: dayOfWeek});
   } catch (error) {
     // throw {status: 400, detail: error};
     throw {status: 400, detail: error};

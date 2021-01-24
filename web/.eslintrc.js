@@ -24,7 +24,11 @@ module.exports = {
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
     "prettier/prettier": ["error"],
-    "linebreak-style": ["error", "windows"],
-    "no-shadow": ["error", { "builtinGlobals": false, "hoist": "all", "allow": [] }]
+    "linebreak-style": ["error", "unix"],
+    "import/extensions": [ "never" | "always" | "ignorePackages"],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "no-unused-vars": ["error", { "varsIgnorePattern": "[iI]gnored" }],
+    "no-shadow": ["error", { "builtinGlobals": false, "hoist": "all", "allow": [] }],
+    "no-underscore-dangle": ["error", { "allow": ["foo_", "_bar"] }]
   }
 };
