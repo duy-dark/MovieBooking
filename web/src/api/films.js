@@ -12,13 +12,17 @@ const getListFilmFuture = () => {
   return Api.get("/api/film/commingson").then((res) => res.data);
 };
 
+const getListFilmToday = () => {
+  return Api.get("/api/theater/getfilmtoday").then((res) => res.data)
+}
+
 const postBookingInfo = (params) => {
   return Api.post("api/ticket", params).then((res) => res.data);
 };
 
 const getDetail = (params) => {
-  return Api.get(`api/film/${params.id}/detail`).then((res) => res.data);
-};
+  return Api.get(`api/film/${params.id}/detail`).then(res => res.data);
+}
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
@@ -27,4 +31,5 @@ export default {
   getDetail,
   getListFilmNow,
   getListFilmFuture,
+  getListFilmToday
 };
