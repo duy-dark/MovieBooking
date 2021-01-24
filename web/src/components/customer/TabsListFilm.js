@@ -11,10 +11,10 @@ export default function TabsListFilm(props) {
         <Tab className="tab-film__header__item">Sắp Chiếu</Tab>
       </TabList>
       <TabPanel className="tab-film__content">
-        <ListFilm />
+        <ListFilm films={props.filmsNow} clickTrailer={props.clickTrailer} />
       </TabPanel>
       <TabPanel className="tab-film__content">
-        <ListFilm />
+        <ListFilm films={props.filmsFuture} clickTrailer={props.clickTrailer} />
       </TabPanel>
     </Tabs>
   )

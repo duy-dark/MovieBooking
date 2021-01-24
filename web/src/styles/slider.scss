@@ -1,12 +1,9 @@
 .block-slider {
   width: 100%;
-  height: 634px;
   margin-bottom: 220px;
 
   .slider {
-    height: 100%;
     .slick-list {
-      height: 100%;
       .slider__list {
         position: relative;
   
@@ -41,47 +38,47 @@
       }
     }
 
-    .slick-dots {
-      height: 318px;
-      bottom: -200px;
-      box-shadow: 0 0 10px rgba(0,0,0,.3);
-      width: 860px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #FFF;
+    // .slick-dots {
+    //   height: 318px;
+    //   bottom: -200px;
+    //   box-shadow: 0 0 10px rgba(0,0,0,.3);
+    //   width: 860px;
+    //   left: 50%;
+    //   transform: translateX(-50%);
+    //   background-color: #FFF;
 
-      li {
-        width: 215px;
-        height: 318px;
-        margin: 0;
+    //   li {
+    //     width: 215px;
+    //     height: 318px;
+    //     margin: 0;
 
-        .adot__link {
-          width: 100%;
-          height: 100%;
-          img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            opacity: 0.5;
-            transition: all .3s ease-in-out;
-          }
-        }
+    //     .adot__link {
+    //       width: 100%;
+    //       height: 100%;
+    //       img {
+    //         width: 100%;
+    //         height: 100%;
+    //         object-fit: cover;
+    //         opacity: 0.5;
+    //         transition: all .3s ease-in-out;
+    //       }
+    //     }
 
-        &:hover {
-          img {
-            opacity: 1;
-            box-shadow: 0 0 10px rgba(0,0,0,.3);
-          }
-        }
+    //     &:hover {
+    //       img {
+    //         opacity: 1;
+    //         box-shadow: 0 0 10px rgba(0,0,0,.3);
+    //       }
+    //     }
 
-        &.slick-active {
-          img {
-            opacity: 1;
-            box-shadow: 0 0 10px rgba(0,0,0,.3);
-          }
-        }
-      }
-    }
+    //     &.slick-active {
+    //       img {
+    //         opacity: 1;
+    //         box-shadow: 0 0 10px rgba(0,0,0,.3);
+    //       }
+    //     }
+    //   }
+    // }
 
     .slick-arrow {
       z-index: 2;
