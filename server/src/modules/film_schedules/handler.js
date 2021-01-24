@@ -56,7 +56,11 @@ const getFilmToDay = async () => {
   try {
     let time_start = new Date(moment().add(7, 'hour'));
 
+    let hour = new Date(moment()).getHours();
     let date = new Date(moment().add(7, 'hour').add(1, 'days')).getDate();
+    if (hour > 17) {
+      date -= 1;
+    }
     let month = new Date(moment().add(7, 'hour').add(1, 'days')).getMonth();
     let year = new Date(moment().add(7, 'hour').add(1, 'days')).getFullYear();
 
@@ -96,6 +100,7 @@ const getFilmToDay = async () => {
     let data = await Model.getFilmToDay(lambda);
     return resSuccess(data);
   } catch (error) {
+    // throw {status: 400, detail: error};
     throw {status: 400, detail: error};
   }
 };

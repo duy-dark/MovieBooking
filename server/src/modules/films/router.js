@@ -104,10 +104,17 @@ router.get('/detail/:id', (req, res, next) => {
     .catch((err) => next(err));
 });
 
+<<<<<<< HEAD
 router.post('/create/:id', (req, res, next) => {
   let params = req.body;
   handler
     .postComment(params)
+=======
+router.get('/getfilm7day/:id', (req, res, next) => {
+  let id = require('mongodb').ObjectId(req.params.id);
+  handler
+    .getFilm7Day(id)
+>>>>>>> caa021805793b3e1523e1b85bfc777a2fe97b900
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });

@@ -26,6 +26,12 @@ let schema = new mongoose.Schema(
 
 let Collection = mongoose.model('Film', schema, 'films');
 
+let getDayOfWeek = (number) => {
+  if (number == 7) {
+    return 'Thứ 7';
+  }
+};
+
 module.exports = {
   findByLambda: async function (lambda) {
     return await Collection.find(lambda.conditions, lambda.views);
@@ -48,6 +54,7 @@ module.exports = {
       }
     ]);
   },
+<<<<<<< HEAD
   getcomment: async function (lambda) {
     return await Collection.aggregate([
       {
@@ -87,52 +94,189 @@ module.exports = {
     ]);
   },
   getDetail: async function (lambda) {
+=======
+  getFilm7Day: async function (lambda) {
+>>>>>>> caa021805793b3e1523e1b85bfc777a2fe97b900
     return await Collection.aggregate([
-      {$match: lambda.conditions},
+      {$match: {_id: lambda.conditions._id}},
+      {
+        $unset: [
+          'content',
+          'directors',
+          'actors',
+          'imdb',
+          'digitals',
+          'is_deleted',
+          'created_at',
+          'updated_at',
+          'category_ids'
+        ]
+      },
       {
         $lookup: {
           from: 'film_schedules',
           localField: '_id',
           foreignField: 'film_id',
-          as: 'film_schedules'
+          as: 'theaters'
         }
       },
       {
+        $unwind: {
+          path: '$theaters',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $lookup: {
+          from: 'theaters',
+          localField: 'theaters.theater_id',
+          foreignField: '_id',
+          as: 'theaters'
+        }
+      },
+      {
+        $unset: [
+          'theaters.rooms',
+          'theaters.is_deleted',
+          'theaters.created_at',
+          'theaters.updated_at'
+        ]
+      },
+      {
+        $unwind: {
+          path: '$theaters',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $group: {
+          _id: '$_id',
+          name: {
+            $first: '$name'
+          },
+          trailer: {
+            $first: '$trailer'
+          },
+          long_time: {
+            $first: '$long_time'
+          },
+          start_date: {
+            $first: '$start_date'
+          },
+          rates: {
+            $first: '$rates'
+          },
+          rate_count: {
+            $first: '$rate_count'
+          },
+          url_avatar: {
+            $first: '$rates'
+          },
+          url_background: {
+            $first: '$rate_count'
+          },
+          is_blockbuster: {
+            $first: '$is_blockbuster'
+          },
+          theaters: {
+            $addToSet: '$theaters'
+          }
+        }
+      },
+
+      {
+        $unwind: {
+          path: '$theaters',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+
+      {
+        $lookup: {
+          from: 'film_schedules',
+          let: {
+            film_id: '$_id',
+            theaters_id: '$theaters._id'
+          },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    {
+                      $eq: ['$film_id', '$$film_id']
+                    },
+                    {
+                      $eq: ['$theater_id', '$$theaters_id']
+                    },
+                    {
+                      $gte: ['$time_start', lambda.conditions.time_start]
+                    },
+                    {
+                      $lte: ['$time_start', lambda.conditions.time_end]
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          as: 'theaters.film_schedules'
+        }
+      },
+
+      {
         $addFields: {
-          film_schedules: {
+          'theaters.film_schedules': {
             $map: {
-              input: '$film_schedules',
+              input: '$theaters.film_schedules',
               in: {
-                _id: '$$this._id',
+                _id1: '$$this._id',
                 time_start: '$$this.time_start',
                 time_end: '$$this.time_end',
+                film_id: '$$this.film_id',
                 theater_id: '$$this.theater_id',
-                room: '$$this.room'
+                room1: '$$this.room',
+                dayOfWeek: {$dayOfWeek: '$$this.time_start'}
               }
             }
           }
         }
       },
+
       {
-        $lookup: {
-          from: 'categories',
-          localField: 'category_ids',
-          foreignField: '_id',
-          as: 'categories'
-        }
-      },
-      {
-        $addFields: {
-          categories: {
-            $map: {
-              input: '$categories',
-              in: {name: '$$this.name'}
-            }
+        $group: {
+          _id: '$_id',
+          name: {
+            $first: '$name'
+          },
+          trailer: {
+            $first: '$trailer'
+          },
+          long_time: {
+            $first: '$long_time'
+          },
+          start_date: {
+            $first: '$start_date'
+          },
+          rates: {
+            $first: '$rates'
+          },
+          rate_count: {
+            $first: '$rate_count'
+          },
+          url_avatar: {
+            $first: '$rates'
+          },
+          url_background: {
+            $first: '$rate_count'
+          },
+          is_blockbuster: {
+            $first: '$is_blockbuster'
+          },
+          theaters: {
+            $push: '$theaters'
           }
         }
-      },
-      {
-        $project: lambda.views
       }
     ]);
   }

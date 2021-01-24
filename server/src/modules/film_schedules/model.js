@@ -6,7 +6,7 @@ let schema = new mongoose.Schema(
     time_end: Date,
     film_id: require('mongodb').ObjectId,
     theater_id: require('mongodb').ObjectId,
-    room: require('mongodb').ObjectId,
+    room: String,
     is_deleted: Boolean,
     created_at: Date,
     updated_at: Date
@@ -71,6 +71,7 @@ module.exports = {
         }
       },
       {
+<<<<<<< HEAD
         //$addFields: {
         // theaters: {
         //   $map: {
@@ -89,7 +90,66 @@ module.exports = {
           as: 'theater&schedule'
         }
         //}
+=======
+        $addFields: {
+          films: {
+            $map: {
+              input: '$films',
+              in: {
+                film_id: '$$this._id',
+                name: '$$this.name',
+                schedules: [
+                  {
+                    schedule_id: '$$ROOT._id',
+                    film_id: '$$ROOT.film_id',
+                    theater_id: '$$ROOT.theater_id',
+                    time_start: '$$ROOT.time_start',
+                    time_end: '$$ROOT.time_end',
+                    room: '$$ROOT.room'
+                  }
+                ]
+              }
+            }
+          }
+        }
+      },
+
+      {
+        // $project: lambda.views
+        $group: {
+          _id: {
+            theater: '$theaters',
+            films: '$films',
+            schedules: [
+              {
+                schedule_id: '$$ROOT._id',
+                film_id: '$$ROOT.film_id',
+                theater_id: '$$ROOT.theater_id',
+                time_start: '$$ROOT.time_start',
+                time_end: '$$ROOT.time_end',
+                room: '$$ROOT.room'
+              }
+            ]
+          }
+        }
+      },
+      {
+        $group: {
+          _id: '$_id.theater',
+          films: {
+            $push: {
+              films: '$_id.films'
+              // schedules1: [
+              //   {
+              //     schedules2: '$$ROOT._id.schedules'
+              //   }
+              // ]
+            }
+          }
+        }
+>>>>>>> caa021805793b3e1523e1b85bfc777a2fe97b900
       }
+
       // {
       //   $lookup: {
       //     from: 'films',
@@ -137,44 +197,47 @@ module.exports = {
       // {
       //   $group: {
       //     _id: '$_id.theater',
-      //     filmss: {
-      //       $push: {
-      //         filmss: '$_id.films'
-      //         // schedules: {
-      //         //   time_start: '$$ROOT.time_start',
-      //         //   time_end: '$$ROOT.time_end'
-      //         // }
-      //       }
-      //     }
-      //   }
-      // }
-      // {
-      //   $group: {
-      //     _id: '$filmss.filmss',
-      //     filmss: {
-      //       $push: {
-      //         schedules: '$ROOT'
-      //         // schedules: {
-      //         //   time_start: '$$ROOT.time_start',
-      //         //   time_end: '$$ROOT.time_end'
-      //         // }
-      //       }
-      //     }
-      //   }
-      // }
-
-      // {
-      //   $group: {
-      //     _id: '$theater',
-      //     films: {$push: '$$ROOT.films'}
-      //   }
-      // }
-
-      // {
-      //   $group: {
-      //     _id: '$theater',
       //     films: {
       //       $push: {
+      //         $group: {
+      //           films: '$_id.films',
+      //           schedules: {
+      //             $push: {
+      //               schedules: '$._id.schedules'
+      //             }
+      //           }
+      //         }
+      //       }
+      //     }
+      //   }
+      // }
+      // {
+      //   // $project: lambda.views
+      //   $group: {
+      //     _id: '$_id',
+      //     theater: {
+      //       $first: '$theaters'
+      //     },
+      //     films: {
+      //       $push: '$films'
+      //     },
+      //     schedule: {
+      //       $push: {
+      //         schedule_id: '$$ROOT._id',
+      //         film_id: '$$ROOT.film_id',
+      //         theater_id: '$$ROOT.theater_id',
+      //         time_start: '$$ROOT.time_start',
+      //         time_end: '$$ROOT.time_end'
+      //       }
+      //     }
+      //   }
+      // },
+      // {
+      //   $group: {
+      //     theater: '$theater',
+      //     films: {
+      //       $push: {
+<<<<<<< HEAD
       //         filmss: '$$ROOT.films',
       //         schedules: {
       //           time_start: '$$ROOT.time_start',
@@ -199,6 +262,14 @@ module.exports = {
       //     schedule: {
       //       $push: {
       //         schedule: '$_id.schedule'
+=======
+      //         films: '$films'
+      //         // schedules: [
+      //         //   {
+      //         //     schedules: '$$ROOT._id.schedules'
+      //         //   }
+      //         // ]
+>>>>>>> caa021805793b3e1523e1b85bfc777a2fe97b900
       //       }
       //     }
       //   }

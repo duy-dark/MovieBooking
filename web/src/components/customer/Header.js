@@ -1,36 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../styles/customers/header.scss";
 import Navbar from "./Navbar";
-import logoWeb from "../../assets/web-logo.png";
-import avatar from "../../assets/avatar.png";
 import Dropdown from "react-bootstrap/Dropdown";
 import { Link } from "react-router-dom";
 export default function Header(props) {
-  // const [ position, setPosition ] = useState(0);
+  const [ position, setPosition ] = useState('Hồ Chí Minh');
+
+  const changePosition = (value) => {
+
+  }
 
   return (
     <div className="header">
       <div className="header__icon">
-        <img src={logoWeb} alt="" />
+        <img src={`/assets/web-logo.png`} alt="" />
       </div>
       <Navbar />
       <div className="header__info">
         <div className="header__customer">
           <Link to="/login" className="header__login">
-            <img src={avatar} alt="avatar" />
+            <img src={`/assets/avatar.png`} alt="avatar" />
             Đăng nhập
           </Link>
         </div>
         <div className="header__position">
-          <Dropdown className="dropdown-position">
-            <Dropdown.Toggle id="dropdown-basic">Hồ Chí Minh</Dropdown.Toggle>
-
-            <Dropdown.Menu>
-              <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-              <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-              <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
+          <div className="header__position__name">{position}</div>
+          <div className="header__dropdown" style={{ display: 'none'}}>
+            <div className="header__dropdown__option" onClick={changePosition('Hà Nội')}>Hà Nội</div>
+            <div className="header__dropdown__option" onClick={changePosition('Đà Nẵng')}>Đà Nẵng</div>
+            <div className="header__dropdown__option" onClick={changePosition('Nha Trang')}>Nha Trang</div>
+            <div className="header__dropdown__option" onClick={changePosition('Hải Phòng')}>Hải Phòng</div>
+          </div>
         </div>
       </div>
     </div>
