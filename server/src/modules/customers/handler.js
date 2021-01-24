@@ -89,6 +89,14 @@ const putUpdate = async (id, params) => {
     throw {status: 400, detail: error};
   }
 };
+// const postLoginGoogle = async (req, res, next) => {
+//   passport.use(
+//     new GoogleStrategy(
+//       {
+//         clientID: key.web.client_id,
+//         clientSecret: key.web.client_secret,
+//         callbackURL: '/api/customer/auth/google/callback'
+//       },
 
 const postLoginFacebook = async (req, res, next) => {
   passport.use(

@@ -5,7 +5,6 @@ const moment = require('moment');
 
 const getNowShowing = async (params) => {
   try {
-    console.log('helloworld: ', params);
     let data = await Model.getNowShowing(params);
     return resSuccess(data);
   } catch (error) {

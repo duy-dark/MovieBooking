@@ -5,10 +5,18 @@ const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
 
 router.get('/getnow', (req, res, next) => {
-  let gte_match = new Date(moment('01/01/2000', MM / DD / YYYY).format());
-  let lte_match = new Date(moment('01/01/2050', MM / DD / YYYY).format());
-  let gte_end = new Date(moment('01/01/2000', MM / DD / YYYY).format());
-  let lte_end = new Date(moment('09/09/9999', MM / DD / YYYY).format());
+  // let gte_match = new Date(moment('01/01/2000', MM / DD / YYYY).format());
+  // let lte_match = new Date(moment('01/01/2050', MM / DD / YYYY).format());
+  // let gte_end = new Date(moment('01/01/2000', MM / DD / YYYY).format());
+  // let lte_end = new Date(moment('09/09/9999', MM / DD / YYYY).format());
+
+  var timezone = Date.now();
+  var timeZone1 = new Date(moment(timezone).format());
+
+  let gte_match = new Date(moment('2015-01-01', moment.ISO_8601));
+  let lte_match = timeZone1;
+  let gte_end = timeZone1;
+  let lte_end = new Date(moment('2080-01-01', moment.ISO_8601));
 
   let params = {
     gte_match: gte_match,
@@ -18,6 +26,23 @@ router.get('/getnow', (req, res, next) => {
   };
   handler
     .getNowShowing(params)
+    .then((val) => res.json(val))
+    .catch((err) => next(err));
+});
+
+router.get('/getcomming', (req, res, next) => {
+  var timezone = Date.now();
+  var timeZone1 = new Date(moment(timezone).format());
+
+  let gte_match = timeZone1;
+  let lte_match = new Date(moment('2080-01-01', moment.ISO_8601));
+
+  let params = {
+    gte_match: gte_match,
+    lte_match: lte_match
+  };
+  handler
+    .getComingSoon(params)
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });
