@@ -97,17 +97,7 @@ module.exports = {
     return await Collection.aggregate([
       {$match: {_id: lambda.conditions._id}},
       {
-        $unset: [
-          'content',
-          'directors',
-          'actors',
-          'imdb',
-          'digitals',
-          'is_deleted',
-          'created_at',
-          'updated_at',
-          'category_ids'
-        ]
+        $unset: ['is_deleted', 'created_at', 'updated_at', 'category_ids']
       },
       {
         $lookup: {
@@ -166,6 +156,22 @@ module.exports = {
           rate_count: {
             $first: '$rate_count'
           },
+          imdb: {
+            $first: '$imdb'
+          },
+          directors: {
+            $first: '$directors'
+          },
+          actors: {
+            $first: '$actors'
+          },
+          digitals: {
+            $first: '$digitals'
+          },
+          countries: {
+            $first: '$countries'
+          },
+
           url_avatar: {
             $first: '$url_avatar'
           },
@@ -260,6 +266,21 @@ module.exports = {
           },
           rate_count: {
             $first: '$rate_count'
+          },
+          imdb: {
+            $first: '$imdb'
+          },
+          directors: {
+            $first: '$directors'
+          },
+          actors: {
+            $first: '$actors'
+          },
+          digitals: {
+            $first: '$digitals'
+          },
+          countries: {
+            $first: '$countries'
           },
           url_avatar: {
             $first: '$url_avatar'
