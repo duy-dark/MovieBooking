@@ -64,69 +64,76 @@ module.exports = {
       // },
       {
         $lookup: {
-          from: 'theaters',
-          localField: 'theater_id',
-          foreignField: '_id',
-          as: 'theaters'
-        }
-      },
-      {
-        $addFields: {
-          theaters: {
-            $map: {
-              input: '$theaters',
-              in: {
-                theater_id: '$$this._id',
-                name: '$$this.name'
-              }
-            }
-          }
-        }
-      },
-      {
-        $lookup: {
           from: 'films',
           localField: 'film_id',
           foreignField: '_id',
-          as: 'films'
+          as: 'film&schedule'
         }
       },
       {
-        $addFields: {
-          films: {
-            $map: {
-              input: '$films',
-              in: {
-                film_id: '$$this._id',
-                name: '$$this.name'
-                // schedules: [
-                //   {
-                //     time_start: '$$ROOT.time_start',
-                //     time_end: '$$ROOT.time_end'
-                //   }
-                // ]
-              }
-            }
-          }
-        }
-      },
+        //$addFields: {
+        // theaters: {
+        //   $map: {
+        //     input: '$theaters',
+        //     in: {
+        //       theater_id: '$$this._id'
+        //       //name: '$$this.name'
+        //     }
+        //   }
+        // }
 
-      {
-        // $project: lambda.views
-        $group: {
-          _id: {
-            theater: '$theaters',
-            films: '$films',
-            schedules: [
-              {
-                schedule_id: '$$ROOT._id',
-                time_start: '$$ROOT.time_start',
-                time_end: '$$ROOT.time_end'
-              }
-            ]
-          }
+        $lookup: {
+          from: 'theaters',
+          localField: 'theater_id',
+          foreignField: '_id',
+          as: 'theater&schedule'
         }
+        //}
       }
+      // {
+      //   $lookup: {
+      //     from: 'films',
+      //     localField: 'film_id',
+      //     foreignField: '_id',
+      //     as: 'films'
+      //   }
+      // },
+      // {
+      //   $addFields: {
+      //     films: {
+      //       $map: {
+      //         input: '$films',
+      //         in: {
+      //           film_id: '$$this._id',
+      //           name: '$$this.name'
+      //           // schedules: [
+      //           //   {
+      //           //     time_start: '$$ROOT.time_start',
+      //           //     time_end: '$$ROOT.time_end'
+      //           //   }
+      //           // ]
+      //         }
+      //       }
+      //     }
+      //   }
+      // },
+
+      // {
+      //   // $project: lambda.views
+      //   $group: {
+      //     _id: {
+      //       theater: '$theaters',
+      //       films: '$films',
+      //       schedules: [
+      //         {
+      //           schedule_id: '$$ROOT._id',
+      //           time_start: '$$ROOT.time_start',
+      //           time_end: '$$ROOT.time_end'
+      //         }
+      //       ]
+      //     }
+      //   }
+      // }
       // {
       //   $group: {
       //     _id: '$_id.theater',
@@ -172,16 +179,16 @@ module.exports = {
       //         schedules: {
       //           time_start: '$$ROOT.time_start',
       //           time_end: '$$ROOT.time_end'
+      //         },
+      //         $group: {
+      //           _id: '$_id.filmss',
+      //           schedules: {
+      //             $push: {
+      //               time_start: '$$ROOT.time_start',
+      //               time_end: '$$ROOT.time_end'
+      //             }
+      //           }
       //         }
-      //         // $group: {
-      //         //   _id: '$_id.filmss',
-      //         //   schedules: {
-      //         //     $push: {
-      //         //       time_start: '$$ROOT.time_start',
-      //         //       time_end: '$$ROOT.time_end'
-      //         //     }
-      //         //   }
-      //         // }
       //       }
       //     }
       //   }

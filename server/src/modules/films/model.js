@@ -48,6 +48,44 @@ module.exports = {
       }
     ]);
   },
+  getcomment: async function (lambda) {
+    return await Collection.aggregate([
+      {
+        $lookup: {
+          from: 'film_comments',
+          localField: '_id',
+          foreignField: 'film_id',
+          as: 'comment'
+        }
+      },
+      {
+        $unset: ['trailer', '_id']
+      },
+      {$unwind: {path: '$comment', preserveNullAndEmptyArrays: true}},
+      {
+        $lookup: {
+          from: 'customers',
+          localField: 'comment.customer_id',
+          foreignField: '_id',
+          as: 'customer'
+        }
+      },
+      {
+        $replaceRoot: {
+          newRoot: {
+            film_id: '$comment.film_id',
+            comment_id: '$comment._id',
+            content: '$comment.content',
+            rates: '$comment.rate',
+            user_id: '$customer._id',
+            name: '$customer.name'
+          }
+        }
+      },
+      {$unwind: {path: '$user_id', preserveNullAndEmptyArrays: true}},
+      {$unwind: {path: '$name', preserveNullAndEmptyArrays: true}}
+    ]);
+  },
   getDetail: async function (lambda) {
     return await Collection.aggregate([
       {$match: lambda.conditions},

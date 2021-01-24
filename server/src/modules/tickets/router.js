@@ -29,6 +29,14 @@ router.get('/:id', (req, res, next) => {
     .catch((err) => next(err));
 });
 
+router.get('/ticket/:id', (req, res, next) => {
+  let id = require('mongodb').ObjectId(req.params.id);
+  handler
+    .getticket(id)
+    .then((val) => res.json(val))
+    .catch((err) => next(err));
+});
+
 router.post('/', (req, res, next) => {
   let params = req.body;
   handler

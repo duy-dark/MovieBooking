@@ -92,6 +92,17 @@ const getDetail = async (params) => {
   }
 };
 
+const getcomment = async (lambda) => {
+  try {
+    let data = await Model.getcomment();
+    //let result = data.filter((item) => !!item.film_id);
+    let result = data.filter((item) => item.film_id == lambda);
+    return resSuccess(result);
+  } catch (error) {
+    throw {status: 400, detail: error};
+  }
+};
+
 const findById = async (id) => {
   try {
     let lambda = {
@@ -246,6 +257,7 @@ let getFilmInPeriod = async (params) => {
 module.exports = {
   getList,
   getDetail,
+  getcomment,
   findById,
   postCreate,
   putUpdate,

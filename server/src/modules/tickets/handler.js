@@ -107,10 +107,24 @@ const deleteData = async (id) => {
   }
 };
 
+const getticket = async (id) => {
+  try {
+    let data = await Model.getticket(id);
+    let arr = [];
+    data.map((item) => {
+      arr = [...arr, ...item.seat_ids];
+    });
+    return resSuccess({seats: arr});
+  } catch (error) {
+    throw {status: 400, detail: error};
+  }
+};
 module.exports = {
+  getticket,
   getList,
   findById,
   postCreate,
   putUpdate,
-  deleteData
+  deleteData,
+  getticket
 };
