@@ -16,7 +16,7 @@ export default function filmsReducer(state = initialState, action) {
   const { type, payload = {} } = action;
   switch (type) {
     case FilmTypes.FILM_DETAIL_SUCCESS:
-      newState = Object.assign({}, state, { filmDetail: payload })
+      newState = Object.assign({}, state, { filmDetail: payload.detail })
       break;
     case FilmTypes.LIST_FILM_NOW_SUCCESS:
       newState = Object.assign({}, state, { filmsNow: payload })
