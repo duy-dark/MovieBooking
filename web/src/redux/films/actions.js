@@ -31,3 +31,10 @@ export function getFilmDetails(info) {
     payload: info,
   };
 }
+
+export function getSeat(data) {
+  return {
+    type: FilmTypes.LIST_SEAT,
+    payload: data,
+  };
+}

@@ -105,7 +105,8 @@ export default function Booking(props) {
   const { users } = useStore().getState();
 
   const [disabledBtn, setDisabledBtn] = useState(false);
-
+  let { id } = useParams();
+ 
   useEffect(() => {
     setDisabledBtn(!(seats.length > 0 && validateEmail(email) && phone && payment));
   }, [seats, email, phone, payment]);
@@ -120,11 +121,21 @@ export default function Booking(props) {
         setSeats([...seats, seat]);
       }
     }
+
+    const info = {
+      id: id
+    };
+    dispatch(getFilmDetails(info));
+    dispatch(getSeat(movies.schedule_id))
   };
 
   const formatMoney = (number) => {
     return new Intl.NumberFormat().format(number);
   };
+
+  let data=useSelector(state =>state.films.filmDetail)
+  let seats=useSelector(state => state.films.seats)
+
 
   const bookingTicket = () => {
     const bookingInfo = {
@@ -155,7 +166,7 @@ export default function Booking(props) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
+  
   return (
     <div className="booking">
       <div className="booking-content">
