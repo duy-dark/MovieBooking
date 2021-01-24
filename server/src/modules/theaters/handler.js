@@ -46,7 +46,7 @@ const findById = async (id) => {
 const getFilmToDay = async () => {
   try {
     // let time_start = new Date(moment().add(7, 'hour'));
-    let time_start = new Date(moment().subtract(1, 'days'));
+    let time_start = new Date(moment().add(7, 'hour'));
 
     let hour = new Date(moment()).getHours();
     let date = new Date(moment().add(7, 'hour').add(1, 'days')).getDate();
