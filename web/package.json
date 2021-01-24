@@ -36,6 +36,7 @@
     "react-select": "^3.1.0",
     "react-slick": "^0.27.14",
     "react-tabs": "^3.1.2",
+    "react-wheel-of-prizes": "^1.0.6",
     "redux": "^4.0.5",
     "redux-ignore": "^1.2.5",
     "redux-logger": "^3.0.6",
