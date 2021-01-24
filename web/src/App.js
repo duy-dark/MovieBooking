@@ -1,21 +1,37 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
-// import routes from "./router";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { connect } from 'react-redux';
+import routes from "./router";
 import "./styles/styles.scss";
+import Header from "./components/customer/Header";
+import Footer from "./components/customer/Footer";
 // import CustomScrollbar from './components/CustomScrollbar'
-import AppCustomer from "./views/customers/AppCustomer";
-import LayoutAdmin from "./views/admin/LayoutAdmin";
-import Login from "./views/customers/Login";
 class App extends Component {
   render() {
-    return (
-      <Router>
-        <Route path="/" exact component={AppCustomer} />
-        <Route path="/login" component={Login} />
-        <Route path="/admin" exact component={LayoutAdmin} />
-      </Router>
-    );
+  let showRouteComponent = (routes) => {
+    let result = null;
+    if (routes.length > 0) {
+      result = routes.map((route, index) => {
+        return <Route key={index} path={route.path} exact={route.exact} component={route.component} />;
+      });
+    }
+    return result;
+  };
+  return (
+    <Router>
+      {this.props.header && <Header/>}
+      <Switch>
+        { showRouteComponent(routes) }
+      </Switch>
+      {/* <Footer/> */}
+    </Router>
+  )
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+  header: !!state.users.header,
+  footer: !!state.users.footer
+}};
+export default connect(mapStateToProps)(App);

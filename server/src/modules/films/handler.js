@@ -157,6 +157,73 @@ const findById = async (id) => {
   }
 };
 
+const getFilm7Day = async (id) => {
+  try {
+    // let time_start = new Date(moment().add(7, 'hour'));
+    let time_start = new Date(moment().subtract(1, 'days'));
+
+    let hour = new Date(moment()).getHours();
+    let date = new Date(moment().add(7, 'hour').add(7, 'days')).getDate();
+    if (hour > 17) {
+      date -= 1;
+    }
+    let month = new Date(moment().add(7, 'hour').add(7, 'days')).getMonth();
+    let year = new Date(moment().add(7, 'hour').add(7, 'days')).getFullYear();
+
+    let time_end = new Date(
+      moment(
+        `${year}-${month > 8 ? month + 1 : '0' + (month + 1)}-${
+          date > 9 ? date : '0' + date
+        }`,
+        moment.ISO_8601
+      ).add(7, 'hour')
+    );
+
+    console.log('time_start: ', time_start);
+    console.log('time_end:   ', time_end);
+    console.log('date:       ', date);
+    console.log('month:      ', month + 1);
+    console.log('year:       ', year);
+
+    let lambda = {
+      conditions: {
+        _id: id,
+        time_start: time_start,
+        time_end: time_end,
+        is_deleted: false
+      }
+    };
+
+    let data = await Model.getFilm7Day(lambda);
+
+    // data = data.map((theater) => {
+    //   return {
+    //     ...theater,
+    //     films:
+    //       theater.films &&
+    //       theater.films.map((film) => {
+    //         return {
+    //           ...film,
+    //           film_schedules:
+    //             film.film_schedules.length > 0 &&
+    //             film.film_schedules.filter((schedule) => {
+    //               let timeStart = moment(schedule.time_start);
+    //               return (
+    //                 timeStart.diff(moment(time_start)) >= 0 &&
+    //                 timeStart.diff(moment(time_end)) <= 0
+    //               );
+    //             })
+    //         };
+    //       })
+    //   };
+    // });
+    return resSuccess(data);
+  } catch (error) {
+    // throw {status: 400, detail: error};
+    throw {status: 400, detail: error};
+  }
+};
+
 const postCreate = async (params) => {
   try {
     let lambda = {
@@ -247,6 +314,7 @@ module.exports = {
   getList,
   getDetail,
   findById,
+  getFilm7Day,
   postCreate,
   putUpdate,
   deleteData,
