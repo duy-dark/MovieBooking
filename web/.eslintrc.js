@@ -29,6 +29,7 @@ module.exports = {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "no-unused-vars": ["error", { "varsIgnorePattern": "[iI]gnored" }],
     "no-shadow": ["error", { "builtinGlobals": false, "hoist": "all", "allow": [] }],
-    "no-underscore-dangle": ["error", { "allow": ["foo_", "_bar"] }]
+    "no-underscore-dangle": ["error", { "allow": ["foo_", "_bar"] }],
+    "no-unused-expressions": { "allowShortCircuit": false, "allowTernary": false }
   }
 };

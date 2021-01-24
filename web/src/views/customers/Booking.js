@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useLocation, useHistory } from "react-router-dom";
 import { useStore, useDispatch, useSelector } from "react-redux";
 import { updateHeaderFooter } from "../../redux/users/actions";
 import "../../styles/customers/booking/booking.scss";
-import { useLocation, useHistory } from "react-router-dom";
 import { postBookingInfo } from "../../redux/films/actions";
 import { getToken } from "../../redux/users/selector";
 
@@ -195,9 +195,7 @@ export default function Booking(props) {
       </div>
       <div className="booking-form">
         <div className="booking-form__input booking-form__total">
-          <p>
-{' '}
-{formatMoney(seats.length * 80000)}đ</p>
+          <p> {formatMoney(seats.length * 80000)}đ</p>
         </div>
         <div className="booking-form__input booking-form__film-name">
           <div className="booking-form__name">{movies.name}</div>
@@ -205,8 +203,7 @@ export default function Booking(props) {
           <div className="booking-form__address">{`${movies.day} - ${movies.date} - ${movies.timeStart} - ${movies.room}`}</div>
         </div>
         <div className="booking-form__input booking-form__seats">
-          Ghế
-{" "}
+          Ghế{" "}
           {seats.map((seat, index) => {
             return (
               <span key={index}>
@@ -232,9 +229,7 @@ export default function Booking(props) {
             <div className="radio-form">
               <input id="momo" name="payment" value="momo" onChange={(e) => setPayment(e.target.value)} type="radio" />
               <label htmlFor="momo">
-                <img src="/assets/logo-momo.jpg" alt="" />
-{' '}
-<span>Thanh toán Momo</span>
+                <img src="/assets/logo-momo.jpg" alt="" /> <span>Thanh toán Momo</span>
               </label>
             </div>
             <div className="radio-form">
