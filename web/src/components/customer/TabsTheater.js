@@ -21,7 +21,7 @@ export default function TabsTheater(props) {
   return (
     <Tabs className="tab-theater" selectedIndex={tabSelect} onSelect={tab => setTabSelect(tab)}>
       <TabList className="tab-theater__header" >
-        {props.theaters.map((theater,index) => 
+        {props.theaters.map((theater,index) =>
           <Tab key={index} className="tab-theater__header__item">
             <div className="tab-theater__header__item__image">
               <img src={theater.url_image} alt=""/>
@@ -54,7 +54,7 @@ export default function TabsTheater(props) {
                   <Collapse isOpened={activeIndex.includes(film._id)}>
                     <div className="tab-theater__item__title">2D Digital</div>
                     <div className="tab-theater__item__schedules">
-                      {film.film_schedules.map((schedule, i) => <CardTime schedule={schedule} key={i} />)}
+                      {film.film_schedules.map((schedule, i) => <CardTime film={film} schedule={schedule} key={i} />)}
                     </div>
                   </Collapse>
                 </div>)

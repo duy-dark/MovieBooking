@@ -8,7 +8,12 @@ export default function CardTime(props) {
     return moment(date).format("hh:mm")
   }
   const clickTime = () => {
-
+    history.push({
+      pathname: `/${props.film._id}/booking`,
+      state: {
+        schedule_id: props.schedule._id
+      }
+    })
   }
   return (
     <div className="time-film" onClick={clickTime}>
