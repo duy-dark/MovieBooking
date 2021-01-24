@@ -34,7 +34,19 @@ module.exports = {
             $gte: lambda.gte_match,
             $lte: lambda.lte_match
           },
-          end_time: {$gte: lambda.gte_end, $lte: lambda.lte_end}
+          time_end: {$gte: lambda.gte_end, $lte: lambda.lte_end}
+        }
+      }
+    ]);
+  },
+  getComingSoon: async function (lambda) {
+    return await Collection.aggregate([
+      {
+        $match: {
+          time_start: {
+            $gte: lambda.gte_match,
+            $lte: lambda.lte_match
+          }
         }
       }
     ]);
@@ -52,31 +64,10 @@ module.exports = {
       // },
       {
         $lookup: {
-          from: 'theaters',
-          localField: 'theater_id',
-          foreignField: '_id',
-          as: 'theaters'
-        }
-      },
-      {
-        $addFields: {
-          theaters: {
-            $map: {
-              input: '$theaters',
-              in: {
-                theater_id: '$$this._id',
-                name: '$$this.name'
-              }
-            }
-          }
-        }
-      },
-      {
-        $lookup: {
           from: 'films',
           localField: 'film_id',
           foreignField: '_id',
-          as: 'films'
+          as: 'film&schedule'
         }
       },
       {
@@ -138,6 +129,50 @@ module.exports = {
         }
       }
 
+      // {
+      //   $lookup: {
+      //     from: 'films',
+      //     localField: 'film_id',
+      //     foreignField: '_id',
+      //     as: 'films'
+      //   }
+      // },
+      // {
+      //   $addFields: {
+      //     films: {
+      //       $map: {
+      //         input: '$films',
+      //         in: {
+      //           film_id: '$$this._id',
+      //           name: '$$this.name'
+      //           // schedules: [
+      //           //   {
+      //           //     time_start: '$$ROOT.time_start',
+      //           //     time_end: '$$ROOT.time_end'
+      //           //   }
+      //           // ]
+      //         }
+      //       }
+      //     }
+      //   }
+      // },
+
+      // {
+      //   // $project: lambda.views
+      //   $group: {
+      //     _id: {
+      //       theater: '$theaters',
+      //       films: '$films',
+      //       schedules: [
+      //         {
+      //           schedule_id: '$$ROOT._id',
+      //           time_start: '$$ROOT.time_start',
+      //           time_end: '$$ROOT.time_end'
+      //         }
+      //       ]
+      //     }
+      //   }
+      // }
       // {
       //   $group: {
       //     _id: '$_id.theater',

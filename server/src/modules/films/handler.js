@@ -92,6 +92,17 @@ const getDetail = async (params) => {
   }
 };
 
+const getcomment = async (lambda) => {
+  try {
+    let data = await Model.getcomment();
+    //let result = data.filter((item) => !!item.film_id);
+    let result = data.filter((item) => item.film_id == lambda);
+    return resSuccess(result);
+  } catch (error) {
+    throw {status: 400, detail: error};
+  }
+};
+
 const findById = async (id) => {
   try {
     let lambda = {
@@ -217,7 +228,7 @@ const getFilm7Day = async (id) => {
     //       })
     //   };
     // });
-    return resSuccess(data);
+    return resSuccess({detail: data[0]});
   } catch (error) {
     // throw {status: 400, detail: error};
     throw {status: 400, detail: error};
@@ -313,6 +324,7 @@ let getFilmInPeriod = async (params) => {
 module.exports = {
   getList,
   getDetail,
+  getcomment,
   findById,
   getFilm7Day,
   postCreate,

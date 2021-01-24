@@ -12,6 +12,10 @@ const express = require('express'),
 const {port} = config;
 
 const app = express();
+const swaggerDocument = require('./swagger.json');
+const swaggerUI = require('swagger-ui-express');
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+
 // app.use(authen) check token
 app.use(bodyParser.json());
 app.use(cookieParser('login123123'));
@@ -26,6 +30,15 @@ app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
 
+const {Authenticator, authenticate} = require('passport');
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+  console.log(user);
+  done(null, user);
+});
 app.get('/', (req, res) => {
   res.json('Hello world :)))');
 });
