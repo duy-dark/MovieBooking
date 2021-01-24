@@ -97,7 +97,22 @@ module.exports = {
     return await Collection.aggregate([
       {$match: {_id: lambda.conditions._id}},
       {
-        $unset: ['is_deleted', 'created_at', 'updated_at', 'category_ids']
+        $unset: ['is_deleted', 'created_at', 'updated_at']
+      },
+      {
+        $lookup: {
+          from: 'categories',
+          localField: 'category_ids',
+          foreignField: '_id',
+          as: 'categories'
+        }
+      },
+      {
+        $unset: [
+          'categories.is_deleted',
+          'categories.created_at',
+          'categories.updated_at'
+        ]
       },
       {
         $lookup: {
@@ -144,6 +159,10 @@ module.exports = {
           trailer: {
             $first: '$trailer'
           },
+
+          categories: {
+            $first: '$categories'
+          },
           long_time: {
             $first: '$long_time'
           },
@@ -155,6 +174,9 @@ module.exports = {
           },
           rate_count: {
             $first: '$rate_count'
+          },
+          content: {
+            $first: '$content'
           },
           imdb: {
             $first: '$imdb'
@@ -171,7 +193,6 @@ module.exports = {
           countries: {
             $first: '$countries'
           },
-
           url_avatar: {
             $first: '$url_avatar'
           },
@@ -255,11 +276,17 @@ module.exports = {
           trailer: {
             $first: '$trailer'
           },
+          categories: {
+            $first: '$categories'
+          },
           long_time: {
             $first: '$long_time'
           },
           start_date: {
             $first: '$start_date'
+          },
+          content: {
+            $first: '$content'
           },
           rates: {
             $first: '$rates'
