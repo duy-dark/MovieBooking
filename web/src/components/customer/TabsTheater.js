@@ -22,7 +22,7 @@ export default function TabsTheater(props) {
       <TabList className="tab-theater__header">
         <Tab className="tab-theater__header__item">
           <div className="tab-theater__header__item__image">
-            <img src={`/assets/film/threater1.jpg`} alt=""/>
+            <img src={`/assets/film/theater1.jpg`} alt=""/>
           </div>
           <div className="tab-theater__header__item__content">
             <div className="tab-theater__header__item-name">BHD Star - Bitexco</div>
@@ -31,7 +31,7 @@ export default function TabsTheater(props) {
         </Tab>
         <Tab className="tab-theater__header__item">
           <div className="tab-theater__header__item__image">
-            <img src={`/assets/film/threater1.jpg`} alt=""/>
+            <img src={`/assets/film/theater2.jpg`} alt=""/>
           </div>
           <div className="tab-theater__header__item__content">
             <div className="tab-theater__header__item-name">BHD Star - Bitexco</div>

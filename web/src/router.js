@@ -3,6 +3,7 @@ import Login from "./views/customers/Login";
 import Home from "./views/customers/Home";
 // import MovieDetail from "./views/customers/film/Film.js";
 import MovieDetail from "./views/customers/FilmDetail.js";
+import Booking from "./views/customers/Booking.js";
 
 const routes = [
   {
@@ -21,6 +22,11 @@ const routes = [
     exact: true,
     component: () => <MovieDetail />,
   },
+  {
+    path: "/:id/booking",
+    exact: true,
+    component: () => <Booking />,
+  }
 ];
 
 export default routes;
