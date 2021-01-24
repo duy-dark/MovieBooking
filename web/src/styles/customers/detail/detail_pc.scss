@@ -158,10 +158,9 @@
   }
 
   .tab-film__theater {
-    padding: 10px;
     .theater__item {
       position: relative;
-      padding: 10px;
+      margin: 20px;
 
       &::after {
         content: "";
