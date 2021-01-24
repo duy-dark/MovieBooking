@@ -1,23 +1,25 @@
 import React from "react";
-import AppCustomer from "./views/customers/AppCustomer";
-import LayoutAdmin from "./views/admin/LayoutAdmin";
 import Login from "./views/customers/Login";
+import Home from "./views/customers/Home";
+// import MovieDetail from "./views/customers/film/Film.js";
+import MovieDetail from "./views/customers/FilmDetail.js";
 
 const routes = [
   {
     path: "/",
     exact: true,
-    component: () => <AppCustomer />,
+    component: () => <Home />,
   },
-  {
-    path: "/admin",
-    exact: false,
-    component: () => <LayoutAdmin />,
-  },
+
   {
     path: "/login",
     exact: true,
     component: () => <Login />,
+  },
+  {
+    path: "/movie/detail",
+    exact: true,
+    component: () => <MovieDetail />,
   },
 ];
 
