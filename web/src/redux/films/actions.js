@@ -6,7 +6,7 @@ export function getListFilmNow() {
   };
 }
 
-export function getListFilmNow() {
+export function getListFilmFuture() {
   return {
     type: FilmTypes.LIST_FILM_FUTURE
   };

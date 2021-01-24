@@ -36,18 +36,9 @@ let lambda={
   phone_number:null,
   payment:null,
   is_deleted:null,
-  created_at:null, 
-  updated_at:null
+  booking_time :null
   };
   var signature;
-  const transporter = nodemailer.createTransport({
-    // config mail server
-    service: 'gmail',
-    auth: {
-      user: 'doantotnghiepthang9@gmail.com',
-      pass: 'doantotnghiep@',
-    },
-  })
 const momoApi= async(params)=>{
     try{
       var orderId = uuidv1()
@@ -64,8 +55,7 @@ const momoApi= async(params)=>{
         phone_number:params.phone_number,
         payment:params.payment,
         is_deleted:params.is_deleted,
-        created_at:params.created_at, 
-        updated_at:params.updated_at    
+        booking_time:params.booking_time
       };
       console.log(lambda)
   var rawSignature = "partnerCode="+partnerCode+
@@ -353,29 +343,7 @@ function sortObject(o) {
   }
   return sorted;
 }
-async function sendQRcodetoEmail(email){
 
-  
-  const mainOptions = {
-    // thiết lập đối tượng, nội dung gửi mail
-    from: 'DATN',
-    to: email,
-    subject: 'Ma Qr cua ban',
-    text: 'You recieved message from " + "doantotnghiepthang9@gmail.com',
-    html: `
-        <h3>Xin chào , </h3>
-        <p>Ban da mua ve xem phim thanh cong</p>
-        `
-  }
-  
-   await transporter.sendMail(mainOptions,  (err, info) => {
-    
-    if (err) {
-      console.log("send mail error")
-      console.log(err.toString())
-    } 
-  })
-}
   module.exports = {
       momoApi,
       checkStatusMomoApi,
