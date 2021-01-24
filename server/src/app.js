@@ -44,7 +44,7 @@ app.use('/api/notification', require('./modules/notifications'));
 app.use('/api/ticket', require('./modules/tickets'));
 // app.use('/api/ticket_queue', require('./modules/ticket_queues'));
 app.use('/api/seat', require('./modules/seats'));
-app.use('/api/theaters', require('./modules/theaters'));
+app.use('/api/theater', require('./modules/theaters'));
 app.use('/api/room', require('./modules/rooms'));
 app.use('/api/permission', require('./modules/permissions'));
 // app.use('/api/admin_permission', require('./modules/admins_permissions'));
