@@ -2,10 +2,12 @@ import React from "react";
 
 import WheelComponent from "react-wheel-of-prizes";
 import "react-wheel-of-prizes/dist/index.css";
-
+import "../../../styles/customers/game/game.scss"
 const Table = () => {
     return (
+        <div className="game__history"> 
         <table id="customers">
+            <caption className="game__history__caption">Lịch sử lượt chơi</caption>
             <tr>
                 <th>Company</th>
                 <th>Contact</th>
@@ -62,7 +64,7 @@ const Table = () => {
         <td>France</td>
     </tr>
         </table>
-        
+    </div>
     )
 };
 
@@ -81,20 +83,25 @@ const Circle = () => {
   const onFinished = (winner) => {
     console.log(winner);
   }
-  return <WheelComponent
-  segments = {segments}
-  segColors = {segColors}
-  winningSegment ='won 10'
-  onFinished={(winner)=>onFinished(winner)}
-  primaryColor='black'
-  contrastColor='white'
-  buttonText='Spin'
-  isOnlyOnce = {false}/>
+  return (
+    <div className="game__circle">
+        <WheelComponent 
+            segments = {segments}
+            segColors = {segColors}
+            winningSegment ='won 10'
+            onFinished={(winner)=>onFinished(winner)}
+            primaryColor='black'
+            contrastColor='white'
+            buttonText='Spin'
+            isOnlyOnce = {false}
+            />
+    </div>
+  )
 };
 
 const PageGame = () => {
   return (
-    <div>
+    <div className="game">
       <Table />
       <Circle />
     </div>
