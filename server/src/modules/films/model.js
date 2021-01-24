@@ -167,10 +167,10 @@ module.exports = {
             $first: '$rate_count'
           },
           url_avatar: {
-            $first: '$rates'
+            $first: '$url_avatar'
           },
           url_background: {
-            $first: '$rate_count'
+            $first: '$url_background'
           },
           is_blockbuster: {
             $first: '$is_blockbuster'
@@ -262,10 +262,10 @@ module.exports = {
             $first: '$rate_count'
           },
           url_avatar: {
-            $first: '$rates'
+            $first: '$url_avatar'
           },
           url_background: {
-            $first: '$rate_count'
+            $first: '$url_background'
           },
           is_blockbuster: {
             $first: '$is_blockbuster'
