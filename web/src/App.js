@@ -1,11 +1,14 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { connect } from 'react-redux';
 import routes from "./router";
 import "./styles/styles.scss";
+import Header from "./components/customer/Header";
+import Footer from "./components/customer/Footer";
 // import CustomScrollbar from './components/CustomScrollbar'
-
 class App extends Component {
-  showRouteComponent = (routes) => {
+  render() {
+  let showRouteComponent = (routes) => {
     let result = null;
     if (routes.length > 0) {
       result = routes.map((route, index) => {
@@ -14,18 +17,21 @@ class App extends Component {
     }
     return result;
   };
-
-  render() {
-    return (
-      <Router>
-        <div className="app">
-          {/* <CustomScrollbar> */}
-          <Switch>{this.showRouteComponent(routes)}</Switch>
-          {/* </CustomScrollbar> */}
-        </div>
-      </Router>
-    );
+  return (
+    <Router>
+      {this.props.header && <Header/>}
+      <Switch>
+        { showRouteComponent(routes) }
+      </Switch>
+      {/* <Footer/> */}
+    </Router>
+  )
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+  header: !!state.users.header,
+  footer: !!state.users.footer
+}};
+export default connect(mapStateToProps)(App);

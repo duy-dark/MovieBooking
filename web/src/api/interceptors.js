@@ -1,12 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
-import { clearToken } from '../redux/modules/actions/users';
-import { showSpinner, hideSpinner } from '../redux/modules/actions/layout';
 import camelcaseKeys from "camelcase-keys";
 
 const setup = (instance) => {
   instance.interceptors.request.use(
     function (config) {
-      const token = useSelector(state => state.users.token) || localStorage.getItem('token');
+      const token = localStorage.getItem("token");
       if (token) {
         config.headers.Authenticator = `Bearer ${token}`;
       }
@@ -28,12 +25,10 @@ const checkToken = (instance) => {
     },
     (error) => {
       if (
-        (!!sessionStorage.getItem("token") ||
-          !!localStorage.getItem("token")) &&
+        (!!sessionStorage.getItem("token") || !!localStorage.getItem("token")) &&
         !window.location.pathname.includes("login")
       ) {
         // clear token storage
-        useDispatch(clearToken())
       }
       return Promise.reject(error);
     }
@@ -43,15 +38,11 @@ const checkToken = (instance) => {
 const checkError = (instance) => {
   instance.interceptors.response.use(
     (response) => {
-      setTimeout(() => {
-        useDispatch(hideSpinner())
-      }, 500)
+      setTimeout(() => {}, 500);
       return response;
     },
     (error) => {
-      setTimeout(() => {
-        useDispatch(hideSpinner())
-      }, 500)
+      setTimeout(() => {}, 500);
       return Promise.reject(error);
     }
   );
@@ -59,42 +50,40 @@ const checkError = (instance) => {
 
 const showSpinnerRequest = (instance) => {
   instance.interceptors.request.use(
-    request => {
+    (request) => {
       // set value showSpinner in store
-      useDispatch(showSpinner())
-      return request
+      return request;
     },
-    error => {
+    (error) => {
       // set value showSpinner in store
-      useDispatch(showSpinner())
-      return Promise.reject(error)
+      return Promise.reject(error);
     }
-  )
-}
+  );
+};
 
 const hideSpinnerRequest = (instance) => {
   instance.interceptors.response.use(
-    response => {
+    (response) => {
       setTimeout(() => {
         // set value showSpinner in store
-        useDispatch(hideSpinner())
-      }, 500)
-      return response
+        // useDispatch(hideSpinner())
+      }, 500);
+      return response;
     },
-    error => {
+    (error) => {
       setTimeout(() => {
         // set value showSpinner in store
-        useDispatch(hideSpinner())
-      }, 500)
-      return Promise.reject(error)
+        // useDispatch(hideSpinner())
+      }, 500);
+      return Promise.reject(error);
     }
-  )
-}
+  );
+};
 
 export default {
   setup,
   checkToken,
   checkError,
   showSpinnerRequest,
-  hideSpinnerRequest
+  hideSpinnerRequest,
 };

@@ -1,30 +1,38 @@
-import React from 'react';
-import '../../styles/customers/header.scss';
-import Navbar from './Navbar';
-import logoWeb from '../../assets/web-logo.png'
-import avatar from '../../assets/avatar.png'
-
-
+import React, { useState } from "react";
+import "../../styles/customers/header.scss";
+import Navbar from "./Navbar";
+import Dropdown from "react-bootstrap/Dropdown";
+import { Link } from "react-router-dom";
 export default function Header(props) {
-  // const [ position, setPosition ] = useState(0);
+  const [ position, setPosition ] = useState('Hồ Chí Minh');
+
+  const changePosition = (value) => {
+
+  }
 
   return (
     <div className="header">
       <div className="header__icon">
-        <img src={logoWeb} alt=""/>
+        <img src={`/assets/web-logo.png`} alt="" />
       </div>
-      <Navbar/>
+      <Navbar />
       <div className="header__info">
         <div className="header__customer">
-          <div className="header__login">
-            <img src={avatar} alt="avatar"/>
+          <Link to="/login" className="header__login">
+            <img src={`/assets/avatar.png`} alt="avatar" />
             Đăng nhập
-          </div>
+          </Link>
         </div>
         <div className="header__position">
-          
+          <div className="header__position__name">{position}</div>
+          <div className="header__dropdown" style={{ display: 'none'}}>
+            <div className="header__dropdown__option" onClick={changePosition('Hà Nội')}>Hà Nội</div>
+            <div className="header__dropdown__option" onClick={changePosition('Đà Nẵng')}>Đà Nẵng</div>
+            <div className="header__dropdown__option" onClick={changePosition('Nha Trang')}>Nha Trang</div>
+            <div className="header__dropdown__option" onClick={changePosition('Hải Phòng')}>Hải Phòng</div>
+          </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
