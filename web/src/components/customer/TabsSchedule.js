@@ -4,7 +4,7 @@ import { Collapse } from 'react-collapse';
 import * as moment from 'moment';
 import CardTime from './CardTime';
 import CardComment from './CardComment';
-
+import theater from '../../assets/film/theater1.jpg'
 const days = ['chủ nhật', 'thứ 2', 'thứ 3', 'thứ 4', 'thứ 5', 'thứ 6', 'thứ 7']
 export default function TabsSchedule(props) {
 
@@ -40,7 +40,7 @@ export default function TabsSchedule(props) {
     setListDate(arr)
     
   }, [])
-
+ 
   return (
     
     <Tabs className="tab-film">
@@ -49,7 +49,7 @@ export default function TabsSchedule(props) {
         <Tab className="tab-film__header__item">Thông Tin</Tab>
         <Tab className="tab-film__header__item">Đánh Giá</Tab>
       </TabList>
-      {console.log(props.detail)}
+     
       <TabPanel className="tab-film__date">
         <Tabs>
           <TabList className="date-list">
@@ -62,29 +62,34 @@ export default function TabsSchedule(props) {
             
           </TabList>
          
-          { listDate.map((item, index) => {
+          { props.dayOfWeeks.map((item, index) => {
               
               return (
-              <TabPanel className="tab-film__theater">
-              
-                <div className="theater__item">
+
+              <TabPanel key={index} className="tab-film__theater">
+                  {item.map((theater,index2)=>{
+                    return (
+                <div key={index2} className="theater__item">
                   <div className="theater__item__header" onClick={() => changeCollapse(1)}>
                     <div className="theater__item__image">
-                      <img src={`/assets/film/theater1.jpg`} alt=""/>
+                      <img src={`${theater.url_image}`} alt=""/>
                     </div>
                     <div className="theater__item__film">
-                      <span>BHD Star - Bitexco</span>
-                      <span>L3-Bitexco Icon 68, 2 Hải Triều, Q.1</span>
+                    <span>{`${theater.name}`}</span>
+                    <span>{`${theater.address}`}</span>
                     </div>
                   </div>
                   <Collapse className="theater__item__schedule" isOpened={activeIndex.includes(1)}>
                     <div className="theater__item__title">2D Digital</div>
                     <div className="theater__item__schedules">
-                      <CardTime />
-                      <CardTime />
+                     { theater.film_schedules.map((film,index1)=><CardTime key={index1} schedule={film} />)}
+                    
                     </div>
                   </Collapse>
                 </div>
+                    )
+                  })}
+                
               </TabPanel>
               )
             })} 
