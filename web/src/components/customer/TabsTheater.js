@@ -54,7 +54,7 @@ export default function TabsTheater(props) {
                   <Collapse isOpened={activeIndex.includes(film._id)}>
                     <div className="tab-theater__item__title">2D Digital</div>
                     <div className="tab-theater__item__schedules">
-                      {film.film_schedules.map((schedule, i) => <CardTime film={film} schedule={schedule} key={i} />)}
+                      {film.film_schedules.map((schedule, i) => <CardTime name={film.name} theater_url_image={theater.url_image} theater_name={theater.name} film={film} schedule={schedule} key={i} />)}
                     </div>
                   </Collapse>
                 </div>)
