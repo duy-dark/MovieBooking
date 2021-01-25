@@ -104,6 +104,13 @@ router.get('/detail/:id', (req, res, next) => {
     .catch((err) => next(err));
 });
 
+router.get('/getfilmtoday', (req, res, next) => {
+  handler
+    .getFilmToDay()
+    .then((val) => res.json(val))
+    .catch((err) => next(err));
+});
+
 router.get('/:id/detail', (req, res, next) => {
   let id = require('mongodb').ObjectId(req.params.id);
   handler

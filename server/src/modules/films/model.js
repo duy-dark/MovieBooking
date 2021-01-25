@@ -143,6 +143,151 @@ module.exports = {
     ]);
   },
 
+  getFilmToDay: async function (lambda) {
+    return await Collection.aggregate([
+      {$unset: ['is_deleted', 'created_at', 'updated_at']},
+      {
+        $lookup: {
+          from: 'film_schedules',
+          localField: '_id',
+          foreignField: 'theater_id',
+          as: 'theaters'
+        }
+      },
+      {
+        $unset: [
+          'theaters.is_deleted',
+          'theaters.created_at',
+          'theaters.updated_at'
+        ]
+      },
+
+      {
+        $unwind: {
+          path: '$theaters',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+
+      {
+        $match: {
+          'theaters.time_start': {
+            $gte: lambda.conditions.time_start,
+            $lte: lambda.conditions.time_end
+          }
+        }
+      },
+
+      {
+        $lookup: {
+          from: 'theaters',
+          localField: 'theaters.film_id',
+          foreignField: '_id',
+          as: 'theaters'
+        }
+      },
+      {
+        $unset: [
+          'theaters.is_deleted',
+          'theaters.created_at',
+          'theaters.updated_at',
+          'theaters.category_ids'
+        ]
+      },
+
+      {
+        $unwind: {
+          path: '$theaters',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+
+      {
+        $group: {
+          _id: '$_id',
+          name: {
+            $first: '$name'
+          },
+          address: {
+            $first: '$address'
+          },
+          url_image: {
+            $first: '$url_image'
+          },
+          theaters: {
+            $addToSet: '$theaters'
+          }
+        }
+      },
+
+      {
+        $unwind: {
+          path: '$theaters',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+
+      {
+        $lookup: {
+          from: 'film_schedules',
+          let: {
+            film_id: '$_id',
+            theaters_id: '$theaters._id'
+          },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    {
+                      $eq: ['$film_id', '$$film_id']
+                    },
+                    {
+                      $eq: ['$theater_id', '$$theaters_id']
+                    },
+                    {
+                      $gte: ['$time_start', lambda.conditions.time_start]
+                    },
+                    {
+                      $lte: ['$time_start', lambda.conditions.time_end]
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          as: 'theaters.film_schedules'
+        }
+      },
+
+      {
+        $unset: [
+          'theaters.film_schedules.is_deleted',
+          'theaters.film_schedules.created_at',
+          'theaters.film_schedules.updated_at'
+        ]
+      },
+
+      {
+        $group: {
+          _id: '$_id',
+          name: {
+            $first: '$name'
+          },
+          address: {
+            $first: '$address'
+          },
+          url_image: {
+            $first: '$url_image'
+          },
+          theaters: {
+            $push: '$theaters'
+          }
+        }
+      }
+    ]);
+  },
+
   getFilm7Day: async function (lambda) {
     return await Collection.aggregate([
       {$match: {_id: lambda.conditions._id}},
@@ -363,12 +508,12 @@ module.exports = {
                   $map: {
                     input: '$theaters.film_schedules',
                     in: {
-                      _id1: '$$this._id',
+                      _id: '$$this._id',
                       time_start: '$$this.time_start',
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room1: '$$this.room',
+                      room: '$$this.room',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -426,12 +571,12 @@ module.exports = {
                   $map: {
                     input: '$theaters.film_schedules',
                     in: {
-                      _id1: '$$this._id',
+                      _id: '$$this._id',
                       time_start: '$$this.time_start',
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room1: '$$this.room',
+                      room: '$$this.room',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -488,12 +633,12 @@ module.exports = {
                   $map: {
                     input: '$theaters.film_schedules',
                     in: {
-                      _id1: '$$this._id',
+                      _id: '$$this._id',
                       time_start: '$$this.time_start',
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room1: '$$this.room',
+                      room: '$$this.room',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -550,12 +695,12 @@ module.exports = {
                   $map: {
                     input: '$theaters.film_schedules',
                     in: {
-                      _id1: '$$this._id',
+                      _id: '$$this._id',
                       time_start: '$$this.time_start',
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room1: '$$this.room',
+                      room: '$$this.room',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -612,12 +757,12 @@ module.exports = {
                   $map: {
                     input: '$theaters.film_schedules',
                     in: {
-                      _id1: '$$this._id',
+                      _id: '$$this._id',
                       time_start: '$$this.time_start',
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room1: '$$this.room',
+                      room: '$$this.room',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -674,12 +819,12 @@ module.exports = {
                   $map: {
                     input: '$theaters.film_schedules',
                     in: {
-                      _id1: '$$this._id',
+                      _id: '$$this._id',
                       time_start: '$$this.time_start',
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room1: '$$this.room',
+                      room: '$$this.room',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -736,12 +881,12 @@ module.exports = {
                   $map: {
                     input: '$theaters.film_schedules',
                     in: {
-                      _id1: '$$this._id',
+                      _id: '$$this._id',
                       time_start: '$$this.time_start',
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room1: '$$this.room',
+                      room: '$$this.room',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
