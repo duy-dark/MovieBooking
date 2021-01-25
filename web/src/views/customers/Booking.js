@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useLocation, useHistory, useParams } from "react-router-dom";
 import { useStore, useDispatch, useSelector } from "react-redux";
 import { updateHeaderFooter } from "../../redux/users/actions";
 import "../../styles/customers/booking/booking.scss";
-import { useLocation, useHistory } from "react-router-dom";
-import { postBookingInfo } from "../../redux/films/actions";
+import { getFilmDetails, getSeats, postBookingInfo } from "../../redux/films/actions";
 import { getToken } from "../../redux/users/selector";
+import * as moment from "moment"
 
 const SeatEl = (props) => {
   const [status, setStatus] = useState();
@@ -105,7 +106,8 @@ export default function Booking(props) {
   const { users } = useStore().getState();
 
   const [disabledBtn, setDisabledBtn] = useState(false);
-
+  let { id } = useParams();
+ 
   useEffect(() => {
     setDisabledBtn(!(seats.length > 0 && validateEmail(email) && phone && payment));
   }, [seats, email, phone, payment]);
@@ -121,17 +123,15 @@ export default function Booking(props) {
       }
     }
   };
-
   const formatMoney = (number) => {
     return new Intl.NumberFormat().format(number);
   };
-
   const bookingTicket = () => {
     const bookingInfo = {
       count: seats.length,
       cost: seats.length * 80000,
       customer_id: user._id,
-      film_schedule_id: movies.scheduleId,
+      film_schedule_id: movies.schedule_id,
       seat_ids: seats,
       email,
       phone_number: phone,
@@ -141,29 +141,40 @@ export default function Booking(props) {
     setDisabledBtn(true);
   };
 
+      // useEffect(() => {
+      //   dispatch(
+      //     updateHeaderFooter({
+      //       header: true,
+      //       footer: true,
+      //     })
+      //   );
+
+      //   const token = getToken(users);
+      //   if (!token) {
+      //     history.push("/login");
+      //   }
+      //   // eslint-disable-next-line react-hooks/exhaustive-deps
+      // }, []);
   useEffect(() => {
-    dispatch(
-      updateHeaderFooter({
-        header: true,
-        footer: true,
-      })
-    );
-
-    const token = getToken(users);
-    if (!token) {
-      history.push("/login");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
+    const info = {
+      id: id
+    };
+    dispatch(getFilmDetails(info));
+    dispatch(getSeats(movies.schedule_id));
+  }, [])
+  // const data = useSelector((state) => state.films.filmDetail)
+  const listSeatsSelected = useSelector((state) => state.films.seats)
+  const formatDate = (date) => {
+    return moment(date).format('dddd DD/MM/YYYY hh:mm');
+  }
   return (
     <div className="booking">
       <div className="booking-content">
         <div className="booking-content__header">
-          <img src="/assets/ic_bhd.png" alt="" />
+          <img src={movies.theater_url_image} alt="" />
           <div className="booking-content__threater">
-            <div className="booking-content__threater__name">{movies && movies.threater}</div>
-            <div className="booking-content__threater__room">{`${movies.day} - ${movies.date} - ${movies.timeStart} - ${movies.room}`}</div>
+            <div className="booking-content__threater__name">{movies && movies.theater_name}</div>
+            <div className="booking-content__threater__room">{`${formatDate(movies.schedule.time_start)} - ${movies.schedule.room}`}</div>
           </div>
         </div>
         <div className="booking-content__screen">
@@ -195,18 +206,15 @@ export default function Booking(props) {
       </div>
       <div className="booking-form">
         <div className="booking-form__input booking-form__total">
-          <p>
-{' '}
-{formatMoney(seats.length * 80000)}đ</p>
+          <p> {formatMoney(seats.length * 80000)}đ</p>
         </div>
         <div className="booking-form__input booking-form__film-name">
           <div className="booking-form__name">{movies.name}</div>
-          <div className="booking-form__threater">{movies.threater}</div>
-          <div className="booking-form__address">{`${movies.day} - ${movies.date} - ${movies.timeStart} - ${movies.room}`}</div>
+          <div className="booking-form__threater">{movies.theater_name}</div>
+          <div className="booking-form__address">{`${formatDate(movies.schedule.time_start)} - ${movies.schedule.room}`}</div>
         </div>
         <div className="booking-form__input booking-form__seats">
-          Ghế
-{" "}
+          Ghế{" "}
           {seats.map((seat, index) => {
             return (
               <span key={index}>
@@ -232,9 +240,7 @@ export default function Booking(props) {
             <div className="radio-form">
               <input id="momo" name="payment" value="momo" onChange={(e) => setPayment(e.target.value)} type="radio" />
               <label htmlFor="momo">
-                <img src="/assets/logo-momo.jpg" alt="" />
-{' '}
-<span>Thanh toán Momo</span>
+                <img src="/assets/logo-momo.jpg" alt="" /> <span>Thanh toán Momo</span>
               </label>
             </div>
             <div className="radio-form">
