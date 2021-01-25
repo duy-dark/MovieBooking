@@ -10,9 +10,9 @@ export default function TabsSchedule(props) {
 
   const [activeIndex, setActiveIndex] = useState([1, 2, 3]);
   const [listDate, setListDate] = useState([])
-  
-  
- 
+
+
+
   const changeCollapse = (index) => {
     let arr = [...activeIndex]
     if (activeIndex.includes(index)) {
@@ -25,7 +25,7 @@ export default function TabsSchedule(props) {
   }
 
   useEffect(() => {
-    
+
     let arr = []
     for(let i = 0; i < 7; i++) {
       let date = moment().add(i, 'day')
@@ -36,37 +36,42 @@ export default function TabsSchedule(props) {
         dayofweek: date.day()
       })
     }
-    
+
     setListDate(arr)
-    
+
   }, [])
 
   return (
-    
+
     <Tabs className="tab-film">
       <TabList className="tab-film__header">
         <Tab className="tab-film__header__item">Lịch Chiếu</Tab>
         <Tab className="tab-film__header__item">Thông Tin</Tab>
         <Tab className="tab-film__header__item">Đánh Giá</Tab>
       </TabList>
-      {console.log(props.detail)}
       <TabPanel className="tab-film__date">
         <Tabs>
           <TabList className="date-list">
-             { listDate.map((item, index) => {
-               
-              return (
-                <Tab key={index} className="date-list__item"><span>{item.name}</span><span>{item.day}</span></Tab>
-              )
-            })} 
-            
+            {
+              listDate.map((item, index) => {
+                return (
+                  <Tab key={index} className="date-list__item"><span>{item.name}</span><span>{item.day}</span></Tab>
+                )
+              })
+            }
           </TabList>
-         
-          { listDate.map((item, index) => {
-              
+          <TabPanel className="tab-film__theater"></TabPanel>
+          <TabPanel className="tab-film__theater"></TabPanel>
+          <TabPanel className="tab-film__theater"></TabPanel>
+          <TabPanel className="tab-film__theater"></TabPanel>
+          <TabPanel className="tab-film__theater"></TabPanel>
+          <TabPanel className="tab-film__theater"></TabPanel>
+          <TabPanel className="tab-film__theater"></TabPanel>
+          {/* { listDate.map((item, index) => {
+
               return (
               <TabPanel className="tab-film__theater">
-              
+
                 <div className="theater__item">
                   <div className="theater__item__header" onClick={() => changeCollapse(1)}>
                     <div className="theater__item__image">
@@ -87,8 +92,8 @@ export default function TabsSchedule(props) {
                 </div>
               </TabPanel>
               )
-            })} 
-          
+            })}  */}
+
         </Tabs>
       </TabPanel>
       <TabPanel className="detail-tab-info">

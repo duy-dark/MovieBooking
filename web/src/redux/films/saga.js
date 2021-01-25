@@ -16,7 +16,6 @@ function* fetchPostBookingInfo(action) {
       });
     }
   } catch (error) {
-    console.log("fetchPostBookingInfo Error", error);
     throw error;
   }
 }

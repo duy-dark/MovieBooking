@@ -129,14 +129,6 @@ const findById = async (id) => {
       }
     };
     let data = await Model.getDetail(lambda);
-    // let now = moment.now();
-
-    // let arrayDay = [];
-    // arrayDay.push(now);
-    // for (let i = 1; i < 7; i++) {
-    //   let day = moment(now, 'DD-MM-YYYY').add(i, 'days');
-    //   arrayDay.push(day);
-    // }
 
     let days = [
       'chủ nhật',
@@ -190,12 +182,6 @@ const getFilm7Day = async (id) => {
       ).add(7, 'hour')
     );
 
-    console.log('time_start: ', time_start);
-    console.log('time_end:   ', time_end);
-    console.log('date:       ', date);
-    console.log('month:      ', month + 1);
-    console.log('year:       ', year);
-
     let lambda = {
       conditions: {
         _id: id,
@@ -207,14 +193,25 @@ const getFilm7Day = async (id) => {
 
     let data = await Model.getFilm7Day(lambda);
     let dayOfWeek = [[], [], [], [], [], [], []];
-
-    console.log('dayOfWeek:', dayOfWeek);
     let dataTemp = data[0];
-    dataTemp.theaters.map((theater) => {});
+
+    // for(let i = 0; i < 7; i++) {
+    //   let day = moment().add(i, 'days').day()
+    //   let da = dataTemp.theaters.filter(item => {
+    //     let schedules = item.film_schedules.filter(i => {
+    //       return i.dayOfWeek === day + 1
+    //     })
+
+    //     if (schedules.length) {
+    //       item.film_schedules = schedules
+    //       return item
+    //     }
+    //   })
+    //   dayOfWeek[i] = da
+    // }
 
     return resSuccess({detail: data[0], dayOfWeek: dayOfWeek});
   } catch (error) {
-    // throw {status: 400, detail: error};
     throw {status: 400, detail: error};
   }
 };
