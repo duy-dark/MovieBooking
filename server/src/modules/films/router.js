@@ -5,15 +5,8 @@ const moment = require('moment');
 const {omitBy, isNil} = require('lodash');
 
 router.get('/nowshowing', (req, res, next) => {
-  let gte_start_date = new Date(moment('2020-01-01', moment.ISO_8601));
-  let lte_start_date = new Date(moment.now());
-  let params = {
-    gte_start_date: gte_start_date,
-    lte_start_date: lte_start_date
-  };
-
   handler
-    .getCommingSoon(params)
+    .getNowShowing(params)
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });

@@ -42,7 +42,7 @@ module.exports = {
   updateByLambda: async function (lambda) {
     return await Collection.updateOne(lambda.conditions, lambda.params);
   },
-  getNowShowing: async function (lambda) {
+  getCommingSoon: async function (lambda) {
     return await Collection.aggregate([
       {
         $match: {
