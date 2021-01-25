@@ -59,4 +59,12 @@ router.delete('/:id', (req, res, next) => {
     .catch((err) => next(err));
 });
 
+router.get('/:id/detail', (req, res, next) => {
+  let id = require('mongodb').ObjectId(req.params.id);
+  handler
+    .getTheater7Day(id)
+    .then((val) => res.json(val))
+    .catch((err) => next(err));
+});
+
 module.exports = router;
