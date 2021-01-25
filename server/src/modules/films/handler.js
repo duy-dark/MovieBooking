@@ -163,15 +163,15 @@ const findById = async (id) => {
 const getFilm7Day = async (id) => {
   try {
     // let time_start = new Date(moment().add(7, 'hour'));
-    let time_start = new Date(moment().subtract(1, 'days'));
+    let time_start = new Date(moment().add(7, 'hour'));
 
     let hour = new Date(moment()).getHours();
-    let date = new Date(moment().add(7, 'hour').add(8, 'days')).getDate();
+    let date = new Date(moment().add(7, 'hour').add(1, 'days')).getDate();
     if (hour > 17) {
       date -= 1;
     }
-    let month = new Date(moment().add(7, 'hour').add(8, 'days')).getMonth();
-    let year = new Date(moment().add(7, 'hour').add(8, 'days')).getFullYear();
+    let month = new Date(moment().add(7, 'hour').add(1, 'days')).getMonth();
+    let year = new Date(moment().add(7, 'hour').add(1, 'days')).getFullYear();
 
     let time_end = new Date(
       moment(
@@ -187,30 +187,22 @@ const getFilm7Day = async (id) => {
         _id: id,
         time_start: time_start,
         time_end: time_end,
+
+        // time_end1: new Date(moment(time_end).add(0, 'days')),
+        time_end2: new Date(moment(time_end).add(1, 'days')),
+        time_end3: new Date(moment(time_end).add(2, 'days')),
+        time_end4: new Date(moment(time_end).add(3, 'days')),
+        time_end5: new Date(moment(time_end).add(4, 'days')),
+        time_end6: new Date(moment(time_end).add(5, 'days')),
+        time_end7: new Date(moment(time_end).add(6, 'days')),
         is_deleted: false
       }
     };
 
     let data = await Model.getFilm7Day(lambda);
-    let dayOfWeek = [[], [], [], [], [], [], []];
-    let dataTemp = data[0];
 
-    // for(let i = 0; i < 7; i++) {
-    //   let day = moment().add(i, 'days').day()
-    //   let da = dataTemp.theaters.filter(item => {
-    //     let schedules = item.film_schedules.filter(i => {
-    //       return i.dayOfWeek === day + 1
-    //     })
+    return resSuccess(data);
 
-    //     if (schedules.length) {
-    //       item.film_schedules = schedules
-    //       return item
-    //     }
-    //   })
-    //   dayOfWeek[i] = da
-    // }
-
-    return resSuccess({detail: data[0], dayOfWeek: dayOfWeek});
   } catch (error) {
     throw {status: 400, detail: error};
   }
