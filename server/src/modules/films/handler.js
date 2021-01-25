@@ -214,12 +214,9 @@ const getFilm7Day = async (id) => {
     };
 
     let data = await Model.getFilm7Day(lambda);
-    let dayOfWeek = [[], [], [], [], [], [], []];
 
     console.log('lambda:', lambda);
-    return resSuccess(data);
-
-    return resSuccess({detail: data[0], dayOfWeek: dayOfWeek});
+    return resSuccess(data[0]);
   } catch (error) {
     // throw {status: 400, detail: error};
     throw {status: 400, detail: error};
