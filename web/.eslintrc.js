@@ -30,6 +30,6 @@ module.exports = {
     "no-unused-vars": ["error", { "varsIgnorePattern": "[iI]gnored" }],
     "no-shadow": ["error", { "builtinGlobals": false, "hoist": "all", "allow": [] }],
     "no-underscore-dangle": ["error", { "allow": ["foo_", "_bar"] }],
-    "react/destructuring-assignment": ['always']
+    "no-unused-expressions": { "allowShortCircuit": false, "allowTernary": false }
   }
 };

@@ -11,7 +11,11 @@ export default function CardTime(props) {
     history.push({
       pathname: `/${props.film._id}/booking`,
       state: {
-        schedule_id: props.schedule._id
+        schedule_id: props.schedule._id,
+        schedule: props.schedule,
+        theater_name: props.theater_name,
+        theater_url_image: props.theater_url_image,
+        name: props.name
       }
     })
   }
