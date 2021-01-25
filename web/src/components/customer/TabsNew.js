@@ -1,5 +1,8 @@
 import React from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import "../../styles/customers/news/news.scss"
+import CardNew from './CardNew';
+import ListCardNew from './ListCardNew';
 
 export default function TabsNew(props) {
   return (
@@ -9,7 +12,15 @@ export default function TabsNew(props) {
         <Tab className="tab-film__header__item">Khuyến mãi</Tab>
       </TabList>
       <TabPanel>
-        tin tức
+        <div className="row-1-2">
+        <CardNew />
+        <CardNew />
+        </div>
+        <div className="row-1-3">
+          <CardNew />
+          <CardNew />
+          <ListCardNew />
+        </div>
       </TabPanel>
       <TabPanel>
         khuyến mãi
