@@ -61,48 +61,48 @@ export default function Booking(props) {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [payment, setPayment] = useState("");
-  // const listSeat = [
-  //   {
-  //     name: "A",
-  //     rows: ["A01", "A02", "A03", "A04", "A05", "A06", "A07", "A08", "A09", "A10", "A11", "A12", "A13", "A14"],
-  //   },
-  //   {
-  //     name: "B",
-  //     rows: ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B09", "B10", "B11", "B12", "B13", "B14"],
-  //   },
-  //   {
-  //     name: "C",
-  //     rows: ["C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C10", "C11", "C12", "C13", "C14"],
-  //   },
-  //   {
-  //     name: "D",
-  //     rows: ["D01", "D02", "D03", "D04", "D05", "D06", "D07", "D08", "D09", "D10", "D11", "D12", "D13", "D14"],
-  //   },
-  //   {
-  //     name: "E",
-  //     rows: ["E01", "E02", "E03", "E04", "E05", "E06", "E07", "E08", "E09", "E10", "E11", "E12", "E13", "E14"],
-  //   },
-  //   {
-  //     name: "F",
-  //     rows: ["F01", "F02", "F03", "F04", "F05", "F06", "F07", "F08", "F09", "F10", "F11", "F12", "F13", "F14"],
-  //   },
-  //   {
-  //     name: "G",
-  //     rows: ["G01", "G02", "G03", "G04", "G05", "G06", "G07", "G08", "G09", "G10", "G11", "G12", "G13", "G14"],
-  //   },
-  //   {
-  //     name: "H",
-  //     rows: ["H01", "H02", "H03", "H04", "H05", "H06", "H07", "H08", "H09", "H10", "H11", "H12", "H13", "H14"],
-  //   },
-  //   {
-  //     name: "I",
-  //     rows: ["I01", "I02", "I03", "I04", "I05", "I06", "I07", "I08", "I09", "I10", "I11", "I12", "I13", "I14"],
-  //   },
-  //   {
-  //     name: "J",
-  //     rows: ["J01", "J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14"],
-  //   },
-  // ];
+  const listSeat = [
+    {
+      name: "A",
+      rows: ["A01", "A02", "A03", "A04", "A05", "A06", "A07", "A08", "A09", "A10", "A11", "A12", "A13", "A14"],
+    },
+    {
+      name: "B",
+      rows: ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B09", "B10", "B11", "B12", "B13", "B14"],
+    },
+    {
+      name: "C",
+      rows: ["C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C10", "C11", "C12", "C13", "C14"],
+    },
+    {
+      name: "D",
+      rows: ["D01", "D02", "D03", "D04", "D05", "D06", "D07", "D08", "D09", "D10", "D11", "D12", "D13", "D14"],
+    },
+    {
+      name: "E",
+      rows: ["E01", "E02", "E03", "E04", "E05", "E06", "E07", "E08", "E09", "E10", "E11", "E12", "E13", "E14"],
+    },
+    {
+      name: "F",
+      rows: ["F01", "F02", "F03", "F04", "F05", "F06", "F07", "F08", "F09", "F10", "F11", "F12", "F13", "F14"],
+    },
+    {
+      name: "G",
+      rows: ["G01", "G02", "G03", "G04", "G05", "G06", "G07", "G08", "G09", "G10", "G11", "G12", "G13", "G14"],
+    },
+    {
+      name: "H",
+      rows: ["H01", "H02", "H03", "H04", "H05", "H06", "H07", "H08", "H09", "H10", "H11", "H12", "H13", "H14"],
+    },
+    {
+      name: "I",
+      rows: ["I01", "I02", "I03", "I04", "I05", "I06", "I07", "I08", "I09", "I10", "I11", "I12", "I13", "I14"],
+    },
+    {
+      name: "J",
+      rows: ["J01", "J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14"],
+    },
+  ];
   const { users } = useStore().getState();
 
   const [disabledBtn, setDisabledBtn] = useState(false);
@@ -163,7 +163,7 @@ export default function Booking(props) {
     dispatch(getSeats(movies.schedule_id));
   }, [])
   // const data = useSelector((state) => state.films.filmDetail)
-  const listSeat = useSelector((state) => state.films.seats)
+  const listSeatsSelected = useSelector((state) => state.films.seats)
   const formatDate = (date) => {
     return moment(date).format('dddd DD/MM/YYYY hh:mm');
   }
