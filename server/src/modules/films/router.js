@@ -5,17 +5,15 @@ const moment = require('moment');
 const {omitBy, isNil} = require('lodash');
 
 router.get('/nowshowing', (req, res, next) => {
-  console.log('oke');
   let gte_start_date = new Date(moment('2020-01-01', moment.ISO_8601));
   let lte_start_date = new Date(moment.now());
-  console.log('oke');
   let params = {
     gte_start_date: gte_start_date,
     lte_start_date: lte_start_date
   };
 
   handler
-    .getFilmInPeriod(params)
+    .getCommingSoon(params)
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });
@@ -27,18 +25,16 @@ router.get('/:id/getcomment', (req, res, next) => {
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });
-router.get('/commingson', (req, res, next) => {
-  console.log('oke');
+router.get('/commingsoon', (req, res, next) => {
   let gte_start_date = new Date(moment.now());
   let lte_start_date = new Date(moment('2030-01-01', moment.ISO_8601));
-  console.log('oke');
   let params = {
     gte_start_date: gte_start_date,
     lte_start_date: lte_start_date
   };
 
   handler
-    .getFilmInPeriod(params)
+    .getCommingSoon(params)
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });
