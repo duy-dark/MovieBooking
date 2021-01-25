@@ -175,9 +175,9 @@ const getFilm7Day = async (id) => {
 
     let hour = new Date(moment()).getHours();
     let date = new Date(moment().add(1, 'days')).getDate();
-    if (hour > 17) {
-      date -= 1;
-    }
+    // if (hour > 17) {
+    //   date -= 1;
+    // }
     let month = new Date(moment().add(1, 'days')).getMonth();
     let year = new Date(moment().add(1, 'days')).getFullYear();
 
