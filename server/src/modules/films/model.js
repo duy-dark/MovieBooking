@@ -42,7 +42,7 @@ module.exports = {
   updateByLambda: async function (lambda) {
     return await Collection.updateOne(lambda.conditions, lambda.params);
   },
-  getNowShowing: async function (lambda) {
+  getCommingSoon: async function (lambda) {
     return await Collection.aggregate([
       {
         $match: {
@@ -139,151 +139,6 @@ module.exports = {
       },
       {
         $project: lambda.views
-      }
-    ]);
-  },
-
-  getFilmToDay: async function (lambda) {
-    return await Collection.aggregate([
-      {$unset: ['is_deleted', 'created_at', 'updated_at']},
-      {
-        $lookup: {
-          from: 'film_schedules',
-          localField: '_id',
-          foreignField: 'theater_id',
-          as: 'theaters'
-        }
-      },
-      {
-        $unset: [
-          'theaters.is_deleted',
-          'theaters.created_at',
-          'theaters.updated_at'
-        ]
-      },
-
-      {
-        $unwind: {
-          path: '$theaters',
-          preserveNullAndEmptyArrays: true
-        }
-      },
-
-      {
-        $match: {
-          'theaters.time_start': {
-            $gte: lambda.conditions.time_start,
-            $lte: lambda.conditions.time_end
-          }
-        }
-      },
-
-      {
-        $lookup: {
-          from: 'theaters',
-          localField: 'theaters.film_id',
-          foreignField: '_id',
-          as: 'theaters'
-        }
-      },
-      {
-        $unset: [
-          'theaters.is_deleted',
-          'theaters.created_at',
-          'theaters.updated_at',
-          'theaters.category_ids'
-        ]
-      },
-
-      {
-        $unwind: {
-          path: '$theaters',
-          preserveNullAndEmptyArrays: true
-        }
-      },
-
-      {
-        $group: {
-          _id: '$_id',
-          name: {
-            $first: '$name'
-          },
-          address: {
-            $first: '$address'
-          },
-          url_image: {
-            $first: '$url_image'
-          },
-          theaters: {
-            $addToSet: '$theaters'
-          }
-        }
-      },
-
-      {
-        $unwind: {
-          path: '$theaters',
-          preserveNullAndEmptyArrays: true
-        }
-      },
-
-      {
-        $lookup: {
-          from: 'film_schedules',
-          let: {
-            film_id: '$_id',
-            theaters_id: '$theaters._id'
-          },
-          pipeline: [
-            {
-              $match: {
-                $expr: {
-                  $and: [
-                    {
-                      $eq: ['$film_id', '$$film_id']
-                    },
-                    {
-                      $eq: ['$theater_id', '$$theaters_id']
-                    },
-                    {
-                      $gte: ['$time_start', lambda.conditions.time_start]
-                    },
-                    {
-                      $lte: ['$time_start', lambda.conditions.time_end]
-                    }
-                  ]
-                }
-              }
-            }
-          ],
-          as: 'theaters.film_schedules'
-        }
-      },
-
-      {
-        $unset: [
-          'theaters.film_schedules.is_deleted',
-          'theaters.film_schedules.created_at',
-          'theaters.film_schedules.updated_at'
-        ]
-      },
-
-      {
-        $group: {
-          _id: '$_id',
-          name: {
-            $first: '$name'
-          },
-          address: {
-            $first: '$address'
-          },
-          url_image: {
-            $first: '$url_image'
-          },
-          theaters: {
-            $push: '$theaters'
-          }
-        }
       }
     ]);
   },
@@ -925,6 +780,174 @@ module.exports = {
           'day6._id',
           'day7._id'
         ]
+      }
+    ]);
+  },
+
+  getNowShowing: async function (lambda) {
+    return await Collection.aggregate([
+      {
+        $unset: [
+          'is_deleted',
+          'created_at',
+          'updated_at',
+          'trailer',
+          'countries',
+          'start_date',
+          'actors',
+          'rates',
+          'rate_count',
+          'is_blockbuster',
+          'directors',
+          'category_ids'
+        ]
+      },
+      {
+        $lookup: {
+          from: 'film_schedules',
+          let: {
+            film_id: '$_id'
+          },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    {
+                      $eq: ['$film_id', '$$film_id']
+                    },
+                    {
+                      $gte: ['$time_start', lambda.conditions.time_start]
+                    },
+                    {
+                      $lte: ['$time_start', lambda.conditions.time_end7]
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          as: 'theaters'
+        }
+      },
+      {$unwind: '$theaters'},
+      {
+        $lookup: {
+          from: 'theaters',
+          localField: 'theaters.theater_id',
+          foreignField: '_id',
+          as: 'theaters'
+        }
+      },
+      {
+        $unset: [
+          'theaters.is_deleted',
+          'theaters.created_at',
+          'theaters.updated_at',
+          'theaters.rooms',
+          'theaters.url_image'
+        ]
+      },
+      {$unwind: '$theaters'},
+      {
+        $group: {
+          _id: '$_id',
+          name: {
+            $first: '$name'
+          },
+          long_time: {
+            $first: '$long_time'
+          },
+          content: {
+            $first: '$content'
+          },
+          imdb: {
+            $first: '$imdb'
+          },
+          digitals: {
+            $first: '$digitals'
+          },
+          url_avatar: {
+            $first: '$url_avatar'
+          },
+          url_background: {
+            $first: '$url_background'
+          },
+          theaters: {
+            $addToSet: '$theaters'
+          }
+        }
+      },
+      // {
+      //   $lookup: {
+      //     from: 'film_schedules',
+      //     localField: 'theaters._id',
+      //     foreignField: 'theater_id',
+      //     as: 'theaters.film_schedules'
+      //   }
+      // }
+      {$unwind: '$theaters'},
+      {
+        $lookup: {
+          from: 'film_schedules',
+          let: {
+            film_id: '$_id',
+            theaters_id: '$theaters._id'
+          },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    {
+                      $eq: ['$film_id', '$$film_id']
+                    },
+                    {
+                      $eq: ['$theater_id', '$$theaters_id']
+                    },
+                    {
+                      $gte: ['$time_start', lambda.conditions.time_start]
+                    },
+                    {
+                      $lte: ['$time_start', lambda.conditions.time_end7]
+                    }
+                  ]
+                }
+              }
+            }
+          ],
+          as: 'theaters.film_schedules'
+        }
+      },
+
+      {
+        $group: {
+          _id: '$_id',
+          name: {
+            $first: '$name'
+          },
+          long_time: {
+            $first: '$long_time'
+          },
+          content: {
+            $first: '$content'
+          },
+          imdb: {
+            $first: '$imdb'
+          },
+          digitals: {
+            $first: '$digitals'
+          },
+          url_avatar: {
+            $first: '$url_avatar'
+          },
+          url_background: {
+            $first: '$url_background'
+          },
+          theaters: {
+            $addToSet: '$theaters'
+          }
+        }
       }
     ]);
   }
