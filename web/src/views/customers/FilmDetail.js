@@ -27,9 +27,12 @@ export default function FilmDetail() {
   },[])
     
    let data=useSelector(state =>state.films.filmDetail)
+   let dayOfWeeks =useSelector(state=>state.films.dayOfWeeks)
+   console.log(data)
   return (
+   
     <div className="detail">
-      <div className="detail-slider">
+         <div className="detail-slider">
         <div className="detail-image">
           <img src={`${data.url_background}`} alt=""/>
         </div>
@@ -47,13 +50,13 @@ export default function FilmDetail() {
         </div>
       </div>
       <div className="detail-wrapper">
-       {data && <TabsSchedule detail={data}/>}
+       {data,dayOfWeeks && <TabsSchedule detail={data} dayOfWeeks={dayOfWeeks}/>}
       </div>
       <ModalTrailer
         show={modalShow}
         onHide={() => setModalShow(false)}
-        id={modalId}
-      />
+        id={modalId} 
+      />  
     </div>
   );
 }
