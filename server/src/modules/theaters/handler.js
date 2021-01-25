@@ -46,15 +46,15 @@ const findById = async (id) => {
 const getFilmToDay = async () => {
   try {
     // let time_start = new Date(moment().add(7, 'hour'));
-    let time_start = new Date(moment().add(7, 'hour'));
+    let time_start = new Date(moment());
 
     let hour = new Date(moment()).getHours();
-    let date = new Date(moment().add(7, 'hour').add(1, 'days')).getDate();
-    if (hour > 17) {
-      date -= 1;
-    }
-    let month = new Date(moment().add(7, 'hour').add(1, 'days')).getMonth();
-    let year = new Date(moment().add(7, 'hour').add(1, 'days')).getFullYear();
+    let date = new Date(moment().add(1, 'days')).getDate();
+    // if (hour > 17) {
+    //   date -= 1;
+    // }
+    let month = new Date(moment().add(1, 'days')).getMonth();
+    let year = new Date(moment().add(1, 'days')).getFullYear();
 
     let time_end = new Date(
       moment(
@@ -62,7 +62,7 @@ const getFilmToDay = async () => {
           date > 9 ? date : '0' + date
         }`,
         moment.ISO_8601
-      ).add(7, 'hour')
+      )
     );
 
     console.log('time_start: ', time_start);

@@ -47,7 +47,7 @@ router.get(
   }
 );
 
-router.get('/:id', verifyAdminToken.requireGetPerson, (req, res, next) => {
+router.get('/:id', (req, res, next) => {
   let id = req.params.id;
   handler
     .findById(id)
