@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as moment from 'moment'
 
@@ -20,9 +20,14 @@ export default function CardTime(props) {
       }
     })
   }
+ 
+ 
   return (
-    <div className="time-film" onClick={clickTime}>
-      <span>{formatDate(props.schedule.time_start)}</span>~<span>{formatDate(props.schedule.time_end)}</span>
+   
+      <div className="time-film" onClick={clickTime}>
+       <span>{formatDate(props.schedule.time_start)}</span>~<span>{formatDate(props.schedule.time_end)}</span> 
     </div>
+ 
+  
   )
 }

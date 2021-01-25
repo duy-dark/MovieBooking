@@ -26,11 +26,11 @@ export default function FilmDetail() {
     dispatch(getFilmDetails(info));
   },[])
 
-  let data=useSelector(state =>state.films.filmDetail)
-
+   let data=useSelector(state =>state.films.filmDetail)
+   let dayOfWeeks =useSelector(state=>state.films.dayOfWeeks)
   return (
     <div className="detail">
-      <div className="detail-slider">
+         <div className="detail-slider">
         <div className="detail-image">
           <img src={`${data.url_background}`} alt=""/>
         </div>
@@ -48,7 +48,7 @@ export default function FilmDetail() {
         </div>
       </div>
       <div className="detail-wrapper">
-       {data && <TabsSchedule detail={data}/>}
+       {data,dayOfWeeks && <TabsSchedule detail={data} dayOfWeeks={dayOfWeeks}/>}
       </div>
       <ModalTrailer
         show={modalShow}

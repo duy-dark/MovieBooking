@@ -40,9 +40,9 @@ export default function TabsSchedule(props) {
     setListDate(arr)
 
   }, [])
+  const [tabSelect, setTabSelect] = useState(0);
 
   return (
-
     <Tabs className="tab-film">
       <TabList className="tab-film__header">
         <Tab className="tab-film__header__item">Lịch Chiếu</Tab>
@@ -50,7 +50,7 @@ export default function TabsSchedule(props) {
         <Tab className="tab-film__header__item">Đánh Giá</Tab>
       </TabList>
       <TabPanel className="tab-film__date">
-        <Tabs>
+        <Tabs selectedIndex={tabSelect} onSelect={tab => setTabSelect(tab)}>
           <TabList className="date-list">
             {
               listDate.map((item, index) => {
@@ -60,39 +60,35 @@ export default function TabsSchedule(props) {
               })
             }
           </TabList>
-          <TabPanel className="tab-film__theater"></TabPanel>
-          <TabPanel className="tab-film__theater"></TabPanel>
-          <TabPanel className="tab-film__theater"></TabPanel>
-          <TabPanel className="tab-film__theater"></TabPanel>
-          <TabPanel className="tab-film__theater"></TabPanel>
-          <TabPanel className="tab-film__theater"></TabPanel>
-          <TabPanel className="tab-film__theater"></TabPanel>
-          {/* { listDate.map((item, index) => {
-
+          { props.dayOfWeeks.map((item, index) => {
               return (
-              <TabPanel className="tab-film__theater">
-
-                <div className="theater__item">
-                  <div className="theater__item__header" onClick={() => changeCollapse(1)}>
-                    <div className="theater__item__image">
-                      <img src={`/assets/film/theater1.jpg`} alt=""/>
-                    </div>
-                    <div className="theater__item__film">
-                      <span>BHD Star - Bitexco</span>
-                      <span>L3-Bitexco Icon 68, 2 Hải Triều, Q.1</span>
-                    </div>
-                  </div>
-                  <Collapse className="theater__item__schedule" isOpened={activeIndex.includes(1)}>
-                    <div className="theater__item__title">2D Digital</div>
-                    <div className="theater__item__schedules">
-                      <CardTime />
-                      <CardTime />
-                    </div>
-                  </Collapse>
-                </div>
+              <TabPanel key={index} className="tab-film__theater">
+                {
+                  item.map(theater => {
+                    return (
+                      <div key={theater._id} className="theater__item">
+                        <div className="theater__item__header" onClick={() => changeCollapse(1)}>
+                          <div className="theater__item__image">
+                            <img src={`${theater.url_image}`} alt=""/>
+                          </div>
+                          <div className="theater__item__film">
+                          <span>{`${theater.name}`}</span>
+                          <span>{`${theater.address}`}</span>
+                          </div>
+                        </div>
+                        <Collapse className="theater__item__schedule" isOpened={activeIndex.includes(1)}>
+                          <div className="theater__item__title">2D Digital</div>
+                          <div className="theater__item__schedules">
+                           { theater.film_schedules.map(film => <CardTime key={film._id} schedule={film} />)}
+                          </div>
+                        </Collapse>
+                      </div>
+                    )
+                  })
+                }
               </TabPanel>
               )
-            })}  */}
+            })}
 
         </Tabs>
       </TabPanel>
