@@ -201,8 +201,34 @@ const getFilm7Day = async (id) => {
 
     let data = await Model.getFilm7Day(lambda);
 
-    return resSuccess(data);
-
+    let detail = {...data[0]};
+    let info = {...detail.film};
+    let schedules = [];
+    schedules.push(
+      detail.day1.theaters.filter((item) => item.film_schedules.length > 0)
+    );
+    schedules.push(
+      detail.day2.theaters.filter((item) => item.film_schedules.length > 0)
+    );
+    schedules.push(
+      detail.day3.theaters.filter((item) => item.film_schedules.length > 0)
+    );
+    schedules.push(
+      detail.day4.theaters.filter((item) => item.film_schedules.length > 0)
+    );
+    schedules.push(
+      detail.day5.theaters.filter((item) => item.film_schedules.length > 0)
+    );
+    schedules.push(
+      detail.day6.theaters.filter((item) => item.film_schedules.length > 0)
+    );
+    schedules.push(
+      detail.day7.theaters.filter((item) => item.film_schedules.length > 0)
+    );
+    return resSuccess({
+      detail: info,
+      dayOfWeeks: schedules
+    });
   } catch (error) {
     throw {status: 400, detail: error};
   }
