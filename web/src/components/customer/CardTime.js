@@ -5,7 +5,8 @@ import * as moment from 'moment'
 export default function CardTime(props) {
   let history = useHistory();
   const formatDate = (date) => {
-    return moment(date).format("hh:mm")
+    let d = new Date(date)
+    return moment(d).format("hh:mm")
   }
   const clickTime = () => {
     history.push({

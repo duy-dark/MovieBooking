@@ -17,7 +17,7 @@ export default function FilmDetail() {
     setModalShow(true);
   };
   let { id } = useParams();
- 
+
   const  dispatch = useDispatch();
   useEffect(() =>{
     const info = {
@@ -25,8 +25,9 @@ export default function FilmDetail() {
     };
     dispatch(getFilmDetails(info));
   },[])
-    
-   let data=useSelector(state =>state.films.filmDetail)
+
+  let data=useSelector(state =>state.films.filmDetail)
+
   return (
     <div className="detail">
       <div className="detail-slider">

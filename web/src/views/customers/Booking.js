@@ -8,6 +8,7 @@ import { getToken } from "../../redux/users/selector";
 import * as moment from "moment"
 
 const SeatEl = (props) => {
+
   const [status, setStatus] = useState();
   const selectSeat = (seat) => {
     if (props.seats.length < 10) {
@@ -21,9 +22,10 @@ const SeatEl = (props) => {
     }
   };
   const formatSeat = (seat) => seat && seat.slice(-2);
+
   return (
-    <span className="seat-wrapper" onClick={() => selectSeat(props.seat)}>
-      <span className={`seat ${status ? "seat--selected" : ""}`}>
+    <span className={`seat-wrapper ${props.seatsSelected.includes(props.seat) ? 'seat-wrapper--hide' : ''}`} onClick={() => selectSeat(props.seat)}>
+      <span className={`seat ${status ? "seat--selected" : ""} ${props.seatsSelected.includes(props.seat) ? 'seat--hide' : ''}`}>
         <span className="s-img">{formatSeat(status)}</span>
       </span>
     </span>
@@ -40,7 +42,7 @@ const RowSeatEl = (props) => {
         <span className="seat seat--name">{props.name}</span>
       </span>
       {props.rows.map((row) => (
-        <SeatEl key={`${row}`} seat={row} seats={props.seats} onSelect={(seat) => selectSeat(seat)} />
+        <SeatEl key={`${row}`} seat={row} seatsSelected={props.seatsSelected} seats={props.seats} onSelect={(seat) => selectSeat(seat)} />
       ))}
     </div>
   );
@@ -107,7 +109,7 @@ export default function Booking(props) {
 
   const [disabledBtn, setDisabledBtn] = useState(false);
   let { id } = useParams();
- 
+
   useEffect(() => {
     setDisabledBtn(!(seats.length > 0 && validateEmail(email) && phone && payment));
   }, [seats, email, phone, payment]);
@@ -164,9 +166,11 @@ export default function Booking(props) {
   }, [])
   // const data = useSelector((state) => state.films.filmDetail)
   const listSeatsSelected = useSelector((state) => state.films.seats)
+
   const formatDate = (date) => {
     return moment(date).format('dddd DD/MM/YYYY hh:mm');
   }
+
   return (
     <div className="booking">
       <div className="booking-content">
@@ -182,7 +186,7 @@ export default function Booking(props) {
         </div>
         <div className="booking-content__list-seats">
           {listSeat.map((row, index) => (
-            <RowSeatEl key={index} seats={seats} {...row} onSelectSeat={(seat) => selectSeat(seat)} />
+            <RowSeatEl key={index} seats={seats} seatsSelected={listSeatsSelected} {...row} onSelectSeat={(seat) => selectSeat(seat)} />
           ))}
         </div>
         <div className="booking-content__des">

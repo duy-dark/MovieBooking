@@ -65,7 +65,7 @@ const getFilmToDay = async () => {
       ).add(7, 'hour')
     );
 
-    console.log('time_start: ', time_start);
+    console.log('time_start: ', new Date(moment()));
     console.log('time_end:   ', time_end);
     console.log('date:       ', date);
     console.log('month:      ', month + 1);

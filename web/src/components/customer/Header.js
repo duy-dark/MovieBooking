@@ -2,18 +2,24 @@ import React, { useState } from "react";
 import "../../styles/customers/header.scss";
 import Navbar from "./Navbar";
 import Dropdown from "react-bootstrap/Dropdown";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+
+
 export default function Header(props) {
   const [ position, setPosition ] = useState('Hồ Chí Minh');
-
+  const history = useHistory();
   const changePosition = (value) => {
 
+  }
+
+  const goHome = () => {
+    history.push('/')
   }
 
   return (
     <div className="header">
       <div className="header__icon">
-        <img src={`/assets/web-logo.png`} alt="" />
+        <img onClick={goHome} src={`/assets/web-logo.png`} alt="" />
       </div>
       <Navbar />
       <div className="header__info">
