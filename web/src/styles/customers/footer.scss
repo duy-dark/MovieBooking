@@ -2,10 +2,11 @@
 @import "../color";
 
 .footer {
-    padding: 25px 15%;
+    padding: 25px 10%;
     background-color: #222;
     font-size: 14px;
     line-height: 1.42;
+    text-align: left;
     .footer__title{
         color: #ffffff;
         margin-bottom: 1rem;
@@ -53,5 +54,24 @@
     .footer__icon__right {
         width: 135px;
         height: auto;
+    }
+    @media screen and (max-width: $breakpoint_md) {
+        .hideOnMobile1 {
+            display: none;
+        }
+        .nowrap {
+            white-space: nowrap;
+        }
+        @media screen and (max-width: $breakpoint_sm) {
+            .col-sm-4 {
+                text-align: center;
+            }
+            .footer__right {
+               div {
+                   margin-top: 15px;
+                   width: 100%;
+               }
+            }
+        }
     }
 }

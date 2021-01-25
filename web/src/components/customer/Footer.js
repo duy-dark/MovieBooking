@@ -6,10 +6,10 @@ function Footer() {
     <div className="footer">
       <div>
         <div className="row">
-          <div className="col-sm-4 footer__left hideOnMobile1">
-            <p className="footer__title ">TIX</p>
+          <div className="col-sm-4 footer__left">
+            <p className="footer__title hideOnMobile1">TIX</p>
             <div className="row">
-              <div className="col-sm-6 ">
+              <div className="col-sm-6 hideOnMobile1">
                 <div>
                   <a href="https://google.com.vn">FAQ</a>
                 </div>
@@ -18,7 +18,7 @@ function Footer() {
                 </div>
               </div>
 
-              <div className="col-sm-6">
+              <div className="col-sm-6 nowrap">
                 <div>
                   <a href="https://google.com.vn">Thỏa thuận sử dụng</a>
                 </div>
@@ -50,7 +50,7 @@ function Footer() {
             </div>
           </div>
           <div className="col-sm-4 footer__right">
-            <div>
+            <div className="hideOnMobile1">
               <p className="footer__title">MOBILE APP</p>
               <a href="https://google.com.vn">
                 <img className="footer__icon__up" src={`/assets/imgFooter/apple-logo.png`} alt="logo"></img>
@@ -59,8 +59,8 @@ function Footer() {
                 <img className="footer__icon__up" src={`/assets/imgFooter/android-logo.png`} alt="logo2"></img>
               </a>
             </div>
-            <div>
-              <p className="footer__title">SOCIAL</p>
+            <div className="nowrap">
+              <p className="footer__title hideOnMobile1">SOCIAL</p>
               <a href="https://google.com.vn">
                 <img className="footer__icon__up" src={`/assets/imgFooter/facebook-logo.png`} alt="image6"></img>
               </a>
