@@ -28,8 +28,8 @@ export default function filmsReducer(state = initialState, action) {
     case FilmTypes.LIST_FILM_TODAY_SUCCESS:
       newState = Object.assign({}, state, { filmsToday: payload })
       break;
-    case FilmTypes.LIST_SEAT:
-        newState = Object.assign({}, state, { seats: payload })
+    case FilmTypes.LIST_SEATS_SUCCESS:
+      newState = Object.assign({}, state, { seats: payload.seats })
       break;
     default:
       newState = state;

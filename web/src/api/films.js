@@ -24,8 +24,8 @@ const getDetail = (params) => {
   return Api.get(`api/film/${params.id}/detail`).then(res => res.data);
 }
 
-const getSeat = (params) => {
-  return Api.get(`http://localhost:1000/api/ticket/ticket/${params.id}`).then(res => res.data)
+const getSeats = (id) => {
+  return Api.get(`api/ticket/ticket/${id}`).then(res => res.data)
 }
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
@@ -35,5 +35,5 @@ export default {
   getListFilmNow,
   getListFilmFuture,
   getListFilmToday,
-  getSeat
+  getSeats
 };

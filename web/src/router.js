@@ -22,7 +22,7 @@ const routes = [
     component: () => <MovieDetail />,
   },
   {
-    path: "/booking",
+    path: "/:id/booking",
     exact: true,
     component: () => <Booking />,
   },

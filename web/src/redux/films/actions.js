@@ -32,9 +32,9 @@ export function getFilmDetails(info) {
   };
 }
 
-export function getSeat(data) {
+export function getSeats(id) {
   return {
-    type: FilmTypes.LIST_SEAT,
-    payload: data,
+    type: FilmTypes.LIST_SEATS,
+    payload: id,
   };
 }

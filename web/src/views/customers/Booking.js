@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useHistory, useParams } from "react-router-dom";
 import { useStore, useDispatch, useSelector } from "react-redux";
 import { updateHeaderFooter } from "../../redux/users/actions";
 import "../../styles/customers/booking/booking.scss";
-import { postBookingInfo } from "../../redux/films/actions";
+import { getFilmDetails, getSeats, postBookingInfo } from "../../redux/films/actions";
 import { getToken } from "../../redux/users/selector";
+import * as moment from "moment"
 
 const SeatEl = (props) => {
   const [status, setStatus] = useState();
@@ -60,48 +61,48 @@ export default function Booking(props) {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [payment, setPayment] = useState("");
-  const listSeat = [
-    {
-      name: "A",
-      rows: ["A01", "A02", "A03", "A04", "A05", "A06", "A07", "A08", "A09", "A10", "A11", "A12", "A13", "A14"],
-    },
-    {
-      name: "B",
-      rows: ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B09", "B10", "B11", "B12", "B13", "B14"],
-    },
-    {
-      name: "C",
-      rows: ["C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C10", "C11", "C12", "C13", "C14"],
-    },
-    {
-      name: "D",
-      rows: ["D01", "D02", "D03", "D04", "D05", "D06", "D07", "D08", "D09", "D10", "D11", "D12", "D13", "D14"],
-    },
-    {
-      name: "E",
-      rows: ["E01", "E02", "E03", "E04", "E05", "E06", "E07", "E08", "E09", "E10", "E11", "E12", "E13", "E14"],
-    },
-    {
-      name: "F",
-      rows: ["F01", "F02", "F03", "F04", "F05", "F06", "F07", "F08", "F09", "F10", "F11", "F12", "F13", "F14"],
-    },
-    {
-      name: "G",
-      rows: ["G01", "G02", "G03", "G04", "G05", "G06", "G07", "G08", "G09", "G10", "G11", "G12", "G13", "G14"],
-    },
-    {
-      name: "H",
-      rows: ["H01", "H02", "H03", "H04", "H05", "H06", "H07", "H08", "H09", "H10", "H11", "H12", "H13", "H14"],
-    },
-    {
-      name: "I",
-      rows: ["I01", "I02", "I03", "I04", "I05", "I06", "I07", "I08", "I09", "I10", "I11", "I12", "I13", "I14"],
-    },
-    {
-      name: "J",
-      rows: ["J01", "J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14"],
-    },
-  ];
+  // const listSeat = [
+  //   {
+  //     name: "A",
+  //     rows: ["A01", "A02", "A03", "A04", "A05", "A06", "A07", "A08", "A09", "A10", "A11", "A12", "A13", "A14"],
+  //   },
+  //   {
+  //     name: "B",
+  //     rows: ["B01", "B02", "B03", "B04", "B05", "B06", "B07", "B08", "B09", "B10", "B11", "B12", "B13", "B14"],
+  //   },
+  //   {
+  //     name: "C",
+  //     rows: ["C01", "C02", "C03", "C04", "C05", "C06", "C07", "C08", "C09", "C10", "C11", "C12", "C13", "C14"],
+  //   },
+  //   {
+  //     name: "D",
+  //     rows: ["D01", "D02", "D03", "D04", "D05", "D06", "D07", "D08", "D09", "D10", "D11", "D12", "D13", "D14"],
+  //   },
+  //   {
+  //     name: "E",
+  //     rows: ["E01", "E02", "E03", "E04", "E05", "E06", "E07", "E08", "E09", "E10", "E11", "E12", "E13", "E14"],
+  //   },
+  //   {
+  //     name: "F",
+  //     rows: ["F01", "F02", "F03", "F04", "F05", "F06", "F07", "F08", "F09", "F10", "F11", "F12", "F13", "F14"],
+  //   },
+  //   {
+  //     name: "G",
+  //     rows: ["G01", "G02", "G03", "G04", "G05", "G06", "G07", "G08", "G09", "G10", "G11", "G12", "G13", "G14"],
+  //   },
+  //   {
+  //     name: "H",
+  //     rows: ["H01", "H02", "H03", "H04", "H05", "H06", "H07", "H08", "H09", "H10", "H11", "H12", "H13", "H14"],
+  //   },
+  //   {
+  //     name: "I",
+  //     rows: ["I01", "I02", "I03", "I04", "I05", "I06", "I07", "I08", "I09", "I10", "I11", "I12", "I13", "I14"],
+  //   },
+  //   {
+  //     name: "J",
+  //     rows: ["J01", "J02", "J03", "J04", "J05", "J06", "J07", "J08", "J09", "J10", "J11", "J12", "J13", "J14"],
+  //   },
+  // ];
   const { users } = useStore().getState();
 
   const [disabledBtn, setDisabledBtn] = useState(false);
@@ -121,28 +122,16 @@ export default function Booking(props) {
         setSeats([...seats, seat]);
       }
     }
-
-    const info = {
-      id: id
-    };
-    dispatch(getFilmDetails(info));
-    dispatch(getSeat(movies.schedule_id))
   };
-
   const formatMoney = (number) => {
     return new Intl.NumberFormat().format(number);
   };
-
-  let data=useSelector(state =>state.films.filmDetail)
-  let seats=useSelector(state => state.films.seats)
-
-
   const bookingTicket = () => {
     const bookingInfo = {
       count: seats.length,
       cost: seats.length * 80000,
       customer_id: user._id,
-      film_schedule_id: movies.scheduleId,
+      film_schedule_id: movies.schedule_id,
       seat_ids: seats,
       email,
       phone_number: phone,
@@ -152,29 +141,40 @@ export default function Booking(props) {
     setDisabledBtn(true);
   };
 
-  useEffect(() => {
-    dispatch(
-      updateHeaderFooter({
-        header: true,
-        footer: true,
-      })
-    );
+      // useEffect(() => {
+      //   dispatch(
+      //     updateHeaderFooter({
+      //       header: true,
+      //       footer: true,
+      //     })
+      //   );
 
-    const token = getToken(users);
-    if (!token) {
-      history.push("/login");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  
+      //   const token = getToken(users);
+      //   if (!token) {
+      //     history.push("/login");
+      //   }
+      //   // eslint-disable-next-line react-hooks/exhaustive-deps
+      // }, []);
+  useEffect(() => {
+    const info = {
+      id: id
+    };
+    dispatch(getFilmDetails(info));
+    dispatch(getSeats(movies.schedule_id));
+  }, [])
+  // const data = useSelector((state) => state.films.filmDetail)
+  const listSeat = useSelector((state) => state.films.seats)
+  const formatDate = (date) => {
+    return moment(date).format('dddd DD/MM/YYYY hh:mm');
+  }
   return (
     <div className="booking">
       <div className="booking-content">
         <div className="booking-content__header">
-          <img src="/assets/ic_bhd.png" alt="" />
+          <img src={movies.theater_url_image} alt="" />
           <div className="booking-content__threater">
-            <div className="booking-content__threater__name">{movies && movies.threater}</div>
-            <div className="booking-content__threater__room">{`${movies.day} - ${movies.date} - ${movies.timeStart} - ${movies.room}`}</div>
+            <div className="booking-content__threater__name">{movies && movies.theater_name}</div>
+            <div className="booking-content__threater__room">{`${formatDate(movies.schedule.time_start)} - ${movies.schedule.room}`}</div>
           </div>
         </div>
         <div className="booking-content__screen">
@@ -210,8 +210,8 @@ export default function Booking(props) {
         </div>
         <div className="booking-form__input booking-form__film-name">
           <div className="booking-form__name">{movies.name}</div>
-          <div className="booking-form__threater">{movies.threater}</div>
-          <div className="booking-form__address">{`${movies.day} - ${movies.date} - ${movies.timeStart} - ${movies.room}`}</div>
+          <div className="booking-form__threater">{movies.theater_name}</div>
+          <div className="booking-form__address">{`${formatDate(movies.schedule.time_start)} - ${movies.schedule.room}`}</div>
         </div>
         <div className="booking-form__input booking-form__seats">
           Ghế{" "}
