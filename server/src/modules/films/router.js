@@ -6,7 +6,7 @@ const {omitBy, isNil} = require('lodash');
 
 router.get('/nowshowing', (req, res, next) => {
   handler
-    .getNowShowing(params)
+    .getNowShowing()
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });
