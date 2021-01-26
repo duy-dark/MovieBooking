@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { Collapse } from 'react-collapse';
 import '../../styles/films/film.scss';
 import CardTime from './CardTime';
 
 export default function TabsTheater(props) {
-  const [activeIndex, setActiveIndex] = useState([1, 2, 3]);
+  const [activeIndex, setActiveIndex] = useState([]);
   const changeCollapse = (index) => {
     let arr = [...activeIndex]
     if (activeIndex.includes(index)) {
@@ -16,6 +16,18 @@ export default function TabsTheater(props) {
       setActiveIndex([...arr, index])
     }
   }
+
+  useEffect(() => {
+    let arr = []
+    props.theaters.map(theater => {
+      theater.films.map(film => {
+        arr.push(film._id)
+      })
+    })
+    console.log(arr)
+    setActiveIndex(arr)
+  }, [props.theaters])
+
   const [tabSelect, setTabSelect] = useState(0);
 
   return (

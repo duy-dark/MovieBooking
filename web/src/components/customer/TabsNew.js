@@ -1,5 +1,7 @@
 import React from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import CardNew from './CardNew.js'
+import CardLucky from './CardLucky.js'
 
 export default function TabsNew(props) {
   return (
@@ -9,10 +11,10 @@ export default function TabsNew(props) {
         <Tab className="tab-film__header__item">Khuyến mãi</Tab>
       </TabList>
       <TabPanel>
-        tin tức
+        <CardNew/>
       </TabPanel>
       <TabPanel>
-        khuyến mãi
+        <CardLucky/>
       </TabPanel>
     </Tabs>
   )

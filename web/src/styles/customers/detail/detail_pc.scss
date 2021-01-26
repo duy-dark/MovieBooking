@@ -87,11 +87,12 @@
   }
 }
 
-.tab-film {
-  min-width: 800px;
+.tab-detail {
+  min-width: 630px;
   margin: 0 auto;
+  height: 700px;
 
-  .tab-film__header {
+  .tab-detail__header {
     background: transparent;
     display: flex;
     align-items: center;
@@ -99,12 +100,16 @@
     justify-content: center;
     padding: 0;
 
-    .tab-film__header__item {
+    .tab-detail__header__item {
       border: none;
       background: transparent;
       font-size: 25px;
       font-weight: bold;
       // color: #fff;
+
+      &:not(:last-child) {
+        margin-right: 20px;
+      }
 
       &.react-tabs__tab--selected {
         color: #fb4226;
@@ -112,13 +117,17 @@
     }
   }
 
-  .tab-film__date {
+  .tab-detail__date {
     background-color: #fff;
     border-radius: 6px;
     max-height: 712px;
     width: 100%;
     display: flex;
     flex-direction: column;
+
+    &.react-tabs__tab-panel--selected {
+      height: calc(100% - 90px);
+    }
 
     .date-list {
       list-style: none;
@@ -127,6 +136,7 @@
       padding: 0;
       height: 90px;
       border-bottom: 1px solid #ccc;
+      margin: 0;
 
       .date-list__item {
         width: 90px;
@@ -155,12 +165,25 @@
         }
       }
     }
+
+    .tab-detail__date-list {
+      height: 100%;
+    }
   }
 
-  .tab-film__theater {
+  .tab-detail__theater {
+    &.react-tabs__tab-panel--selected {
+      height: calc(100% - 90px);
+      &>div {
+        height: 100%;
+        overflow-y: scroll;
+      }
+    }
+
     .theater__item {
       position: relative;
       margin: 20px;
+      padding-bottom: 20px;
 
       &::after {
         content: "";
@@ -215,6 +238,7 @@
     display: flex;
     flex-direction: row;
     width: 100%;
+    max-width: 870px;
 
     .detail-info__info {
       display: flex;
@@ -246,10 +270,9 @@
     }
   }
 
-  .tab-film__comment {
+  .tab-detail__comment {
     max-width: 810px;
     margin: auto;
-    padding-top: 40px;
     color: #e9e9e9;
     .comment-block {
       max-width: 580px;

@@ -43,14 +43,14 @@ export default function TabsSchedule(props) {
   const [tabSelect, setTabSelect] = useState(0);
 
   return (
-    <Tabs className="tab-film">
-      <TabList className="tab-film__header">
-        <Tab className="tab-film__header__item">Lịch Chiếu</Tab>
-        <Tab className="tab-film__header__item">Thông Tin</Tab>
-        <Tab className="tab-film__header__item">Đánh Giá</Tab>
+    <Tabs className="tab-detail">
+      <TabList className="tab-detail__header">
+        <Tab className="tab-detail__header__item">Lịch Chiếu</Tab>
+        <Tab className="tab-detail__header__item">Thông Tin</Tab>
+        <Tab className="tab-detail__header__item">Đánh Giá</Tab>
       </TabList>
-      <TabPanel className="tab-film__date">
-        <Tabs selectedIndex={tabSelect} onSelect={tab => setTabSelect(tab)}>
+      <TabPanel className="tab-detail__date">
+        <Tabs className="tab-detail__date-list" selectedIndex={tabSelect} onSelect={tab => setTabSelect(tab)}>
           <TabList className="date-list">
             {
               listDate.map((item, index) => {
@@ -62,7 +62,8 @@ export default function TabsSchedule(props) {
           </TabList>
           { props.dayOfWeeks.map((item, index) => {
               return (
-              <TabPanel key={index} className="tab-film__theater">
+              <TabPanel key={index} className="tab-detail__theater">
+                <div>
                 {
                   item.map(theater => {
                     return (
@@ -86,6 +87,7 @@ export default function TabsSchedule(props) {
                     )
                   })
                 }
+                </div>
               </TabPanel>
               )
             })}
@@ -128,7 +130,7 @@ export default function TabsSchedule(props) {
           <p>{ `${props.detail.content}` }</p>
         </div>
       </TabPanel>
-      <TabPanel className="tab-film__comment">
+      <TabPanel className="tab-detail__comment">
           <div className="comment-block" onClick={()=> {}}>
             <span className="comment-block__image"><img src="https://tix.vn/app/assets/img/avatar.png" alt="avatar"/></span>
             <input type="text" placeholder="Bạn nghĩ gì về phim này?"/>
