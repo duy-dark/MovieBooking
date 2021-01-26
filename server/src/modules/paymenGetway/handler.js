@@ -7,6 +7,7 @@ const { v1: uuidv1 } = require('uuid');
 var sha256 = require('sha256');
 const axios = require('axios')
 const Nexmo = require('nexmo');
+const ticket = require('../tickets/handler')
 var endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor"
 var hostname = "https://test-payment.momo.vn"
 var partnerCode = "MOMOESSA20200911"
@@ -137,17 +138,7 @@ try{
     if(newsignature==params.signature){
      
         if (params.errorCode == '0'){
-        //let data = await Model.createByLambda(lambda);
-        console.log(lambda.email)
-        sendQRcodetoEmail(lambda.email)
-        const from = 'Vonage APIs';
-       
-        const text = 'hi this is a test';
-       try{
-        
-        nexmo.message.sendSms(from, lambda.phone_number, text);}
-        catch (error){ console.log(error.toString())}
-        console.log("Success");
+            let data = await ticket.postCreate(lambda);
       return({"result":"Success"}) 
       }
         else {
