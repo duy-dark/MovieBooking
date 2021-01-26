@@ -24,7 +24,6 @@ export default function TabsTheater(props) {
         arr.push(film._id)
       })
     })
-    console.log(arr)
     setActiveIndex(arr)
   }, [props.theaters])
 

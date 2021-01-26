@@ -9,7 +9,7 @@ const getListFilmNow = () => {
 };
 
 const getListFilmFuture = () => {
-  return Api.get("/api/film/commingson").then((res) => res.data);
+  return Api.get("/api/film/commingsoon").then((res) => res.data);
 };
 
 const getListFilmToday = () => {
