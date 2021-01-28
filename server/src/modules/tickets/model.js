@@ -12,6 +12,7 @@ let schema = new mongoose.Schema(
     phone_number: String,
     payment: String,
     seat_ids: [String],
+    categories: [String],
     is_deleted: Boolean,
     created_at: Date,
     updated_at: Date
