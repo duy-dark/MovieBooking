@@ -2,51 +2,26 @@ import { StyleSheet } from "react-native"
 
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: 10,
+        flex: 1,
         borderWidth: 0.5,
         borderColor: "lightgray",
-        borderRadius: 15
     },
     row: {
         flexDirection: "row",
-        marginVertical: 10
-    },
-    film: {
-        flex: 3,
-        alignItems: "flex-start"
-    },
-    nameFilm : {
-        fontSize: 15
-    },
-    imageFilm: {
-        width: 50,
-        height: 70
+        marginVertical: 10,
+        marginLeft: 10
     },
     reviewer: {
-        flex: 2,
-        justifyContent: "flex-end",
+        flex: 1,
         flexDirection: "row"
     },
-    reviewerInfo: {
-        flex: 1,
-        alignItems: "flex-end"
-    },
-    nameReviewer: {
-        fontSize: 13,
-        color: "gray"
-    },
-    timeReviewer: {
-        fontSize: 11,
-        color: "lightgray"
-    },
     containerImages: {
-        position: "relative"
+        position: "relative",
     },
     avatarReviewer: {
         height: 30,
         width: 30,
         borderRadius: 50,
-        marginLeft: 5
     },
     icon: {
         position: "absolute",
@@ -56,8 +31,31 @@ const styles = StyleSheet.create({
         height: 12,
         borderRadius: 50
     },
-    contentComment: {
-        marginLeft: 5
+    reviewerInfo: {
+        marginLeft: 10
+    },
+    nameReviewer: {
+        fontSize: 13,
+        color: "gray"
+    },
+    timeReviewer: {
+        fontSize: 11,
+        color: "lightgray"
+    },
+    review: {
+        marginRight: 10
+    },
+    reviewText: {
+        fontSize: 16,
+        textAlign: "center",
+        color: "green",
+    },
+    comment: {
+        borderBottomWidth: 1,
+        borderBottomColor: "lightgray",
+        paddingBottom: 15,
+        paddingTop: 5,
+        paddingLeft: 10
     },
     iconText: {
         alignSelf: "center",

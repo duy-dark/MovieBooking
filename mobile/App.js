@@ -7,7 +7,8 @@ import CardFilmComingSoon from './src/components/film/CardFilmComingSoon'
 import CardFilm from './src/components/film/CardFilm';
 import CardNews from './src/components/news/CardNews';
 import CardNewsSummary from './src/components/news/CardNewsSummary';
-import CardComment from './src/components/comments/CardComment';
+import CardComment from './src/components/comment/CardComment';
+import CardCommentFilm from './src/components/comment/CardCommentFilm'
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
       <CardNews />
       <CardNewsSummary />
       <CardComment />
+      <CardCommentFilm />
     </ScrollView>
   );
 }
