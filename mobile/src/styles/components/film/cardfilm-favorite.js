@@ -2,10 +2,11 @@ import { StyleSheet } from "react-native"
 
 const styles = StyleSheet.create({
     container: {
-        height: 350,
+        height: 300,
+        marginBottom: 15
     },
     image: {
-        borderRadius: 25,
+        borderRadius: 20,
         resizeMode: "cover",
     },
     touch: {
@@ -31,7 +32,7 @@ const styles = StyleSheet.create({
     },
     detail: {
         backgroundColor: "rgba(0,0,0,0.7)",
-        borderBottomLeftRadius: 25,
+        borderBottomLeftRadius: 20,
         borderBottomRightRadius: 25,
         paddingHorizontal: 15,
         paddingBottom: 15
@@ -55,7 +56,7 @@ const styles = StyleSheet.create({
     },
     titleText: {
         flex: 3,
-        fontSize: 30,
+        fontSize: 25,
         color: "white",
     },
     bookText: {
