@@ -1,54 +1,146 @@
-[
-  {
-    "name": "Việt Nam",
-    "is_deleted": "false"
-  },
-  {
-    "name": "Nhật Bản",
-    "is_deleted": "false"
-  },
-  {
-    "name": "Pháp",
-    "is_deleted": "false"
-  },
-  {
-    "name": "Canada",
-    "is_deleted": "false"
-  },
-  {
-    "name": "Trung Quốc",
-    "is_deleted": "false"
-  },
-  {
-    "name": "Hồng Kông",
-    "is_deleted": "false"
-  },
-  {
-    "name": "Đài Loan",
-    "is_deleted": "false"
-  },
-  {
-    "name": "Mỹ",
-    "is_deleted": "false"
-  },
-  {
-    "name": "Ấn Độ",
-    "is_deleted": "false"
-  },
-  {
-    "name": "Úc",
-    "is_deleted": "false"
-  },
-  {
-    "name": "Hàn Quốc",
-    "is_deleted": "false"
-  },
-  {
-    "name": "Thái Lan",
-    "is_deleted": "false"
-  },
-  {
-    "name": "Anh",
-    "is_deleted": "false"
-  }
-]
+{
+  "status": "ok",
+  "code": 200,
+  "data": [
+    {
+      "theaters": [
+        {
+          "_id": "60028152501dbc0ec82ce3b3",
+          "name": "BHD Star ‎Phạm Hùng",
+          "address": "L4-Satra Phạm Hùng, C6/27 Phạm Hùng, Bình Chánh",
+          "url_image": "/assets/images/theater/bhd-star-pham-hung.jpg"
+        },
+        {
+          "_id": "60028091501dbc0ec82ce3b0",
+          "name": "BHD Star - Bitexco",
+          "address": "L3-Bitexco Icon 68, 2 Hải Triều, Q.1",
+          "url_image": "/assets/images/theater/bhd-star-bitexco.jpg"
+        }
+      ],
+      "films": [
+        {
+          "_id": "5ff14348ad87be0d3c8f9d8d",
+          "name": "Cuộc Sống Nhiệm Màu - Soul",
+          "content": "Điều gì khiến bạn là chính bạn? Cuối năm nay, hãng phim hoạt hình danh tiếng Pixar sẽ trình làng một tác phẩm mới mang tên SOUL – CUỘC SỐNG NHIỆM MÀU với nhân vật chính là Joe Gardner (Jamie Foxx lồng tiếng) một giáo viên dạy nhạc ở trường trung học. Anh vừa nhận được một cơ hội duy nhất trong đời khi có thể được tham gia chơi Jazz cho một ban nhạc nổi nhất thành phố. Nhưng một bước chân sai lầm đã đưa anh từ thành phố New York hoa lệ đến Cõi Trước – một nơi kỳ diệu mà ở đó các linh hồn được nhận tính cách, sở thích trước khi họ đi đến Trái Đất. Quyết tâm trở về cuộc đời của chính mình, Joe hợp tác với một linh hồn bất hảo mang tên 22 (lồng tiếng bởi Tina Fey) - người chưa bao giờ hiểu được sự hấp dẫn của cuộc sống loài người. Joe cố gắng hết mình để cho 22 thấy cuộc sống này nhiệm màu như thế nào, đồng thời anh ấy cũng khám phá ra câu trả lời quan trọng cho đời người."
+        },
+        {
+          "_id": "5ff14974773a790ef47cc1b8",
+          "name": "'Em' Là Của Em",
+          "content": "Chuyện phim “Em” Là Của Em xoay quanh Hoàng (Ngô Kiến Huy) - một chàng trai đã 30 tuổi nhưng vẫn chưa đi đến được trạm cuối của con đường tình yêu. Phải lòng một cô gái hơn tuổi từ tận năm cấp 3, Hoàng đã phải trải qua nhiều gian nan trắc trở để “cầm cưa” chị đẹp nhưng đều liên tiếp bị chị người thương từ chối. Lúc này, Thanh (Khả Như) trở thành người “cứu rỗi” tình yêu cho Hoàng khi lập ra cho anh hẳn một kế hoạch cưa đổ crush cực kỳ hoàn hảo. Liệu rằng với kế hoạch ấy, anh chàng có thành công thu phục trái tim của người đẹp giấu mặt? Câu trả lời sẽ được hé lộ vào ngày 08.01.2021."
+        }
+      ],
+      "dayOfWeek": [
+        {
+          "date": "2021-01-30T10:59:12.892Z",
+          "count": 1,
+          "schedules": [
+            {
+              "_id": "600aaecd7135163ca442a2a8",
+              "time_start": "2021-01-30T14:20:55.785Z",
+              "time_end": "2021-01-30T16:00:35.785Z",
+              "film_id": "5ff14974773a790ef47cc1b8",
+              "theater_id": "60028152501dbc0ec82ce3b3",
+              "room": "rạp 2"
+            }
+          ]
+        },
+        {
+          "date": "2021-01-30T17:00:00.000Z",
+          "count": 4,
+          "schedules": [
+            {
+              "_id": "600d0eb42bc2a8248cc65dbb",
+              "time_start": "2021-01-30T17:00:40.785Z",
+              "time_end": "2021-01-30T18:40:40.785Z",
+              "film_id": "5ff14348ad87be0d3c8f9d8d",
+              "theater_id": "60028091501dbc0ec82ce3b0",
+              "room": "rạp 1"
+            },
+            {
+              "_id": "600d42cf9ac1fa259c6c20ba",
+              "time_start": "2021-01-30T17:00:40.785Z",
+              "time_end": "2021-01-30T18:40:40.785Z",
+              "film_id": "5ff14348ad87be0d3c8f9d8d",
+              "theater_id": "60028091501dbc0ec82ce3b0",
+              "room": "rạp 1"
+            },
+            {
+              "_id": "600d42d99ac1fa259c6c20bb",
+              "time_start": "2021-01-30T17:00:40.785Z",
+              "time_end": "2021-01-30T18:40:40.785Z",
+              "film_id": "5ff14348ad87be0d3c8f9d8d",
+              "theater_id": "60028091501dbc0ec82ce3b0",
+              "room": "rạp 1"
+            },
+            {
+              "_id": "600d42e49ac1fa259c6c20bc",
+              "time_start": "2021-01-30T17:00:40.785Z",
+              "time_end": "2021-01-30T18:40:40.785Z",
+              "film_id": "5ff14348ad87be0d3c8f9d8d",
+              "theater_id": "60028091501dbc0ec82ce3b0",
+              "room": "rạp 1"
+            }
+          ]
+        },
+        {
+          "date": "2021-01-31T17:00:00.000Z",
+          "count": 3,
+          "schedules": [
+            {
+              "_id": "600d42f09ac1fa259c6c20bd",
+              "time_start": "2021-01-31T17:00:40.785Z",
+              "time_end": "2021-01-31T18:40:40.785Z",
+              "film_id": "5ff14348ad87be0d3c8f9d8d",
+              "theater_id": "60028091501dbc0ec82ce3b0",
+              "room": "rạp 1"
+            },
+            {
+              "_id": "600d42f89ac1fa259c6c20be",
+              "time_start": "2021-01-31T17:00:40.785Z",
+              "time_end": "2021-01-31T18:40:40.785Z",
+              "film_id": "5ff14348ad87be0d3c8f9d8d",
+              "theater_id": "60028091501dbc0ec82ce3b0",
+              "room": "rạp 1"
+            },
+            {
+              "_id": "600d43019ac1fa259c6c20bf",
+              "time_start": "2021-01-31T17:00:40.785Z",
+              "time_end": "2021-01-31T18:40:40.785Z",
+              "film_id": "5ff14348ad87be0d3c8f9d8d",
+              "theater_id": "60028091501dbc0ec82ce3b0",
+              "room": "rạp 1"
+            }
+          ]
+        },
+        {
+          "date": "2021-02-01T17:00:00.000Z",
+          "count": 1,
+          "schedules": [
+            {
+              "_id": "600d43229ac1fa259c6c20c1",
+              "time_start": "2021-02-01T17:00:40.785Z",
+              "time_end": "2021-02-01T18:40:40.785Z",
+              "film_id": "5ff14348ad87be0d3c8f9d8d",
+              "theater_id": "60028091501dbc0ec82ce3b0",
+              "room": "rạp 1"
+            }
+          ]
+        },
+        {
+          "date": "2021-02-02T17:00:00.000Z",
+          "count": 1,
+          "schedules": [
+            {
+              "_id": "600d43139ac1fa259c6c20c0",
+              "time_start": "2021-02-02T17:00:40.785Z",
+              "time_end": "2021-02-02T18:40:40.785Z",
+              "film_id": "5ff14348ad87be0d3c8f9d8d",
+              "theater_id": "60028091501dbc0ec82ce3b0",
+              "room": "rạp 1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
