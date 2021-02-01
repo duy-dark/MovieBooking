@@ -1,10 +1,10 @@
 import React from 'react'
 import { ImageBackground, Text, View, TouchableOpacity } from 'react-native'
-import styles from "../../styles/components/film/cardfilm-today"
+import styles from "../../styles/components/film/cardfilm-nowshowing"
 import StarRating from 'react-native-star-rating';
 
 
-const CardFilmFavorite = () => {
+const CardFilmNowShowing = () => {
     const image = { uri: "https://s3img.vcdn.vn/123phim/2021/01/lua-deu-gap-lua-dao-16105107337344.jpg" } ;
     return (
         <ImageBackground style={styles.container} source={image} imageStyle={styles.image}>
@@ -27,5 +27,5 @@ const CardFilmFavorite = () => {
     )
 }
 
-export default CardFilmFavorite
+export default CardFilmNowShowing
 

@@ -2,14 +2,16 @@ import { StyleSheet } from "react-native"
 
 const styles = StyleSheet.create({
     container: {
-        borderRadius: 25,
+        borderRadius: 15,
         borderWidth: 0.5,
-        borderColor: "lightgray"
+        borderColor: "lightgray",
+        backgroundColor: "white", 
+        marginBottom: 15
     },
     image: {
         height: 150,
-        borderTopLeftRadius: 25,
-        borderTopRightRadius: 25,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
         resizeMode: "cover"
     },
     content: {
@@ -28,7 +30,8 @@ const styles = StyleSheet.create({
     },
     detail: {
         fontSize: 14,
-        color: "gray"
+        color: "gray",
+        paddingBottom: 10
     }
 });
 

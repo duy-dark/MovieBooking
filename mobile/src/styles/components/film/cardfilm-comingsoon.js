@@ -1,9 +1,10 @@
-import { StyleSheet } from "react-native"
+import { StyleSheet, Dimensions } from "react-native"
 
 const styles = StyleSheet.create({
     container: {
         height: 220,
-        width: "50%"
+        width: Dimensions.get("screen").width/2 - 10,
+        margin: 5
     },
     image: {
         borderRadius: 10,
