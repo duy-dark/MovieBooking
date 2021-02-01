@@ -67,6 +67,8 @@ export default function Home() {
     } else {
       setOptionDate([{ label: "vui lòng chọn rạp", isDisabled: true }])
     }
+
+    setOptionTime([{ label: "vui lòng chọn rạp", isDisabled: true }])
   }, [filmsNow, selectFilm, selectThreater, selectDate])
 
   const BookingTicketFast = () => {
@@ -114,13 +116,13 @@ export default function Home() {
             components={{ OptionComponent }}
             placeholder="Ngày xem"
           />
-          {/* <Select
+          <Select
             className="select"
             value={selectTime}
             options={optionTime}
             onChange={setSelectTime}
             placeholder="Suất chiếu"
-          /> */}
+          />
           <button
             className={"btn btn-booking" + (disabledBtn ? "" : " btn-disabled")}
             onClick={BookingTicketFast}

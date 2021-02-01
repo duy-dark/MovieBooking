@@ -1,10 +1,16 @@
 import React from 'react';
 import '../../styles/customers/news/news.scss';
+import { useHistory } from "react-router-dom";
 
 export default function CardNew(props) {
+  let history = useHistory();
+  const goNew = () => {
+    history.push('/new')
+  }
+
   return (
     <div className="card-new">
-      <div className="card-new__thumbnail">
+      <div onClick={goNew} className="card-new__thumbnail">
         <div className="thumbnail__image">
           <img src={`/assets/news/new1.jpg`} alt=""/>
         </div>
@@ -13,7 +19,7 @@ export default function CardNew(props) {
           Cư dân nơi khác đang sắp “gato nổ mắt” với dân Sài Thành khi sắp tới đây thành phố HCM sẽ chào đón một rạp chiếu phim mang phong cách Artistic Urban Lifestyle đầu tiên tại Việt Nam!
         </div>
       </div>
-      <div className="card-new__thumbnail">
+      <div onClick={goNew} className="card-new__thumbnail">
         <div className="thumbnail__image">
           <img src={`/assets/news/new2.jpg`} alt=""/>
         </div>
@@ -22,7 +28,7 @@ export default function CardNew(props) {
           Vào đúng ngày Nhà giáo Việt Nam 20/11, khu vui chơi sống ảo độc-lạ-chill nhất từ trước đến giờ sẽ chính thức khai trương tại 360 Giải Phóng!
         </div>
       </div>
-      <div className="card-new__thumbnail">
+      <div onClick={goNew} className="card-new__thumbnail">
         <div className="thumbnail__image">
           <img src={`/assets/news/new3.png`} alt=""/>
         </div>
@@ -31,7 +37,7 @@ export default function CardNew(props) {
           Sau 2 tuần ra mắt, Tiệc Trăng Máu chính thức gia nhập câu lạc bộ phim điện ảnh đạt 100 tỷ đồng doanh thu phòng vé. Dàn ngôi sao “bạc tỷ” của phim cũng lần đầu tiên hội tụ đầy đủ trong một khung hình để ăn mừng thành tích ấn tượng của tác phẩm.
         </div>
       </div>
-      <div className="card-new__thumbnail">
+      <div onClick={goNew} className="card-new__thumbnail">
         <div className="thumbnail__image">
           <img src={`/assets/news/new4.jpg`} alt=""/>
         </div>
