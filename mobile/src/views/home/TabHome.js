@@ -1,0 +1,56 @@
+import React from 'react'
+import { View, Text, ScrollView, TouchableOpacity } from 'react-native'
+import styles from "../../styles/views/home/tabhome"
+import CardFilmFavorite from "../../components/film/CardFilmFavorite"
+import CardFilm from "../../components/film/CardFilm"
+import CardNews from "../../components/news/CardNews"
+import CardNewsSummary from "../../components/news/CardNewsSummary"
+import CardCommment from "../../components/comment/CardComment"
+
+const TabHome = () => {
+    return (
+        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+            <Text style={styles.section}>Phim được yêu thích nhất</Text>
+            <CardFilmFavorite />
+            <CardFilmFavorite />
+            <CardFilmFavorite />
+            <View style={styles.area}>
+                <View style={styles.row}>
+                    <Text style={styles.textRow}>Rạp đang có phim gì?</Text>
+                    <TouchableOpacity><Text style={styles.seeAll}>Xem Tất Cả</Text></TouchableOpacity>
+                </View>
+                <CardFilm />
+                <CardFilm />
+                <CardFilm />
+            </View>
+            <Text style={styles.section}>Tin nóng nhất hôm nay</Text>
+            <CardNews />
+            <CardNews />
+            <CardNews />
+            <View style={styles.area}>
+                <View style={styles.row}>
+                    <Text style={styles.textRow}>Lướt thêm tin mới nhé!</Text>
+                    <TouchableOpacity><Text style={styles.seeAll}>Xem Tất Cả</Text></TouchableOpacity>
+                </View>
+                <CardNewsSummary />
+                <CardNewsSummary />
+                <CardNewsSummary />
+                <CardNewsSummary />
+                <CardNewsSummary />
+            </View>
+            <View>
+                <View style={[styles.row, {marginBottom: 15}] }>
+                    <Text style={styles.textRow}>Cộng đồng bình luận phim</Text>
+                    <TouchableOpacity><Text style={styles.seeAll}>Xem Tất Cả</Text></TouchableOpacity>
+                </View>
+                <CardCommment />
+                <CardCommment />
+                <CardCommment />
+                <CardCommment />
+                <CardCommment />
+            </View>
+        </ScrollView>
+    )
+}
+
+export default TabHome

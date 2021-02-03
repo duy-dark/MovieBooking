@@ -2,10 +2,13 @@ import { StyleSheet } from "react-native"
 
 const styles = StyleSheet.create({
     container: {
-        paddingHorizontal: 10,
+        paddingHorizontal: 15,
+        paddingVertical: 5,
         borderWidth: 0.5,
         borderColor: "lightgray",
-        borderRadius: 15
+        borderRadius: 15,
+        backgroundColor: "white",
+        marginBottom: 15
     },
     row: {
         flexDirection: "row",
