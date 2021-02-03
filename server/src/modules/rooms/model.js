@@ -4,9 +4,9 @@ let schema = new mongoose.Schema(
   {
     name: String,
     count_of_seat: Number,
-    type_room: String,
+    type: String,
     theater_id: require('mongodb').ObjectID,
-    seat_ids: [require('mongodb').ObjectID],
+    seats: Array,
     is_deleted: Boolean,
     created_at: Date,
     updated_at: Date
@@ -14,7 +14,7 @@ let schema = new mongoose.Schema(
   {versionKey: false}
 );
 
-let Collection = mongoose.model('TheaterRoom', schema, 'theater_rooms');
+let Collection = mongoose.model('Room', schema, 'rooms');
 
 module.exports = {
   findByLambda: async function (lambda) {
