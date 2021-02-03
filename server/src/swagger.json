@@ -1,20 +1,24 @@
 {
     "swagger": "2.0",
     "info": {
-      "version": "4.0",
-      "title": "MovieBooking API",
-      "description": "How to use API",
+      "version": "2.0",
+      "title": "Movie Booking API",
+      "description": "Document API",
       "license": {
-        "name": "Đồ Án Tốt Nghiệp",
+        "name": "Movie Booking",
         "url": "https://opensource.org/licenses/MIT"
       }
     },
     "host": "localhost:1000",
-    "basePath": "/api-docs",
+    "basePath": "/",
     "tags": [
       {
         "name": "Admin",
         "description": "API for Admin"
+      },
+      {
+        "name": "User",
+        "description": "API for User"
       }
 
     ],
@@ -36,44 +40,11 @@
         }
     },
     "paths": {
-      "/api/user/create": {
-        "post": {
-          "summary": "Create user",
-          "tags": [
-            "User"
-          ],
-          "description": "Create new user",
-          "parameters": [
-            {
-              "name": "body",
-              "in": "body",
-              "description": "Create user",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            }
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "responses": {
-            "200": {
-              "description": "Create User Success!",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            },
-            "404":{
-              "description": "Error Create User!"
-            }
-          }
-        }
-      },
-      "/api/admin/Users": {
+      "/api/admin/": {
         "get": {
           "summary": "Get list user",
           "tags": [
-            "User"
+            "Admin"
           ],
           "description": "Get list user",
           "parameters": [
@@ -85,7 +56,7 @@
             "200": {
               "description": "Get list user Success!",
               "schema": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/Admin"
               }
             },
             "404":{
@@ -94,18 +65,18 @@
           }
         },
         "post": {
-          "summary": "Change information user",
+          "summary": "Add information user",
           "tags": [
-            "User"
+            "Admin"
           ],
-          "description": "Change information user",
+          "description": "Add information user",
           "parameters": [
             {
               "name": "body",
               "in": "body",
-              "description": "Edit user",
+              "description": "Add user",
               "schema": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/Admin"
               }
             }
           ],
@@ -114,22 +85,22 @@
           ],
           "responses": {
             "200": {
-              "description": "Change information user Success!",
+              "description": "Add user Success!",
               "schema": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/Admin"
               }
             },
             "404":{
-              "description": "Error Change information User!"
+              "description": "Error add User!"
             }
           }
         }
       },
-      "/api/admin/Users/:id": {
+      "/api/admin/:id": {
         "get": {
           "summary": "Get list user by id",
           "tags": [
-            "User"
+            "Admin"
           ],
           "description": "Get list user by id",
           "parameters": [
@@ -147,7 +118,7 @@
             "200": {
               "description": "Get list user by id Success!",
               "schema": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/Admin"
               }
             },
             "404":{
@@ -155,10 +126,10 @@
             }
           }
         },
-        "patch": {
+        "put": {
           "summary": "Edit user by id",
           "tags": [
-            "User"
+            "Admin"
           ],
           "description": "Edit user by id",
           "parameters": [
@@ -167,7 +138,7 @@
               "in": "body",
               "description": "Edit user",
               "schema": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/Admin"
               }
             }
           ],
@@ -178,7 +149,7 @@
             "200": {
               "description": "Edit user by id Success!",
               "schema": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/Admin"
               }
             },
             "404":{
@@ -189,7 +160,7 @@
         "delete": {
           "summary": "Delete user by id",
           "tags": [
-            "User"
+            "Admin"
           ],
           "description": "Delete user by id",
           "parameters": [
@@ -213,43 +184,20 @@
           }
         }
       },
-      "/api/adminlogin": {
-        "get": {
-          "summary": "Get form login user",
-          "tags": [
-            "User"
-          ],
-          "description": "Get form login user",
-          "parameters": [
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "responses": {
-            "200": {
-              "description": "Get form login User Success!",
-              "schema": {
-                "$ref": "#/definitions/User"
-              }
-            },
-            "404":{
-              "description": "Error Get form login User!"
-            }
-          }
-        },
+      "/api/admin/login": {
         "post": {
-          "summary": "Login user admin",
+          "summary": "Check login user admin",
           "tags": [
-            "User"
+            "Admin"
           ],
-          "description": "Login user admin",
+          "description": "Check login user admin",
           "parameters": [
             {
               "name": "body",
               "in": "body",
-              "description": "Login user admin",
+              "description": "Check login user admin",
               "schema": {
-                "$ref": "#/definitions/User"
+                "$ref": "#/definitions/Admin"
               }
             }
           ],
@@ -265,6 +213,31 @@
             },
             "404":{
               "description": "Error Login user admin!"
+            }
+          }
+        }
+      },
+      "/api/admin/getdetail": {
+        "get": {
+          "summary": "Get detail user admin",
+          "tags": [
+            "Admin"
+          ],
+          "description": "Get detail user admin",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get detail user admin Success!",
+              "schema": {
+                "$ref": "#/definitions/Admin"
+              }
+            },
+            "404":{
+              "description": "Error Get detail user admin!"
             }
           }
         }
@@ -403,6 +376,31 @@
             },
             "404":{
               "description": "Load page login facebook user!"
+            }
+          }
+        }
+      },
+      "/api/customer/response": {
+        "get": {
+          "summary": "Response session",
+          "tags": [
+            "User"
+          ],
+          "description": "Response session",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Response session Success!",
+              "schema": {
+                "$ref": "http://localhost:1000/api/customer/auth/facebook"
+              }
+            },
+            "404":{
+              "description": "Error response session!"
             }
           }
         }
@@ -602,44 +600,19 @@
         }
       },
 
-      "/api/film_comment": {
+      "/api/film/:id/getcomment": {
         "get": {
-          "summary": "Get all film_comment",
+          "summary": "Get all comment film by id_film",
           "tags": [
             "User"
           ],
-          "description": "Get all film_comment",
-          "parameters": [
-          ],
-          "produces": [
-            "application/json"
-          ],
-          "responses": {
-            "200": {
-              "description": "Get all film_comment Success!",
-              "schema": {
-                "$ref": "#/definitions/FilmComment"
-              }
-            },
-            "404":{
-              "description": "Error Get all film_comment!"
-            }
-          }
-        },
-        "post": {
-          "summary": "Create new film_comment",
-          "tags": [
-            "User"
-          ],
-          "description": "Create new film_comment",
+          "description": "Get all comment film by id_film",
           "parameters": [
             {
-              "name": "body",
-              "in": "body",
-              "description": "Create new film_comment",
-              "schema": {
-                "$ref": "#/definitions/FilmComment"
-              }
+              "name": "film_id",
+              "in": "path",
+              "description": "Get list user by id",
+              "type": "string"
             }
           ],
           "produces": [
@@ -647,13 +620,200 @@
           ],
           "responses": {
             "200": {
-              "description": "Create new film_comment Success!",
+            "description": "Get all comment film by id_film Success!",
+             "schema":{
+               "type":"object",
+               "properties":{
+                "film_id": {"type":"string", "format":"ObjectID"},
+                "comment_id": {"type":"string","format":"ObjectID"},
+                "content": {"type":"string"},
+                "rates": {"type":"string"},
+                "user_id": {"type":"string","format":"ObjectID"},
+                "name": {"type":"string"}
+               }
+               
+             }
+            },
+            "404":{
+              "description": "Error Get all comment film by id_film!"
+            }
+          }
+        }
+      },
+      "/api/film/nowshowing": {
+        "get": {
+          "summary": "Get all film now showing",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all film now showing",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all film now showing Success!",
               "schema": {
-                "$ref": "#/definitions/FilmComment"
+                "type":"array",
+                "items": {
+                  "type":"object",
+                  "properties":{
+                    "_id":  {"type":"string", "format":"ObjectID"},
+                    "name": {"type":"string"},
+                    "long_time":{"type":"int"},
+                    "content": {"type":"string"},
+                    "imdb": {"type":"string"},
+                    "digitals": {"type":"string"},
+                    "url_avatar": {"type":"string"},
+                    "url_background": {"type":"string"},
+                    "theaters":{
+                      "type":"object",
+                      "properties":{
+                        "_id":  {"type":"string", "format":"ObjectID"},
+                        "name":  {"type":"string"},
+                        "address":  {"type":"string"},
+                        "film_schedule":{
+                            "type":"object",
+                            "properties":{
+                              "_id": {"type":"string", "format":"ObjectID"},
+                              "time_start": {"type":"string"," format":"date"},
+                              "time_end": {"type":"string", "format":"date"},
+                              "film_id": {"type":"string", "format":"ObjectID"},
+                              "theater_id": {"type":"string", "format":"ObjectID"},
+                              "room": {"type":"string"},
+                              "is_deleted": false,
+                              "created_at": {"type":"string"," format":"date"},
+                              "updated_at": {"type":"string"," format":"date"}
+                            }
+                        }
+                      }
+                    }
+                  }
+                }
               }
             },
             "404":{
-              "description": "Error Create new film_comment!"
+              "description": "Error Get all film now showing!"
+            }
+          }
+        }
+      },
+      "/api/film/commingsoon": {
+        "get": {
+          "summary": "Get all film comming soon",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all film comming soon",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all film comming soon Success!",
+              "schema": {
+                "type":"array",
+                "items": {
+                  "type":"object",
+                  "properties":{
+                    "_id":  {"type":"string", "format":"ObjectID"},
+                    "name": {"type":"string"},
+                    "long_time":{"type":"int"},
+                    "content": {"type":"string"},
+                    "imdb": {"type":"string"},
+                    "digitals": {"type":"string"},
+                    "url_avatar": {"type":"string"},
+                    "url_background": {"type":"string"},
+                    "theaters":{
+                      "type":"object",
+                      "properties":{
+                        "_id":  {"type":"string", "format":"ObjectID"},
+                        "name":  {"type":"string"},
+                        "address":  {"type":"string"},
+                        "film_schedule":{
+                            "type":"object",
+                            "properties":{
+                              "_id": {"type":"string", "format":"ObjectID"},
+                              "time_start": {"type":"string"," format":"date"},
+                              "time_end": {"type":"string", "format":"date"},
+                              "film_id": {"type":"string", "format":"ObjectID"},
+                              "theater_id": {"type":"string", "format":"ObjectID"},
+                              "room": {"type":"string"},
+                              "is_deleted": false,
+                              "created_at": {"type":"string"," format":"date"},
+                              "updated_at": {"type":"string"," format":"date"}
+                            }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404":{
+              "description": "Error Get all film comming soon!"
+            }
+          }
+        }
+
+      }
+      ,
+      "/api/film/detail": {
+        "get": {
+          "summary": "Get film detail",
+          "tags": [
+            "User"
+          ],
+          "description": "Get film detail",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get film detail Success!",
+              "schema": {
+                "$ref": "#/definitions/Film"
+              }
+            },
+            "404":{
+              "description": "Error Get film detail!"
+            }
+          }
+        }
+      },
+      "/api/film/:id/detail": {
+        "get": {
+          "summary": "Get film detail by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Get film detail by id",
+          "parameters": [
+            {
+              "name": "film_id",
+              "in": "path",
+              "description": "Get list user by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get film detail by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Film"
+              }
+            },
+            "404":{
+              "description": "Error Get film detail by id!"
             }
           }
         }
@@ -802,7 +962,7 @@
           }
         }
       },
-      "/api/film_schedule/:id": {
+      "/api/film_schedule/detail/:id": {
         "get": {
           "summary": "Get film_schedule by id",
           "tags": [
@@ -831,7 +991,9 @@
               "description": "Error Get film_schedule by id!"
             }
           }
-        },
+        }
+      },
+      "/api/film_schedule/:id": {
         "put": {
           "summary": "Update film_schedule by id",
           "tags": [
@@ -890,52 +1052,68 @@
           }
         }
       },
-      "/api/film_schedule/getnow": {
+      "/api/film_schedule/getfilmtoday": {
         "get": {
-          "summary": "Get all film now showing",
+          "summary": "Get all film today",
           "tags": [
             "User"
           ],
-          "description": "Get all film now showing",
+          "description": "Get all film today",
           "parameters": [
+            {
+              "name": "film_id",
+              "in": "path",
+              "description": "Get list user by id",
+              "type": "string"
+            }
           ],
           "produces": [
             "application/json"
           ],
           "responses": {
             "200": {
-              "description": "Get all film now showing Success!",
+              "description": "Get all film today!",
               "schema": {
-                "$ref": "#/definitions/FilmSchedules"
+                "type":"object",
+                "properties":{
+                  "_id":{"type":"object"},
+                  "films":{"type":"object"}
+                }
               }
             },
             "404":{
-              "description": "Error Get all film now showing!"
+              "description": "Error Get all film today!"
             }
           }
         }
       },
-      "/api/film_schedule/getcomming": {
+      "/api/film_schedule/getfilm7day/:id": {
         "get": {
-          "summary": "Get all film comming soon",
+          "summary": "Get all film next 7 day",
           "tags": [
             "User"
           ],
-          "description": "Get all film comming soon",
+          "description": "Get all film next 7 day",
           "parameters": [
+            {
+              "name": "film_id",
+              "in": "path",
+              "description": "Get list user by id",
+              "type": "string"
+            }
           ],
           "produces": [
             "application/json"
           ],
           "responses": {
             "200": {
-              "description": "Get all film comming soon Success!",
+              "description": "Get all film next 7 day Success!",
               "schema": {
                 "$ref": "#/definitions/FilmSchedules"
               }
             },
             "404":{
-              "description": "Error Get all film comming soon!"
+              "description": "Error Get all film next 7 day!"
             }
           }
         }
@@ -1660,6 +1838,33 @@
           }
         }
       },
+      "/api/ticket/ticket/:id": {
+        "get": {
+          "summary": "Get all seat_ids",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all seat_ids",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all seat_ids Success!",
+              "schema": {
+                "type":"array",
+                "items":["string","string"],
+                "example":["A10","B9"]
+              }
+            },
+            "404":{
+              "description": "Error Get all seat_ids!"
+            }
+          }
+        }
+      },
       "/api/ticket": {
         "get": {
           "summary": "Get all ticket",
@@ -2092,7 +2297,158 @@
           }
         }
       },
-      "/api/theaters": {
+      "/api/theater/detail/:id": {
+        "get": {
+          "summary": "Get all theaters by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all theaters by id",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all theaters by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Theater"
+              }
+            },
+            "404":{
+              "description": "Error Get all theaters by id!"
+            }
+          }
+        }
+      },
+      "/api/theater/getfilmtoday": {
+        "get": {
+          "summary": "Get all film today from theater",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all film today from theater",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all film today from theater Success!",
+              "schema": {
+                "type":"array",
+                "items":{
+                  "type":"object",
+                  "properties":{
+                    "_id": {"type":"string","format":"ObjectId"},
+                    "name": {"type":"string"},
+                    "address": {"type":"string"},
+                    "url_image": {"type":"string"},
+                    "films": {
+                        "type":"object",
+                        "properties":{
+                          "_id": "5ff147f263ccaf2a14e45106",
+                        "name":{"type":"string"},
+                        "trailer": {"type":"string"},
+                        "countries": {"type":"string"},
+                        "long_time": {"type":"string"},
+                        "start_date":{"type":"string", "format":"date"},
+                        "rates": {"type":"string"},
+                        "rate_count": {"type":"string"},
+                        "url_avatar":{"type":"string"},
+                        "url_background": {"type":"string"},
+                        "is_blockbuster":{"type":"string"},
+                        "film_schedules": 
+                            {
+                            "type":"object",
+                            "properties":{
+                            "_id": {"type":"string","format":"ObjectId"},
+                            "time_start": {"type":"string", "format":"date"},
+                            "time_end": {"type":"string", "format":"date"},
+                            "film_id": {"type":"string","format":"ObjectId"},
+                            "theater_id": {"type":"string","format":"ObjectId"},
+                            "room":{"type":"string"}
+                            }
+                            }
+                          } 
+                        }
+                        
+                  }
+                }
+              }
+            },
+            "404":{
+              "description": "Error Get all film today from theater!"
+            }
+          }
+        }
+      },
+      "/api/theater/:id/detail": {
+        "get": {
+          "summary": "Get all film 7 day by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all film 7 day by id",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all film 7 day by id Success!",
+              "schema": {
+                "type":"array",
+                "items":{
+                  "type":"object",
+                  "properties":{
+                    "_id": {"type":"string","format":"ObjectId"},
+                    "name": {"type":"string"},
+                    "address": {"type":"string"},
+                    "url_image": {"type":"string"},
+                    "films": {
+                        "type":"object",
+                        "properties":{
+                          "_id": "5ff147f263ccaf2a14e45106",
+                        "name":{"type":"string"},
+                        "trailer": {"type":"string"},
+                        "countries": {"type":"string"},
+                        "long_time": {"type":"string"},
+                        "start_date":{"type":"string", "format":"date"},
+                        "rates": {"type":"string"},
+                        "rate_count": {"type":"string"},
+                        "url_avatar":{"type":"string"},
+                        "url_background": {"type":"string"},
+                        "is_blockbuster":{"type":"string"},
+                        "film_schedules": 
+                            {
+                            "type":"object",
+                            "properties":{
+                            "_id": {"type":"string","format":"ObjectId"},
+                            "time_start": {"type":"string", "format":"date"},
+                            "time_end": {"type":"string", "format":"date"},
+                            "film_id": {"type":"string","format":"ObjectId"},
+                            "theater_id": {"type":"string","format":"ObjectId"},
+                            "room":{"type":"string"}
+                            }
+                            }
+                          } 
+                        }
+                        
+                  }
+                }
+              }
+            },
+            "404":{
+              "description": "Error Get all film 7 day by id!"
+            }
+          }
+        }
+      },
+      "/api/theater": {
         "get": {
           "summary": "Get all theaters",
           "tags": [
@@ -2815,6 +3171,22 @@
     },
 
     "definitions": {
+      "Admin":{
+        "properties":{
+          "name":{"type":"string"},
+          "phone":{"type":"string"},
+          "date_of_birth":{"type":"string"," format":"date"},
+          "email":{"type":"string"},
+          "password": {"type":"string"},
+          "genre":{"type":"string"},
+          "avatar":{"type":"string"},
+          "address":{"type":"string"},
+          "permission_id":{"type":"string"},
+          "is_deleted":{"type":"boolean"},
+          "created_at":{"type":"string"," format":"date"},
+          "updated_at":{"type":"string"," format":"date"}       
+        }
+      },
       "Categories":{
         "properties":{
             "name":{"type":"string"},

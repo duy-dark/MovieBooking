@@ -6,8 +6,7 @@ const {omitBy, isNil} = require('lodash');
 router.get('/', (req, res, next) => {
   let conditions = {
     _id: req.query._id,
-    name: req.query.name,
-    event_info_id: req.query.event_info_id
+    name: req.query.name
   };
   conditions = omitBy(conditions, isNil);
   handler

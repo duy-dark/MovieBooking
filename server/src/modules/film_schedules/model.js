@@ -26,223 +26,130 @@ module.exports = {
   updateByLambda: async function (lambda) {
     return await Collection.updateOne(lambda.conditions, lambda.params);
   },
+
   getNowShowing: async function (lambda) {
     return await Collection.aggregate([
       {
         $match: {
           time_start: {
-            $gte: lambda.gte_match,
-            $lte: lambda.lte_match
-          },
-          time_end: {$gte: lambda.gte_end, $lte: lambda.lte_end}
-        }
-      }
-    ]);
-  },
-  getComingSoon: async function (lambda) {
-    return await Collection.aggregate([
-      {
-        $match: {
-          time_start: {
-            $gte: lambda.gte_match,
-            $lte: lambda.lte_match
+            $gte: lambda.conditions.time_start,
+            $lte: lambda.conditions.time_end7
           }
         }
-      }
-    ]);
-  },
-
-  getFilmToDay: async function (lambda) {
-    return await Collection.aggregate([
-      // {
-      //   $match: {
-      //     time_start: {
-      //       $gte: lambda.conditions.time_start,
-      //       $lte: lambda.conditions.time_end
-      //     }
-      //   }
-      // },
+      },
       {
-        $lookup: {
-          from: 'films',
-          localField: 'film_id',
-          foreignField: '_id',
-          as: 'film&schedule'
+        $facet: {
+          theaters: [
+            {
+              $lookup: {
+                from: 'theaters',
+                localField: 'theater_id',
+                foreignField: '_id',
+                as: 'theaters'
+              }
+            },
+
+            {
+              $replaceRoot: {
+                newRoot: {
+                  $mergeObjects: ['$theaters']
+                }
+              }
+            },
+            {
+              $group: {
+                _id: '$_id',
+                name: {
+                  $first: '$name'
+                },
+                address: {
+                  $first: '$address'
+                },
+                url_image: {
+                  $first: '$url_image'
+                }
+              }
+            }
+          ],
+          films: [
+            {
+              $lookup: {
+                from: 'films',
+                localField: 'film_id',
+                foreignField: '_id',
+                as: 'films'
+              }
+            },
+
+            {
+              $replaceRoot: {
+                newRoot: {
+                  $mergeObjects: ['$films']
+                }
+              }
+            },
+            {
+              $group: {
+                _id: '$_id',
+                name: {
+                  $first: '$name'
+                },
+                content: {
+                  $first: '$content'
+                }
+              }
+            }
+          ],
+          dayOfWeek: [
+            {
+              $bucket: {
+                groupBy: '$time_start', // Field to group by
+                boundaries: [
+                  lambda.conditions.time_start,
+                  lambda.conditions.time_end1,
+                  lambda.conditions.time_end2,
+                  lambda.conditions.time_end3,
+                  lambda.conditions.time_end4,
+                  lambda.conditions.time_end5,
+                  lambda.conditions.time_end6,
+                  lambda.conditions.time_end7
+                ], // Boundaries for the buckets
+                default: 'Other', // Bucket id for documents which do not fall into a bucket
+                output: {
+                  // Output for each bucket
+                  count: {$sum: 1},
+                  schedules: {
+                    $push: {
+                      _id: '$_id',
+                      time_start: '$time_start',
+                      time_end: '$time_end',
+                      film_id: '$film_id',
+                      theater_id: '$theater_id',
+                      room: '$room'
+                    }
+                  }
+                }
+              }
+            }
+          ]
         }
       },
       {
         $addFields: {
-          films: {
+          dayOfWeek: {
             $map: {
-              input: '$films',
+              input: '$dayOfWeek',
               in: {
-                film_id: '$$this._id',
-                name: '$$this.name',
-                schedules: [
-                  {
-                    schedule_id: '$$ROOT._id',
-                    film_id: '$$ROOT.film_id',
-                    theater_id: '$$ROOT.theater_id',
-                    time_start: '$$ROOT.time_start',
-                    time_end: '$$ROOT.time_end',
-                    room: '$$ROOT.room'
-                  }
-                ]
+                _id: '$$this._id',
+                date: '$$this._id',
+                count: '$$this.count',
+                schedules: '$$this.schedules'
               }
             }
           }
         }
       },
-
-      {
-        // $project: lambda.views
-        $group: {
-          _id: {
-            theater: '$theaters',
-            films: '$films',
-            schedules: [
-              {
-                schedule_id: '$$ROOT._id',
-                film_id: '$$ROOT.film_id',
-                theater_id: '$$ROOT.theater_id',
-                time_start: '$$ROOT.time_start',
-                time_end: '$$ROOT.time_end',
-                room: '$$ROOT.room'
-              }
-            ]
-          }
-        }
-      },
-      {
-        $group: {
-          _id: '$_id.theater',
-          films: {
-            $push: {
-              films: '$_id.films'
-              // schedules1: [
-              //   {
-              //     schedules2: '$$ROOT._id.schedules'
-              //   }
-              // ]
-            }
-          }
-        }
-      }
-
-      // {
-      //   $lookup: {
-      //     from: 'films',
-      //     localField: 'film_id',
-      //     foreignField: '_id',
-      //     as: 'films'
-      //   }
-      // },
-      // {
-      //   $addFields: {
-      //     films: {
-      //       $map: {
-      //         input: '$films',
-      //         in: {
-      //           film_id: '$$this._id',
-      //           name: '$$this.name'
-      //           // schedules: [
-      //           //   {
-      //           //     time_start: '$$ROOT.time_start',
-      //           //     time_end: '$$ROOT.time_end'
-      //           //   }
-      //           // ]
-      //         }
-      //       }
-      //     }
-      //   }
-      // },
-
-      // {
-      //   // $project: lambda.views
-      //   $group: {
-      //     _id: {
-      //       theater: '$theaters',
-      //       films: '$films',
-      //       schedules: [
-      //         {
-      //           schedule_id: '$$ROOT._id',
-      //           time_start: '$$ROOT.time_start',
-      //           time_end: '$$ROOT.time_end'
-      //         }
-      //       ]
-      //     }
-      //   }
-      // }
-      // {
-      //   $group: {
-      //     _id: '$_id.theater',
-      //     films: {
-      //       $push: {
-      //         $group: {
-      //           films: '$_id.films',
-      //           schedules: {
-      //             $push: {
-      //               schedules: '$._id.schedules'
-      //             }
-      //           }
-      //         }
-      //       }
-      //     }
-      //   }
-      // }
-      // {
-      //   // $project: lambda.views
-      //   $group: {
-      //     _id: '$_id',
-      //     theater: {
-      //       $first: '$theaters'
-      //     },
-      //     films: {
-      //       $push: '$films'
-      //     },
-      //     schedule: {
-      //       $push: {
-      //         schedule_id: '$$ROOT._id',
-      //         film_id: '$$ROOT.film_id',
-      //         theater_id: '$$ROOT.theater_id',
-      //         time_start: '$$ROOT.time_start',
-      //         time_end: '$$ROOT.time_end'
-      //       }
-      //     }
-      //   }
-      // },
-      // {
-      //   $group: {
-      //     theater: '$theater',
-      //     films: {
-      //       $push: {
-      //         films: '$films'
-      //         // schedules: [
-      //         //   {
-      //         //     schedules: '$$ROOT._id.schedules'
-      //         //   }
-      //         // ]
-      //       }
-      //     }
-      //   }
-      // }
-    ]);
-  },
-
-  getFilm7Day: async function (lambda) {
-    return await Collection.aggregate([
-      {
-        $match: {
-          time_start: {
-            $gte: lambda.gte_match,
-            $lte: lambda.lte_match
-          },
-          end_time: {$gte: lambda.gte_end, $lte: lambda.lte_end}
-        }
-      },
-      {
-        $project: lambda.views
-      }
+      {$unset: ['dayOfWeek._id']}
     ]);
   }
 };
