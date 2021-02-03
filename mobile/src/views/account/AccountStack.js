@@ -11,7 +11,8 @@ const AccountStack = () => {
                 component={AccountScreen} 
                 options={{ 
                     title: "Cá nhân", 
-                    headerStyle: { height: 80 }
+                    headerStyle: { height: 80 },
+                    headerLeft: null
                 }} 
             />
         </Stack.Navigator>

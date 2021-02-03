@@ -11,7 +11,8 @@ const CinemaStack = () => {
                 component={CinemaScreen} 
                 options={{ 
                     title: "Rạp chiếu", 
-                    headerStyle: { height: 80 }
+                    headerStyle: { height: 80 },
+                    headerLeft: null
                 }} 
             />
         </Stack.Navigator>

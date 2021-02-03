@@ -11,7 +11,8 @@ const NewsStack = () => {
                 component={NewsScreen} 
                 options={{ 
                     title: "Tin tức", 
-                    headerStyle: { height: 80 }
+                    headerStyle: { height: 80 },
+                    headerLeft: null
                 }} 
             />
         </Stack.Navigator>

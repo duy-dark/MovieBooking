@@ -36,6 +36,7 @@ const MainTabs = () => {
                 activeTintColor: "tomato",
                 inactiveTintColor: "gray",
             }}
+            
         >
             <Tab.Screen name="HomeStack" component={HomeStack} options={{ title: "Khám phá" }}/>
             <Tab.Screen name= "CinemaStack" component={CinemaStack} options={{title: "Rạp"}}/>
