@@ -4,7 +4,7 @@ import styles from "../../styles/components/comment/cardcomment-film"
 import StarRating from 'react-native-star-rating'
 import Icon from "react-native-vector-icons/FontAwesome"
 
-const CardComment = () => {
+const CardCommentFilm = () => {
     const avatarReviewer = { uri: "https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.0-9/132855827_3327445237361772_7305091957233836118_n.jpg?_nc_cat=110&ccb=2&_nc_sid=09cbfe&_nc_ohc=s4r_8MOLOXUAX8g3h5y&_nc_ht=scontent.fsgn5-3.fna&oh=8893babdf97583fefc92305155f30638&oe=603880DE"}
     const imageFilm = { uri: "https://media.vov.vn/sites/default/files/styles/large/public/2021-01/tch_poster_vn_final.jpg.jpg" }
     const icon = { uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png"}
@@ -45,4 +45,4 @@ const CardComment = () => {
     )
 }
 
-export default CardComment
+export default CardCommentFilm

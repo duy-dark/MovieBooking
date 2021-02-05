@@ -7,21 +7,26 @@ import CardNews from "../../components/news/CardNews"
 import CardNewsSummary from "../../components/news/CardNewsSummary"
 import CardCommment from "../../components/comment/CardComment"
 
-const TabHome = () => {
+const TabHome = (props) => {
+    const seeAllFilm = () => {
+        props.navigation.navigate("TabFilmsNowShowing")
+    }
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <Text style={styles.section}>Phim được yêu thích nhất</Text>
-            <CardFilmFavorite />
-            <CardFilmFavorite />
-            <CardFilmFavorite />
+            <CardFilmFavorite navigation={props.navigation} />
+            <CardFilmFavorite navigation={props.navigation} />
+            <CardFilmFavorite navigation={props.navigation} />
             <View style={styles.area}>
                 <View style={styles.row}>
                     <Text style={styles.textRow}>Rạp đang có phim gì?</Text>
-                    <TouchableOpacity><Text style={styles.seeAll}>Xem Tất Cả</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={seeAllFilm}>
+                        <Text style={styles.seeAll}>Xem Tất Cả</Text>
+                    </TouchableOpacity>
                 </View>
-                <CardFilm />
-                <CardFilm />
-                <CardFilm />
+                <CardFilm navigation={props.navigation} />
+                <CardFilm navigation={props.navigation} />
+                <CardFilm navigation={props.navigation} />
             </View>
             <Text style={styles.section}>Tin nóng nhất hôm nay</Text>
             <CardNews />

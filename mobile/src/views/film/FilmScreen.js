@@ -5,7 +5,7 @@ import TabComments from './TabComments';
 import TabInfomation from './TabInfomation';
 
 const Tab = createMaterialTopTabNavigator();
-const FilmScreen = () => {
+const FilmScreen = (props) => {
     return (
         <Tab.Navigator 
           tabBarOptions={{
@@ -15,7 +15,9 @@ const FilmScreen = () => {
             indicatorStyle: { backgroundColor: "orangered" },
           }}
         >
-          <Tab.Screen name="TabSchedules" component={TabSchedules} options={{title: "Lịch chiếu"}}/>
+          <Tab.Screen name="TabSchedules" options={{title: "Lịch chiếu"}}>
+            {() => <TabSchedules navigation={props.navigation} />}
+          </Tab.Screen>
           <Tab.Screen name="TabComments" component={TabComments} options={{title: "Bình luận"}}/>
           <Tab.Screen name="TabInfomation" component={TabInfomation} options={{title: "Thông tin"}}/>
         </Tab.Navigator>
