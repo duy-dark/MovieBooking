@@ -10,12 +10,12 @@ const getList = async (params) => {
       views: {
         _id: 1,
         name: 1,
-        count_of_seat: 1,
-        type_room: 1,
+        type: 1,
         theater_id: 1,
-        seat_ids: 1
+        seats: 1
       }
     };
+    console.log('lambda', lambda);
     let data = await Model.findByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
@@ -33,7 +33,7 @@ const findById = async (id) => {
         count_of_seat: 1,
         type_room: 1,
         theater_id: 1,
-        seat_ids: 1
+        seats: 1
       }
     };
     let data = await Model.findByLambda(lambda);
@@ -47,10 +47,9 @@ const postCreate = async (params) => {
   try {
     let lambda = {
       name: params.name || undefined,
-      count_of_seat: params.count_of_seat || undefined,
-      type_room: params.type_room || undefined,
+      type: params.type || undefined,
       theater_id: params.theater_id || undefined,
-      seat_ids: params.seat_ids || undefined,
+      seats: params.seats || undefined,
       is_deleted: false,
       created_at: moment.now(),
       updated_at: moment.now()
@@ -68,10 +67,9 @@ const putUpdate = async (id, params) => {
       conditions: {_id: id, is_deleted: false},
       params: {
         name: params.name || undefined,
-        count_of_seat: params.count_of_seat || undefined,
-        type_room: params.type_room || undefined,
+        type: params.type || undefined,
         theater_id: params.theater_id || undefined,
-        seat_ids: params.seat_ids || undefined,
+        seats: params.seats || undefined,
         updated_at: moment.now()
       }
     };

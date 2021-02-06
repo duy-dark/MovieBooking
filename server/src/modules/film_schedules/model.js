@@ -6,7 +6,7 @@ let schema = new mongoose.Schema(
     time_end: Date,
     film_id: require('mongodb').ObjectId,
     theater_id: require('mongodb').ObjectId,
-    room: String,
+    room_id: require('mongodb').ObjectId,
     is_deleted: Boolean,
     created_at: Date,
     updated_at: Date
@@ -26,7 +26,33 @@ module.exports = {
   updateByLambda: async function (lambda) {
     return await Collection.updateOne(lambda.conditions, lambda.params);
   },
-
+  findByLambda_detail: async function (lambda) {
+    return await Collection.aggregate([
+      {
+        $match: {
+          _id: lambda.conditions._id
+        }
+      },
+      {
+        $lookup: {
+          from: 'rooms',
+          localField: 'room_id',
+          foreignField: '_id',
+          as: 'room'
+        }
+      },
+      {$unset: ['room.is_deleted', 'room.created_at', 'room.updated_at']},
+      {
+        $unwind: {
+          path: '$room',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $project: lambda.views
+      }
+    ]);
+  },
   getNowShowing: async function (lambda) {
     return await Collection.aggregate([
       {
@@ -125,9 +151,40 @@ module.exports = {
                       time_end: '$time_end',
                       film_id: '$film_id',
                       theater_id: '$theater_id',
-                      room: '$room'
+                      room_id: '$room_id'
                     }
                   }
+                }
+              }
+            },
+            {
+              $unwind: {
+                path: '$schedules',
+                preserveNullAndEmptyArrays: true
+              }
+            },
+            {
+              $lookup: {
+                from: 'rooms',
+                localField: 'schedules.room_id',
+                foreignField: '_id',
+                as: 'schedules.rooms'
+              }
+            },
+            {
+              $unwind: {
+                path: '$schedules.rooms',
+                preserveNullAndEmptyArrays: true
+              }
+            },
+            {
+              $group: {
+                _id: '$_id',
+                count: {
+                  $first: '$count'
+                },
+                schedules: {
+                  $push: '$schedules'
                 }
               }
             }
