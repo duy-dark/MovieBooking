@@ -791,7 +791,6 @@ module.exports = {
           'is_deleted',
           'created_at',
           'updated_at',
-          'trailer',
           'countries',
           'start_date',
           'actors',
@@ -873,6 +872,9 @@ module.exports = {
           url_background: {
             $first: '$url_background'
           },
+          trailer: {
+            $first: '$trailer'
+          },
           theaters: {
             $addToSet: '$theaters'
           }
@@ -943,6 +945,9 @@ module.exports = {
           },
           url_background: {
             $first: '$url_background'
+          },
+          trailer: {
+            $first: '$trailer'
           },
           theaters: {
             $addToSet: '$theaters'
