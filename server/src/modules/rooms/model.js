@@ -25,5 +25,8 @@ module.exports = {
   },
   updateByLambda: async function (lambda) {
     return await Collection.updateOne(lambda.conditions, lambda.params);
+  },
+  updateManyByLambda: async function (lambda) {
+    return await Collection.updateMany(lambda.conditions, lambda.params);
   }
 };
