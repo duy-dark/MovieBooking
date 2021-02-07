@@ -9,7 +9,8 @@ const initialState = {
   theaters: [],
   filmDetail: {},
   seats: [],
-  dayOfWeeks:[]
+  dayOfWeeks:[],
+  search: null
 }
 
 export default function filmsReducer(state = initialState, action) {
@@ -31,6 +32,9 @@ export default function filmsReducer(state = initialState, action) {
       break;
     case FilmTypes.LIST_SEATS_SUCCESS:
       newState = Object.assign({}, state, { seats: payload.seats })
+      break;
+    case FilmTypes.SEARCH_SUCCESS:
+      newState = Object.assign({}, state, { search: payload.seats })
       break;
     default:
       newState = state;

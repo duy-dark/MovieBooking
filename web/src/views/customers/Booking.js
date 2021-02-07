@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useHistory, useParams } from "react-router-dom";
 import { useStore, useDispatch, useSelector } from "react-redux";
-import { updateHeaderFooter } from "../../redux/users/actions";
+// import { updateHeaderFooter } from "../../redux/users/actions";
 import "../../styles/customers/booking/booking.scss";
 import { getFilmDetails, getSeats, postBookingInfo } from "../../redux/films/actions";
-import { getToken } from "../../redux/users/selector";
+// import { getToken } from "../../redux/users/selector";
 import * as moment from "moment"
 
 const SeatEl = (props) => {

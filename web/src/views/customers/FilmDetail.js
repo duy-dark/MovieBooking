@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ModalTrailer from "../../components/customer/ModalTrailer";
 import TabsSchedule from "../../components/customer/TabsSchedule.js";
-import { CircularProgressbar } from 'react-circular-progressbar';
+// import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import '../../styles/customers/detail/detail.scss';
 import * as moment from 'moment';
@@ -38,7 +38,7 @@ export default function FilmDetail() {
         <div className="detail-slider__wrapper">
           <div className="detail-slider__image">
             <img className="detail-slider__image__movie" src={`${data.url_avatar}`} alt=""/>
-            <img className="detail-slider__image__play" onClick={() => {}} src={`/assets/film/play-video.png`} alt=""/>
+            <img className="detail-slider__image__play" onClick={() => showTrailerSlider(data._id)} src={`/assets/film/play-video.png`} alt=""/>
           </div>
           <div className="detail-slider__content">
             <div className="detail-slider__date">{moment('2021/01/02').format('DD-MM-YYYY')}</div>

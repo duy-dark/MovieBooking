@@ -4,7 +4,7 @@ import TabListFilm from "../../components/customer/TabsListFilm.js";
 import TabsTheater from "../../components/customer/TabsTheater.js";
 import TabsNew from "../../components/customer/TabsNew.js";
 import SliderMovies from "../../components/customer/SliderMovies.js";
-import { getListFilmFuture, getListFilmNow, getListFilmToday } from "../../redux/films/actions";
+import { getListFilmFuture, getListFilmNow, getListFilmToday, getSearch } from "../../redux/films/actions";
 import ModalTrailer from "../../components/customer/ModalTrailer";
 import Select, { components } from "react-select";
 import *as moment from "moment";
@@ -17,6 +17,7 @@ export default function Home() {
     dispatch(getListFilmNow());
     dispatch(getListFilmFuture());
     dispatch(getListFilmToday());
+    dispatch(getSearch());
   }, []);
 
   const [modalShow, setModalShow] = useState(false);
@@ -45,29 +46,8 @@ export default function Home() {
 
   useEffect(() => {
     setOptionFilm(filmsNow.map((item, index) => ({...item, label: item.name, value: index})));
-    selectFilm ? setOptionTheater(selectFilm.theaters.map((item, index) => ({...item, label: item.name, value: index}))) : setOptionTheater([{ label: "vui lòng chọn phim", isDisabled: true }])
-    if (selectThreater) {
-      let arr = []
-      selectThreater.film_schedules.map(item => {
-        let d = moment(item.time_start).format("DD-MM-YYYY")
-        let date = arr.filter(day => day.name === d)
-        console.log(d)
-        console.log(days[moment(item.time_start).day()])
-        console.log(moment(item.time_start).day())
-        if(date.length < 0) {
-          arr.push({
-            date: d,
-            name: days[moment(item.time_start).day()],
-            label: days[moment(item.time_start).day()],
-            value: moment(item.time_start).day()
-          })
-        }
-      })
-      setOptionDate(arr);
-    } else {
-      setOptionDate([{ label: "vui lòng chọn rạp", isDisabled: true }])
-    }
-
+    setOptionTheater([{ label: "vui lòng chọn phim", isDisabled: true }])
+    setOptionDate([{ label: "vui lòng chọn rạp", isDisabled: true }])
     setOptionTime([{ label: "vui lòng chọn rạp", isDisabled: true }])
   }, [filmsNow, selectFilm, selectThreater, selectDate])
 
@@ -93,7 +73,7 @@ export default function Home() {
       <div className="home__slider">
         <SliderMovies listSlider={filmsSlider} clickTrailer={showTrailer} />
 
-        <div className="filter-film">
+        {/* <div className="filter-film">
           <Select
             className="select"
             value={selectFilm}
@@ -129,7 +109,7 @@ export default function Home() {
           >
             MUA VÉ NGAY
           </button>
-        </div>
+        </div> */}
 
         <TabListFilm filmsNow={filmsNow} filmsFuture={filmsFuture} clickTrailer={showTrailer} />
         <TabsTheater theaters={filmsToday} />

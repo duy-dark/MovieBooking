@@ -38,3 +38,9 @@ export function getSeats(id) {
     payload: id,
   };
 }
+
+export function getSearch() {
+  return {
+    type: FilmTypes.SEARCH,
+  };
+}
