@@ -18,6 +18,8 @@ const MainTabs = () => {
     
                 if (route.name === "HomeStack") {
                     iconName = focused ? "star" : 'star-outline';
+                } else if (route.name === "CinemaStack") {
+                    iconName = focused ? "videocam" : "videocam-outline";
                 } else if (route.name === "NewsStack") {
                     iconName = focused ? "newspaper" : "newspaper-outline";
                 } else if (route.name === "SearchStack") {

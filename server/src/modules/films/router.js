@@ -118,7 +118,7 @@ router.post('/', (req, res, next) => {
 
 router.put('/:id', (req, res, next) => {
   let params = req.body;
-  let id = req.params.id;
+  let id = require('mongodb').ObjectId(req.params.id);
   handler
     .putUpdate(id, params)
     .then((val) => res.json(val))
@@ -126,7 +126,7 @@ router.put('/:id', (req, res, next) => {
 });
 
 router.delete('/:id', (req, res, next) => {
-  let id = req.params.id;
+  let id = require('mongodb').ObjectId(req.params.id);
   handler
     .deleteData(id)
     .then((val) => res.json(val))

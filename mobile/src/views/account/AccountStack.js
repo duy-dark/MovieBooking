@@ -1,11 +1,20 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { createStackNavigator } from '@react-navigation/stack';
+import AccountScreen from './AccountScreen';
 
+const Stack = createStackNavigator();
 const AccountStack = () => {
     return (
-        <View>
-            <Text></Text>
-        </View>
+        <Stack.Navigator>
+            <Stack.Screen 
+                name="AccountScreen" 
+                component={AccountScreen} 
+                options={{ 
+                    title: "Cá nhân", 
+                    headerStyle: { height: 80 }
+                }} 
+            />
+        </Stack.Navigator>
     )
 }
 

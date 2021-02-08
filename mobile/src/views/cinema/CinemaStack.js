@@ -1,19 +1,16 @@
-import React from 'react';
+import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from './HomeScreen';
+import CinemaScreen from './CinemaScreen';
 
 const Stack = createStackNavigator();
-
-const HomeStack = (props) => {
-    
+const CinemaStack = () => {
     return (
         <Stack.Navigator>
             <Stack.Screen 
-               
-                name="HomeScreen" 
-                component={HomeScreen} 
+                name="CinemaScreen" 
+                component={CinemaScreen} 
                 options={{ 
-                    title: "Khám Phá", 
+                    title: "Rạp chiếu", 
                     headerStyle: { height: 80 }
                 }} 
             />
@@ -21,4 +18,4 @@ const HomeStack = (props) => {
     )
 }
 
-export default HomeStack
+export default CinemaStack
