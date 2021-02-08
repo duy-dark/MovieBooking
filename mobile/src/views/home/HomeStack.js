@@ -4,10 +4,13 @@ import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './HomeScreen';
 
 const Stack = createStackNavigator();
-const HomeStack = () => {
+
+const HomeStack = (props) => {
+    
     return (
         <Stack.Navigator>
             <Stack.Screen 
+               
                 name="HomeScreen" 
                 component={HomeScreen} 
                 options={{ 
