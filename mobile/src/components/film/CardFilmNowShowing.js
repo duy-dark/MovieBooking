@@ -7,7 +7,7 @@ import StarRating from 'react-native-star-rating';
 const CardFilmNowShowing = (props) => {
     const image = { uri: "https://s3img.vcdn.vn/123phim/2021/01/lua-deu-gap-lua-dao-16105107337344.jpg" } ;
     const onPress = () => {
-        props.navigation.navigate("FilmScreen", {nameFilm: "LỪA ĐỂU GẶP LỪA ĐẢO"})
+        props.navigation.navigate("FilmScreen", {nameFilm: "Lừa Đểu Gặp Lừa Đảo"})
     }
     return (
         <ImageBackground style={styles.container} source={image} imageStyle={styles.image}>

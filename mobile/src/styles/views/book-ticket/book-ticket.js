@@ -77,8 +77,9 @@ const styles = StyleSheet.create({
         height: 30
     },
     payment: {
+        flex: 1,
         fontSize:  15,
-        marginLeft: 10
+        marginLeft: 10,
     },
     areaNote: {
         margin: 15,

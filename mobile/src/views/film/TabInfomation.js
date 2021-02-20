@@ -5,7 +5,7 @@ import styles from '../../styles/views/film/tab-infomation'
 const TabInfomation = () => {
     const image = { uri: "https://media.vov.vn/sites/default/files/styles/large/public/2021-01/tch_poster_vn_final.jpg.jpg" }
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <Image style={styles.image} source={image}/>
             <View style={{ padding: 10 }}>
                 <Text style={styles.nameFilm}>The Con-Hertist</Text>

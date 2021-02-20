@@ -18,7 +18,9 @@ const FilmScreen = (props) => {
           <Tab.Screen name="TabSchedules" options={{title: "Lịch chiếu"}}>
             {() => <TabSchedules navigation={props.navigation} />}
           </Tab.Screen>
-          <Tab.Screen name="TabComments" component={TabComments} options={{title: "Bình luận"}}/>
+          <Tab.Screen name="TabComments" options={{title: "Bình luận"}}>
+            {() => <TabComments navigation={props.navigation} />}
+          </Tab.Screen>
           <Tab.Screen name="TabInfomation" component={TabInfomation} options={{title: "Thông tin"}}/>
         </Tab.Navigator>
       );

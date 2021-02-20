@@ -5,13 +5,12 @@ import NewsScreen from './NewsScreen';
 const Stack = createStackNavigator();
 const NewsStack = () => {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{headerStyle: { height: 80 }}}>
             <Stack.Screen 
                 name="NewsScreen" 
                 component={NewsScreen} 
                 options={{ 
-                    title: "Tin tức", 
-                    headerStyle: { height: 80 },
+                    title: "Tin tức",
                     headerLeft: null
                 }} 
             />

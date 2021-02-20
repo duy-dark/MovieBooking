@@ -5,9 +5,9 @@ import StarRating from 'react-native-star-rating'
 import CardCommentFilm from '../../components/comment/CardCommentFilm'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-const TabComments = () => {
+const TabComments = (props) => {
     return (
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.review}>
                 <Text style={styles.reviewText}>8.8</Text>
                 <StarRating
@@ -22,10 +22,10 @@ const TabComments = () => {
             <TouchableOpacity style={styles.inputArea}>
                 <Text style={styles.inputText}>Bạn nghĩ gì về phim này...</Text>
             </TouchableOpacity>
-            <CardCommentFilm />
-            <CardCommentFilm />
-            <CardCommentFilm />
-            <CardCommentFilm />
+            <CardCommentFilm navigation={props.navigation} />
+            <CardCommentFilm navigation={props.navigation} />
+            <CardCommentFilm navigation={props.navigation} />
+            <CardCommentFilm navigation={props.navigation} />
         </ScrollView>
     )
 }

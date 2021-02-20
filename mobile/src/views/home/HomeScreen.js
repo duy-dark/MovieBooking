@@ -22,7 +22,9 @@ function HomeScreen(props) {
       <Tab.Screen name="TabFilmsNowShowing" options={{title: "Đang chiếu"}}>
         {() => <TabFilmsNowShowing navigation={props.navigation} />}
       </Tab.Screen>
-      <Tab.Screen name="TabFilmsComingSoon" component={TabFilmsComingSoon} options={{title: "Sắp chiếu"}}/>
+      <Tab.Screen name="TabFilmsComingSoon" options={{title: "Sắp chiếu"}}>
+        {() => <TabFilmsComingSoon navigation={props.navigation} />}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 }

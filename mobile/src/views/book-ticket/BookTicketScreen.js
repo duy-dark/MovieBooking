@@ -1,11 +1,13 @@
-import React from 'react'
-import { ScrollView, View, Text, TextInput, Image, Button } from 'react-native'
+import React, { useState } from 'react'
+import { ScrollView, View, Text, TextInput, Image, Button, TouchableOpacity } from 'react-native'
 import styles from '../../styles/views/book-ticket/book-ticket'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
 const BookTicketScreen = () => {
     const iconZalo = {uri: "https://play-lh.googleusercontent.com/F8cUV5oOLjCTMSvSRymK1154MwKalnvkepN4xGrfWBC_tcXvNTq_sEStiwCYV61lRdI"}
     const iconMasterCard = {uri: "https://icons.iconarchive.com/icons/designbolts/credit-card-payment/256/Master-Card-Blue-icon.png"}
+    const [payment, setPayment] = useState("zalo")
+    
     return (
         <ScrollView style={styles.container}>
             <View style={styles.areaSeats}></View>
@@ -53,14 +55,20 @@ const BookTicketScreen = () => {
             </View>
             <Text style={{marginLeft: 15, marginBottom: 5}}>Phương thức thanh toán</Text>
             <View style={styles.area}>
-                <View style={styles.row}>
+                <TouchableOpacity style={styles.row} onPress={() => setPayment("zalo")}>
                     <Image style={styles.paymentIcon} source={iconZalo} />
                     <Text style={styles.payment}>Thanh toán qua Zalo</Text>
-                </View>
-                <View style={styles.row}>
+                    { payment === "zalo" &&
+                        <Ionicons name="checkmark-circle-outline" size={20} color="green"/>
+                    }
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.row} onPress={() => setPayment("mastercard")}>
                     <Image style={styles.paymentIcon} source={iconMasterCard}/>
                     <Text style={styles.payment}>Thanh toán qua MasterCard</Text>
-                </View>
+                    { payment === "mastercard" &&
+                        <Ionicons name="checkmark-circle-outline" size={20} color="green"/>
+                    }
+                </TouchableOpacity>
             </View>
             <View style={styles.areaNote}>
                 <View style={styles.row}>
@@ -72,7 +80,7 @@ const BookTicketScreen = () => {
                 <Text style={styles.noteText}>Khi được yêu cầu, vui lòng xuất trình giấy tờ tùy thân để chứng thực độ tuổi khi xem phim</Text> 
             </View>
             <View style={{padding: 10}}>
-                <Button title="Mua vé" color="limegreen" onPress={()=>alert("Mua vé")}/>
+                <Button title="Mua vé" color="limegreen" onPress={() => alert("Mua vé")}/>
             </View>
         </ScrollView>
     )

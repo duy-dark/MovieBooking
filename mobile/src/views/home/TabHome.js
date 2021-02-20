@@ -48,11 +48,11 @@ const TabHome = (props) => {
                     <Text style={styles.textRow}>Cộng đồng bình luận phim</Text>
                     <TouchableOpacity><Text style={styles.seeAll}>Xem Tất Cả</Text></TouchableOpacity>
                 </View>
-                <CardCommment />
-                <CardCommment />
-                <CardCommment />
-                <CardCommment />
-                <CardCommment />
+                <CardCommment navigation={props.navigation} />
+                <CardCommment navigation={props.navigation} />
+                <CardCommment navigation={props.navigation} />
+                <CardCommment navigation={props.navigation} />
+                <CardCommment navigation={props.navigation} />
             </View>
         </ScrollView>
     )

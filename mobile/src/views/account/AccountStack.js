@@ -5,13 +5,12 @@ import AccountScreen from './AccountScreen';
 const Stack = createStackNavigator();
 const AccountStack = () => {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{headerStyle: { height: 80 }}}>
             <Stack.Screen 
                 name="AccountScreen" 
                 component={AccountScreen} 
                 options={{ 
-                    title: "Cá nhân", 
-                    headerStyle: { height: 80 },
+                    title: "Cá nhân",
                     headerLeft: null
                 }} 
             />

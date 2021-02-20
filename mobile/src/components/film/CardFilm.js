@@ -6,7 +6,7 @@ import styles from "../../styles/components/film/cardfilm"
 const CardFilm = (props) => {
     const image = { uri: "https://media.vov.vn/sites/default/files/styles/large/public/2021-01/tch_poster_vn_final.jpg.jpg"}
     const onPress = () => {
-        props.navigation.navigate("FilmScreen", {nameFilm: "LỪA ĐỂU GẶP LỪA ĐẢO"})
+        props.navigation.navigate("FilmScreen", {nameFilm: "Lừa Đểu Gặp Lừa Đảo"})
     }
     return (
         <TouchableOpacity style={styles.touch} onPress={onPress}>

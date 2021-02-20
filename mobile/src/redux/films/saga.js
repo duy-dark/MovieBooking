@@ -47,7 +47,6 @@ function* fetchListFilmsNow() {
 function* fetchListFilmsFuture() {
   try {
     const res = yield call(httpFilms.getListFilmFuture, {});
-    console.log(res)
     const { status, data } = res
     if (status === "ok") {
       yield put({ type: FilmsType.LIST_FILM_FUTURE_SUCCESS, payload: data });

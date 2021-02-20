@@ -1,4 +1,3 @@
-import axios from "axios";
 import Api from "./api";
 
 const getListFilmShowing = (params) => {
@@ -10,7 +9,6 @@ const getListFilmNow = () => {
 };
 
 const getListFilmFuture = () => {
-  // return axios.get("https://127.0.0.1:1000/api/film/commingsoon").then(res => res.data)
   return Api.get("/api/film/commingsoon").then((res) => res.data);
 };
 
