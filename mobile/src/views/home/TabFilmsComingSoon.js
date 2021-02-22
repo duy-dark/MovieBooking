@@ -6,11 +6,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { getListFilmFuture } from "../../redux/films/actions"
 
 const TabFilmsComingSoon = (props) => {
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(getListFilmFuture())
-    }, [])
+    // useEffect(() => {
+    //     dispatch(getListFilmFuture())
+    // }, [])
 
     const films = useSelector((state) => state.films.filmsFuture);
     return (

@@ -6,6 +6,10 @@ import CardCommentFilm from '../../components/comment/CardCommentFilm'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const TabComments = (props) => {
+    const onPressReviewFilm = () => {
+        props.navigation.navigate("ReviewFilmScreen")
+    }
+    
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.review}>
@@ -19,7 +23,7 @@ const TabComments = (props) => {
                 />
                 <Text style={styles.countReview}>76 Người đánh giá</Text>
             </View>
-            <TouchableOpacity style={styles.inputArea}>
+            <TouchableOpacity style={styles.inputArea} onPress={onPressReviewFilm}>
                 <Text style={styles.inputText}>Bạn nghĩ gì về phim này...</Text>
             </TouchableOpacity>
             <CardCommentFilm navigation={props.navigation} />
