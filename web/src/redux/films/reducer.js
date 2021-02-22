@@ -34,7 +34,7 @@ export default function filmsReducer(state = initialState, action) {
       newState = Object.assign({}, state, { seats: payload.seats })
       break;
     case FilmTypes.SEARCH_SUCCESS:
-      newState = Object.assign({}, state, { search: payload.seats })
+      newState = Object.assign({}, state, { search: payload })
       break;
     default:
       newState = state;

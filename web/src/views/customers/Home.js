@@ -7,7 +7,7 @@ import SliderMovies from "../../components/customer/SliderMovies.js";
 import { getListFilmFuture, getListFilmNow, getListFilmToday, getSearch } from "../../redux/films/actions";
 import ModalTrailer from "../../components/customer/ModalTrailer";
 import Select, { components } from "react-select";
-import *as moment from "moment";
+import * as moment from "moment";
 
 const days = ['chủ nhật', 'thứ 2', 'thứ 3', 'thứ 4', 'thứ 5', 'thứ 6', 'thứ 7']
 export default function Home() {
@@ -30,6 +30,7 @@ export default function Home() {
   const filmsNow = useSelector((state) => state.films.filmsNow);
   const filmsFuture = useSelector((state) => state.films.filmsFuture);
   const filmsToday = useSelector((state) => state.films.filmsToday);
+  const search = useSelector((state) => state.films.search);
   const filmsSlider = filmsNow.slice(0, 4);
 
   const [selectFilm, setSelectFilm] = useState();
@@ -41,15 +42,34 @@ export default function Home() {
   const [optionTheater, setOptionTheater] = useState();
   const [optionDate, setOptionDate] = useState();
   const [optionTime, setOptionTime] = useState();
+  const [arrSchedules, setArrSchedules] = useState([]);
 
   const disabledBtn = selectFilm && selectThreater && selectDate && selectTime;
 
   useEffect(() => {
-    setOptionFilm(filmsNow.map((item, index) => ({...item, label: item.name, value: index})));
-    setOptionTheater([{ label: "vui lòng chọn phim", isDisabled: true }])
-    setOptionDate([{ label: "vui lòng chọn rạp", isDisabled: true }])
-    setOptionTime([{ label: "vui lòng chọn rạp", isDisabled: true }])
-  }, [filmsNow, selectFilm, selectThreater, selectDate])
+    if (search) {
+      let arr = [];
+      search.dayOfWeek.map(val => {
+        val.schedules.map(schedule => arr.push(schedule))
+      })
+      setOptionFilm(search.films.map(val => ({ ...val, label: val.name, value: val._id })));
+      setOptionTheater(search.theaters.map(val => ({ ...val, label: val.name, value: val._id })));
+      setOptionDate(search.dayOfWeek.map((val, index) => ({ ...val, label: days[moment(val.date).day()], value: index})))
+      setOptionTime([{ label: "vui lòng chọn rạp", isDisabled: true }])
+      setArrSchedules(arr)
+    }
+
+    if (selectFilm) {
+      if (!selectThreater) {
+        let arr = arrSchedules.map(val => val.theater_id)
+        let arrfilms = arrSchedules.map(val => val.film_id)
+        setOptionTheater(search.theaters.filter(val => arr.includes(val._id) && arrfilms.includes(selectFilm._id)).map(val => ({ ...val, label: val.name, value: val._id })))
+      }
+      if (!selectDate) {
+
+      }
+    }
+  }, [filmsNow, selectFilm, selectThreater, selectDate, search])
 
   const BookingTicketFast = () => {
 
@@ -73,7 +93,7 @@ export default function Home() {
       <div className="home__slider">
         <SliderMovies listSlider={filmsSlider} clickTrailer={showTrailer} />
 
-        {/* <div className="filter-film">
+        <div className="filter-film">
           <Select
             className="select"
             value={selectFilm}
@@ -109,7 +129,7 @@ export default function Home() {
           >
             MUA VÉ NGAY
           </button>
-        </div> */}
+        </div>
 
         <TabListFilm filmsNow={filmsNow} filmsFuture={filmsFuture} clickTrailer={showTrailer} />
         <TabsTheater theaters={filmsToday} />
