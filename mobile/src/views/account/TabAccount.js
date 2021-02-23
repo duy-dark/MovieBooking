@@ -4,16 +4,16 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import styles from '../../styles/views/account/tab-account'
 
 const TabAccount = () => {
-    const avatar = { uri: "https://icon-library.com/images/facebook-user-icon/facebook-user-icon-17.jpg" }
+    const avatar = { uri: "https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.0-9/132855827_3327445237361772_7305091957233836118_n.jpg?_nc_cat=110&ccb=2&_nc_sid=09cbfe&_nc_ohc=s4r_8MOLOXUAX8g3h5y&_nc_ht=scontent.fsgn5-3.fna&oh=8893babdf97583fefc92305155f30638&oe=603880DE" }
     const logoUni = { uri: "https://truyenthongdaiphuc.files.wordpress.com/2015/09/dai_hoc_khoa_hoc_tu_nhien_dhqg-hcm.png" }
     const logo = { uri: "https://s3img.vcdn.vn/123phim/2020/03/d1e6bd560daa9e20131ea8a0f62e87f8.png" }
     return (
         <ScrollView style={styles.container}>
             <TouchableOpacity style={styles.user}>
                 <Image style={styles.avatar} source={avatar} />
-                <View>
-                    <Text style={styles.name}>Bạn chưa đăng nhập</Text>
-                    <Text style={styles.note}>Đăng nhập để đặt vé và hiển thị vé đã mua</Text>
+                <View style={{flex: 1}}>
+                    <Text style={styles.name}>Sơn Hứa</Text>
+                    <Text style={styles.note}>Chạm để thêm số điện thoại</Text>
                 </View>
                 <Ionicons style={styles.icon} name="chevron-forward-outline" size={15} color="black"/>
             </TouchableOpacity>

@@ -6,7 +6,7 @@ import TabFilmsComingSoon from "./TabFilmsComingSoon"
 
 const Tab = createMaterialTopTabNavigator();
 
-function HomeScreen() {
+function HomeScreen(props) {
   return (
     <Tab.Navigator 
       tabBarOptions={{
@@ -16,9 +16,15 @@ function HomeScreen() {
         indicatorStyle: { backgroundColor: "orangered" },
       }}
     >
-      <Tab.Screen name="TabHome" component={TabHome} options={{title: "Home"}}/>
-      <Tab.Screen name="TabFilmsNowShowing" component={TabFilmsNowShowing} options={{title: "Đang chiếu"}}/>
-      <Tab.Screen name="TabFilmsComingSoon" component={TabFilmsComingSoon} options={{title: "Sắp chiếu"}}/>
+      <Tab.Screen name="TabHome" options={{ title: "Home" }}>
+        {() => <TabHome navigation={props.navigation} />}
+      </Tab.Screen>
+      <Tab.Screen name="TabFilmsNowShowing" options={{title: "Đang chiếu"}}>
+        {() => <TabFilmsNowShowing navigation={props.navigation} />}
+      </Tab.Screen>
+      <Tab.Screen name="TabFilmsComingSoon" options={{title: "Sắp chiếu"}}>
+        {() => <TabFilmsComingSoon navigation={props.navigation} />}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 }

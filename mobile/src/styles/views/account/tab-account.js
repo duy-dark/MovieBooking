@@ -22,8 +22,10 @@ const styles = StyleSheet.create({
     },
     note: {
         fontSize: 13,
-        color: "gray",
-        width: "90%"
+        color: "gray"
+    },
+    icon: {
+        marginRight: 10
     },
     titleArea: {
         fontSize: 14,
