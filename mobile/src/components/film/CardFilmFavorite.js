@@ -4,11 +4,17 @@ import styles from "../../styles/components/film/cardfilm-favorite"
 import StarRating from 'react-native-star-rating';
 
 
-const CardFilmFavorite = () => {
-    const image = { uri: "https://media.vov.vn/sites/default/files/styles/large/public/2021-01/tch_poster_vn_final.jpg.jpg" } ;
+const CardFilmFavorite = (props) => {
+    const image = { uri: "https://media.vov.vn/sites/default/files/styles/large/public/2021-01/tch_poster_vn_final.jpg.jpg" } 
+    const onPress = () => {
+        props.navigation.navigate("FilmScreen", {nameFilm: "Lừa Đểu Gặp Lừa Đảo"})
+    }
     return (
         <ImageBackground style={styles.container} source={image} imageStyle={styles.image}>
-            <TouchableOpacity style={styles.touch}>
+            <TouchableOpacity 
+                style={styles.touch} 
+                onPress={onPress}
+            >
                 <View style={styles.content}>
                     <View style={styles.review}>
                         <Text style={styles.reviewText}>8.8</Text>

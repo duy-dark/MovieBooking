@@ -1,11 +1,20 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { createStackNavigator } from '@react-navigation/stack';
+import SearchScreen from "./SearchScreen"
 
+const Stack = createStackNavigator();
 const SearchStack = () => {
     return (
-        <View>
-            <Text></Text>
-        </View>
+        <Stack.Navigator screenOptions={{headerStyle: { height: 80 }}}>
+            <Stack.Screen 
+                name="SearchScreen" 
+                component={SearchScreen} 
+                options={{ 
+                    title: "Mua vé nhanh",
+                    headerLeft: null
+                }} 
+            />
+        </Stack.Navigator>
     )
 }
 
