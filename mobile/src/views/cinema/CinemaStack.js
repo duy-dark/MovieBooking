@@ -5,13 +5,13 @@ import CinemaScreen from './CinemaScreen';
 const Stack = createStackNavigator();
 const CinemaStack = () => {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{ headerStyle: { height: 80 }}}>
             <Stack.Screen 
                 name="CinemaScreen" 
                 component={CinemaScreen} 
                 options={{ 
-                    title: "Rạp chiếu", 
-                    headerStyle: { height: 80 }
+                    title: "Rạp chiếu",
+                    headerLeft: null
                 }} 
             />
         </Stack.Navigator>
