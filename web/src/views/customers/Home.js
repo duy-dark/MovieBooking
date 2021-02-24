@@ -8,6 +8,7 @@ import { getListFilmFuture, getListFilmNow, getListFilmToday, getSearch } from "
 import ModalTrailer from "../../components/customer/ModalTrailer";
 import Select, { components } from "react-select";
 import * as moment from "moment";
+import { updateHeaderFooter } from "../../redux/users/actions";
 
 const days = ['chủ nhật', 'thứ 2', 'thứ 3', 'thứ 4', 'thứ 5', 'thứ 6', 'thứ 7']
 export default function Home() {
@@ -18,6 +19,12 @@ export default function Home() {
     dispatch(getListFilmFuture());
     dispatch(getListFilmToday());
     dispatch(getSearch());
+    dispatch(
+      updateHeaderFooter({
+        header: true,
+        footer: true,
+      })
+    )
   }, []);
 
   const [modalShow, setModalShow] = useState(false);

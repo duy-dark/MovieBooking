@@ -118,7 +118,7 @@
       margin: 0;
 
       .date-list__item {
-        width: 50px;
+        width: calc(100% / 7);
         height: 100%;
         padding: 10px 0;
         display: flex;

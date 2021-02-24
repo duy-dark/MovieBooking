@@ -3,7 +3,7 @@ import "../../styles/customers/header.scss";
 import Navbar from "./Navbar";
 // import Dropdown from "react-bootstrap/Dropdown";
 import { Link, useHistory } from "react-router-dom";
-
+import { useSelector } from 'react-redux';
 
 export default function Header(props) {
   const [ position, setPosition ] = useState('Hồ Chí Minh');
@@ -11,6 +11,8 @@ export default function Header(props) {
   const changePosition = (value) => {
     setPosition()
   }
+
+  const user = useSelector(state => state.users.user);
 
   const goHome = () => {
     history.push('/')
@@ -24,10 +26,11 @@ export default function Header(props) {
       <Navbar />
       <div className="header__info">
         <div className="header__customer">
+          { user ? (<div className="header__login"><img src={`/assets/avatar.png`} alt="avatar"/><span>{user.name}</span></div>) : (
           <Link to="/login" className="header__login">
-            <img src={`/assets/avatar.png`} alt="avatar" />
+            <img src={`/assets/avatar.png`} alt="avatar"/>
             Đăng nhập
-          </Link>
+          </Link>)}
         </div>
         <div className="header__position">
           <div className="header__position__name">{position}</div>

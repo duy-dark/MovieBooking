@@ -33,7 +33,8 @@ export default function filmsReducer(state = initialState, action) {
       newState = Object.assign({}, state, { filmsToday: payload })
       break;
     case FilmTypes.LIST_SEATS_SUCCESS:
-      newState = Object.assign({}, state, { seats: payload.seatsMap, seated: seatsExisted })
+      const { seatsMap = [], seatsExisted = [] } = payload
+      newState = Object.assign({}, state, { seats: seatsMap, seated: seatsExisted })
       break;
     case FilmTypes.SEARCH_SUCCESS:
       newState = Object.assign({}, state, { search: payload })
