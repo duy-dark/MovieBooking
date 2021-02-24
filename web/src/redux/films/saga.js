@@ -88,6 +88,17 @@ function* fetchSearch() {
   } catch (error) { console.log(error); }
 }
 
+function* fetchComments(action) {
+  try {
+    const { payload } = action
+    const res = yield call(httpFilms.getComments, payload);
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.COMMENT_SUCCESS, payload: data });
+    }
+  } catch (error) { console.log(error); }
+}
+
 function* postBookingInfo() {
   yield takeEvery(FilmsType.POST_BOOKING_INFO, fetchPostBookingInfo);
 }
@@ -116,6 +127,9 @@ function* getSearch() {
   yield takeEvery(FilmsType.SEARCH, fetchSearch)
 }
 
+function* getComments() {
+  yield takeEvery(FilmsType.COMMENT, fetchComments);
+}
 
 
 export default function* filmsSaga() {
@@ -126,6 +140,7 @@ export default function* filmsSaga() {
     getFilmsFuture(),
     getFilmsToday(),
     getSeats(),
-    getSearch()
+    getSearch(),
+    getComments()
   ]);
 }

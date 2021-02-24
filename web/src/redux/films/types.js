@@ -15,5 +15,7 @@ export default {
   LIST_SEATS: _prefix + "LIST_SEATS",
   LIST_SEATS_SUCCESS: _prefix + "LIST_SEATS_SUCCESS",
   SEARCH: _prefix + "SEARCH",
-  SEARCH_SUCCESS: _prefix + "SEARCH_SUCCESS"
+  SEARCH_SUCCESS: _prefix + "SEARCH_SUCCESS",
+  COMMENT: _prefix + "COMMENT",
+  COMMENT_SUCCESS: _prefix + "COMMENT_SUCCESS"
 };

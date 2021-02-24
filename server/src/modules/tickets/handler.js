@@ -219,6 +219,5 @@ module.exports = {
   findById,
   postCreate,
   putUpdate,
-  deleteData,
-  getticket
+  deleteData
 };

@@ -10,6 +10,7 @@ const initialState = {
   filmDetail: {},
   seats: [],
   dayOfWeeks:[],
+  comments: [],
   search: null
 }
 
@@ -35,6 +36,9 @@ export default function filmsReducer(state = initialState, action) {
       break;
     case FilmTypes.SEARCH_SUCCESS:
       newState = Object.assign({}, state, { search: payload })
+      break;
+    case FilmTypes.COMMENT_SUCCESS:
+      newState = Object.assign({}, state, { comments: payload })
       break;
     default:
       newState = state;

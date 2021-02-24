@@ -6,7 +6,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import '../../styles/customers/detail/detail.scss';
 import * as moment from 'moment';
 import {useParams} from "react-router-dom"
-import { getFilmDetails } from "../../redux/films/actions"
+import { getFilmDetails, getComments } from "../../redux/films/actions"
 import { useDispatch , useSelector} from "react-redux";
 
 export default function FilmDetail() {
@@ -24,6 +24,7 @@ export default function FilmDetail() {
       id: id
     };
     dispatch(getFilmDetails(info));
+    dispatch(getComments(id));
   },[])
 
    let data=useSelector(state =>state.films.filmDetail)

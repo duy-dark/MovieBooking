@@ -44,3 +44,10 @@ export function getSearch() {
     type: FilmTypes.SEARCH,
   };
 }
+
+export function getComments(id) {
+  return {
+    type: FilmTypes.COMMENT,
+    payload: id
+  };
+}

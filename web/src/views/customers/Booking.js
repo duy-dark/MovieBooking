@@ -247,39 +247,6 @@ export default function Booking(props) {
                 <img src="/assets/logo-momo.jpg" alt="" /> <span>Thanh toán Momo</span>
               </label>
             </div>
-            <div className="radio-form">
-              <input
-                id="zalopay"
-                name="payment"
-                value="zalopay"
-                onChange={(e) => setPayment(e.target.value)}
-                type="radio"
-              />
-              <label htmlFor="zalopay">
-                <img src="/assets/ic-zalopay.png" alt="" /> <span>Thanh toán Zalopay</span>
-              </label>
-            </div>
-            <div className="radio-form">
-              <div className="">
-                <input
-                  id="noidia"
-                  name="payment"
-                  value="noi dia"
-                  onChange={(e) => setPayment(e.target.value)}
-                  type="radio"
-                />
-                <label htmlFor="noidia">
-                  <img src="/assets/ic-noidia.png" alt="" />
-                  <span>Thanh Toán Nội Địa</span>
-                </label>
-              </div>
-            </div>
-            <div className="radio-form">
-              <input id="visa" name="payment" value="visa" onChange={(e) => setPayment(e.target.value)} type="radio" />
-              <label htmlFor="visa">
-                <img src="/assets/ic-visa.png" alt="" /> <span>Thanh Toán Visa, Jcb, master card</span>
-              </label>
-            </div>
           </div>
         </div>
         <button
