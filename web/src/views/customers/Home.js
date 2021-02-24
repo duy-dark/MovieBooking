@@ -58,18 +58,17 @@ export default function Home() {
       setOptionTime([{ label: "vui lòng chọn rạp", isDisabled: true }])
       setArrSchedules(arr)
     }
+  }, [search])
 
+  useEffect(() => {
     if (selectFilm) {
-      if (!selectThreater) {
-        let arr = arrSchedules.map(val => val.theater_id)
-        let arrfilms = arrSchedules.map(val => val.film_id)
-        setOptionTheater(search.theaters.filter(val => arr.includes(val._id) && arrfilms.includes(selectFilm._id)).map(val => ({ ...val, label: val.name, value: val._id })))
-      }
-      if (!selectDate) {
-
-      }
+      // option theater
+      let arr = arrSchedules.map(val => val.theater_id)
+      let arrfilms = arrSchedules.map(val => val.film_id)
+      setOptionTheater(search.theaters.filter(val => arr.includes(val._id) && arrfilms.includes(selectFilm._id)).map(val => ({ ...val, label: val.name, value: val._id })))
+      //option time
     }
-  }, [filmsNow, selectFilm, selectThreater, selectDate, search])
+  }, [selectFilm])
 
   const BookingTicketFast = () => {
 
