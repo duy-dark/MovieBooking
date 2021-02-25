@@ -15,7 +15,9 @@ const getList = async (params) => {
         rate: 1
       }
     };
-    let data = await Model.findByLambda(lambda);
+    // console.log('type:', typeof lambda.conditions._id);
+    // console.log('_id:', lambda.conditions);
+    let data = await Model.findByLambda_detail(lambda.conditions);
     return resSuccess(data);
   } catch (error) {
     throw {status: 400, detail: error};

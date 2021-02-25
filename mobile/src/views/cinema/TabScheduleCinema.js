@@ -1,24 +1,19 @@
 import React, { useState, useEffect } from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity, FlatList } from 'react-native'
+import { View, Text, TouchableOpacity, SafeAreaView, FlatList } from 'react-native'
+import CardFilmSchedule from '../../components/film/CardFilmSchedule'
 import styles from '../../styles/views/schedule/tab-schedules'
-import CardCinemaSchedule from '../../components/cinema/CardCinemaSchedule'
+const DATA = [  
+    {id: '1', key1: 'Lừa Đểu Gặp Lừa Đảo',key2:'C18',key3:'128 phút',key4:'2D - Phụ Đề',
+    time:[{start:'21:45',end:'23:15'},{start:'21:45',end:'23:15'}]},
+    {id: '2', key1: 'Lừa Đểu Gặp Lừa Đảo',key2:'C18',key3:'128 phút',key4:'2D - Phụ Đề',
+    time:[{start:'21:45',end:'23:15'},{start:'21:45',end:'23:15'}]},
+    {id: '3', key1: 'Lừa Đểu Gặp Lừa Đảo',key2:'C18',key3:'128 phút',key4:'2D - Phụ Đề',
+    time:[{start:'21:45',end:'23:15'},{start:'21:45',end:'23:15'}]},
+    {id: '4', key1: 'Lừa Đểu Gặp Lừa Đảo',key2:'C18',key3:'128 phút',key4:'2D - Phụ Đề',
+    time:[{start:'21:45',end:'23:15'},{start:'21:45',end:'23:15'}]},                  
+]
 
-var DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'Cinema 1',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Cinema 2',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Cinema 3',
-    },
-];
-
-const TabSchedules = (props) => {
+const TabScheduleCinema = (props) => {
     const arrayDefault = [
         {
             day: "Hôm nay",
@@ -65,7 +60,7 @@ const TabSchedules = (props) => {
         // DATA = []
         // update DATA
     }, [schedules])
-    const renderListCinemas = ({ item }) => <CardCinemaSchedule navigation={props.navigation} title={item.title} />
+    const renderListFilms = ({ item }) => <CardFilmSchedule navigation={props.navigation} item={item} /> 
     const schedulesHeader = (
         <View style={styles.schedules}>
             <View style={{flexDirection: "row"}}>
@@ -96,11 +91,11 @@ const TabSchedules = (props) => {
            <FlatList
                 ListHeaderComponent={schedulesHeader}
                 data={DATA}
-                renderItem={renderListCinemas}
+                renderItem={renderListFilms}
                 keyExtractor={item => item.id}
             />
         </SafeAreaView>
     )
 }
 
-export default TabSchedules
+export default TabScheduleCinema
