@@ -9,7 +9,10 @@ const initialState = {
   theaters: [],
   filmDetail: {},
   seats: [],
-  dayOfWeeks:[]
+  seated: [],
+  dayOfWeeks:[],
+  comments: [],
+  search: null
 }
 
 export default function filmsReducer(state = initialState, action) {
@@ -30,7 +33,14 @@ export default function filmsReducer(state = initialState, action) {
       newState = Object.assign({}, state, { filmsToday: payload })
       break;
     case FilmTypes.LIST_SEATS_SUCCESS:
-      newState = Object.assign({}, state, { seats: payload.seats })
+      const { seatsMap = [], seatsExisted = [] } = payload
+      newState = Object.assign({}, state, { seats: seatsMap, seated: seatsExisted })
+      break;
+    case FilmTypes.SEARCH_SUCCESS:
+      newState = Object.assign({}, state, { search: payload })
+      break;
+    case FilmTypes.COMMENT_SUCCESS:
+      newState = Object.assign({}, state, { comments: payload })
       break;
     default:
       newState = state;
