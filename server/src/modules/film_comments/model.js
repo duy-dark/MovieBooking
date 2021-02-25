@@ -24,5 +24,30 @@ module.exports = {
   },
   updateByLambda: async function (lambda) {
     return await Collection.updateOne(lambda.conditions, lambda.params);
+  },
+  findByLambda_detail: async function (lambda) {
+    console.log('lambda:', lambda);
+
+    return await Collection.aggregate([
+      {
+        $match: {
+          $and: [lambda]
+        }
+      },
+      {
+        $lookup: {
+          from: 'customers',
+          localField: 'customer_id',
+          foreignField: '_id',
+          as: 'customers'
+        }
+      },
+      {
+        $unwind: {
+          path: '$customers',
+          preserveNullAndEmptyArrays: true
+        }
+      }
+    ]);
   }
 };
