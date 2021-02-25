@@ -1,13 +1,12 @@
 import React from 'react'
-import { View, Text } from 'react-native'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
-import TabInfomation from './TabInfomation'
-import TabSchedule from './TabSchedule'
+import TabScheduleCinema from './TabScheduleCinema'
+import TabInfoCinema from './TabInfoCinema'
 
 
 const Tab = createMaterialTopTabNavigator();
 
-function ScheduleScreen() {
+const CinemaDetailScreen = () => {
   return (
     <Tab.Navigator 
       tabBarOptions={{
@@ -17,10 +16,10 @@ function ScheduleScreen() {
         indicatorStyle: { backgroundColor: "orangered" },
       }}
     >
-      <Tab.Screen name="TabSchedule" component={TabSchedule} options={{title: "Lịch Chiếu"}}/>
-      <Tab.Screen name="TabInfomation" component={TabInfomation} options={{title: "Thông Tin"}}/>
+      <Tab.Screen name="TabScheduleCinema" component={TabScheduleCinema} options={{title: "Lịch Chiếu"}}/>
+      <Tab.Screen name="TabInfoCinema" component={TabInfoCinema} options={{title: "Thông Tin"}}/>
     </Tab.Navigator>
   );
 }
 
-export default ScheduleScreen
+export default CinemaDetailScreen
