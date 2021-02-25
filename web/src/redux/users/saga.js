@@ -11,6 +11,7 @@ function* fetchLogin(action) {
       history.push("/");
     }
   } catch (err) {
+    console.log(err);
     throw err;
   }
 }

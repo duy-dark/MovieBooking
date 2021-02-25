@@ -1,16 +1,21 @@
-/* ---------------login scss ------------------- */
-@charset "utf-8";
-
-@import "../../mixin";
-@import "../../color";
-
-
-/* media query */
-
-@media only screen and (min-width: $breakpoint_sm) {
-  @import "news_pc.scss";
+* {
+    box-sizing: border-box;
 }
-
-@media only screen and (max-width: $breakpoint_sm - 1px) {
-  @import "news_sp.scss";
+.tab-film {
+    .row-1-2 {
+        display: flex;
+        flex-direction: row;
+        .column {
+            width: 50%;
+            padding: 15px;
+        }
+    }
+    .row-1-3 {
+        display: flex;
+        flex-direction: row;
+        .column {
+            width: 33%;
+            padding: 15px;
+        }
+    }
 }

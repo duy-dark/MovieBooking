@@ -47,12 +47,11 @@ const TabFindByFilm = () => {
                 itemStyle={{
                     justifyContent: 'flex-start'
                 }}
-                dropDownStyle={{backgroundColor: '#fafafa', zIndex: 10}}
+                dropDownStyle={{backgroundColor: '#fafafa'}}
                 placeholder={"Chọn suất"}
             />
-            <View style={{zIndex: -1}}>
-                <Button title="Mua vé" color="orangered" onPress={() => alert("Mua vé")}/>
-            </View>
+
+            <Button title="Mua vé" color="orangered" onPress={() => alert("Mua vé")}/>
 
         </View>
     )

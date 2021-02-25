@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { BrowserRouter as Route } from "react-router-dom";
 
 export default function showRouteComponent(routes) {
   let result = null;

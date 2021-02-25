@@ -32,7 +32,7 @@ module.exports = {
   updateByLambda: async function (lambda) {
     return await Collection.updateOne(lambda.conditions, lambda.params);
   },
-  getTicket: async function (lambda) {
+  getticket: async function (lambda) {
     //return await Collection.find();
     return await Collection.aggregate([
       {
@@ -41,20 +41,10 @@ module.exports = {
         }
       },
       {
-        $unwind: {
-          path: '$seat_ids',
-          preserveNullAndEmptyArrays: true
+        $project: {
+          seat_ids: 1
         }
-      },
-      {
-        $group: {
-          _id: '$seat_ids',
-          seats: {
-            $first: '$seat_ids'
-          }
-        }
-      },
-      {$unset: ['_id']}
+      }
     ]);
   },
   getDetail: async function (lambda) {
@@ -78,7 +68,7 @@ module.exports = {
                 time_start: '$$this.time_start',
                 time_end: '$$this.time_end',
                 theater: '$$this.theater_id',
-                room_id: '$$this.room_id'
+                room: '$$this.room'
               }
             }
           }

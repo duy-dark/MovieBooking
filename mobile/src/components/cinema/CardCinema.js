@@ -1,20 +1,36 @@
-import React from 'react'
-import { View, Text, TouchableOpacity, Image } from 'react-native'
-import styles from "../../styles/components/cinema/cardcinema"
+import React, { useState } from 'react'
+import { View, Text, TouchableWithoutFeedback } from 'react-native'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import styles from '../../styles/components/cinema/card-cinema'
 
 const CardCinema = (props) => {
-    const item = props.item
-    const onPress = () => {
-        props.navigation.navigate('CinemaDetailScreen', {nameCinema: item.key1})
+    const [showtimes, setShowtimes] = useState(false)
+    const bookTicket = () => {
+        props.navigation.navigate("BookTicketScreen")
     }
+
     return (
-        <TouchableOpacity style={styles.container} onPress={onPress}>
-            <Image style={styles.image} source={{uri: 'http://loremflickr.com/g/50/50/paris'}}/>
-            <View style={styles.item}>
-                <Text style={{color: 'orange',fontSize: 16}}>{item.key1}</Text>
-                <Text style={{color:'darkgray', fontSize: 13}}>{item.key2}</Text>
+            <View>
+                <TouchableWithoutFeedback onPress={() => setShowtimes(!showtimes)}>
+                    <Text style={styles.cinema}>{props.title}</Text>
+                </TouchableWithoutFeedback>
+                {showtimes &&
+                    <View style={styles.showtimes}>
+                        <Text style={{color: "gray"}}>2D - Phụ đề</Text>
+                        <View style={{flexDirection: "row"}}>           
+                            <TouchableOpacity style={styles.hoursArea} onPress={bookTicket}>
+                                <Text style={styles.hoursStart}>12:00</Text>
+                                <Text style={styles.hoursEnd}>13:40</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.hoursArea}>
+                                <Text style={styles.hoursStart}>12:00</Text>
+                                <Text style={styles.hoursEnd}>13:40</Text>
+                            </TouchableOpacity>
+                        </View>
+   
+                    </View>
+                }
             </View>
-        </TouchableOpacity> 
     )
 }
 

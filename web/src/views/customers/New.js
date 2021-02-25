@@ -14,15 +14,15 @@ export default function New(props) {
         <div className="row">
           <div className="col-sm-12 count">
             <div className="wrapIcon wrapIconLike">
-              <img alt="" className="icon" src="assets/img/icons/like.png"/>
+              <img className="icon" src="assets/img/icons/like.png"/>
               <span>2 LIKES</span>
             </div>
             <div className="wrapIcon wrapIconComment">
-              <img alt="" className="icon" src="assets/img/icons/comment.png"/>
+              <img className="icon" src="assets/img/icons/comment.png"/>
               <span>0 COMMENT</span>
             </div>
             <div className="wrapIcon wrapIconShare">
-              <img alt="" className="icon" src="assets/img/icons/share.png"/>
+              <img className="icon" src="assets/img/icons/share.png"/>
               <span>0 SHARE</span>
             </div>
           </div>
@@ -36,10 +36,10 @@ export default function New(props) {
               Sau 2 tuần ra mắt, Tiệc Trăng Máu chính thức gia nhập câu lạc bộ phim điện ảnh đạt 100 tỷ đồng doanh thu phòng vé. Dàn ngôi sao “bạc tỷ” của phim cũng lần đầu tiên hội tụ đầy đủ trong một khung hình để ăn mừng thành tích ấn tượng của tác phẩm.&nbsp;
             </p>
             <p>
-              Sau tuần đầu mở màn thành công, bộ phim điện ảnh Tiệc Trăng Máu của đạo diễn Nguyễn Quang Dũng và nhà sản xuất Phan Gia Nhật Linh đã chính thức cán mốc 100 tỷ đồng doanh thu phòng vé chỉ sau tuần thứ hai công chiếu (tính từ ngày 26/10 – hết ngày 2/11), theo số liệu được công bố chính từ nhà phát hành Lotte Entertainment.
+              Sau tuần đầu mở màn thành công, bộ phim điện ảnh Tiệc Trăng Máu của đạo diễn Nguyễn Quang Dũng và nhà sản xuất Phan Gia Nhật Linh đã chính thức cán mốc 100 tỷ đồng doanh thu phòng vé chỉ sau tuần thứ hai công chiếu (tính từ ngày 26/10 – hết ngày 2/11), theo số liệu được công bố chính từ nhà phát hành Lotte Entertainment. 
             </p>
             <p>
-              <img alt="" src="https://s3img.vcdn.vn/123phim/2020/11/a8963d351c6d3fd2764171e2bc066d04.jpg" style={{heigth: "auto", width: "100%"}} />
+              <img src="https://s3img.vcdn.vn/123phim/2020/11/a8963d351c6d3fd2764171e2bc066d04.jpg" style={{heigth: "auto", width: "100%"}} />
             </p>
             <p>
               Tính đến nay, bộ phim đã thu hút hơn 1,4 triệu lượt khán giả ra rạp thưởng thức bộ phim. Theo đó, Tiệc Trăng Máu chính thức trở thành bộ phim điện ảnh có doanh thu cao thứ nhì trong năm 2020, chỉ xếp sau Gái Già Lắm Chiêu 3 khởi chiếu dịp Tết vừa qua.&nbsp;
@@ -48,7 +48,7 @@ export default function New(props) {
               Đặc biệt, dù bước sang tuần chiếu thứ hai, bộ phim của Nguyễn Quang Dũng vẫn đem lại doanh thu ấn tượng với gần 27 tỷ đồng chỉ trong 3 ngày cuối tuần, chỉ giảm rất ít so với tuần trước đó. Tiệc Trăng Máu là một trong những bộ phim Việt có sự sụt giảm thấp nhất khi sang đến tuần chiếu thứ hai.&nbsp;
             </p>
             <p>
-              <img alt="" src="https://s3img.vcdn.vn/123phim/2020/11/7d18092bec10275fb90c21fe163b7649.png" style={{heigth: "auto", width: "100%"}} />
+              <img src="https://s3img.vcdn.vn/123phim/2020/11/7d18092bec10275fb90c21fe163b7649.png" style={{heigth: "auto", width: "100%"}} />
             </p>
             <p>
               Tỷ lệ giảm thấp này chứng tỏ sức hút không hề giảm của bộ phim bởi chất lượng đã được nhiều khán giả kiểm chứng cùng với yếu tố truyền miệng mạnh mẽ. Nhiều khả năng, bộ phim sẽ tiếp tục dẫn đầu phòng vé trong tuần tới, đạt kỷ lục 3 tuần liên tiếp tuần đứng nhất mà trước đó chỉ có phim Mắt Biếc làm được.&nbsp;
@@ -57,7 +57,7 @@ export default function New(props) {
               Đặc biệt, đây chính là bộ phim đầu tiên của đạo diễn Nguyễn Quang Dũng chạm mốc 100 tỷ đồng doanh thu phòng vé. Trước đó, bộ phim có thành tích cao nhất của anh là Tháng Năm Rực Rỡ (2018) với 84 tỷ đồng.&nbsp;
             </p>
             <p>
-              <img alt="" src="https://s3img.vcdn.vn/123phim/2020/11/c9752b4209f181263a3891a8dceb64d6.png" style={{heigth: "auto", width: "100%"}} />
+              <img src="https://s3img.vcdn.vn/123phim/2020/11/c9752b4209f181263a3891a8dceb64d6.png" style={{heigth: "auto", width: "100%"}} />
             </p>
             <p>
               Không giấu được cảm xúc, đạo diễn Nguyễn Quang Dũng bày tỏ: “Thật sự thở phào nhẹ nhõm vì thấy đây là thành tích xứng đáng dành cho công sức của đoàn phim. Nhưng hơn hết, tôi thật sự vui mừng khi thấy thị trường rạp chiếu phim sôi động trở lại khi có được&nbsp;
@@ -69,7 +69,7 @@ export default function New(props) {
               Thành tích ấn tượng của Tiệc Trăng Máu là phần thưởng xứng đáng, một lần nữa khẳng định chất lượng và sức hấp dẫn của bộ phim. Tác phẩm không chỉ giúp đem lại những giây phút giải trí cho khán giả mà còn đọng lại trong lòng họ những trăn trở, suy nghĩ, những tiếng cười chua cay trước những câu chuyện, mắt tối về cuộc sống, gia đình được thể hiện một cách trào phúng, đầy châm biếm trong phim.&nbsp;
               </p>
             <p>
-              <img alt="" src="https://s3img.vcdn.vn/123phim/2020/11/28452aca97f025e13db5e9c374865a42.png" style={{heigth: "auto", width: "100%"}} />
+              <img src="https://s3img.vcdn.vn/123phim/2020/11/28452aca97f025e13db5e9c374865a42.png" style={{heigth: "auto", width: "100%"}} />
             </p>
             <p>
               Với nhà sản xuất Phan Gia Nhật Linh anh dành lời cảm ơn khán giả đã ủng hộ bộ phim nói riêng và cả ngành điện ảnh nói chung. “Mặc dù Tiệc Trăng Máu ra mắt trong một năm nhiều khó khăn, từ bệnh dịch đến mưa lũ nhưng rất cám ơn đoàn phim đã làm hết mình để khán giả có những giây phút 'thoát ly thực tại' để được cười khóc, thư giãn và suy ngẫm”, anh chia sẻ.&nbsp;
@@ -100,7 +100,7 @@ export default function New(props) {
         <div className="row">
           <div className="col-sm-12">
             <div className="detailReviewer">
-              <img alt="" className="imageReviewer" src="https://graph.facebook.com/3396763350429960/picture?type=square"/>
+              <img className="imageReviewer" src="https://graph.facebook.com/3396763350429960/picture?type=square"/>
               <input className="inputReviewer" type="text" placeholder="Bạn nghĩ gì về bài viết này?" readOnly  />
             </div>
           </div>

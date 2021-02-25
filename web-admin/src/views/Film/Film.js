@@ -1,84 +1,60 @@
-import React from "react";
-import { Table, Tag, Space } from "antd";
+import React, { useEffect, useState } from "react";
+import { Table, Tag, Space } from 'antd';
+import "./../../styles/Film/film.scss";
+import Detail from "./DetailPopup"
+import Schedule from "./SchedulePopup"
+import { useSelector, useDispatch } from "react-redux";
+import {  getListFilmNow } from "../../redux/films/actions";
+export default function Film(){
+  const dispatch = useDispatch();
 
-const Film = () => {
-  const columns = [
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      render: (text) => <a>{text}</a>,
-    },
-    {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
-    },
-    {
-      title: "Address",
-      dataIndex: "address",
-      key: "address",
-    },
-    {
-      title: "Tags",
-      key: "tags",
-      dataIndex: "tags",
-      render: (tags) => (
-        <>
-          {tags.map((tag) => {
-            let color = tag.length > 5 ? "geekblue" : "green";
-            if (tag === "loser") {
-              color = "volcano";
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      ),
-    },
-    {
-      title: "Action",
-      key: "action",
-      render: (text, record) => (
-        <Space size="middle">
-          <a>Invite</a>
-          <a>Delete</a>
-        </Space>
-      ),
-    },
-  ];
+  useEffect(() => {
+    dispatch(getListFilmNow());
+  }, []);
+  const filmsNow = useSelector((state) => state.films.filmsNow.data);
+  const data = []
+for (let i = 0; i <filmsNow.length(); i++) {
+  data.push(
+  {
+    key: i,
+    name: data.name,
+    director: data.directors,
+    country: data.countries,
+  })
 
-  const data = [
-    {
-      key: "1",
-      name: "John Brown",
-      age: 32,
-      address: "New York No. 1 Lake Park",
-      tags: ["nice", "developer"],
-    },
-    {
-      key: "2",
-      name: "Jim Green",
-      age: 42,
-      address: "London No. 1 Lake Park",
-      tags: ["loser"],
-    },
-    {
-      key: "3",
-      name: "Joe Black",
-      age: 32,
-      address: "Sidney No. 1 Lake Park",
-      tags: ["cool", "teacher"],
-    },
-  ];
+}
 
-  return (
-    <div class="listfilm">
-      <Table columns={columns} dataSource={data} />
-    </div>
-  );
-};
-export default Film;
+const columns = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+    render: text => <a>{text}</a>,
+  },
+  {
+    title: 'Director',
+    dataIndex: 'director',
+    key: 'director',
+  },
+  {
+    title: 'Country',
+    dataIndex: 'country',
+    key: 'country',
+  },
+  {
+    title: 'Action',
+    key: 'action',
+    render: (text, record) => (
+      <Space size="middle">
+        <Detail />
+        <a>Delete</a>
+       <Schedule/>
+        <a>Add Schedules</a>
+      </Space>
+    ),
+  },
+];
+
+
+return (<div class="listfilm" ><Table columns={columns} dataSource={data} /></div>)
+}

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import ModalTrailer from "../../components/customer/ModalTrailer";
 import TabsSchedule from "../../components/customer/TabsSchedule.js";
-// import { CircularProgressbar } from 'react-circular-progressbar';
+import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import '../../styles/customers/detail/detail.scss';
 import * as moment from 'moment';
 import {useParams} from "react-router-dom"
-import { getFilmDetails, getComments } from "../../redux/films/actions"
+import { getFilmDetails } from "../../redux/films/actions"
 import { useDispatch , useSelector} from "react-redux";
 
 export default function FilmDetail() {
@@ -17,19 +17,20 @@ export default function FilmDetail() {
     setModalShow(true);
   };
   let { id } = useParams();
-
+ 
   const  dispatch = useDispatch();
   useEffect(() =>{
     const info = {
       id: id
     };
     dispatch(getFilmDetails(info));
-    dispatch(getComments(id));
   },[])
-
+    
    let data=useSelector(state =>state.films.filmDetail)
    let dayOfWeeks =useSelector(state=>state.films.dayOfWeeks)
+   console.log(data)
   return (
+   
     <div className="detail">
          <div className="detail-slider">
         <div className="detail-image">
@@ -39,7 +40,7 @@ export default function FilmDetail() {
         <div className="detail-slider__wrapper">
           <div className="detail-slider__image">
             <img className="detail-slider__image__movie" src={`${data.url_avatar}`} alt=""/>
-            <img className="detail-slider__image__play" onClick={() => showTrailerSlider(data._id)} src={`/assets/film/play-video.png`} alt=""/>
+            <img className="detail-slider__image__play" onClick={() => {}} src={`/assets/film/play-video.png`} alt=""/>
           </div>
           <div className="detail-slider__content">
             <div className="detail-slider__date">{moment('2021/01/02').format('DD-MM-YYYY')}</div>
@@ -54,8 +55,8 @@ export default function FilmDetail() {
       <ModalTrailer
         show={modalShow}
         onHide={() => setModalShow(false)}
-        id={modalId}
-      />
+        id={modalId} 
+      />  
     </div>
   );
 }

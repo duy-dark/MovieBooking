@@ -10,7 +10,9 @@ import { Button } from 'react-native';
 import { TouchableOpacity, Text } from 'react-native';
 
 const Stack = createStackNavigator();
-const HomeStack = () => {
+
+const HomeStack = (props) => {
+    
     return (
         <Stack.Navigator screenOptions={{headerStyle: { height: 80 }}}>
             <Stack.Screen name="HomeScreen" component={HomeScreen} 

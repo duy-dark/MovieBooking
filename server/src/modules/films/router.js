@@ -11,13 +11,6 @@ router.get('/nowshowing', (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.get('/commingsoon', (req, res, next) => {
-  handler
-    .getCommingSoon()
-    .then((val) => res.json(val))
-    .catch((err) => next(err));
-});
-
 router.get('/:id/getcomment', (req, res, next) => {
   //let id = require('mongodb').ObjectId(req.params.id);
   handler
@@ -25,26 +18,23 @@ router.get('/:id/getcomment', (req, res, next) => {
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });
+router.get('/commingsoon', (req, res, next) => {
+  let gte_start_date = new Date(moment.now());
+  let lte_start_date = new Date(moment('2030-01-01', moment.ISO_8601));
+  let params = {
+    gte_start_date: gte_start_date,
+    lte_start_date: lte_start_date
+  };
 
-// router.get('/commingsoon', (req, res, next) => {
-//   let gte_start_date = new Date(moment.now());
-//   let lte_start_date = new Date(moment('2030-01-01', moment.ISO_8601));
-//   let params = {
-//     gte_start_date: gte_start_date,
-//     lte_start_date: lte_start_date
-//   };
-
-//   handler
-//     .getCommingSoon(params)
-//     .then((val) => res.json(val))
-//     .catch((err) => next(err));
-// });
+  handler
+    .getCommingSoon(params)
+    .then((val) => res.json(val))
+    .catch((err) => next(err));
+});
 
 router.get('/', (req, res, next) => {
-  const {_id = undefined} = req.query;
-
   let conditions = {
-    _id: !_id ? undefined : require('mongodb').ObjectId(req.query._id),
+    _id: req.query._id,
     name: req.query.name,
     content: req.query.content,
     countries: req.query.countries,
@@ -69,10 +59,8 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/detail', (req, res, next) => {
-  const {_id = undefined} = req.query;
-
   let conditions = {
-    _id: !_id ? undefined : require('mongodb').ObjectId(req.query._id),
+    _id: req.query._id,
     name: req.query.name,
     trailer: req.query.trailer,
     content: req.query.content,

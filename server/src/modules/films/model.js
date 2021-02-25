@@ -95,26 +95,6 @@ module.exports = {
   getDetail: async function (lambda) {
     return await Collection.aggregate([
       {$match: lambda.conditions},
-
-      {
-        $lookup: {
-          from: 'categories',
-          localField: 'category_ids',
-          foreignField: '_id',
-          as: 'categories'
-        }
-      },
-      {
-        $addFields: {
-          categories: {
-            $map: {
-              input: '$categories',
-              in: {name: '$$this.name'}
-            }
-          }
-        }
-      },
-
       {
         $lookup: {
           from: 'film_schedules',
@@ -133,105 +113,30 @@ module.exports = {
                 time_start: '$$this.time_start',
                 time_end: '$$this.time_end',
                 theater_id: '$$this.theater_id',
-                room_id: '$$this.room_id'
+                room: '$$this.room'
               }
             }
           }
         }
       },
       {
-        $unwind: {
-          path: '$film_schedules',
-          preserveNullAndEmptyArrays: true
-        }
-      },
-      {
         $lookup: {
-          from: 'theaters',
-          localField: 'film_schedules.theater_id',
+          from: 'categories',
+          localField: 'category_ids',
           foreignField: '_id',
-          as: 'film_schedules.theaters'
+          as: 'categories'
         }
       },
       {
-        $lookup: {
-          from: 'rooms',
-          localField: 'film_schedules.room_id',
-          foreignField: '_id',
-          as: 'film_schedules.room'
-        }
-      },
-      {
-        $unwind: {
-          path: '$film_schedules.theaters',
-          preserveNullAndEmptyArrays: true
-        }
-      },
-      {
-        $unwind: {
-          path: '$film_schedules.room',
-          preserveNullAndEmptyArrays: true
-        }
-      },
-      {
-        $group: {
-          _id: '$_id',
-          name: {
-            $first: '$name'
-          },
-          trailer: {
-            $first: '$trailer'
-          },
-
+        $addFields: {
           categories: {
-            $first: '$categories'
-          },
-          long_time: {
-            $first: '$long_time'
-          },
-          start_date: {
-            $first: '$start_date'
-          },
-          rates: {
-            $first: '$rates'
-          },
-          rate_count: {
-            $first: '$rate_count'
-          },
-          content: {
-            $first: '$content'
-          },
-          imdb: {
-            $first: '$imdb'
-          },
-          directors: {
-            $first: '$directors'
-          },
-          actors: {
-            $first: '$actors'
-          },
-          digitals: {
-            $first: '$digitals'
-          },
-          countries: {
-            $first: '$countries'
-          },
-          url_avatar: {
-            $first: '$url_avatar'
-          },
-          url_background: {
-            $first: '$url_background'
-          },
-          is_blockbuster: {
-            $first: '$is_blockbuster'
-          },
-
-          film_schedules: {
-            $addToSet: '$film_schedules'
+            $map: {
+              input: '$categories',
+              in: {name: '$$this.name'}
+            }
           }
         }
       },
-
       {
         $project: lambda.views
       }
@@ -463,7 +368,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room_id: '$$this.room_id',
+                      room: '$$this.room',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -526,7 +431,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room_id: '$$this.room_id',
+                      room: '$$this.room',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -588,7 +493,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room_id: '$$this.room_id',
+                      room: '$$this.room',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -650,7 +555,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room_id: '$$this.room_id',
+                      room: '$$this.room',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -712,7 +617,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room_id: '$$this.room_id',
+                      room: '$$this.room',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -774,7 +679,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room_id: '$$this.room_id',
+                      room: '$$this.room',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -836,7 +741,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room_id: '$$this.room_id',
+                      room: '$$this.room',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }

@@ -326,7 +326,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room_id: '$$this.room_id',
+                      room: '$$this.room',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -389,7 +389,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room_id: '$$this.room_id',
+                      room: '$$this.room',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -452,7 +452,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room_id: '$$this.room_id',
+                      room: '$$this.room',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -515,7 +515,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room_id: '$$this.room_id',
+                      room: '$$this.room',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -578,7 +578,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room_id: '$$this.room_id',
+                      room: '$$this.room',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -641,7 +641,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room_id: '$$this.room_id',
+                      room: '$$this.room',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -704,7 +704,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room_id: '$$this.room_id',
+                      room: '$$this.room',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
