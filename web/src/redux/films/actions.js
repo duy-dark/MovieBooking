@@ -38,3 +38,16 @@ export function getSeats(id) {
     payload: id,
   };
 }
+
+export function getSearch() {
+  return {
+    type: FilmTypes.SEARCH,
+  };
+}
+
+export function getComments(id) {
+  return {
+    type: FilmTypes.COMMENT,
+    payload: id
+  };
+}

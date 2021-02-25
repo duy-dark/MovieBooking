@@ -43,7 +43,7 @@ const getNowShowing = async () => {
 
     let data = await Model.getNowShowing(lambda);
 
-    return resSuccess(data);
+    return resSuccess(data[0]);
   } catch (error) {
     // throw {status: 400, detail: error};
     throw {status: 400, detail: error};

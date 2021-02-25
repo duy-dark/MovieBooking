@@ -30,6 +30,15 @@ module.exports = {
     "no-unused-vars": ["error", { "varsIgnorePattern": "[iI]gnored" }],
     "no-shadow": ["error", { "builtinGlobals": false, "hoist": "all", "allow": [] }],
     "no-underscore-dangle": ["error", { "allow": ["foo_", "_bar"] }],
-    "no-unused-expressions": { "allowShortCircuit": false, "allowTernary": false }
+    "no-unused-expressions": { "allowShortCircuit": false, "allowTernary": false },
+    "valid-jsdoc": "error",
+    "no-unused-vars": "error",
+    "jsx-a11y/alt-text": [ 2, {
+      "elements": [ "img", "object", "area", "input[type=\"image\"]" ],
+      "img": ["Image"],
+      "object": ["Object"],
+      "area": ["Area"],
+      "input[type=\"image\"]": ["InputImage"]
+    }],
   }
 };

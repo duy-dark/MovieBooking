@@ -129,14 +129,6 @@ const findById = async (id) => {
       }
     };
     let data = await Model.getDetail(lambda);
-    // let now = moment.now();
-
-    // let arrayDay = [];
-    // arrayDay.push(now);
-    // for (let i = 1; i < 7; i++) {
-    //   let day = moment(now, 'DD-MM-YYYY').add(i, 'days');
-    //   arrayDay.push(day);
-    // }
 
     let days = [
       'chủ nhật',
@@ -190,12 +182,6 @@ const getFilm7Day = async (id) => {
       )
     );
 
-    console.log('time_start: ', time_start);
-    console.log('time_end:   ', time_end);
-    console.log('date:       ', date);
-    console.log('month:      ', month + 1);
-    console.log('year:       ', year);
-
     let lambda = {
       conditions: {
         _id: id,
@@ -217,11 +203,6 @@ const getFilm7Day = async (id) => {
 
     let detail = {...data[0]};
     let info = {...detail.film};
-    // console.log(
-    //   'lambda:',
-    //   detail.day1.theaters.filter((item) => item.film_schedules.length > 0)
-    // );
-    // return resSuccess(data[0]);
     let schedules = [];
     schedules.push(
       detail.day1.theaters.filter((item) => item.film_schedules.length > 0)
@@ -249,7 +230,6 @@ const getFilm7Day = async (id) => {
       dayOfWeeks: schedules
     });
   } catch (error) {
-    // throw {status: 400, detail: error};
     throw {status: 400, detail: error};
   }
 };

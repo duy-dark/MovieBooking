@@ -97,7 +97,6 @@ router.post('/', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
   let id = require('mongodb').ObjectId(req.params.id);
   let params = {...req.body};
-  console.log('params: ', params);
   handler
     .putUpdate(id, params)
     .then((val) => res.json(val))
