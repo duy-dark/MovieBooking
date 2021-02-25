@@ -78,7 +78,7 @@ module.exports = {
                 time_start: '$$this.time_start',
                 time_end: '$$this.time_end',
                 theater: '$$this.theater_id',
-                room: '$$this.room'
+                room_id: '$$this.room_id'
               }
             }
           }

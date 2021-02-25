@@ -128,7 +128,7 @@ const postCreate = async (params) => {
       time_start: timeStart,
       time_end: time_end,
       theater: ticketView[0].film_schedules[0].theater,
-      room: ticketView[0].film_schedules[0].room
+      room_id: ticketView[0].film_schedules[0].room_id
     };
 
     let mainOptions = {
@@ -216,13 +216,13 @@ const getTicket = async (film_schedule_id) => {
         film_id: 1,
         theater_id: 1,
         // room_id: 1,
-        room: 1
+        room_id: 1
       }
     };
 
     let seatsMap = await ScheduleModel.findByLambda_detail(lambda);
 
-    return resSuccess({seatsExisted: arr, seatsMap: seatsMap[0].room.seats});
+    return resSuccess({seatsExisted: arr, seatsMap: seatsMap[0].room_id.seats});
   } catch (error) {
     throw {status: 400, detail: error};
   }
