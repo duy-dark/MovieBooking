@@ -41,8 +41,10 @@ router.get('/:id/getcomment', (req, res, next) => {
 // });
 
 router.get('/', (req, res, next) => {
+  const {_id = undefined} = req.query;
+
   let conditions = {
-    _id: req.query._id,
+    _id: !_id ? undefined : require('mongodb').ObjectId(req.query._id),
     name: req.query.name,
     content: req.query.content,
     countries: req.query.countries,
