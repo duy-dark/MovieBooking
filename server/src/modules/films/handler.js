@@ -152,7 +152,8 @@ const findById = async (id) => {
 
     console.log('arr:', arr);
     // let data = await Model.getDetail(lambda);
-    data[0] = {...data[0], listday: arr};
+    // data[0] = {...data[0], listday: arr};
+    data[0] = {...data};
 
     return resSuccess(data[0]);
   } catch (error) {
