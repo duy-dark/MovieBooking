@@ -2,6 +2,7 @@ import React from "react";
 import "antd/dist/antd.css";
 import "./../../../styles/home/home.scss";
 import { Menu, Switch, Divider } from "antd";
+import { Link } from 'react-router-dom'
 import {
   MailOutlined,
   CalendarOutlined,
@@ -17,6 +18,7 @@ export default function MenuHome(props) {
   const [mode, setMode] = React.useState("inline");
   const [theme, setTheme] = React.useState("light");
 
+  
   const changeMode = (value) => {
     setMode(value ? "vertical" : "inline");
   };
@@ -35,7 +37,7 @@ export default function MenuHome(props) {
         mode={mode}
         theme={theme}
       >
-        <VideoCameraFilled style={{ fontSize: "100px", color: "#db3434" }} />
+        <VideoCameraFilled style={{ fontSize: "100px", color: "#db3434",marginLeft:"75px" }} />
         <div>
           {" "}
           <Switch onChange={changeMode} /> Change Mode
@@ -45,26 +47,26 @@ export default function MenuHome(props) {
 
         <br />
         <br />
-        <Menu.Item key="1" icon={<MailOutlined />}>
-          Navigation One
-        </Menu.Item>
-        <Menu.Item key="2" icon={<CalendarOutlined />}>
-          Navigation Two
-        </Menu.Item>
+        
         <SubMenu key="sub1" icon={<AppstoreOutlined />} title="Phim">
-          <Menu.Item key="sub1-1">Danh sách phim</Menu.Item>
+      <Menu.Item key="sub1-1">Danh sách phim   <Link to="/ManageFilm" /></Menu.Item>
           <Menu.Item key="sub1-2">Thể loại</Menu.Item>
-          <Menu.Item key="sub1-3">Bình luận</Menu.Item>
+          <Menu.Item key="sub1-3">Rạp</Menu.Item>
         </SubMenu>
+      
+         
         <SubMenu key="sub2" icon={<SettingOutlined />} title="Người dùng">
           <SubMenu key="sub2-1" title="Quản trị viên">
             <Menu.Item key="5">Danh sách</Menu.Item>
             <Menu.Item key="6">Danh sách bị cấm</Menu.Item>
           </SubMenu>
-          <SubMenu key="sub2-2" title="Khách Hoàng">
+          <SubMenu key="sub2-2" title="Khách Hàng">
             <Menu.Item key="7">Danh sách</Menu.Item>
             <Menu.Item key="8">Danh sách bị cấm</Menu.Item>
           </SubMenu>
+        </SubMenu>
+        <SubMenu key="sub3" icon={<SettingOutlined />} title="Thống Kê">
+        <Menu.Item key="9">Thống Kê</Menu.Item>
         </SubMenu>
         <Menu.Item key="link" icon={<LinkOutlined />}>
           <a
