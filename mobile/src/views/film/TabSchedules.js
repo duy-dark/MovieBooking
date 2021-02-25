@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { SafeAreaView, View, Text, TouchableOpacity, FlatList } from 'react-native'
 import styles from '../../styles/views/schedule/tab-schedules'
-import CardCinema from '../../components/cinema/CardCinema'
+import CardCinemaSchedule from '../../components/cinema/CardCinemaSchedule'
 
-const DATA = [
+var DATA = [
     {
       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
       title: 'Cinema 1',
@@ -61,8 +61,11 @@ const TabSchedules = (props) => {
         })
         setSchedules(updateSchedules)
     }  
-    
-    const renderListCinemas = ({ item }) => <CardCinema navigation={props.navigation} title={item.title} />
+    useEffect(() => {
+        // DATA = []
+        // update DATA
+    }, [schedules])
+    const renderListCinemas = ({ item }) => <CardCinemaSchedule navigation={props.navigation} title={item.title} />
     const schedulesHeader = (
         <View style={styles.schedules}>
             <View style={{flexDirection: "row"}}>

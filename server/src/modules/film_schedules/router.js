@@ -5,13 +5,26 @@ const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
 
 router.get('/', (req, res, next) => {
+  const {
+    _id = undefined,
+    film_id = undefined,
+    theater_id = undefined,
+    room_id = undefined
+  } = req.query;
+
   let conditions = {
-    _id: req.query._id,
+    _id: !_id ? undefined : require('mongodb').ObjectId(req.query._id),
     time_start: req.query.time_start,
     time_end: req.query.time_end,
-    film_id: req.query.film_id,
-    theater_id: req.query.theater_id,
-    room_id: req.query.room_id
+    film_id: !film_id
+      ? undefined
+      : require('mongodb').ObjectId(req.query.film_id),
+    theater_id: !theater_id
+      ? undefined
+      : require('mongodb').ObjectId(req.query.theater_id),
+    room_id: !room_id
+      ? undefined
+      : require('mongodb').ObjectId(req.query.room_id)
   };
   conditions = omitBy(conditions, isNil);
   handler

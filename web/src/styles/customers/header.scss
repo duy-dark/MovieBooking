@@ -15,6 +15,8 @@
     .header__icon {
       display: flex;
       align-items: center;
+      cursor: pointer;
+
       img {
         width: 50px;
         height: 50px;
@@ -64,4 +66,65 @@
 }
 
 @media only screen and (max-width: $breakpoint_sm - 1px) {
+  .header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #FFF;
+    height: 60px;
+    padding: 0 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,.3);
+
+    .header__icon {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      img {
+        width: 50px;
+        height: 50px;
+      }
+    }
+
+    .header__info {
+      display: flex;
+      flex-direction: row;
+
+      .header__customer {
+        .header__login {
+          display: flex;
+          align-items: center;
+          padding-right: 10px;
+          border-right: 1px solid $font_grey_01;
+          text-decoration: none;
+          color: black;
+
+          img {
+            width: 30px;
+            height: 30px;
+            border-radius:  50%;
+            margin-right: 10px;
+          }
+        }
+      }
+
+      .header__position {
+        display: flex;
+        position: relative;
+
+        .header__position__name {
+          padding-left: 10px;
+          display: flex;
+          align-items: center;
+        }
+
+        .header__dropdown {
+          position: absolute;
+          bottom: 0;
+          width: 100%;
+        }
+      }
+    }
+  }
 }

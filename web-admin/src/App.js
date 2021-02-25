@@ -1,13 +1,16 @@
 import routes from "./router";
 import React,{ Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { Layout } from 'antd';
-import { connect } from 'react-redux';
-import MenuHome from "./views/home/menu/MenuHome";
+import { Layout } from "antd";
 
-const { Header, Footer, Sider, Content } = Layout; 
-class App extends Component {
-  render(){
+import "./styles/home-layout/home.scss";
+import MenuHome from "./components/home-layout/MenuHome";
+import HeaderHome from "./components/home-layout/HeaderHome";
+import DirectoryHome from "./components/home-layout/DirectoryHome";
+import FooterHome from "./components/home-layout/FooterHome";
+
+const { Header, Footer, Sider, Content } = Layout;
+export default function App() {
   function showRouteComponent(routes) {
     let result = null;
     if (routes.length > 0) {
@@ -27,18 +30,22 @@ class App extends Component {
 
   return (
     <Router>
-      {/* <div className="app">
-        <CustomScrollbar>
-        <Switch>{showRouteComponent(routes)}</Switch>
-        </CustomScrollbar>
-      </div> */}
-      
       <Layout>
-        <Sider><MenuHome/></Sider>
-        <Layout>
-          <Switch>{showRouteComponent(routes)}</Switch>
-        </Layout>
+        <div className="home">
+          <div className="home-left">
+            <MenuHome></MenuHome>
+          </div>
+          <div className="home-right">
+            <HeaderHome></HeaderHome>
+            <div className="content">
+              <DirectoryHome></DirectoryHome>
+              <Switch>{showRouteComponent(routes)}</Switch>
+            </div>
+          </div>
+        </div>
+        <div className=""></div>
       </Layout>
+      <FooterHome></FooterHome>
     </Router>
   );}
 }
