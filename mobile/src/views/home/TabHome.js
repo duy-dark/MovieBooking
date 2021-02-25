@@ -11,6 +11,11 @@ const TabHome = (props) => {
     const seeAllFilm = () => {
         props.navigation.navigate("TabFilmsNowShowing")
     }
+    const seeAllNews = () => {
+        props.navigation.navigate("NewsStack")
+    }
+
+
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <Text style={styles.section}>Phim được yêu thích nhất</Text>
@@ -35,7 +40,7 @@ const TabHome = (props) => {
             <View style={styles.area}>
                 <View style={styles.row}>
                     <Text style={styles.textRow}>Lướt thêm tin mới nhé!</Text>
-                    <TouchableOpacity><Text style={styles.seeAll}>Xem Tất Cả</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={seeAllNews}><Text style={styles.seeAll}>Xem Tất Cả</Text></TouchableOpacity>
                 </View>
                 <CardNewsSummary />
                 <CardNewsSummary />
