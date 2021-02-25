@@ -31,7 +31,7 @@ export default function MenuHome(props) {
     <>
       <Menu
         className="home-left"
-        style={{ width: 256 }}
+        style={{ width: 256,height:603 }}
         defaultSelectedKeys={["1"]}
         defaultOpenKeys={["sub1"]}
         mode={mode}
