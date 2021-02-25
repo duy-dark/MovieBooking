@@ -10,7 +10,7 @@ const initialState = {
   filmDetail: {},
   seats: [],
   seated: [],
-  dayOfWeeks:[],
+  dayOfWeeks:[[], [], [], [], [], [], []],
   comments: [],
   search: null
 }

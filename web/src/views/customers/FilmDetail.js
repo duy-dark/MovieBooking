@@ -5,7 +5,7 @@ import TabsSchedule from "../../components/customer/TabsSchedule.js";
 import 'react-circular-progressbar/dist/styles.css';
 import '../../styles/customers/detail/detail.scss';
 import * as moment from 'moment';
-import {useParams} from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 import { getFilmDetails, getComments } from "../../redux/films/actions"
 import { useDispatch , useSelector} from "react-redux";
 
@@ -17,6 +17,8 @@ export default function FilmDetail() {
     setModalShow(true);
   };
   let { id } = useParams();
+  const location = useLocation();
+  const [future, setFuture] = useState(location.state);
 
   const  dispatch = useDispatch();
   useEffect(() =>{
@@ -27,8 +29,9 @@ export default function FilmDetail() {
     dispatch(getComments(id));
   },[])
 
-   let data=useSelector(state =>state.films.filmDetail)
-   let dayOfWeeks =useSelector(state=>state.films.dayOfWeeks)
+   let data = useSelector(state =>state.films.filmDetail)
+   let dayOfWeeks = useSelector(state=>state.films.dayOfWeeks)
+   let comments = useSelector(state=>state.films.comments)
   return (
     <div className="detail">
          <div className="detail-slider">
@@ -49,7 +52,7 @@ export default function FilmDetail() {
         </div>
       </div>
       <div className="detail-wrapper">
-       {data,dayOfWeeks && <TabsSchedule detail={data} dayOfWeeks={dayOfWeeks}/>}
+       {data,dayOfWeeks && <TabsSchedule future={future.future ? 0 : 1} detail={data} dayOfWeeks={dayOfWeeks} comments={comments}/>}
       </div>
       <ModalTrailer
         show={modalShow}

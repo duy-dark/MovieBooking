@@ -9,6 +9,7 @@ import ModalTrailer from "../../components/customer/ModalTrailer";
 import Select, { components } from "react-select";
 import * as moment from "moment";
 import { updateHeaderFooter } from "../../redux/users/actions";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 const days = ['chủ nhật', 'thứ 2', 'thứ 3', 'thứ 4', 'thứ 5', 'thứ 6', 'thứ 7']
 export default function Home() {
@@ -98,44 +99,130 @@ export default function Home() {
     <div className="home">
       <div className="home__slider">
         <SliderMovies listSlider={filmsSlider} clickTrailer={showTrailer} />
-
-        <div className="filter-film">
-          <Select
-            className="select"
-            value={selectFilm}
-            options={optionFilm}
-            onChange={setSelectFilm}
-            placeholder="Phim"
-          />
-          <Select
-            className="select"
-            value={selectThreater}
-            options={optionTheater}
-            onChange={setSelectThreater}
-            placeholder="Rạp"
-          />
-          <Select
-            className="select"
-            value={selectDate}
-            options={optionDate}
-            onChange={setSelectDate}
-            components={{ OptionComponent }}
-            placeholder="Ngày xem"
-          />
-          <Select
-            className="select"
-            value={selectTime}
-            options={optionTime}
-            onChange={setSelectTime}
-            placeholder="Suất chiếu"
-          />
-          <button
-            className={"btn btn-booking" + (disabledBtn ? "" : " btn-disabled")}
-            onClick={BookingTicketFast}
-          >
-            MUA VÉ NGAY
-          </button>
-        </div>
+        <Tabs className="search">
+          <TabList className="search-headers">
+            <Tab className="search-headers__item">Theo Phim</Tab>
+            <Tab className="search-headers__item">Theo Rạp</Tab>
+            <Tab className="search-headers__item">Theo Ngày</Tab>
+          </TabList>
+          <TabPanel>
+            <div className="filter-film">
+              <Select
+                className="select"
+                value={selectFilm}
+                options={optionFilm}
+                onChange={setSelectFilm}
+                placeholder="Phim"
+              />
+              <Select
+                className="select"
+                value={selectThreater}
+                options={optionTheater}
+                onChange={setSelectThreater}
+                placeholder="Rạp"
+              />
+              <Select
+                className="select"
+                value={selectDate}
+                options={optionDate}
+                onChange={setSelectDate}
+                components={{ OptionComponent }}
+                placeholder="Ngày xem"
+              />
+              <Select
+                className="select"
+                value={selectTime}
+                options={optionTime}
+                onChange={setSelectTime}
+                placeholder="Suất chiếu"
+              />
+              <button
+                className={"btn btn-booking" + (disabledBtn ? "" : " btn-disabled")}
+                onClick={BookingTicketFast}
+              >
+                MUA VÉ NGAY
+              </button>
+            </div>
+          </TabPanel>
+          <TabPanel>
+            <div className="filter-film">
+              <Select
+                className="select"
+                value={selectThreater}
+                options={optionTheater}
+                onChange={setSelectThreater}
+                placeholder="Rạp"
+              />
+              <Select
+                className="select"
+                value={selectFilm}
+                options={optionFilm}
+                onChange={setSelectFilm}
+                placeholder="Phim"
+              />
+              <Select
+                className="select"
+                value={selectDate}
+                options={optionDate}
+                onChange={setSelectDate}
+                components={{ OptionComponent }}
+                placeholder="Ngày xem"
+              />
+              <Select
+                className="select"
+                value={selectTime}
+                options={optionTime}
+                onChange={setSelectTime}
+                placeholder="Suất chiếu"
+              />
+              <button
+                className={"btn btn-booking" + (disabledBtn ? "" : " btn-disabled")}
+                onClick={BookingTicketFast}
+              >
+                MUA VÉ NGAY
+              </button>
+            </div>
+          </TabPanel>
+          <TabPanel>
+            <div className="filter-film">
+              <Select
+                className="select"
+                value={selectDate}
+                options={optionDate}
+                onChange={setSelectDate}
+                components={{ OptionComponent }}
+                placeholder="Ngày xem"
+              />
+              <Select
+                className="select"
+                value={selectFilm}
+                options={optionFilm}
+                onChange={setSelectFilm}
+                placeholder="Phim"
+              />
+              <Select
+                className="select"
+                value={selectThreater}
+                options={optionTheater}
+                onChange={setSelectThreater}
+                placeholder="Rạp"
+              />
+              <Select
+                className="select"
+                value={selectTime}
+                options={optionTime}
+                onChange={setSelectTime}
+                placeholder="Suất chiếu"
+              />
+              <button
+                className={"btn btn-booking" + (disabledBtn ? "" : " btn-disabled")}
+                onClick={BookingTicketFast}
+              >
+                MUA VÉ NGAY
+              </button>
+            </div>
+          </TabPanel>
+        </Tabs>
 
         <TabListFilm filmsNow={filmsNow} filmsFuture={filmsFuture} clickTrailer={showTrailer} />
         <TabsTheater theaters={filmsToday} />
