@@ -59,8 +59,10 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/detail', (req, res, next) => {
+  const {_id = undefined} = req.query;
+
   let conditions = {
-    _id: req.query._id,
+    _id: !_id ? undefined : require('mongodb').ObjectId(req.query._id),
     name: req.query.name,
     trailer: req.query.trailer,
     content: req.query.content,
