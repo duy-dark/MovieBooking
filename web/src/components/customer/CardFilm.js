@@ -1,8 +1,10 @@
 import React from "react";
+import { useHistory } from 'react-router-dom';
 
 export default function CardFilm(props) {
+  const history = useHistory();
   const goDetail = (id) => {
-    console.log("id", id);
+    history.push(`/${id}/detail`);
   };
   return (
     <div className="card-film">

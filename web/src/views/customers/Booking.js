@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useHistory, useParams } from "react-router-dom";
 import { useStore, useDispatch, useSelector } from "react-redux";
-import { updateHeaderFooter } from "../../redux/users/actions";
+// import { updateHeaderFooter } from "../../redux/users/actions";
 import "../../styles/customers/booking/booking.scss";
 import { getFilmDetails, getSeats, postBookingInfo } from "../../redux/films/actions";
-import { getToken } from "../../redux/users/selector";
+// import { getToken } from "../../redux/users/selector";
 import * as moment from "moment"
 
 const SeatEl = (props) => {
+
   const [status, setStatus] = useState();
   const selectSeat = (seat) => {
     if (props.seats.length < 10) {
@@ -21,9 +22,10 @@ const SeatEl = (props) => {
     }
   };
   const formatSeat = (seat) => seat && seat.slice(-2);
+
   return (
-    <span className="seat-wrapper" onClick={() => selectSeat(props.seat)}>
-      <span className={`seat ${status ? "seat--selected" : ""}`}>
+    <span className={`seat-wrapper ${props.seatsSelected.includes(props.seat) ? 'seat-wrapper--hide' : ''}`} onClick={() => selectSeat(props.seat)}>
+      <span className={`seat ${status ? "seat--selected" : ""} ${props.seatsSelected.includes(props.seat) ? 'seat--hide' : ''}`}>
         <span className="s-img">{formatSeat(status)}</span>
       </span>
     </span>
@@ -40,7 +42,7 @@ const RowSeatEl = (props) => {
         <span className="seat seat--name">{props.name}</span>
       </span>
       {props.rows.map((row) => (
-        <SeatEl key={`${row}`} seat={row} seats={props.seats} onSelect={(seat) => selectSeat(seat)} />
+        <SeatEl key={`${row}`} seat={row} seatsSelected={props.seatsSelected} seats={props.seats} onSelect={(seat) => selectSeat(seat)} />
       ))}
     </div>
   );
@@ -107,7 +109,7 @@ export default function Booking(props) {
 
   const [disabledBtn, setDisabledBtn] = useState(false);
   let { id } = useParams();
- 
+
   useEffect(() => {
     setDisabledBtn(!(seats.length > 0 && validateEmail(email) && phone && payment));
   }, [seats, email, phone, payment]);
@@ -164,9 +166,11 @@ export default function Booking(props) {
   }, [])
   // const data = useSelector((state) => state.films.filmDetail)
   const listSeatsSelected = useSelector((state) => state.films.seats)
+
   const formatDate = (date) => {
     return moment(date).format('dddd DD/MM/YYYY hh:mm');
   }
+
   return (
     <div className="booking">
       <div className="booking-content">
@@ -182,7 +186,7 @@ export default function Booking(props) {
         </div>
         <div className="booking-content__list-seats">
           {listSeat.map((row, index) => (
-            <RowSeatEl key={index} seats={seats} {...row} onSelectSeat={(seat) => selectSeat(seat)} />
+            <RowSeatEl key={index} seats={seats} seatsSelected={listSeatsSelected} {...row} onSelectSeat={(seat) => selectSeat(seat)} />
           ))}
         </div>
         <div className="booking-content__des">
@@ -241,39 +245,6 @@ export default function Booking(props) {
               <input id="momo" name="payment" value="momo" onChange={(e) => setPayment(e.target.value)} type="radio" />
               <label htmlFor="momo">
                 <img src="/assets/logo-momo.jpg" alt="" /> <span>Thanh toán Momo</span>
-              </label>
-            </div>
-            <div className="radio-form">
-              <input
-                id="zalopay"
-                name="payment"
-                value="zalopay"
-                onChange={(e) => setPayment(e.target.value)}
-                type="radio"
-              />
-              <label htmlFor="zalopay">
-                <img src="/assets/ic-zalopay.png" alt="" /> <span>Thanh toán Zalopay</span>
-              </label>
-            </div>
-            <div className="radio-form">
-              <div className="">
-                <input
-                  id="noidia"
-                  name="payment"
-                  value="noi dia"
-                  onChange={(e) => setPayment(e.target.value)}
-                  type="radio"
-                />
-                <label htmlFor="noidia">
-                  <img src="/assets/ic-noidia.png" alt="" />
-                  <span>Thanh Toán Nội Địa</span>
-                </label>
-              </div>
-            </div>
-            <div className="radio-form">
-              <input id="visa" name="payment" value="visa" onChange={(e) => setPayment(e.target.value)} type="radio" />
-              <label htmlFor="visa">
-                <img src="/assets/ic-visa.png" alt="" /> <span>Thanh Toán Visa, Jcb, master card</span>
               </label>
             </div>
           </div>

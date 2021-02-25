@@ -188,6 +188,10 @@
     margin-right: 40px;
   }
 
+  &.seat-wrapper--hide {
+    pointer-events: none;
+  }
+
   .seat {
     position: relative;
     display: inline-flex;
@@ -234,6 +238,15 @@
       border-color: #f7b500;
       .s-img {
         background-color: #f7b500;
+      }
+    }
+
+    &.seat--hide {
+      border-color: rgb(231, 234, 236);
+      cursor: default;
+
+      .s-img {
+        background-color: rgb(231, 234, 236);
       }
     }
   }

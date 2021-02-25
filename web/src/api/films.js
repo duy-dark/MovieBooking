@@ -17,16 +17,25 @@ const getListFilmToday = () => {
 }
 
 const postBookingInfo = (params) => {
-  return Api.post("api/ticket", params).then((res) => res.data);
+  return Api.post("/api/ticket", params).then((res) => res.data);
 };
 
 const getDetail = (params) => {
-  return Api.get(`api/film/${params.id}/detail`).then(res => res.data);
+  return Api.get(`/api/film/${params.id}/detail`).then(res => res.data);
 }
 
 const getSeats = (id) => {
-  return Api.get(`api/ticket/ticket/${id}`).then(res => res.data)
+  return Api.get(`/api/ticket/${id}`).then(res => res.data)
 }
+
+const getComments = (params) => {
+  return Api.get(`/api/film_comment?film_id=${params}`).then(res => res.data)
+}
+
+const search = () => {
+  return Api.get('/api/film_schedule/nowshowing').then(res => res.data)
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getListFilmShowing,
@@ -35,5 +44,7 @@ export default {
   getListFilmNow,
   getListFilmFuture,
   getListFilmToday,
-  getSeats
+  getSeats,
+  search,
+  getComments
 };
