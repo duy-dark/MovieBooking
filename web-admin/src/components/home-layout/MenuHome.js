@@ -38,7 +38,7 @@ export default function MenuHome(props) {
         theme={theme}
       >
         <VideoCameraFilled
-          style={{ fontSize: "100px", color: "#db3434", marginLeft: "75px" }}
+          style={{ fontSize: "100px", color: "#db3434", marginLeft: "0px" }}
         />
         <div>
           {" "}
