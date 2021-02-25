@@ -1,0 +1,17 @@
+.home {
+  display: flex;
+  flex-direction: row;
+
+  .home-left {
+    width: 256px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .home-right {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+  }
+}

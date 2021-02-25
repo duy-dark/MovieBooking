@@ -1,0 +1,3395 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "2.0",
+      "title": "Movie Booking API",
+      "description": "Document API",
+      "license": {
+        "name": "Movie Booking",
+        "url": "https://opensource.org/licenses/MIT"
+      }
+    },
+    "host": "localhost:1000",
+    "basePath": "/",
+    "tags": [
+      {
+        "name": "Admin",
+        "description": "API for Admin"
+      },
+      {
+        "name": "User",
+        "description": "API for User"
+      }
+
+    ],
+    "schemes": [
+      "http",
+      "https"
+    ],
+    "consumes": [
+      "application/json"
+    ],
+    "produces": [
+      "application/json"
+    ],
+    "securityDefinitions": {
+        "ApiKeyAuth":{
+          "type": "apiKey",
+          "in": "headers",
+          "name": "authorization"
+        }
+    },
+    "paths": {
+      "/api/admin/": {
+        "get": {
+          "summary": "Get list user",
+          "tags": [
+            "Admin"
+          ],
+          "description": "Get list user",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get list user Success!",
+              "schema": {
+                "$ref": "#/definitions/Admin"
+              }
+            },
+            "404":{
+              "description": "Error Get list User!"
+            }
+          }
+        },
+        "post": {
+          "summary": "Add information user",
+          "tags": [
+            "Admin"
+          ],
+          "description": "Add information user",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Add user",
+              "schema": {
+                "$ref": "#/definitions/Admin"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Add user Success!",
+              "schema": {
+                "$ref": "#/definitions/Admin"
+              }
+            },
+            "404":{
+              "description": "Error add User!"
+            }
+          }
+        }
+      },
+      "/api/admin/:id": {
+        "get": {
+          "summary": "Get list user by id",
+          "tags": [
+            "Admin"
+          ],
+          "description": "Get list user by id",
+          "parameters": [
+            {
+              "name": "UserId",
+              "in": "path",
+              "description": "Get list user by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get list user by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Admin"
+              }
+            },
+            "404":{
+              "description": "Error Get list by id User!"
+            }
+          }
+        },
+        "put": {
+          "summary": "Edit user by id",
+          "tags": [
+            "Admin"
+          ],
+          "description": "Edit user by id",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Edit user",
+              "schema": {
+                "$ref": "#/definitions/Admin"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Edit user by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Admin"
+              }
+            },
+            "404":{
+              "description": "Error Edit by id User!"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete user by id",
+          "tags": [
+            "Admin"
+          ],
+          "description": "Delete user by id",
+          "parameters": [
+            {
+              "name": "UserId",
+              "in": "path",
+              "description": "Delete user by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Delete user by id Success!"
+            },
+            "404":{
+              "description": "Error Delete by id User!"
+            }
+          }
+        }
+      },
+      "/api/admin/login": {
+        "post": {
+          "summary": "Check login user admin",
+          "tags": [
+            "Admin"
+          ],
+          "description": "Check login user admin",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Check login user admin",
+              "schema": {
+                "$ref": "#/definitions/Admin"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Login user admin Success!",
+              "schema": {
+                "$ref": "#/definitions/User"
+              }
+            },
+            "404":{
+              "description": "Error Login user admin!"
+            }
+          }
+        }
+      },
+      "/api/admin/getdetail": {
+        "get": {
+          "summary": "Get detail user admin",
+          "tags": [
+            "Admin"
+          ],
+          "description": "Get detail user admin",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get detail user admin Success!",
+              "schema": {
+                "$ref": "#/definitions/Admin"
+              }
+            },
+            "404":{
+              "description": "Error Get detail user admin!"
+            }
+          }
+        }
+      },
+      "/api/customer/list": {
+        "get": {
+          "summary": "Get all user",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all user",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all user Success!",
+              "schema": {
+                "$ref": "#/definitions/Customer"
+              }
+            },
+            "404":{
+              "description": "Error Get all user!"
+            }
+          }
+        }
+      },
+      "/api/customer/:id": {
+        "get": {
+          "summary": "Get user by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Get user by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Get user by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get user by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Customer"
+              }
+            },
+            "404":{
+              "description": "Error Get user by id!"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update user by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Update user by id",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Update user by id",
+              "schema": {
+                "$ref": "#/definitions/Customer"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Update user by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Customer"
+              }
+            },
+            "404":{
+              "description": "Error Update user by id film!"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete user by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Delete user by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Delete user by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Delete user by id Success!"              
+            },
+            "404":{
+              "description": "Error Delete user by id!"
+            }
+          }
+        }
+      },
+      "/api/customer/auth/facebook": {
+        "get": {
+          "summary": "Load page login facebook",
+          "tags": [
+            "User"
+          ],
+          "description": "Load page login facebook",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Load page login facebook Success!",
+              "schema": {
+                "$ref": "http://localhost:1000/api/customer/auth/facebook"
+              }
+            },
+            "404":{
+              "description": "Load page login facebook user!"
+            }
+          }
+        }
+      },
+      "/api/customer/response": {
+        "get": {
+          "summary": "Response session",
+          "tags": [
+            "User"
+          ],
+          "description": "Response session",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Response session Success!",
+              "schema": {
+                "$ref": "http://localhost:1000/api/customer/auth/facebook"
+              }
+            },
+            "404":{
+              "description": "Error response session!"
+            }
+          }
+        }
+      },
+        "/api/customer/auth/google": {
+          "get": {
+            "summary": "Load page login google",
+            "tags": [
+              "User"
+            ],
+            "description": "Load page login google",
+            "parameters": [
+            ],
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "200": {
+                "description": "Load page login google Success!",
+                "schema": {
+                  "$ref": "http://localhost:1000/api/customer/auth/google"
+                }
+              },
+              "404":{
+                "description": "Load page login google error!"
+              }
+            }
+          }
+        },
+          "/api/customer/auth/logout": {
+            "get": {
+              "summary": "Logout user",
+              "tags": [
+                "User"
+              ],
+              "description": "Logout user",
+              "parameters": [
+              ],
+              "produces": [
+                "application/json"
+              ],
+              "responses": {
+                "200": {
+                  "description": "Logout user Success!",
+                  "schema": {
+                    "$ref": "http://localhost:1000/"
+                  }
+                },
+                "404":{
+                  "description": "Logout user error!"
+                }
+              }
+            }
+          },
+      "/api/film": {
+        "get": {
+          "summary": "Get all film",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all film",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all film Success!",
+              "schema": {
+                "$ref": "#/definitions/Film"
+              }
+            },
+            "404":{
+              "description": "Error Get all film!"
+            }
+          }
+        },
+        "post": {
+          "summary": "Create new film",
+          "tags": [
+            "User"
+          ],
+          "description": "Create new film",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Create new film",
+              "schema": {
+                "$ref": "#/definitions/Film"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Create new film Success!",
+              "schema": {
+                "$ref": "#/definitions/Film"
+              }
+            },
+            "404":{
+              "description": "Error Create new film!"
+            }
+          }
+        }
+      },
+      "/api/film/:id": {
+        "get": {
+          "summary": "Get film by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Get film by id",
+          "parameters": [
+            {
+              "name": "FilmId",
+              "in": "path",
+              "description": "Get film by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get film by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Film"
+              }
+            },
+            "404":{
+              "description": "Error Get film by id!"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update film by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Update film by id",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Update film by id",
+              "schema": {
+                "$ref": "#/definitions/Film"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Update by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Film"
+              }
+            },
+            "404":{
+              "description": "Error Update by id film!"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete film by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Delete film by id",
+          "parameters": [
+            {
+              "name": "FilmId",
+              "in": "path",
+              "description": "Delete film by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Delete film by id Success!"              
+            },
+            "404":{
+              "description": "Error Delete film by id!"
+            }
+          }
+        }
+      },
+
+      "/api/film/:id/getcomment": {
+        "get": {
+          "summary": "Get all comment film by id_film",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all comment film by id_film",
+          "parameters": [
+            {
+              "name": "film_id",
+              "in": "path",
+              "description": "Get list user by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+            "description": "Get all comment film by id_film Success!",
+             "schema":{
+               "type":"object",
+               "properties":{
+                "film_id": {"type":"string", "format":"ObjectID"},
+                "comment_id": {"type":"string","format":"ObjectID"},
+                "content": {"type":"string"},
+                "rates": {"type":"string"},
+                "user_id": {"type":"string","format":"ObjectID"},
+                "name": {"type":"string"}
+               }
+               
+             }
+            },
+            "404":{
+              "description": "Error Get all comment film by id_film!"
+            }
+          }
+        }
+      },
+      "/api/film/nowshowing": {
+        "get": {
+          "summary": "Get all film now showing",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all film now showing",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all film now showing Success!",
+              "schema": {
+                "type":"array",
+                "items": {
+                  "type":"object",
+                  "properties":{
+                    "_id":  {"type":"string", "format":"ObjectID"},
+                    "name": {"type":"string"},
+                    "long_time":{"type":"int"},
+                    "content": {"type":"string"},
+                    "imdb": {"type":"string"},
+                    "digitals": {"type":"string"},
+                    "url_avatar": {"type":"string"},
+                    "url_background": {"type":"string"},
+                    "theaters":{
+                      "type":"object",
+                      "properties":{
+                        "_id":  {"type":"string", "format":"ObjectID"},
+                        "name":  {"type":"string"},
+                        "address":  {"type":"string"},
+                        "film_schedule":{
+                            "type":"object",
+                            "properties":{
+                              "_id": {"type":"string", "format":"ObjectID"},
+                              "time_start": {"type":"string"," format":"date"},
+                              "time_end": {"type":"string", "format":"date"},
+                              "film_id": {"type":"string", "format":"ObjectID"},
+                              "theater_id": {"type":"string", "format":"ObjectID"},
+                              "room": {"type":"string"},
+                              "is_deleted": false,
+                              "created_at": {"type":"string"," format":"date"},
+                              "updated_at": {"type":"string"," format":"date"}
+                            }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404":{
+              "description": "Error Get all film now showing!"
+            }
+          }
+        }
+      },
+      "/api/film/commingsoon": {
+        "get": {
+          "summary": "Get all film comming soon",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all film comming soon",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all film comming soon Success!",
+              "schema": {
+                "type":"array",
+                "items": {
+                  "type":"object",
+                  "properties":{
+                    "_id":  {"type":"string", "format":"ObjectID"},
+                    "name": {"type":"string"},
+                    "long_time":{"type":"int"},
+                    "content": {"type":"string"},
+                    "imdb": {"type":"string"},
+                    "digitals": {"type":"string"},
+                    "url_avatar": {"type":"string"},
+                    "url_background": {"type":"string"},
+                    "theaters":{
+                      "type":"object",
+                      "properties":{
+                        "_id":  {"type":"string", "format":"ObjectID"},
+                        "name":  {"type":"string"},
+                        "address":  {"type":"string"},
+                        "film_schedule":{
+                            "type":"object",
+                            "properties":{
+                              "_id": {"type":"string", "format":"ObjectID"},
+                              "time_start": {"type":"string"," format":"date"},
+                              "time_end": {"type":"string", "format":"date"},
+                              "film_id": {"type":"string", "format":"ObjectID"},
+                              "theater_id": {"type":"string", "format":"ObjectID"},
+                              "room": {"type":"string"},
+                              "is_deleted": false,
+                              "created_at": {"type":"string"," format":"date"},
+                              "updated_at": {"type":"string"," format":"date"}
+                            }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404":{
+              "description": "Error Get all film comming soon!"
+            }
+          }
+        }
+
+      }
+      ,
+      "/api/film/detail": {
+        "get": {
+          "summary": "Get film detail",
+          "tags": [
+            "User"
+          ],
+          "description": "Get film detail",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get film detail Success!",
+              "schema": {
+                "$ref": "#/definitions/Film"
+              }
+            },
+            "404":{
+              "description": "Error Get film detail!"
+            }
+          }
+        }
+      },
+      "/api/film/:id/detail": {
+        "get": {
+          "summary": "Get film detail by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Get film detail by id",
+          "parameters": [
+            {
+              "name": "film_id",
+              "in": "path",
+              "description": "Get list user by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get film detail by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Film"
+              }
+            },
+            "404":{
+              "description": "Error Get film detail by id!"
+            }
+          }
+        }
+      },
+      "/api/film_comment/:id": {
+        "get": {
+          "summary": "Get film_comment by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Get film_comment by id",
+          "parameters": [
+            {
+              "name": "FilmId",
+              "in": "path",
+              "description": "Get film_comment by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get film_comment by id Success!",
+              "schema": {
+                "$ref": "#/definitions/FilmComment"
+              }
+            },
+            "404":{
+              "description": "Error Get film_comment by id!"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update film_comment by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Update film_comment by id",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Update film_comment by id",
+              "schema": {
+                "$ref": "#/definitions/FilmComment"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Update film_comment by id Success!",
+              "schema": {
+                "$ref": "#/definitions/FilmComment"
+              }
+            },
+            "404":{
+              "description": "Error Update film_comment by id film!"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete film_comment by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Delete film_comment by id",
+          "parameters": [
+            {
+              "name": "FilmId",
+              "in": "path",
+              "description": "Delete film_comment by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Delete film_comment by id Success!"              
+            },
+            "404":{
+              "description": "Error Delete film_comment by id!"
+            }
+          }
+        }
+      },
+      "/api/film_schedule": {
+        "get": {
+          "summary": "Get all film_schedule",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all film_schedule",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all film_schedule Success!",
+              "schema": {
+                "$ref": "#/definitions/FilmSchedules"
+              }
+            },
+            "404":{
+              "description": "Error Get all film_schedule!"
+            }
+          }
+        },
+        "post": {
+          "summary": "Create new film_schedule",
+          "tags": [
+            "User"
+          ],
+          "description": "Create new film_schedule",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Create new film_schedule",
+              "schema": {
+                "$ref": "#/definitions/FilmSchedules"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Create new film_schedule Success!",
+              "schema": {
+                "$ref": "#/definitions/FilmSchedules"
+              }
+            },
+            "404":{
+              "description": "Error Create new film_schedule!"
+            }
+          }
+        }
+      },
+      "/api/film_schedule/detail/:id": {
+        "get": {
+          "summary": "Get film_schedule by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Get film_schedule by id",
+          "parameters": [
+            {
+              "name": "FilmId",
+              "in": "path",
+              "description": "Get film_schedule by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get film_schedule by id Success!",
+              "schema": {
+                "$ref": "#/definitions/FilmSchedules"
+              }
+            },
+            "404":{
+              "description": "Error Get film_schedule by id!"
+            }
+          }
+        }
+      },
+      "/api/film_schedule/:id": {
+        "put": {
+          "summary": "Update film_schedule by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Update film_schedule by id",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Update film_schedule by id",
+              "schema": {
+                "$ref": "#/definitions/FilmSchedules"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Update film_schedule by id Success!",
+              "schema": {
+                "$ref": "#/definitions/FilmSchedules"
+              }
+            },
+            "404":{
+              "description": "Error Update film_schedule by id film!"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete film_schedule by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Delete film_schedule by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Delete film_schedule by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Delete film_schedule by id Success!"              
+            },
+            "404":{
+              "description": "Error Delete film_schedule by id!"
+            }
+          }
+        }
+      },
+      "/api/film_schedule/getfilmtoday": {
+        "get": {
+          "summary": "Get all film today",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all film today",
+          "parameters": [
+            {
+              "name": "film_id",
+              "in": "path",
+              "description": "Get list user by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all film today!",
+              "schema": {
+                "type":"object",
+                "properties":{
+                  "_id":{"type":"object"},
+                  "films":{"type":"object"}
+                }
+              }
+            },
+            "404":{
+              "description": "Error Get all film today!"
+            }
+          }
+        }
+      },
+      "/api/film_schedule/getfilm7day/:id": {
+        "get": {
+          "summary": "Get all film next 7 day",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all film next 7 day",
+          "parameters": [
+            {
+              "name": "film_id",
+              "in": "path",
+              "description": "Get list user by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all film next 7 day Success!",
+              "schema": {
+                "$ref": "#/definitions/FilmSchedules"
+              }
+            },
+            "404":{
+              "description": "Error Get all film next 7 day!"
+            }
+          }
+        }
+      },
+      "/api/category": {
+        "get": {
+          "summary": "Get all category",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all category",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all category Success!",
+              "schema": {
+                "$ref": "#/definitions/Categories"
+              }
+            },
+            "404":{
+              "description": "Error Get all category!"
+            }
+          }
+        },
+        "post": {
+          "summary": "Create new category",
+          "tags": [
+            "User"
+          ],
+          "description": "Create new category",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Create new category",
+              "schema": {
+                "$ref": "#/definitions/Categories"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Create new category Success!",
+              "schema": {
+                "$ref": "#/definitions/Categories"
+              }
+            },
+            "404":{
+              "description": "Error Create new category!"
+            }
+          }
+        }
+      },
+      "/api/category/:id": {
+        "get": {
+          "summary": "Get category by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Get category by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Get category by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get category by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Categories"
+              }
+            },
+            "404":{
+              "description": "Error Get category by id!"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update category by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Update category by id",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Update category by id",
+              "schema": {
+                "$ref": "#/definitions/Categories"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Update category by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Categories"
+              }
+            },
+            "404":{
+              "description": "Error Update category by id film!"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete category by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Delete category by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Delete category by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Delete category by id Success!"              
+            },
+            "404":{
+              "description": "Error Delete category by id!"
+            }
+          }
+        }
+      },
+      "/api/event": {
+        "get": {
+          "summary": "Get all event",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all event",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all event Success!",
+              "schema": {
+                "$ref": "#/definitions/Event"
+              }
+            },
+            "404":{
+              "description": "Error Get all event!"
+            }
+          }
+        },
+        "post": {
+          "summary": "Create new event",
+          "tags": [
+            "User"
+          ],
+          "description": "Create new event",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Create new event",
+              "schema": {
+                "$ref": "#/definitions/Event"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Create new event Success!",
+              "schema": {
+                "$ref": "#/definitions/Event"
+              }
+            },
+            "404":{
+              "description": "Error Create new event!"
+            }
+          }
+        }
+      },
+      "/api/event/:id": {
+        "get": {
+          "summary": "Get event by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Get event by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Get event by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get event by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Event"
+              }
+            },
+            "404":{
+              "description": "Error Get event by id!"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update event by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Update event by id",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Update event by id",
+              "schema": {
+                "$ref": "#/definitions/Event"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Update event by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Event"
+              }
+            },
+            "404":{
+              "description": "Error Update event by id film!"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete event by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Delete event by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Delete event by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Delete event by id Success!"              
+            },
+            "404":{
+              "description": "Error Delete event by id!"
+            }
+          }
+        }
+      },
+      "/api/event_info": {
+        "get": {
+          "summary": "Get all event_info",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all event_info",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all event_info Success!",
+              "schema": {
+                "$ref": "#/definitions/Event_info"
+              }
+            },
+            "404":{
+              "description": "Error Get all event_info!"
+            }
+          }
+        },
+        "post": {
+          "summary": "Create new event_info",
+          "tags": [
+            "User"
+          ],
+          "description": "Create new event_info",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Create new event_info",
+              "schema": {
+                "$ref": "#/definitions/Event_info"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Create new event_info Success!",
+              "schema": {
+                "$ref": "#/definitions/Event_info"
+              }
+            },
+            "404":{
+              "description": "Error Create new event_info!"
+            }
+          }
+        }
+      },
+      "/api/event_info/:id": {
+        "get": {
+          "summary": "Get event_info by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Get event_info by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Get event_info by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get event_info by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Event_info"
+              }
+            },
+            "404":{
+              "description": "Error Get event_info by id!"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update event_info by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Update event_info by id",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Update event_info by id",
+              "schema": {
+                "$ref": "#/definitions/Event_info"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Update event_info by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Event_info"
+              }
+            },
+            "404":{
+              "description": "Error Update event_info by id film!"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete event_info by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Delete event_info by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Delete event_info by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Delete event_info by id Success!"              
+            },
+            "404":{
+              "description": "Error Delete event_info by id!"
+            }
+          }
+        }
+      },
+      "/api/news": {
+        "get": {
+          "summary": "Get all news",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all news",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all news Success!",
+              "schema": {
+                "$ref": "#/definitions/News"
+              }
+            },
+            "404":{
+              "description": "Error Get all news!"
+            }
+          }
+        },
+        "post": {
+          "summary": "Create new news",
+          "tags": [
+            "User"
+          ],
+          "description": "Create new news",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Create new news",
+              "schema": {
+                "$ref": "#/definitions/News"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Create new news Success!",
+              "schema": {
+                "$ref": "#/definitions/News"
+              }
+            },
+            "404":{
+              "description": "Error Create new news!"
+            }
+          }
+        }
+      },
+      "/api/news/:id": {
+        "get": {
+          "summary": "Get news by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Get news by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Get news by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get news by id Success!",
+              "schema": {
+                "$ref": "#/definitions/News"
+              }
+            },
+            "404":{
+              "description": "Error Get news by id!"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update news by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Update news by id",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Update news by id",
+              "schema": {
+                "$ref": "#/definitions/News"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Update news by id Success!",
+              "schema": {
+                "$ref": "#/definitions/News"
+              }
+            },
+            "404":{
+              "description": "Error Update news by id film!"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete news by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Delete news by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Delete news by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Delete news by id Success!"              
+            },
+            "404":{
+              "description": "Error Delete news by id!"
+            }
+          }
+        }
+      },
+      "/api/notification": {
+        "get": {
+          "summary": "Get all notification",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all notification",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all notification Success!",
+              "schema": {
+                "$ref": "#/definitions/Notification"
+              }
+            },
+            "404":{
+              "description": "Error Get all notification!"
+            }
+          }
+        },
+        "post": {
+          "summary": "Create new notification",
+          "tags": [
+            "User"
+          ],
+          "description": "Create new notification",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Create new notification",
+              "schema": {
+                "$ref": "#/definitions/Notification"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Create new notification Success!",
+              "schema": {
+                "$ref": "#/definitions/Notification"
+              }
+            },
+            "404":{
+              "description": "Error Create new notification!"
+            }
+          }
+        }
+      },
+      "/api/notification/:id": {
+        "get": {
+          "summary": "Get notification by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Get notification by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Get notification by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get notification by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Notification"
+              }
+            },
+            "404":{
+              "description": "Error Get notification by id!"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update notification by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Update notification by id",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Update notification by id",
+              "schema": {
+                "$ref": "#/definitions/Notification"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Update notification by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Notification"
+              }
+            },
+            "404":{
+              "description": "Error Update notification by id film!"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete notification by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Delete notification by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Delete notification by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Delete notification by id Success!"              
+            },
+            "404":{
+              "description": "Error Delete notification by id!"
+            }
+          }
+        }
+      },
+      "/api/ticket/ticket/:id": {
+        "get": {
+          "summary": "Get all seat_ids",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all seat_ids",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all seat_ids Success!",
+              "schema": {
+                "type":"array",
+                "items":["string","string"],
+                "example":["A10","B9"]
+              }
+            },
+            "404":{
+              "description": "Error Get all seat_ids!"
+            }
+          }
+        }
+      },
+      "/api/ticket": {
+        "get": {
+          "summary": "Get all ticket",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all ticket",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all ticket Success!",
+              "schema": {
+                "$ref": "#/definitions/Ticket"
+              }
+            },
+            "404":{
+              "description": "Error Get all ticket!"
+            }
+          }
+        },
+        "post": {
+          "summary": "Create new ticket",
+          "tags": [
+            "User"
+          ],
+          "description": "Create new ticket",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Create new ticket",
+              "schema": {
+                "$ref": "#/definitions/Ticket"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Create new ticket Success!",
+              "schema": {
+                "$ref": "#/definitions/Ticket"
+              }
+            },
+            "404":{
+              "description": "Error Create new ticket!"
+            }
+          }
+        }
+      },
+      "/api/ticket/:id": {
+        "get": {
+          "summary": "Get ticket by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Get ticket by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Get ticket by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get ticket by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Ticket"
+              }
+            },
+            "404":{
+              "description": "Error Get ticket by id!"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update ticket by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Update ticket by id",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Update ticket by id",
+              "schema": {
+                "$ref": "#/definitions/Ticket"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Update ticket by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Ticket"
+              }
+            },
+            "404":{
+              "description": "Error Update ticket by id film!"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete ticket by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Delete ticket by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Delete ticket by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Delete ticket by id Success!"              
+            },
+            "404":{
+              "description": "Error Delete ticket by id!"
+            }
+          }
+        }
+      },
+      "/api/ticket_queue": {
+        "get": {
+          "summary": "Get all ticket_queue",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all ticket_queue",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all ticket_queue Success!",
+              "schema": {
+                "$ref": "#/definitions/Ticket_queue"
+              }
+            },
+            "404":{
+              "description": "Error Get all ticket_queue!"
+            }
+          }
+        },
+        "post": {
+          "summary": "Create new ticket_queue",
+          "tags": [
+            "User"
+          ],
+          "description": "Create new ticket_queue",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Create new ticket_queue",
+              "schema": {
+                "$ref": "#/definitions/Ticket_queue"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Create new ticket_queue Success!",
+              "schema": {
+                "$ref": "#/definitions/Ticket_queue"
+              }
+            },
+            "404":{
+              "description": "Error Create new ticket_queue!"
+            }
+          }
+        }
+      },
+      "/api/ticket_queue/:id": {
+        "get": {
+          "summary": "Get ticket_queue by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Get ticket_queue by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Get ticket_queue by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get ticket_queue by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Ticket_queue"
+              }
+            },
+            "404":{
+              "description": "Error Get ticket_queue by id!"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update ticket_queue by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Update ticket_queue by id",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Update ticket_queue by id",
+              "schema": {
+                "$ref": "#/definitions/Ticket_queue"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Update ticket_queue by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Ticket_queue"
+              }
+            },
+            "404":{
+              "description": "Error Update ticket_queue by id film!"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete ticket_queue by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Delete ticket_queue by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Delete ticket_queue by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Delete ticket_queue by id Success!"              
+            },
+            "404":{
+              "description": "Error Delete ticket_queue by id!"
+            }
+          }
+        }
+      },
+      "/api/type_seat": {
+        "get": {
+          "summary": "Get all type_seat",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all type_seat",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all type_seat Success!",
+              "schema": {
+                "$ref": "#/definitions/Type_seat"
+              }
+            },
+            "404":{
+              "description": "Error Get all type_seat!"
+            }
+          }
+        },
+        "post": {
+          "summary": "Create new type_seat",
+          "tags": [
+            "User"
+          ],
+          "description": "Create new type_seat",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Create new type_seat",
+              "schema": {
+                "$ref": "#/definitions/Type_seat"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Create new type_seat Success!",
+              "schema": {
+                "$ref": "#/definitions/Type_seat"
+              }
+            },
+            "404":{
+              "description": "Error Create new type_seat!"
+            }
+          }
+        }
+      },
+      "/api/type_seat/:id": {
+        "get": {
+          "summary": "Get type_seat by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Get type_seat by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Get type_seat by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get type_seat by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Type_seat"
+              }
+            },
+            "404":{
+              "description": "Error Get type_seat by id!"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update type_seat by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Update type_seat by id",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Update type_seat by id",
+              "schema": {
+                "$ref": "#/definitions/Type_seat"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Update type_seat by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Type_seat"
+              }
+            },
+            "404":{
+              "description": "Error Update type_seat by id film!"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete type_seat by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Delete type_seat by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Delete type_seat by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Delete type_seat by id Success!"              
+            },
+            "404":{
+              "description": "Error Delete type_seat by id!"
+            }
+          }
+        }
+      },
+      "/api/theater/detail/:id": {
+        "get": {
+          "summary": "Get all theaters by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all theaters by id",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all theaters by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Theater"
+              }
+            },
+            "404":{
+              "description": "Error Get all theaters by id!"
+            }
+          }
+        }
+      },
+      "/api/theater/getfilmtoday": {
+        "get": {
+          "summary": "Get all film today from theater",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all film today from theater",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all film today from theater Success!",
+              "schema": {
+                "type":"array",
+                "items":{
+                  "type":"object",
+                  "properties":{
+                    "_id": {"type":"string","format":"ObjectId"},
+                    "name": {"type":"string"},
+                    "address": {"type":"string"},
+                    "url_image": {"type":"string"},
+                    "films": {
+                        "type":"object",
+                        "properties":{
+                          "_id": "5ff147f263ccaf2a14e45106",
+                        "name":{"type":"string"},
+                        "trailer": {"type":"string"},
+                        "countries": {"type":"string"},
+                        "long_time": {"type":"string"},
+                        "start_date":{"type":"string", "format":"date"},
+                        "rates": {"type":"string"},
+                        "rate_count": {"type":"string"},
+                        "url_avatar":{"type":"string"},
+                        "url_background": {"type":"string"},
+                        "is_blockbuster":{"type":"string"},
+                        "film_schedules": 
+                            {
+                            "type":"object",
+                            "properties":{
+                            "_id": {"type":"string","format":"ObjectId"},
+                            "time_start": {"type":"string", "format":"date"},
+                            "time_end": {"type":"string", "format":"date"},
+                            "film_id": {"type":"string","format":"ObjectId"},
+                            "theater_id": {"type":"string","format":"ObjectId"},
+                            "room":{"type":"string"}
+                            }
+                            }
+                          } 
+                        }
+                        
+                  }
+                }
+              }
+            },
+            "404":{
+              "description": "Error Get all film today from theater!"
+            }
+          }
+        }
+      },
+      "/api/theater/:id/detail": {
+        "get": {
+          "summary": "Get all film 7 day by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all film 7 day by id",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all film 7 day by id Success!",
+              "schema": {
+                "type":"array",
+                "items":{
+                  "type":"object",
+                  "properties":{
+                    "_id": {"type":"string","format":"ObjectId"},
+                    "name": {"type":"string"},
+                    "address": {"type":"string"},
+                    "url_image": {"type":"string"},
+                    "films": {
+                        "type":"object",
+                        "properties":{
+                          "_id": "5ff147f263ccaf2a14e45106",
+                        "name":{"type":"string"},
+                        "trailer": {"type":"string"},
+                        "countries": {"type":"string"},
+                        "long_time": {"type":"string"},
+                        "start_date":{"type":"string", "format":"date"},
+                        "rates": {"type":"string"},
+                        "rate_count": {"type":"string"},
+                        "url_avatar":{"type":"string"},
+                        "url_background": {"type":"string"},
+                        "is_blockbuster":{"type":"string"},
+                        "film_schedules": 
+                            {
+                            "type":"object",
+                            "properties":{
+                            "_id": {"type":"string","format":"ObjectId"},
+                            "time_start": {"type":"string", "format":"date"},
+                            "time_end": {"type":"string", "format":"date"},
+                            "film_id": {"type":"string","format":"ObjectId"},
+                            "theater_id": {"type":"string","format":"ObjectId"},
+                            "room":{"type":"string"}
+                            }
+                            }
+                          } 
+                        }
+                        
+                  }
+                }
+              }
+            },
+            "404":{
+              "description": "Error Get all film 7 day by id!"
+            }
+          }
+        }
+      },
+      "/api/theater": {
+        "get": {
+          "summary": "Get all theaters",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all theaters",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all theaters Success!",
+              "schema": {
+                "$ref": "#/definitions/Theater"
+              }
+            },
+            "404":{
+              "description": "Error Get all theaters!"
+            }
+          }
+        },
+        "post": {
+          "summary": "Create new theaters",
+          "tags": [
+            "User"
+          ],
+          "description": "Create new theaters",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Create new theaters",
+              "schema": {
+                "$ref": "#/definitions/Theater"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Create new theaters Success!",
+              "schema": {
+                "$ref": "#/definitions/Theater"
+              }
+            },
+            "404":{
+              "description": "Error Create new theaters!"
+            }
+          }
+        }
+      },
+      "/api/theaters/:id": {
+        "get": {
+          "summary": "Get theaters by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Get theaters by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Get theaters by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get theaters by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Theater"
+              }
+            },
+            "404":{
+              "description": "Error Get theaters by id!"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update theaters by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Update theaters by id",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Update theaters by id",
+              "schema": {
+                "$ref": "#/definitions/Theater"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Update theaters by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Theater"
+              }
+            },
+            "404":{
+              "description": "Error Update theaters by id film!"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete theaters by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Delete theaters by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Delete theaters by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Delete theaters by id Success!"              
+            },
+            "404":{
+              "description": "Error Delete theaters by id!"
+            }
+          }
+        }
+      },
+      "/api/theater_room": {
+        "get": {
+          "summary": "Get all theater_room",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all theater_room",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all theater_room Success!",
+              "schema": {
+                "$ref": "#/definitions/TheaterRoom"
+              }
+            },
+            "404":{
+              "description": "Error Get all theater_room!"
+            }
+          }
+        },
+        "post": {
+          "summary": "Create new theater_room",
+          "tags": [
+            "User"
+          ],
+          "description": "Create new theater_room",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Create new theater_room",
+              "schema": {
+                "$ref": "#/definitions/TheaterRoom"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Create new theaters Success!",
+              "schema": {
+                "$ref": "#/definitions/TheaterRoom"
+              }
+            },
+            "404":{
+              "description": "Error Create new theater_room!"
+            }
+          }
+        }
+      },
+      "/api/theater_room/:id": {
+        "get": {
+          "summary": "Get theater_room by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Get theater_room by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Get theater_room by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get theater_room by id Success!",
+              "schema": {
+                "$ref": "#/definitions/TheaterRoom"
+              }
+            },
+            "404":{
+              "description": "Error Get theater_room by id!"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update theater_room by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Update theater_room by id",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Update theater_room by id",
+              "schema": {
+                "$ref": "#/definitions/TheaterRoom"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Update theater_room by id Success!",
+              "schema": {
+                "$ref": "#/definitions/TheaterRoom"
+              }
+            },
+            "404":{
+              "description": "Error Update theater_room by id film!"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete theater_room by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Delete theater_room by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Delete theater_room by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Delete theater_room by id Success!"              
+            },
+            "404":{
+              "description": "Error Delete theater_room by id!"
+            }
+          }
+        }
+      },
+      "/api/permission": {
+        "get": {
+          "summary": "Get all permission",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all permission",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all permission Success!",
+              "schema": {
+                "$ref": "#/definitions/User_Permission"
+              }
+            },
+            "404":{
+              "description": "Error Get all permission!"
+            }
+          }
+        },
+        "post": {
+          "summary": "Create new permission",
+          "tags": [
+            "User"
+          ],
+          "description": "Create new permission",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Create new permission",
+              "schema": {
+                "$ref": "#/definitions/User_Permission"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Create new permission Success!",
+              "schema": {
+                "$ref": "#/definitions/User_Permission"
+              }
+            },
+            "404":{
+              "description": "Error Create new permission!"
+            }
+          }
+        }
+      },
+      "/api/permission/:id": {
+        "get": {
+          "summary": "Get permission by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Get permission by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Get permission by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get permission by id Success!",
+              "schema": {
+                "$ref": "#/definitions/User_Permission"
+              }
+            },
+            "404":{
+              "description": "Error Get permission by id!"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update permission by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Update permission by id",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Update permission by id",
+              "schema": {
+                "$ref": "#/definitions/User_Permission"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Update permission by id Success!",
+              "schema": {
+                "$ref": "#/definitions/User_Permission"
+              }
+            },
+            "404":{
+              "description": "Error Update permission by id film!"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete permission by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Delete permission by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Delete permission by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Delete permission by id Success!"              
+            },
+            "404":{
+              "description": "Error Delete permission by id!"
+            }
+          }
+        }
+      },
+      "/api/user_permission": {
+        "get": {
+          "summary": "Get all user_permission",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all user_permission",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all user_permission Success!",
+              "schema": {
+                "$ref": "#/definitions/User_Permission"
+              }
+            },
+            "404":{
+              "description": "Error Get all user_permission!"
+            }
+          }
+        },
+        "post": {
+          "summary": "Create new user_permission",
+          "tags": [
+            "User"
+          ],
+          "description": "Create new user_permission",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Create new user_permission",
+              "schema": {
+                "$ref": "#/definitions/User_Permission"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Create new user_permission Success!",
+              "schema": {
+                "$ref": "#/definitions/User_Permission"
+              }
+            },
+            "404":{
+              "description": "Error Create new user_permission!"
+            }
+          }
+        }
+      },
+      "/api/user_permission/:id": {
+        "get": {
+          "summary": "Get user_permission by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Get user_permission by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Get user_permission by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get user_permission by id Success!",
+              "schema": {
+                "$ref": "#/definitions/User_Permission"
+              }
+            },
+            "404":{
+              "description": "Error Get user_permission by id!"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update user_permission by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Update user_permission by id",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Update user_permission by id",
+              "schema": {
+                "$ref": "#/definitions/User_Permission"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Update user_permission by id Success!",
+              "schema": {
+                "$ref": "#/definitions/User_Permission"
+              }
+            },
+            "404":{
+              "description": "Error Update user_permission by id film!"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete user_permission by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Delete user_permission by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Delete user_permission by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Delete user_permission by id Success!"              
+            },
+            "404":{
+              "description": "Error Delete user_permission by id!"
+            }
+          }
+        }
+      },
+      "/api/voucher": {
+        "get": {
+          "summary": "Get all voucher",
+          "tags": [
+            "User"
+          ],
+          "description": "Get all voucher",
+          "parameters": [
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get all voucher Success!",
+              "schema": {
+                "$ref": "#/definitions/Voucher"
+              }
+            },
+            "404":{
+              "description": "Error Get all voucher!"
+            }
+          }
+        },
+        "post": {
+          "summary": "Create new voucher",
+          "tags": [
+            "User"
+          ],
+          "description": "Create new voucher",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Create new voucher",
+              "schema": {
+                "$ref": "#/definitions/Voucher"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Create new voucher Success!",
+              "schema": {
+                "$ref": "#/definitions/Voucher"
+              }
+            },
+            "404":{
+              "description": "Error Create new voucher!"
+            }
+          }
+        }
+      },
+      "/api/voucher/:id": {
+        "get": {
+          "summary": "Get voucher by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Get voucher by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Get voucher by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Get voucher by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Voucher"
+              }
+            },
+            "404":{
+              "description": "Error Get voucher by id!"
+            }
+          }
+        },
+        "put": {
+          "summary": "Update voucher by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Update voucher by id",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "description": "Update voucher by id",
+              "schema": {
+                "$ref": "#/definitions/Voucher"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Update voucher by id Success!",
+              "schema": {
+                "$ref": "#/definitions/Voucher"
+              }
+            },
+            "404":{
+              "description": "Error Update voucher by id film!"
+            }
+          }
+        },
+        "delete": {
+          "summary": "Delete voucher by id",
+          "tags": [
+            "User"
+          ],
+          "description": "Delete voucher by id",
+          "parameters": [
+            {
+              "name": "Id",
+              "in": "path",
+              "description": "Delete voucher by id",
+              "type": "string"
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Delete voucher by id Success!"              
+            },
+            "404":{
+              "description": "Error Delete voucher by id!"
+            }
+          }
+        }
+      }     
+    },
+
+    "definitions": {
+      "Admin":{
+        "properties":{
+          "name":{"type":"string"},
+          "phone":{"type":"string"},
+          "date_of_birth":{"type":"string"," format":"date"},
+          "email":{"type":"string"},
+          "password": {"type":"string"},
+          "genre":{"type":"string"},
+          "avatar":{"type":"string"},
+          "address":{"type":"string"},
+          "permission_id":{"type":"string"},
+          "is_deleted":{"type":"boolean"},
+          "created_at":{"type":"string"," format":"date"},
+          "updated_at":{"type":"string"," format":"date"}       
+        }
+      },
+      "Categories":{
+        "properties":{
+            "name":{"type":"string"},
+            "is_deleted":{"type":"boolean"},
+            "created_at":{"type":"string"," format":"date"},
+            "updated_at":{"type":"string"," format":"date"}   
+        }
+      },
+      "Customer":{
+        "properties":{
+          "name":{"type":"string"},
+          "phone":{"type":"string"},
+          "date_of_birth":{"type":"string"," format":"date"},
+          "email":{"type":"string"},
+          "account_type": {"type":"string"},
+          "facebook_id": {"type":"string"},
+          "google_id": {"type":"string"},
+          "genre":{"type":"string"},
+          "avatar":{"type":"string"},
+          "address":{"type":"string"},
+          "is_deleted":{"type":"boolean"},
+          "created_at":{"type":"string"," format":"date"},
+          "updated_at":{"type":"string"," format":"date"}       
+        }
+      },
+      "Event_info":{
+        "properties":{
+          "name":{"type":"string"},
+          "content":{"type":"string"},
+          "is_deleted":{"type":"boolean"},
+          "created_at":{"type":"string"," format":"date"},
+          "updated_at":{"type":"string"," format":"date"}
+        }
+      },
+      "Event":{
+        "properties":{
+          "name":{"type":"string"},
+          "event_info_id":{"type":"string"},
+          "is_deleted":{"type":"boolean"},
+          "created_at":{"type":"string"," format":"date"},
+          "updated_at":{"type":"string"," format":"date"}
+        }
+      },
+      "FilmCategory":{
+        "properties":{
+          "film_id":{"type":"string"},
+          "category_id":{"type":"string"},
+          "is_deleted":{"type":"boolean"},
+          "created_at":{"type":"string"," format":"date"},
+          "updated_at":{"type":"string"," format":"date"}
+        }
+      },
+      "FilmComment":{
+        "properties":{
+          "film_id":{"type":"object"},
+          "customer_id":{"type":"string"},
+          "content":{"type":"string"},
+          "rate":{"type":"Number"},
+          "is_deleted":{"type":"boolean"},
+          "created_at":{"type":"string"," format":"date"},
+          "updated_at":{"type":"string"," format":"date"}
+        }
+      },
+      "FilmSchedules":{
+        "properties":{
+          "film_id":{"type":"object"},
+          "time_start":{"type":"string"," format":"date"},
+          "time_end":{"type":"string"," format":"date"},
+          "theater_id":{"type":"string"},
+          "is_deleted":{"type":"boolean"},
+          "created_at":{"type":"string"," format":"date"},
+          "updated_at":{"type":"string"," format":"date"}
+        }
+      },
+      "Film":{
+        "properties":{
+          "name":{"type":"string"},
+          "content":{"type":"string"},
+          "countries":{"type":"string"},
+          "long_time":{"type":"string"},
+          "start_date":{"type":"string"," format":"date"},
+          "directors":{"type":"string"},
+          "actors":{"type":"string"},
+          "digitals":{"type":"string"},
+          "is_deleted":{"type":"boolean"},
+          "updated_at":{"type":"string"," format":"date"}
+        }
+      },
+
+      "News":{
+        "properties":{
+          "title":{"type":"string"},
+          "content":{"type":"string"},
+          "hastag":{"type":"Array"},
+          "public_date":{"type":"string"," format":"date"},
+          "film_id":{"type":"string"},
+          "is_deleted":{"type":"boolean"},
+          "created_at":{"type":"string"," format":"date"},
+          "updated_at":{"type":"string"," format":"date"}
+        }
+      },
+      "Notification":{
+        "properties":{
+          "content":{"type":"string"},
+          "type":{"type":"string"},
+          "is_deleted":{"type":"boolean"},
+          "created_at":{"type":"string"," format":"date"},
+          "updated_at":{"type":"string"," format":"date"}
+        }
+      },
+      "Permission":{
+        "properties":{
+          "name":{"type":"string"},
+          "content":{"type":"string"},
+          "is_deleted":{"type":"boolean"},
+          "created_at":{"type":"string"," format":"date"},
+          "updated_at":{"type":"string"," format":"date"}
+        }
+      },
+      "TheaterRoom":{
+        "properties":{
+          "theater_id":{"type":"string"},
+          "name":{"type":"string"},
+          "count_of_seat":{"type":"Number"},
+          "seat_ids":{"type":"Array"},
+          "type_room":{"type":"string"},
+          "is_deleted":{"type":"boolean"},
+          "created_at":{"type":"string"," format":"date"},
+          "updated_at":{"type":"string"," format":"date"}
+        }
+      },
+      "Theater":{
+        "properties":{
+          "name":{"type":"string"},
+          "address":{"type":"string"},
+          "url_image":{"type":"string"},
+          "comment":{"type":"string"},
+          "is_deleted":{"type":"boolean"},
+          "created_at":{"type":"string"," format":"date"},
+          "updated_at":{"type":"string"," format":"date"}
+        }
+      },
+      "Ticket_queue":{
+        "properties":{
+          "room_id":{"type":"string"},
+          "seat_detail_id":{"type":"string"},
+          "is_deleted":{"type":"boolean"},
+          "created_at":{"type":"string"," format":"date"},
+          "updated_at":{"type":"string"," format":"date"}
+        }
+      },
+      "Ticket":{
+        "properties":{
+          "customer_id":{"type":"string"},
+          "film_id":{"type":"string"},
+          "count":{"type":"Number"},
+          "voucher_id":{"type":"string"},
+          "seat":{"type":"Array"},
+          "booking_time":{"type":"string"," format":"date"},
+          "cost":{"type":"Number"},
+          "is_deleted":{"type":"boolean"},
+          "created_at":{"type":"string"," format":"date"},
+          "updated_at":{"type":"string"," format":"date"}
+        }
+      },
+      "Type_seat":{
+        "properties":{
+          "room_id":{"type":"string"},
+          "seats":{"type":"Array"},
+          "column":{"type":"Number"},
+          "rows":{"type":"Number"},
+          "is_deleted":{"type":"boolean"},
+          "created_at":{"type":"string"," format":"date"},
+          "updated_at":{"type":"string"," format":"date"}
+        }
+      },
+      "Voucher":{
+        "properties":{
+          "code":{"type":"string"},
+          "event_id":{"type":"string"},
+          "is_deleted":{"type":"boolean"},
+          "created_at":{"type":"string"," format":"date"},
+          "updated_at":{"type":"string"," format":"date"}
+        }
+      },
+      "User": {
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "User_Permission":{
+          "properties":{
+            "user_id": {"type":"object"},
+            "permission_id": {"type":"string"},
+            "is_deleted": {"type":"boolean"},
+            "created_at": {"type":"string"," format":"date"},
+            "updated_at":{"type": "datetime"}
+          }
+      }
+    }
+  }

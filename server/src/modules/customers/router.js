@@ -86,10 +86,17 @@ router.get('/list/:id', verifyUser.requireGetPerson, (req, res, next) => {
     .catch((err) => next(err));
 });
 
+router.post('/', (req, res, next) => {
+  let params = {...req.body};
+  handler
+    .postCreate(params)
+    .then((val) => res.json(val))
+    .catch((err) => next(err));
+});
+
 router.put('/:id', (req, res, next) => {
   let id = req.params.id;
   let params = {...req.body};
-  console.log('params: ', params);
   handler
     .putUpdate(id, params)
     .then((val) => res.json(val))

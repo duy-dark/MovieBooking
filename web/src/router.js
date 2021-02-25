@@ -4,21 +4,20 @@ import Home from "./views/customers/Home";
 // import MovieDetail from "./views/customers/film/Film.js";
 import MovieDetail from "./views/customers/FilmDetail.js";
 import Booking from "./views/customers/Booking.js";
-
+import New from "./views/customers/New.js"
 const routes = [
   {
     path: "/",
     exact: true,
     component: () => <Home />,
   },
-
   {
     path: "/login",
     exact: true,
     component: () => <Login />,
   },
   {
-    path: "/movie/detail",
+    path: "/:id/detail",
     exact: true,
     component: () => <MovieDetail />,
   },
@@ -26,6 +25,11 @@ const routes = [
     path: "/:id/booking",
     exact: true,
     component: () => <Booking />,
+  },
+  {
+    path: "/new",
+    exact: true,
+    component: () => <New />
   }
 ];
 

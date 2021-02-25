@@ -23,7 +23,7 @@ class App extends Component {
       <Switch>
         { showRouteComponent(routes) }
       </Switch>
-      {/* <Footer/> */}
+      {this.props.footer && <Footer/>}
     </Router>
   )
   }

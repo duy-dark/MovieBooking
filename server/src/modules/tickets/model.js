@@ -12,6 +12,7 @@ let schema = new mongoose.Schema(
     phone_number: String,
     payment: String,
     seat_ids: [String],
+    categories: [String],
     is_deleted: Boolean,
     created_at: Date,
     updated_at: Date
@@ -30,6 +31,31 @@ module.exports = {
   },
   updateByLambda: async function (lambda) {
     return await Collection.updateOne(lambda.conditions, lambda.params);
+  },
+  getTicket: async function (lambda) {
+    //return await Collection.find();
+    return await Collection.aggregate([
+      {
+        $match: {
+          film_schedule_id: lambda
+        }
+      },
+      {
+        $unwind: {
+          path: '$seat_ids',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $group: {
+          _id: '$seat_ids',
+          seats: {
+            $first: '$seat_ids'
+          }
+        }
+      },
+      {$unset: ['_id']}
+    ]);
   },
   getDetail: async function (lambda) {
     return await Collection.aggregate([

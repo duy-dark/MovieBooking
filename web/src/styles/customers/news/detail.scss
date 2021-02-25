@@ -70,6 +70,63 @@
     .title {
       position: relative;
       margin-top: 9%;
+      p {
+        font-size: 48px;
+        text-align: center;
+        font-weight: bold;
+      }
+    }
+    .count {
+      margin-top: 3%;
+      display: flex;
+      justify-content: center;
+      .wrapIcon {
+        margin-right: 15px;
+        cursor: pointer;
+        .icon {
+          margin-right: 10px;
+          width: 16px;
+          height: auto;
+        }
+      }
+    }
+    .content {
+      margin-top: 40px;
+      font-size: 16px;
+    }
+    .line {
+      margin-top: 2%;
+      margin-bottom: 20px;
+    }
+    .detailReviewer {
+      max-width: 810px;
+      margin: auto;
+      position: relative;
+      .imageReviewer {
+        height: 36px;
+        width: 36px;
+        border-radius: 25px;
+        position: absolute;
+        top: 20%;
+        left: 2%;
+      }
+      .inputReviewer {
+        height: 60px;
+        width: 100%;
+        padding: 10px 10px 10px 60px;
+        border-radius: 4px;
+        color: #9b9b9b;
+        border: 1px solid #e8e8e9;
+        
+      }
+    }
+  }
+  .list {
+    display: flex;
+    margin-bottom: 40px;
+    .column {
+      width: 33%;
+      padding: 15px;
     }
   }
 }

@@ -36,7 +36,7 @@ export default function Login(props) {
         header: false,
         footer: false,
       })
-    );
+    )
   }, []);
   return (
     <div className="login">

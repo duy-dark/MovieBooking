@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -27,13 +27,7 @@ function SamplePrevArrow(props) {
 
 export default function SliderMovies(props) {
   const settings = {
-    customPaging: function(i) {
-      return (
-        <Link className="adot__link" to="/movies/details">
-          <img src={`${props.listSlider[i].url_avatar}`} alt=""/>
-        </Link>
-      );
-    },
+
     dots: true,
     dotsClass: "slick-dots slick-thumb",
     infinite: true,
@@ -54,7 +48,7 @@ export default function SliderMovies(props) {
             return (
               <div key={item._id} className="slider__list">
                 <img className="slider__image" src={`${item.url_background}`}  alt=""/>
-                <img className="play" onClick={() => props.clickTrailer(item._id)} name={item._id} src={`/assets/film/play-video.png`} alt=""/>
+                <img className="play" onClick={() => props.clickTrailer(item.trailer)} name={item._id} src={`/assets/images/film/play-video.png`} alt=""/>
               </div>
             )
           })

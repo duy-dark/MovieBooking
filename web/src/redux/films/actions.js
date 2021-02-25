@@ -11,6 +11,11 @@ export function getListFilmFuture() {
     type: FilmTypes.LIST_FILM_FUTURE,
   };
 }
+export function getListFilmToday() {
+  return {
+    type: FilmTypes.LIST_FILM_TODAY
+  }
+}
 
 export function postBookingInfo(bookingInfo, history) {
   return {
@@ -24,5 +29,25 @@ export function getFilmDetails(info) {
   return {
     type: FilmTypes.FILM_DETAIL,
     payload: info,
+  };
+}
+
+export function getSeats(id) {
+  return {
+    type: FilmTypes.LIST_SEATS,
+    payload: id,
+  };
+}
+
+export function getSearch() {
+  return {
+    type: FilmTypes.SEARCH,
+  };
+}
+
+export function getComments(id) {
+  return {
+    type: FilmTypes.COMMENT,
+    payload: id
   };
 }

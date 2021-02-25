@@ -1,4 +1,5 @@
 let Model = require('./model');
+let ScheduleModel = require('../film_schedules/model');
 const resSuccess = require('../../responses/res-success');
 const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
@@ -201,10 +202,36 @@ const deleteData = async (id) => {
   }
 };
 
+const getTicket = async (film_schedule_id) => {
+  try {
+    let data = await Model.getTicket(film_schedule_id);
+    let arr = data.map((item) => item.seats);
+
+    let lambda = {
+      conditions: {_id: film_schedule_id, is_deleted: false},
+      views: {
+        _id: 1,
+        time_start: 1,
+        time_end: 1,
+        film_id: 1,
+        theater_id: 1,
+        // room_id: 1,
+        room: 1
+      }
+    };
+
+    let seatsMap = await ScheduleModel.findByLambda_detail(lambda);
+
+    return resSuccess({seatsExisted: arr, seatsMap: seatsMap[0].room.seats});
+  } catch (error) {
+    throw {status: 400, detail: error};
+  }
+};
 module.exports = {
   getList,
   findById,
   postCreate,
   putUpdate,
-  deleteData
+  deleteData,
+  getTicket
 };
