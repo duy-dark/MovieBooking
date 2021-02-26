@@ -3,6 +3,13 @@ const resSuccess = require('../../responses/res-success');
 const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
 
+let cloudinary = require('cloudinary').v2;
+cloudinary.config({
+  cloud_name: 'dkpv3a73a',
+  api_key: '319327752335849',
+  api_secret: 'bZSWKqMyIW8E8uH9gSbyJnJ_j9w'
+});
+
 const getList = async (params) => {
   try {
     let lambda = {
@@ -236,6 +243,24 @@ const getFilm7Day = async (id) => {
 };
 
 const postCreate = async (params) => {
+  let image = param.body.image;
+
+  cloudinary.uploader.upload(image);
+
+  // cloudinary.v2.uploader.upload(
+  //   image,
+  //   {
+  //     resource_type: 'image',
+  //     public_id: 'test',
+  //     overwrite: true,
+  //     notification_url:
+  //       'https://cloudinary.com/console/c-4205030a9f5c35e013957834134f1a/media_library/folders/5d68242865dc959266460583adbed53d'
+  //   },
+  //   function (error, result) {
+  //     console.log(result, error);
+  //   }
+  // );
+
   try {
     let lambda = {
       name: params.name || undefined,
@@ -257,9 +282,9 @@ const postCreate = async (params) => {
       created_at: moment.now(),
       updated_at: moment.now()
     };
-    let data = await Model.createByLambda(lambda);
+    // let data = await Model.createByLambda(lambda);
 
-    return resSuccess(data);
+    return resSuccess('data');
   } catch (error) {
     throw {status: 400, detail: error};
   }
