@@ -7,7 +7,7 @@ const verifyAdminToken = require('../../middlewares/auth.admin.middleware');
 
 router.get(
   '/',
-  verifyAdminToken.requireByPermission('read_admin'),
+  // verifyAdminToken.requireByPermission('read_admin'),
   (req, res, next) => {
     let conditions = {
       _id: req.query._id,
@@ -28,10 +28,12 @@ router.get(
 
 router.get(
   '/getdetail',
-  verifyAdminToken.requireByPermission('read_admin'),
+  // verifyAdminToken.requireByPermission('read_admin'),
   (req, res, next) => {
+    const {_id = undefined} = req.query;
+
     let conditions = {
-      _id: req.query._id,
+      _id: !_id ? undefined : require('mongodb').ObjectId(req.query._id),
       name: req.query.name,
       phone: req.query.phone,
       date_of_birth: req.query.date_of_birth,
@@ -48,7 +50,7 @@ router.get(
 );
 
 router.get('/:id', (req, res, next) => {
-  let id = req.params.id;
+  let id = require('mongodb').ObjectId(req.params.id);
   handler
     .findById(id)
     .then((val) => res.json(val))
@@ -64,7 +66,7 @@ router.post('/', (req, res, next) => {
 });
 
 router.put('/:id', (req, res, next) => {
-  let id = req.params.id;
+  let id = require('mongodb').ObjectId(req.params.id);
   let params = {...req.body};
   console.log('params: ', params);
   handler
@@ -74,7 +76,7 @@ router.put('/:id', (req, res, next) => {
 });
 
 router.delete('/:id', (req, res, next) => {
-  let id = req.params.id;
+  let id = require('mongodb').ObjectId(req.params.id);
   handler
     .deleteData(id)
     .then((val) => res.json(val))

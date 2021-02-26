@@ -326,7 +326,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room: '$$this.room',
+                      room_id: '$$this.room_id',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -389,7 +389,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room: '$$this.room',
+                      room_id: '$$this.room_id',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -452,7 +452,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room: '$$this.room',
+                      room_id: '$$this.room_id',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -515,7 +515,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room: '$$this.room',
+                      room_id: '$$this.room_id',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -578,7 +578,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room: '$$this.room',
+                      room_id: '$$this.room_id',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -641,7 +641,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room: '$$this.room',
+                      room_id: '$$this.room_id',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -704,7 +704,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room: '$$this.room',
+                      room_id: '$$this.room_id',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -739,7 +739,7 @@ module.exports = {
 
       {
         $unset: [
-          'day1.films._id',
+          // 'day1.films._id',
           'day1.films.trailer',
           'day1.films.content',
           'day1.films.countries',
@@ -752,11 +752,11 @@ module.exports = {
           'day1.films.created_at',
           'day1.films.updated_at',
           'day1.films.category_ids',
-          'day1.films.film_schedules._id',
+          // 'day1.films.film_schedules._id',
           'day1.films.film_schedules.film_id',
           'day1.films.film_schedules.theater_id',
 
-          'day2.films._id',
+          // 'day2.films._id',
           'day2.films.trailer',
           'day2.films.content',
           'day2.films.countries',
@@ -769,11 +769,11 @@ module.exports = {
           'day2.films.created_at',
           'day2.films.updated_at',
           'day2.films.category_ids',
-          'day2.films.film_schedules._id',
+          // 'day2.films.film_schedules._id',
           'day2.films.film_schedules.film_id',
           'day2.films.film_schedules.theater_id',
 
-          'day3.films._id',
+          // 'day3.films._id',
           'day3.films.trailer',
           'day3.films.content',
           'day3.films.countries',
@@ -786,11 +786,11 @@ module.exports = {
           'day3.films.created_at',
           'day3.films.updated_at',
           'day3.films.category_ids',
-          'day3.films.film_schedules._id',
+          // 'day3.films.film_schedules._id',
           'day3.films.film_schedules.film_id',
           'day3.films.film_schedules.theater_id',
 
-          'day4.films._id',
+          // 'day4.films._id',
           'day4.films.trailer',
           'day4.films.content',
           'day4.films.countries',
@@ -803,11 +803,11 @@ module.exports = {
           'day4.films.created_at',
           'day4.films.updated_at',
           'day4.films.category_ids',
-          'day4.films.film_schedules._id',
+          // 'day4.films.film_schedules._id',
           'day4.films.film_schedules.film_id',
           'day4.films.film_schedules.theater_id',
 
-          'day5.films._id',
+          // 'day5.films._id',
           'day5.films.trailer',
           'day5.films.content',
           'day5.films.countries',
@@ -820,11 +820,11 @@ module.exports = {
           'day5.films.created_at',
           'day5.films.updated_at',
           'day5.films.category_ids',
-          'day5.films.film_schedules._id',
+          // 'day5.films.film_schedules._id',
           'day5.films.film_schedules.film_id',
           'day5.films.film_schedules.theater_id',
 
-          'day6.films._id',
+          // 'day6.films._id',
           'day6.films.trailer',
           'day6.films.content',
           'day6.films.countries',
@@ -837,11 +837,11 @@ module.exports = {
           'day6.films.created_at',
           'day6.films.updated_at',
           'day6.films.category_ids',
-          'day6.films.film_schedules._id',
+          // 'day6.films.film_schedules._id',
           'day6.films.film_schedules.film_id',
           'day6.films.film_schedules.theater_id',
 
-          'day7.films._id',
+          // 'day7.films._id',
           'day7.films.trailer',
           'day7.films.content',
           'day7.films.countries',
@@ -854,7 +854,7 @@ module.exports = {
           'day7.films.created_at',
           'day7.films.updated_at',
           'day7.films.category_ids',
-          'day7.films.film_schedules._id',
+          // 'day7.films.film_schedules._id',
           'day7.films.film_schedules.film_id',
           'day7.films.film_schedules.theater_id'
         ]
