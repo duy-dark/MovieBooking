@@ -82,8 +82,9 @@ const findById = async (id) => {
         time_end: 1,
         film_id: 1,
         theater_id: 1,
-        room_id: 1
-        // room: 1
+        room_id: 1,
+        room: 1,
+        theater: 1
       }
     };
     let data = await Model.findByLambda_detail(lambda);
