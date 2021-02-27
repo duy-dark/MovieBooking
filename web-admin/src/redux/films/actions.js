@@ -38,3 +38,15 @@ export function getSeats(id) {
     payload: id,
   };
 }
+export function updateFilmDetail(id){
+  return {
+    type: FilmTypes.UPDATE_FILM_DETAIL,
+    payload: id
+  }};
+export function getCategories(){
+  return {
+    type: FilmTypes.LIST_CATEGOGY,
+   
+    };
+  } 
+

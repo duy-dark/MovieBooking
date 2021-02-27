@@ -1,8 +1,8 @@
 import React from "react";
 import Login from "./views/login/Login";
 import Home from "./views/home/Home";
-import Film from "./views/Film/Film"
-import Detail from "./views/Film/DetailPopup"
+import Film from "./views/Film/showAllFilm/Film"
+import Detail from "./views/Film/editFilm/DetailPopup"
 const routes = [
   {
     path: "/login",

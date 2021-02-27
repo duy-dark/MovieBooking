@@ -9,7 +9,8 @@ const initialState = {
   theaters: [],
   filmDetail: {},
   seats: [],
-  dayOfWeeks:[]
+  dayOfWeeks:[],
+  categories:[]
 }
 
 export default function filmsReducer(state = initialState, action) {
@@ -32,6 +33,12 @@ export default function filmsReducer(state = initialState, action) {
     case FilmTypes.LIST_SEATS_SUCCESS:
       newState = Object.assign({}, state, { seats: payload.seats })
       break;
+    case FilmTypes.UPDATE_FILM_DETAIL_SUCCESS:
+      newState = Object.assign({},state,{filmUpdate : payload})
+    case FilmTypes.LIST_CATEGOGY_SUCCESS:
+      
+      newState = Object.assign({},state,{categories : payload})
+      
     default:
       newState = state;
   }
