@@ -6,6 +6,7 @@ import LoginScreen from './src/views/login/LoginScreen'
 import MainTabs from './src/views/main/MainTabs'
 import { Provider } from 'react-redux'
 import store from './src/redux/stores'
+import 'localstorage-polyfill';
 
 const Stack = createStackNavigator();
 

@@ -13,23 +13,26 @@ const TabComments = (props) => {
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.review}>
-                <Text style={styles.reviewText}>8.8</Text>
+                <Text style={styles.reviewText}>{props.imdb}</Text>
                 <StarRating
                     disabled={true}
-                    maxStars={4}
-                    rating={4}
+                    maxStars={5}
+                    rating={props.imdb / 2}
                     fullStarColor={"orangered"}
                     starSize={15}
                 />
-                <Text style={styles.countReview}>76 Người đánh giá</Text>
+                <Text style={styles.countReview}>{props.rateCount} người đánh giá</Text>
             </View>
             <TouchableOpacity style={styles.inputArea} onPress={onPressReviewFilm}>
                 <Text style={styles.inputText}>Bạn nghĩ gì về phim này...</Text>
             </TouchableOpacity>
+            {/* <CardCommentFilm navigation={props.navigation} />
             <CardCommentFilm navigation={props.navigation} />
             <CardCommentFilm navigation={props.navigation} />
-            <CardCommentFilm navigation={props.navigation} />
-            <CardCommentFilm navigation={props.navigation} />
+            <CardCommentFilm navigation={props.navigation} /> */}
+            {props.comments.map((comment, index) => (
+                <CardCommentFilm key={index} comment={comment} navigation={props.navigation} />
+            ))}
         </ScrollView>
     )
 }

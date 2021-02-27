@@ -4,7 +4,7 @@ import TabSchedules from './TabSchedules';
 import TabComments from './TabComments';
 import TabInfomation from './TabInfomation';
 import { useSelector, useDispatch } from "react-redux";
-import { getFilmDetails } from '../../redux/films/actions';
+import { getComments, getFilmDetails } from '../../redux/films/actions';
 
 const Tab = createMaterialTopTabNavigator();
 const FilmScreen = (props) => {
@@ -17,10 +17,12 @@ const FilmScreen = (props) => {
         id: idFilm
       }
       dispatch(getFilmDetails(info))
+      dispatch(getComments(idFilm))
     }, [])
 
     const film = useSelector((state) => state.films.filmDetail);
     const dayOfWeeks = useSelector((state) => state.films.dayOfWeeks);
+    const comments = useSelector((state) => state.films.comments)
     
     return (
         <Tab.Navigator 
@@ -35,7 +37,7 @@ const FilmScreen = (props) => {
             {() => <TabSchedules film={film} dayOfWeeks={dayOfWeeks} navigation={props.navigation} />}
           </Tab.Screen>
           <Tab.Screen name="TabComments" options={{title: "Bình luận"}}>
-            {() => <TabComments navigation={props.navigation} />}
+            {() => <TabComments comments={comments} imdb={film.imdb} rateCount={film.rate_count} navigation={props.navigation} />}
           </Tab.Screen>
           <Tab.Screen name="TabInfomation" options={{title: "Thông tin"}}>
             {() => <TabInfomation film={film} />}

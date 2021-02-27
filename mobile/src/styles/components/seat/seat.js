@@ -25,7 +25,25 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         borderBottomLeftRadius: 6,
         borderBottomRightRadius: 6
-    }
+    },
+    seatHide: {
+        borderColor: "rgb(231, 234, 236)"
+    },
+    seatHideImage: {
+        backgroundColor: "rgb(231, 234, 236)"
+    },
+    seatVip: {
+        borderColor: "#f7b500"
+    },
+    seatVipImage: {
+        backgroundColor: "#f7b500"
+    },
+    seatTogether: {
+        borderColor: "#701010"
+    },
+    seatTogetherImage: {
+        backgroundColor: "#701010"
+    },
 });
 
 export default styles

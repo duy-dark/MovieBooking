@@ -1,6 +1,6 @@
 import { all, takeEvery, put, call } from "redux-saga/effects";
 import UsersTypes from "./types";
-import httpUser from "../../apis/customers";
+import httpUser from "../../api/customers";
 
 function* fetchLogin(action) {
   try {
@@ -11,7 +11,6 @@ function* fetchLogin(action) {
       history.push("/");
     }
   } catch (err) {
-    console.log(err);
     throw err;
   }
 }
@@ -33,7 +32,7 @@ function* fetchUserInfo(action) {
     const res = yield call(httpUser.getUserInfo, action.payload);
 
     if (res.status === "ok") {
-      yield put({ type: UsersTypes.USER_INFO_SUCCESS, payload: res.data });
+      yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: res.data });
     }
   } catch (err) {
     throw err;
