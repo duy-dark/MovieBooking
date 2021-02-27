@@ -3,21 +3,6 @@ const router = express.Router();
 const handler = require('./handler');
 const moment = require('moment');
 const {omitBy, isNil} = require('lodash');
-let multer = require('multer');
-let path = require('path');
-const crypto = require('crypto');
-
-const storage = multer.diskStorage({
-  destination: 'uploads',
-  filename: function (req, file, cb) {
-    let filename = `${file.originalname}`;
-    cb(null, filename);
-  }
-});
-
-const upload = multer({
-  storage: storage
-}).fields([{name: 'avatar'}, {name: 'background'}]);
 
 router.get('/nowshowing', (req, res, next) => {
   handler
@@ -124,23 +109,11 @@ router.get('/:id/detail', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-  upload(req, res, (error) => {
-    if (error) {
-      console.log(`Error when trying to upload: ${error}`);
-    }
-    console.log(`upload file to server backend ok`);
-    // res.sendFile(path.join(`${__dirname}/uploads/${req.file.filename}`));
-
-    let avatar = req.files.avatar;
-    let background = req.files.background;
-    // console.log(path.join(`${process.cwd()}/uploads/${avatar[0].filename}`));
-
-    let params = req.body;
-    handler
-      .postCreate(params, avatar, background)
-      .then((val) => res.json(val))
-      .catch((err) => next(err));
-  });
+  let params = req.body;
+  handler
+    .postCreate(params)
+    .then((val) => res.json(val))
+    .catch((err) => next(err));
 });
 
 router.put('/:id', (req, res, next) => {

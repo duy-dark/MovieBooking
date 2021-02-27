@@ -63,6 +63,7 @@ app.use('/api/room', require('./modules/rooms'));
 app.use('/api/permission', require('./modules/permissions'));
 // app.use('/api/admin_permission', require('./modules/admins_permissions'));
 app.use('/api/voucher', require('./modules/vouchers'));
+app.use('/api/file', require('./util/file'));
 
 app.use(errorHandler);
 
