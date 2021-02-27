@@ -235,7 +235,7 @@ module.exports = {
           }
         }
       },
-      {$unset: ['dayOfWeek._id']}
+      {$unset: ['dayOfWeek._id', 'dayOfWeek.schedules.rooms.seats']}
     ]);
   },
 
