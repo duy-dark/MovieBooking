@@ -3,6 +3,13 @@ const resSuccess = require('../../responses/res-success');
 const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
 
+let cloudinary = require('cloudinary').v2;
+cloudinary.config({
+  cloud_name: 'dkpv3a73a',
+  api_key: '319327752335849',
+  api_secret: 'bZSWKqMyIW8E8uH9gSbyJnJ_j9w'
+});
+
 const getList = async (params) => {
   try {
     let lambda = {
@@ -152,7 +159,8 @@ const findById = async (id) => {
 
     console.log('arr:', arr);
     // let data = await Model.getDetail(lambda);
-    data[0] = {...data[0], listday: arr};
+    // data[0] = {...data[0], listday: arr};
+    data[0] = {...data};
 
     return resSuccess(data[0]);
   } catch (error) {
@@ -235,6 +243,24 @@ const getFilm7Day = async (id) => {
 };
 
 const postCreate = async (params) => {
+  let image = param.body.image;
+
+  cloudinary.uploader.upload(image);
+
+  // cloudinary.v2.uploader.upload(
+  //   image,
+  //   {
+  //     resource_type: 'image',
+  //     public_id: 'test',
+  //     overwrite: true,
+  //     notification_url:
+  //       'https://cloudinary.com/console/c-4205030a9f5c35e013957834134f1a/media_library/folders/5d68242865dc959266460583adbed53d'
+  //   },
+  //   function (error, result) {
+  //     console.log(result, error);
+  //   }
+  // );
+
   try {
     let lambda = {
       name: params.name || undefined,
@@ -256,9 +282,9 @@ const postCreate = async (params) => {
       created_at: moment.now(),
       updated_at: moment.now()
     };
-    let data = await Model.createByLambda(lambda);
+    // let data = await Model.createByLambda(lambda);
 
-    return resSuccess(data);
+    return resSuccess('data');
   } catch (error) {
     throw {status: 400, detail: error};
   }
@@ -358,15 +384,63 @@ const getNowShowing = async () => {
   }
 };
 
-let getCommingSoon = async (params) => {
+const getCommingSoon = async () => {
   try {
-    console.log('helloworld: ', params);
-    let data = await Model.getCommingSoon(params);
+    let time_start = new Date(moment());
+
+    let date = new Date(moment().add(7, 'days')).getDate();
+
+    let month = new Date(moment().add(7, 'days')).getMonth();
+    let year = new Date(moment().add(7, 'days')).getFullYear();
+
+    let time_end1 = new Date(
+      moment(
+        `${year}-${month > 8 ? month + 1 : '0' + (month + 1)}-${
+          date > 9 ? date : '0' + date
+        }`,
+        moment.ISO_8601
+      )
+    );
+
+    console.log('time_start: ', time_start);
+    console.log('time_end1:   ', time_end1);
+    console.log('date:       ', date);
+    console.log('month:      ', month + 1);
+    console.log('year:       ', year);
+
+    let lambda = {
+      conditions: {
+        time_start: time_end1,
+        time_end1: new Date(moment(time_end1).add(1, 'days')),
+        time_end2: new Date(moment(time_end1).add(2, 'days')),
+        time_end3: new Date(moment(time_end1).add(3, 'days')),
+        time_end4: new Date(moment(time_end1).add(4, 'days')),
+        time_end5: new Date(moment(time_end1).add(5, 'days')),
+        time_end6: new Date(moment(time_end1).add(6, 'days')),
+        time_end7: new Date(moment(time_end1).add(7, 'days')),
+        is_deleted: false
+      }
+    };
+
+    let data = await Model.getNowShowing(lambda);
+
     return resSuccess(data);
   } catch (error) {
-    return error;
+    // throw {status: 400, detail: error};
+    throw {status: 400, detail: error};
   }
 };
+
+// let getCommingSoon = async (params) => {
+//   try {
+//     console.log('helloworld: ', params);
+//     let data = await Model.getCommingSoon(params);
+//     return resSuccess(data);
+//   } catch (error) {
+//     return error;
+//   }
+// };
+
 module.exports = {
   getList,
   getDetail,
