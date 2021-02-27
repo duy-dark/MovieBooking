@@ -1,11 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import TabSchedules from './TabSchedules';
 import TabComments from './TabComments';
 import TabInfomation from './TabInfomation';
+import { useSelector, useDispatch } from "react-redux";
+import { getFilmDetails } from '../../redux/films/actions';
 
 const Tab = createMaterialTopTabNavigator();
 const FilmScreen = (props) => {
+    const idFilm = props.route.params.idFilm
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+      const info = { 
+        id: idFilm
+      }
+      dispatch(getFilmDetails(info))
+    }, [])
+
+    const film = useSelector((state) => state.films.filmDetail);
+    const dayOfWeeks = useSelector((state) => state.films.dayOfWeeks);
+    
     return (
         <Tab.Navigator 
           tabBarOptions={{
@@ -16,12 +32,14 @@ const FilmScreen = (props) => {
           }}
         >
           <Tab.Screen name="TabSchedules" options={{title: "Lịch chiếu"}}>
-            {() => <TabSchedules navigation={props.navigation} />}
+            {() => <TabSchedules film={film} dayOfWeeks={dayOfWeeks} navigation={props.navigation} />}
           </Tab.Screen>
           <Tab.Screen name="TabComments" options={{title: "Bình luận"}}>
             {() => <TabComments navigation={props.navigation} />}
           </Tab.Screen>
-          <Tab.Screen name="TabInfomation" component={TabInfomation} options={{title: "Thông tin"}}/>
+          <Tab.Screen name="TabInfomation" options={{title: "Thông tin"}}>
+            {() => <TabInfomation film={film} />}
+          </Tab.Screen>
         </Tab.Navigator>
       );
 }

@@ -56,14 +56,14 @@ export default function Home() {
   useEffect(() => {
     if (search) {
       let arr = [];
-      search.dayOfWeek.map(val => {
-        val.schedules.map(schedule => arr.push(schedule))
-      })
-      setOptionFilm(search.films.map(val => ({ ...val, label: val.name, value: val._id })));
-      setOptionTheater(search.theaters.map(val => ({ ...val, label: val.name, value: val._id })));
-      setOptionDate(search.dayOfWeek.map((val, index) => ({ ...val, label: days[moment(val.date).day()], value: index})))
-      setOptionTime([{ label: "vui lòng chọn rạp", isDisabled: true }])
-      setArrSchedules(arr)
+      // search.dayOfWeek.map(val => {
+      //   val.schedules.map(schedule => arr.push(schedule))
+      // })
+      // setOptionFilm(search.films.map(val => ({ ...val, label: val.name, value: val._id })));
+      // setOptionTheater(search.theaters.map(val => ({ ...val, label: val.name, value: val._id })));
+      // setOptionDate(search.dayOfWeek.map((val, index) => ({ ...val, label: days[moment(val.date).day()], value: index})))
+      // setOptionTime([{ label: "vui lòng chọn rạp", isDisabled: true }])
+      // setArrSchedules(arr)
     }
   }, [search])
 

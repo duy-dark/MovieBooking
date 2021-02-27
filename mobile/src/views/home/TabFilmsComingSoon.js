@@ -6,23 +6,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { getListFilmFuture } from "../../redux/films/actions"
 
 const TabFilmsComingSoon = (props) => {
-    // const dispatch = useDispatch()
+    const dispatch = useDispatch()
 
-    // useEffect(() => {
-    //     dispatch(getListFilmFuture())
-    // }, [])
+    useEffect(() => {
+        dispatch(getListFilmFuture())
+    }, [])
 
     const films = useSelector((state) => state.films.filmsFuture);
     return (
         <ScrollView style={styles.view} contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
-            {/* <CardFilmComingSoon navigation={props.navigation} />
-            <CardFilmComingSoon navigation={props.navigation} />
-            <CardFilmComingSoon navigation={props.navigation} />
-            <CardFilmComingSoon navigation={props.navigation} />
-            <CardFilmComingSoon navigation={props.navigation} />
-            <CardFilmComingSoon navigation={props.navigation} />
-            <CardFilmComingSoon navigation={props.navigation} />
-            <CardFilmComingSoon navigation={props.navigation} /> */}
             {films.map((film, index) => 
                 <CardFilmComingSoon key={index} film={film} navigation={props.navigation} />
             )}
