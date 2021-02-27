@@ -40,7 +40,7 @@ module.exports = {
       if (token) {
         let payload = jwt.decode(token);
         req.payload = payload;
-        console.log('payload.account: ', payload.account);
+        req.token = token;
         if (payload.account._id === req.params.id) {
           next();
         } else {

@@ -19,7 +19,9 @@ export default function TabsTheater(props) {
 
   useEffect(() => {
     let arr = []
+    // eslint-disable-next-line
     props.theaters.map(theater => {
+      // eslint-disable-next-line
       theater.films.map(film => {
         arr.push(film._id)
       })
@@ -30,7 +32,7 @@ export default function TabsTheater(props) {
   const [tabSelect, setTabSelect] = useState(0);
 
   return (
-    <Tabs className="tab-theater" selectedIndex={tabSelect} onSelect={tab => setTabSelect(tab)}>
+    <Tabs id={props.id ? props.id : ''} className="tab-theater" selectedIndex={tabSelect} onSelect={tab => setTabSelect(tab)}>
       <TabList className="tab-theater__header" >
         {props.theaters.map((theater,index) =>
           <Tab key={index} className="tab-theater__header__item">
