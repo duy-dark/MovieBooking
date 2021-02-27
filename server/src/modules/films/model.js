@@ -174,6 +174,9 @@ module.exports = {
         }
       },
       {
+        $unset: ['film_schedules.room.seats', 'film_schedules.theaters.rooms']
+      },
+      {
         $group: {
           _id: '$_id',
           name: {
