@@ -192,6 +192,7 @@ module.exports = {
                 preserveNullAndEmptyArrays: true
               }
             },
+            {$sort: {'schedules.time_start': 1}},
             {
               $lookup: {
                 from: 'rooms',
@@ -216,7 +217,8 @@ module.exports = {
                   $push: '$schedules'
                 }
               }
-            }
+            },
+            {$sort: {'schedules.time_start': 1}}
           ]
         }
       },
