@@ -23,7 +23,7 @@ export function updateStatusFriend(user) {
 
 export function getUserInfo(payload) {
   return {
-    payload,
+    payload: payload,
     type: UsersTypes.USER_INFO,
   };
 }

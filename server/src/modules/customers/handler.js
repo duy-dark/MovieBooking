@@ -38,7 +38,7 @@ const getList = async (params) => {
   }
 };
 
-const findById = async (id) => {
+const findById = async (id, token) => {
   try {
     let lambda = {
       conditions: {_id: id, is_deleted: false},
@@ -61,7 +61,10 @@ const findById = async (id) => {
         status: 204,
         detail: 'Customer not found'
       };
-    return resSuccess(data);
+    return resSuccess({
+      customer: data[0],
+      token: token
+    });
   } catch (error) {
     throw {status: 400, detail: error};
   }

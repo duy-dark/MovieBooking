@@ -5,7 +5,7 @@ import ListFilm from './ListFilm.js';
 
 export default function TabsListFilm(props) {
   return (
-    <Tabs className="tab-film">
+    <Tabs id={props.id ? props.id : ''} className="tab-film">
       <TabList className="tab-film__header">
         <Tab className="tab-film__header__item">Đang Chiếu</Tab>
         <Tab className="tab-film__header__item">Sắp Chiếu</Tab>

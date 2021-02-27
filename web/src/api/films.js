@@ -25,7 +25,7 @@ const getDetail = (params) => {
 }
 
 const getSeats = (id) => {
-  return Api.get(`/api/ticket/${id}`).then(res => res.data)
+  return Api.get(`/api/ticket/schedule_id/${id}`).then(res => res.data)
 }
 
 const getComments = (params) => {

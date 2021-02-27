@@ -15,8 +15,8 @@ export default function CardComment(props) {
           { rate1 >= 2 && (<img src={`https://tix.vn/app/assets/img/icons/star1.png`} alt="star"/>)}
           { rate1 >= 3 && (<img src={`https://tix.vn/app/assets/img/icons/star1.png`} alt="star"/>)}
           { rate1 >= 4 && (<img src={`https://tix.vn/app/assets/img/icons/star1.png`} alt="star"/>)}
-          { rate1 == 5 && (<img src={`https://tix.vn/app/assets/img/icons/star1.png`} alt="star"/>)}
-          { rate2 != 0 && (<img src={`https://tix.vn/app/assets/img/icons/star1.2.png`} alt="star"/>)}
+          { rate1 === 5 && (<img src={`https://tix.vn/app/assets/img/icons/star1.png`} alt="star"/>)}
+          { rate2 !== 0 && (<img src={`https://tix.vn/app/assets/img/icons/star1.2.png`} alt="star"/>)}
         </div>
       </div>
       <div className="card-comment__content">

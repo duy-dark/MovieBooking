@@ -18,7 +18,8 @@ export default function FilmDetail() {
   };
   let { id } = useParams();
   const location = useLocation();
-  const [future, setFuture] = useState(location.state);
+  // eslint-disable-next-line
+  const [future, setFuture] = useState(location.state || {});
 
   const  dispatch = useDispatch();
   useEffect(() =>{
@@ -27,6 +28,7 @@ export default function FilmDetail() {
     };
     dispatch(getFilmDetails(info));
     dispatch(getComments(id));
+  // eslint-disable-next-line
   },[])
 
    let data = useSelector(state =>state.films.filmDetail)
@@ -52,7 +54,7 @@ export default function FilmDetail() {
         </div>
       </div>
       <div className="detail-wrapper">
-       {data,dayOfWeeks && <TabsSchedule future={future.future ? 0 : 1} detail={data} dayOfWeeks={dayOfWeeks} comments={comments}/>}
+       {data && dayOfWeeks && <TabsSchedule future={future.future ? 0 : 1} detail={data} dayOfWeeks={dayOfWeeks} comments={comments}/>}
       </div>
       <ModalTrailer
         show={modalShow}

@@ -78,10 +78,10 @@ router.get('/list', verifyUser.requireByUser, (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.get('/list/:id', verifyUser.requireGetPerson, (req, res, next) => {
+router.get('/:id/detail', verifyUser.requireGetPerson, (req, res, next) => {
   let id = require('mongodb').ObjectId(req.params.id);
   handler
-    .findById(id)
+    .findById(id, req.token)
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });
