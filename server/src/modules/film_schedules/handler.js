@@ -42,7 +42,8 @@ const getNowShowing = async () => {
     };
 
     let data = await Model.getNowShowing(lambda);
-
+    data[0].theaters = data[0].theaters.filter((item) => item._id !== null);
+    data[0].films = data[0].films.filter((item) => item._id !== null);
     return resSuccess(data[0]);
   } catch (error) {
     // throw {status: 400, detail: error};
