@@ -28,9 +28,16 @@ const login = (params) => {
   };
 };
 
+const getUserInfo = (params) => {
+  return Api.get(`/api/customer/${params.userID}/detail`).then(
+    (res) => res.data
+  );
+};
+
 export default {
   loginFacebook,
   loginZalo,
   loginGoogle,
   login,
+  getUserInfo
 };

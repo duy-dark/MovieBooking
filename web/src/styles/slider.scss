@@ -6,13 +6,13 @@
     .slick-list {
       .slider__list {
         position: relative;
-  
+
         .slider__image {
           width: 100%;
           height: auto;
           object-fit: cover;
         }
-  
+
         .play {
           opacity: 0;
           visibility: hidden;
@@ -24,7 +24,7 @@
           transform: translate(-50%, -50%);
           transition: all .3s ease-in-out;
           cursor: pointer;
-  
+
           &:hover {
             opacity: .8;
             visibility: visible;
@@ -34,9 +34,25 @@
           opacity: .8;
           visibility: visible;
         }
-  
+
       }
     }
+    .slick-dots {
+      bottom: 50px;
+
+      li {
+        background-color: #FFF;
+        border-radius: 50%;
+        opacity: .7;
+        transition: all .3 ease-in-out;
+        box-shadow: 0 0 10px rgba(0,0,0,.3);
+
+        button {
+          &::before {
+            content: none;
+          }
+        }
+      }
 
     // .slick-dots {
     //   height: 318px;

@@ -6,6 +6,7 @@ import "./styles/styles.scss";
 import Header from "./components/customer/Header";
 import Footer from "./components/customer/Footer";
 // import CustomScrollbar from './components/CustomScrollbar'
+// import MyLoading from './components/MyLoading'
 class App extends Component {
   render() {
   let showRouteComponent = (routes) => {
@@ -18,6 +19,8 @@ class App extends Component {
     return result;
   };
   return (
+    <>
+    {/* <MyLoading active={true}/> */}
     <Router>
       {this.props.header && <Header/>}
       <Switch>
@@ -25,6 +28,7 @@ class App extends Component {
       </Switch>
       <Footer/>
     </Router>
+    </>
   )
   }
 }

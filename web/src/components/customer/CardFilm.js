@@ -2,7 +2,12 @@ import React from "react";
 
 export default function CardFilm(props) {
   const goDetail = (id) => {
-    console.log("id", id);
+    history.push({
+      pathname: `/${id}/detail`,
+      state: {
+        future: props.future
+      }
+    })
   };
   return (
     <div className="card-film">

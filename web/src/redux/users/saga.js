@@ -33,7 +33,7 @@ function* fetchUserInfo(action) {
     const res = yield call(httpUser.getUserInfo, action.payload);
 
     if (res.status === "ok") {
-      yield put({ type: UsersTypes.USER_INFO_SUCCESS, payload: res.data });
+      yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: res.data });
     }
   } catch (err) {
     throw err;

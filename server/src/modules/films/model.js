@@ -95,30 +95,7 @@ module.exports = {
   getDetail: async function (lambda) {
     return await Collection.aggregate([
       {$match: lambda.conditions},
-      {
-        $lookup: {
-          from: 'film_schedules',
-          localField: '_id',
-          foreignField: 'film_id',
-          as: 'film_schedules'
-        }
-      },
-      {
-        $addFields: {
-          film_schedules: {
-            $map: {
-              input: '$film_schedules',
-              in: {
-                _id: '$$this._id',
-                time_start: '$$this.time_start',
-                time_end: '$$this.time_end',
-                theater_id: '$$this.theater_id',
-                room: '$$this.room'
-              }
-            }
-          }
-        }
-      },
+
       {
         $lookup: {
           from: 'categories',
@@ -137,6 +114,127 @@ module.exports = {
           }
         }
       },
+
+      {
+        $lookup: {
+          from: 'film_schedules',
+          localField: '_id',
+          foreignField: 'film_id',
+          as: 'film_schedules'
+        }
+      },
+      {
+        $addFields: {
+          film_schedules: {
+            $map: {
+              input: '$film_schedules',
+              in: {
+                _id: '$$this._id',
+                time_start: '$$this.time_start',
+                time_end: '$$this.time_end',
+                theater_id: '$$this.theater_id',
+                room_id: '$$this.room_id'
+              }
+            }
+          }
+        }
+      },
+      {
+        $unwind: {
+          path: '$film_schedules',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $lookup: {
+          from: 'theaters',
+          localField: 'film_schedules.theater_id',
+          foreignField: '_id',
+          as: 'film_schedules.theaters'
+        }
+      },
+      {
+        $lookup: {
+          from: 'rooms',
+          localField: 'film_schedules.room_id',
+          foreignField: '_id',
+          as: 'film_schedules.room'
+        }
+      },
+      {
+        $unwind: {
+          path: '$film_schedules.theaters',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $unwind: {
+          path: '$film_schedules.room',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $unset: ['film_schedules.room.seats', 'film_schedules.theaters.rooms']
+      },
+      {
+        $group: {
+          _id: '$_id',
+          name: {
+            $first: '$name'
+          },
+          trailer: {
+            $first: '$trailer'
+          },
+
+          categories: {
+            $first: '$categories'
+          },
+          long_time: {
+            $first: '$long_time'
+          },
+          start_date: {
+            $first: '$start_date'
+          },
+          rates: {
+            $first: '$rates'
+          },
+          rate_count: {
+            $first: '$rate_count'
+          },
+          content: {
+            $first: '$content'
+          },
+          imdb: {
+            $first: '$imdb'
+          },
+          directors: {
+            $first: '$directors'
+          },
+          actors: {
+            $first: '$actors'
+          },
+          digitals: {
+            $first: '$digitals'
+          },
+          countries: {
+            $first: '$countries'
+          },
+          url_avatar: {
+            $first: '$url_avatar'
+          },
+          url_background: {
+            $first: '$url_background'
+          },
+          is_blockbuster: {
+            $first: '$is_blockbuster'
+          },
+
+          film_schedules: {
+            $addToSet: '$film_schedules'
+          }
+        }
+      },
+
       {
         $project: lambda.views
       }
@@ -368,7 +466,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room: '$$this.room',
+                      room_id: '$$this.room_id',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -431,7 +529,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room: '$$this.room',
+                      room_id: '$$this.room_id',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -493,7 +591,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room: '$$this.room',
+                      room_id: '$$this.room_id',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -555,7 +653,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room: '$$this.room',
+                      room_id: '$$this.room_id',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -617,7 +715,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room: '$$this.room',
+                      room_id: '$$this.room_id',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -679,7 +777,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room: '$$this.room',
+                      room_id: '$$this.room_id',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }
@@ -741,7 +839,7 @@ module.exports = {
                       time_end: '$$this.time_end',
                       film_id: '$$this.film_id',
                       theater_id: '$$this.theater_id',
-                      room: '$$this.room',
+                      room_id: '$$this.room_id',
                       dayOfWeek: {$dayOfWeek: '$$this.time_start'}
                     }
                   }

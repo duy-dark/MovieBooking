@@ -29,10 +29,11 @@ router.get('/:id/detail', (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.get('/ticket/:id', (req, res, next) => {
-  let id = require('mongodb').ObjectId(req.params.id);
+router.get('/schedule_id/:schedule_id', (req, res, next) => {
+  // console.log('asdasdsa');
+  let schedule_id = require('mongodb').ObjectId(req.params.schedule_id);
   handler
-    .getticket(id)
+    .getTicket(schedule_id)
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });

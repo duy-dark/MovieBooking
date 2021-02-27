@@ -9,10 +9,8 @@ const days = ['chủ nhật', 'thứ 2', 'thứ 3', 'thứ 4', 'thứ 5', 'thứ
 export default function TabsSchedule(props) {
 
   const [activeIndex, setActiveIndex] = useState([1, 2, 3]);
-  const [listDate, setListDate] = useState([])
-  
-  
- 
+  const [listDate, setListDate] = useState([{}, {}, {}, {}, {}, {}, {}])
+
   const changeCollapse = (index) => {
     let arr = [...activeIndex]
     if (activeIndex.includes(index)) {
@@ -25,7 +23,7 @@ export default function TabsSchedule(props) {
   }
 
   useEffect(() => {
-    
+
     let arr = []
     for(let i = 0; i < 7; i++) {
       let date = moment().add(i, 'day')
@@ -36,66 +34,72 @@ export default function TabsSchedule(props) {
         dayofweek: date.day()
       })
     }
-    
-    setListDate(arr)
-    
-  }, [])
- 
-  return (
-    
-    <Tabs className="tab-film">
-      <TabList className="tab-film__header">
-        <Tab className="tab-film__header__item">Lịch Chiếu</Tab>
-        <Tab className="tab-film__header__item">Thông Tin</Tab>
-        <Tab className="tab-film__header__item">Đánh Giá</Tab>
-      </TabList>
-     
-      <TabPanel className="tab-film__date">
-        <Tabs>
-          <TabList className="date-list">
-             { listDate.map((item, index) => {
-               
-              return (
-                <Tab key={index} className="date-list__item"><span>{item.name}</span><span>{item.day}</span></Tab>
-              )
-            })} 
-            
-          </TabList>
-         
-          { props.dayOfWeeks.map((item, index) => {
-              
-              return (
 
-              <TabPanel key={index} className="tab-film__theater">
-                  {item.map((theater,index2)=>{
-                    return (
-                <div key={index2} className="theater__item">
-                  <div className="theater__item__header" onClick={() => changeCollapse(1)}>
-                    <div className="theater__item__image">
-                      <img src={`${theater.url_image}`} alt=""/>
+    setListDate(arr)
+
+  }, [])
+  const [tabSelect, setTabSelect] = useState(0);
+
+  const showTheater = (item) => {
+    if (item.length > 0) {
+      return item.map(theater => {
+        return (
+          <div key={theater._id} className="theater__item">
+            <div className="theater__item__header" onClick={() => changeCollapse(1)}>
+              <div className="theater__item__image">
+                <img src={`${theater.url_image}`} alt=""/>
+              </div>
+              <div className="theater__item__film">
+              <span>{`${theater.name}`}</span>
+              <span>{`${theater.address}`}</span>
+              </div>
+            </div>
+            <Collapse className="theater__item__schedule" isOpened={activeIndex.includes(1)}>
+              <div className="theater__item__title">2D Digital</div>
+              <div className="theater__item__schedules">
+               { theater.film_schedules.map(film => <CardTime key={film._id} schedule={film} name={props.detail.name} theater_url_image={theater.url_image} theater_name={theater.name} film={props.detail} />)}
+              </div>
+            </Collapse>
+          </div>
+        )
+      })
+    } else {
+      return (<p>Không có lịch chiếu</p>)
+    }
+  }
+
+  return (
+    <Tabs className="tab-detail">
+      <TabList className="tab-detail__header">
+        {props.future > 0 && (<Tab className="tab-detail__header__item">Lịch Chiếu</Tab>)}
+        <Tab className="tab-detail__header__item">Thông Tin</Tab>
+        <Tab className="tab-detail__header__item">Đánh Giá</Tab>
+      </TabList>
+      {props.future > 0 && (
+        <TabPanel className="tab-detail__date">
+          <Tabs className="tab-detail__date-list" selectedIndex={tabSelect} onSelect={tab => setTabSelect(tab)}>
+            <TabList className="date-list">
+              {
+                listDate.map((item, index) => {
+                  return (
+                    <Tab key={index} className={`date-list__item ${props.dayOfWeeks[index].length > 0 ? 'date-list__item-show' : ''}`}><span>{item.name}</span><span>{item.day}</span></Tab>
+                  )
+                })
+              }
+            </TabList>
+            { props.dayOfWeeks.map((item, index) => {
+                  return (
+                  <TabPanel key={index} className="tab-detail__theater">
+                    <div>
+                    { showTheater(item) }
                     </div>
-                    <div className="theater__item__film">
-                    <span>{`${theater.name}`}</span>
-                    <span>{`${theater.address}`}</span>
-                    </div>
-                  </div>
-                  <Collapse className="theater__item__schedule" isOpened={activeIndex.includes(1)}>
-                    <div className="theater__item__title">2D Digital</div>
-                    <div className="theater__item__schedules">
-                     { theater.film_schedules.map((film,index1)=><CardTime key={index1} schedule={film} />)}
-                    
-                    </div>
-                  </Collapse>
-                </div>
-                    )
-                  })}
-                
-              </TabPanel>
-              )
-            })} 
-          
-        </Tabs>
-      </TabPanel>
+                  </TabPanel>
+                  )
+              })}
+
+          </Tabs>
+        </TabPanel>
+      )}
       <TabPanel className="detail-tab-info">
         <div className="detail-info__info">
           <table>
@@ -136,9 +140,10 @@ export default function TabsSchedule(props) {
           <div className="comment-block" onClick={()=> {}}>
             <span className="comment-block__image"><img src="https://tix.vn/app/assets/img/avatar.png" alt="avatar"/></span>
             <input type="text" placeholder="Bạn nghĩ gì về phim này?"/>
-            <span class="comment-block__rate"><img src="https://tix.vn/app/assets/img/icons/listStar.png" alt="star"/></span>
+            <span className="comment-block__rate"><img src="https://tix.vn/app/assets/img/icons/listStar.png" alt="star"/></span>
           </div>
-          <CardComment/>
+          { props.comments.map(comment => (<CardComment key={comment._id} username={comment.customers.name} {...comment}/>))}
+
       </TabPanel>
     </Tabs>
   )

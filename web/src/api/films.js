@@ -25,7 +25,7 @@ const getDetail = (params) => {
 }
 
 const getSeats = (id) => {
-  return Api.get(`api/ticket/ticket/${id}`).then(res => res.data)
+  return Api.get(`/api/ticket/schedule_id/${id}`).then(res => res.data)
 }
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {

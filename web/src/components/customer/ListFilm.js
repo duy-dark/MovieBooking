@@ -43,12 +43,12 @@ export default function ListFilm(props) {
   for (var i = 0; i < slides; i++) {
     listSlidesFilm.push(
       <div className="list-film" key={i}>
-        {paginate(props.films, 8, i + 1).map((film,index) => 
-        <CardFilm key={index} film={film} clickTrailer={props.clickTrailer} />   
+        {paginate(props.films, 8, i + 1).map((film,index) =>
+        <CardFilm future={props.future} key={index} film={film} clickTrailer={props.clickTrailer} />
         )}
     </div>
     )
-  } 
+  }
   return (
     <Slider className="list-slider" {...settings}>
       {listSlidesFilm}

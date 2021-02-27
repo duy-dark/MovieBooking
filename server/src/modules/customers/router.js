@@ -78,18 +78,25 @@ router.get('/list', verifyUser.requireByUser, (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.get('/list/:id', verifyUser.requireGetPerson, (req, res, next) => {
-  let id = req.params.id;
+router.get('/:id/detail', verifyUser.requireGetPerson, (req, res, next) => {
+  let id = require('mongodb').ObjectId(req.params.id);
   handler
-    .findById(id)
+    .findById(id, req.token)
+    .then((val) => res.json(val))
+    .catch((err) => next(err));
+});
+
+router.post('/', (req, res, next) => {
+  let params = {...req.body};
+  handler
+    .postCreate(params)
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });
 
 router.put('/:id', (req, res, next) => {
-  let id = req.params.id;
+  let id = require('mongodb').ObjectId(req.params.id);
   let params = {...req.body};
-  console.log('params: ', params);
   handler
     .putUpdate(id, params)
     .then((val) => res.json(val))
@@ -97,7 +104,7 @@ router.put('/:id', (req, res, next) => {
 });
 
 router.delete('/:id', (req, res, next) => {
-  let id = req.params.id;
+  let id = require('mongodb').ObjectId(req.params.id);
   handler
     .deleteData(id)
     .then((val) => res.json(val))

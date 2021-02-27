@@ -3,7 +3,7 @@ import "../../styles/customers/login/login.scss";
 import { useDispatch } from "react-redux";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import GoogleLogin from "react-google-login";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { signIn, updateHeaderFooter } from "../../redux/users/actions";
 
 export default function Login(props) {
@@ -36,7 +36,8 @@ export default function Login(props) {
         header: false,
         footer: false,
       })
-    );
+    )
+  // eslint-disable-next-line
   }, []);
   return (
     <div className="login">
@@ -58,9 +59,6 @@ export default function Login(props) {
                   </button>
                 )}
               />
-              <a href="https://www.facebook.com/" className="btn btn-zalo">
-                Login with Zalo
-              </a>
               <GoogleLogin
                 clientId="827380774255-d0ksdk40jlq25n7g7okdgdl7hm073iip.apps.googleusercontent.com"
                 onSuccess={responseGoogle}
@@ -78,6 +76,9 @@ export default function Login(props) {
                   </button>
                 )}
               />
+              <Link to="/" className="btn btn-zalo">
+                Về Trang Chủ
+              </Link>
             </div>
           </div>
         </div>

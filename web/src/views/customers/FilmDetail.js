@@ -5,8 +5,8 @@ import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import '../../styles/customers/detail/detail.scss';
 import * as moment from 'moment';
-import {useParams} from "react-router-dom"
-import { getFilmDetails } from "../../redux/films/actions"
+import { useLocation, useParams } from "react-router-dom"
+import { getFilmDetails, getComments } from "../../redux/films/actions"
 import { useDispatch , useSelector} from "react-redux";
 
 export default function FilmDetail() {
@@ -17,20 +17,25 @@ export default function FilmDetail() {
     setModalShow(true);
   };
   let { id } = useParams();
- 
+  const location = useLocation();
+  // eslint-disable-next-line
+  const [future, setFuture] = useState(location.state || {});
+
   const  dispatch = useDispatch();
   useEffect(() =>{
     const info = {
       id: id
     };
     dispatch(getFilmDetails(info));
+    dispatch(getComments(id));
+  // eslint-disable-next-line
   },[])
-    
-   let data=useSelector(state =>state.films.filmDetail)
-   let dayOfWeeks =useSelector(state=>state.films.dayOfWeeks)
-   console.log(data)
+
+   let data = useSelector(state =>state.films.filmDetail)
+   let dayOfWeeks = useSelector(state=>state.films.dayOfWeeks)
+   let comments = useSelector(state=>state.films.comments)
   return (
-   
+
     <div className="detail">
          <div className="detail-slider">
         <div className="detail-image">
@@ -50,13 +55,13 @@ export default function FilmDetail() {
         </div>
       </div>
       <div className="detail-wrapper">
-       {data,dayOfWeeks && <TabsSchedule detail={data} dayOfWeeks={dayOfWeeks}/>}
+       {data && dayOfWeeks && <TabsSchedule future={future.future ? 0 : 1} detail={data} dayOfWeeks={dayOfWeeks} comments={comments}/>}
       </div>
       <ModalTrailer
         show={modalShow}
         onHide={() => setModalShow(false)}
-        id={modalId} 
-      />  
+        id={modalId}
+      />
     </div>
   );
 }

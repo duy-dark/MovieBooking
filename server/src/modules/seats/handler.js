@@ -69,7 +69,12 @@ const putUpdate = async (id, params) => {
     };
     lambda.params = omitBy(lambda.params, isNil);
     let data = await Model.updateByLambda(lambda);
-    return resSuccess(data);
+    if (data.ok) {
+      let result = await findById(id);
+      return result;
+    } else {
+      throw {status: 400, detail: data};
+    }
   } catch (error) {
     throw {status: 400, detail: error};
   }

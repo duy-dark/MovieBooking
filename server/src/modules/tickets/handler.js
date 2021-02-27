@@ -1,4 +1,5 @@
 let Model = require('./model');
+let ScheduleModel = require('../film_schedules/model');
 const resSuccess = require('../../responses/res-success');
 const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
@@ -127,7 +128,7 @@ const postCreate = async (params) => {
       time_start: timeStart,
       time_end: time_end,
       theater: ticketView[0].film_schedules[0].theater,
-      room: ticketView[0].film_schedules[0].room
+      room_id: ticketView[0].film_schedules[0].room_id
     };
 
     let mainOptions = {
@@ -179,7 +180,12 @@ const putUpdate = async (id, params) => {
     };
     lambda.params = omitBy(lambda.params, isNil);
     let data = await Model.updateByLambda(lambda);
-    return resSuccess(data);
+    if (data.ok) {
+      let result = await findById(id);
+      return result;
+    } else {
+      throw {status: 400, detail: data};
+    }
   } catch (error) {
     throw {status: 400, detail: error};
   }
@@ -201,24 +207,40 @@ const deleteData = async (id) => {
   }
 };
 
-const getticket = async (id) => {
+const getTicket = async (film_schedule_id) => {
   try {
-    let data = await Model.getticket(id);
-    let arr = [];
-    data.map((item) => {
-      arr = [...arr, ...item.seat_ids];
+    let data = await Model.getTicket(film_schedule_id);
+    let arr = data.map((item) => item.seats);
+
+    let lambda = {
+      conditions: {_id: film_schedule_id, is_deleted: false},
+      views: {
+        _id: 1,
+        time_start: 1,
+        time_end: 1,
+        film_id: 1,
+        theater_id: 1,
+        // room_id: 1,
+        room: 1
+      }
+    };
+
+    let seatsMap = await ScheduleModel.getRoomInfoForTicket(lambda);
+
+    return resSuccess({
+      seatsExisted: arr,
+      seatsMap: seatsMap[0].room.seats,
+      room_name: seatsMap[0].room.name
     });
-    return resSuccess({seats: arr});
   } catch (error) {
     throw {status: 400, detail: error};
   }
 };
 module.exports = {
-  getticket,
   getList,
   findById,
   postCreate,
   putUpdate,
   deleteData,
-  getticket
+  getTicket
 };
