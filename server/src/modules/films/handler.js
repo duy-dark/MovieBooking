@@ -2,6 +2,7 @@ let Model = require('./model');
 const resSuccess = require('../../responses/res-success');
 const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
+let path = require('path');
 
 let cloudinary = require('cloudinary').v2;
 cloudinary.config({
@@ -137,30 +138,30 @@ const findById = async (id) => {
     };
     let data = await Model.getDetail(lambda);
 
-    let days = [
-      'chủ nhật',
-      'thứ 2',
-      'thứ 3',
-      'thứ 4',
-      'thứ 5',
-      'thứ 6',
-      'thứ 7'
-    ];
-    let arr = [];
-    let now = moment();
-    for (let i = 0; i < 7; i++) {
-      arr.push({
-        name: days[moment(now).add(i, 'days').day()],
-        date: moment(now).add(i, 'days').format('DD/MM/YYYY'),
-        day: moment(now).add(i, 'days').format('DD'),
-        dateISO_8601: moment(now, moment.ISO_8601).add(i, 'days')
-      });
-    }
+    // let days = [
+    //   'chủ nhật',
+    //   'thứ 2',
+    //   'thứ 3',
+    //   'thứ 4',
+    //   'thứ 5',
+    //   'thứ 6',
+    //   'thứ 7'
+    // ];
+    // let arr = [];
+    // let now = moment();
+    // for (let i = 0; i < 7; i++) {
+    //   arr.push({
+    //     name: days[moment(now).add(i, 'days').day()],
+    //     date: moment(now).add(i, 'days').format('DD/MM/YYYY'),
+    //     day: moment(now).add(i, 'days').format('DD'),
+    //     dateISO_8601: moment(now, moment.ISO_8601).add(i, 'days')
+    //   });
+    // }
 
-    console.log('arr:', arr);
-    // let data = await Model.getDetail(lambda);
-    // data[0] = {...data[0], listday: arr};
-    data[0] = {...data};
+    // console.log('arr:', arr);
+    // // let data = await Model.getDetail(lambda);
+    // // data[0] = {...data[0], listday: arr};
+    // data[0] = {...data};
 
     return resSuccess(data[0]);
   } catch (error) {
@@ -242,26 +243,44 @@ const getFilm7Day = async (id) => {
   }
 };
 
-const postCreate = async (params) => {
-  let image = param.body.image;
-
-  cloudinary.uploader.upload(image);
-
-  // cloudinary.v2.uploader.upload(
-  //   image,
-  //   {
-  //     resource_type: 'image',
-  //     public_id: 'test',
-  //     overwrite: true,
-  //     notification_url:
-  //       'https://cloudinary.com/console/c-4205030a9f5c35e013957834134f1a/media_library/folders/5d68242865dc959266460583adbed53d'
-  //   },
-  //   function (error, result) {
-  //     console.log(result, error);
-  //   }
-  // );
-
+const postCreate = async (params, avatar, background) => {
   try {
+    console.log(avatar, background);
+    let avatarFile = path.join(
+      `${process.cwd()}/uploads/${avatar[0].filename}`
+    );
+    let backgroundFile = path.join(
+      `${process.cwd()}/uploads/${background[0].filename}`
+    );
+
+    let uploadAvatar = await cloudinary.uploader.upload(
+      avatarFile,
+      {
+        resource_type: 'image',
+        public_id: `film/${avatar[0].filename}`,
+        overwrite: true,
+        notification_url:
+          'https://cloudinary.com/console/c-4205030a9f5c35e013957834134f1a/media_library/folders/5d68242865dc959266460583adbed53d'
+      },
+      function (error, result) {
+        return {error: error, result: result};
+      }
+    );
+
+    let uploadBackground = await cloudinary.uploader.upload(
+      backgroundFile,
+      {
+        resource_type: 'image',
+        public_id: `film/${background[0].filename}`,
+        overwrite: true,
+        notification_url:
+          'https://cloudinary.com/console/c-4205030a9f5c35e013957834134f1a/media_library/folders/5d68242865dc959266460583adbed53d'
+      },
+      function (error, result) {
+        return {error: error, result: result};
+      }
+    );
+
     let lambda = {
       name: params.name || undefined,
       content: params.content || undefined,
@@ -282,9 +301,10 @@ const postCreate = async (params) => {
       created_at: moment.now(),
       updated_at: moment.now()
     };
-    // let data = await Model.createByLambda(lambda);
+    let data = await Model.createByLambda(lambda);
 
-    return resSuccess('data');
+    return resSuccess({avatar: uploadAvatar, background: uploadBackground});
+    // return image;
   } catch (error) {
     throw {status: 400, detail: error};
   }
@@ -315,7 +335,12 @@ const putUpdate = async (id, params) => {
     };
     lambda.params = omitBy(lambda.params, isNil);
     let data = await Model.updateByLambda(lambda);
-    return resSuccess(data);
+    if (data.ok) {
+      let result = await findById(id);
+      return result;
+    } else {
+      throw {status: 400, detail: data};
+    }
   } catch (error) {
     throw {status: 400, detail: error};
   }
