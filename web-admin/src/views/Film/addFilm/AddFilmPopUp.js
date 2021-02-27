@@ -1,13 +1,14 @@
 import { Modal, Button } from 'antd';
 import React from "react";
-import EditableTable from './EditFilm'
-import "./../../styles/Film/detailPopup.scss";
-const Detail = () => {
+import AddFilm from './AddFilm'
+import "./../../../styles/Film/addfilmPopup.scss";
+const AddNewFilm = (props) => {
   const [visible, setVisible] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
   const [modalText, setModalText] = React.useState();
 
   const showModal = () => {
+
     setVisible(true);
   };
 
@@ -28,19 +29,21 @@ const Detail = () => {
   return (
     <>
       <a type="primary" onClick={showModal}>
-        Detail
+        Add Film
       </a>
       <Modal 
-        title="Edit Film Detail"
+        width={400}
+        
+        title="Add New Film"
         visible={visible}
         onOk={handleOk}
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
         pagination={false}
       >
-        <EditableTable />
+        <AddFilm/>
       </Modal>
     </>
   );
 };
-export default Detail
+export default AddNewFilm
