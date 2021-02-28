@@ -2,7 +2,6 @@ import { StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
     areaSeats: {
-        height: 350,
         backgroundColor: "lightgray",
         marginBottom: 15,
         

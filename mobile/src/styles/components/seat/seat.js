@@ -66,10 +66,10 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0, 0, 0, 0)',
     },
     seatBuyed: {
-        borderColor: "orange"
+        borderColor: "#e7eaec"
     },
     seatBuyedImage: {
-        backgroundColor: "orange"
+        backgroundColor: "#e7eaec"
     },
     seatSelected: {
         borderColor: "red"

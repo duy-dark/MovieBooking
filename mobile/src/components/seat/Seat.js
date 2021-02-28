@@ -38,15 +38,18 @@ const Seat = (props) => {
     }
 
     const onPressSeat = (seat) => {
-        if (props.seats.length < 10) {
-            !status ? setStatus(seat) : setStatus("");
-            props.selected(seat);
-          } else if (props.seats.includes(seat)) {
-            !status ? setStatus(seat) : setStatus("");
-            props.selected(seat);
-          } else {
-            alert("không được mua quá 10 vé");
-          }
+        if(!props.arrSeatsSelected.includes(props.value)) {
+            if (props.seats.length < 10 ) {
+                !status ? setStatus(seat) : setStatus("");
+                props.selected(seat);
+              } else if (props.seats.includes(seat)) {
+                !status ? setStatus(seat) : setStatus("");
+                props.selected(seat);
+              } 
+              else {
+                alert("không được mua quá 10 vé");
+              }
+        }
     }
     
     return (
@@ -58,8 +61,8 @@ const Seat = (props) => {
                 </View>
             </TouchableOpacity>
         ) : (
-            <TouchableOpacity style={[...array1]} onPress={() => onPressSeat(props.value)}> 
-                <Text style={[...array2]}></Text>
+            <TouchableOpacity style={array1} onPress={() => onPressSeat(props.value)}> 
+                <Text style={array2}></Text>
             </TouchableOpacity>
         )}
         

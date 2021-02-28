@@ -3,7 +3,6 @@ import { View, Text } from 'react-native'
 import Seat from "./Seat"
 
 const SeatRow = (props) => {
-
     return (
         <View style={{flexDirection: "row", justifyContent: "space-between"}}>
             <Text style={{fontSize: 20, color: "black", marginRight: 10}}>{props.name}</Text>

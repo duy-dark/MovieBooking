@@ -6,6 +6,7 @@ import moment from 'moment'
 import SeatRow from '../../components/seat/SeatRow'
 import { useSelector, useDispatch } from "react-redux";
 import { getSeats } from '../../redux/films/actions'
+import styles2 from '../../styles/components/seat/seat'
 
 const BookTicketScreen = (props) => {
     const film = props.route.params.film
@@ -50,9 +51,35 @@ const BookTicketScreen = (props) => {
     return (
         <ScrollView style={styles.container}>
             <ScrollView style={styles.areaSeats} contentContainerStyle={{padding: 15, flexDirection: "column"}} horizontal={true}>
-                {arrSeatsModel.map((seatRow, index) => 
+                {arrSeatsModel.length > 0 && arrSeatsModel.map((seatRow, index) => 
                     <SeatRow key={index} {...seatRow} seats={seats} selected={seat => selectSeat(seat)} arrSeatsSelected={arrSeatsSelected}/>
                 )}
+                <View style={{flexDirection: "row", justifyContent: "center", marginTop: 25}}>
+                    <View style={{alignItems: "center", marginHorizontal: 10}}>
+                        <View style={[styles2.seat, styles2.seatBuyed]}> 
+                            <Text style={[styles2.seatImage, styles2.seatBuyedImage]}></Text>
+                        </View>
+                        <Text>Ghế đã mua</Text>
+                    </View>
+                    <View style={{alignItems: "center", marginHorizontal: 10}}>
+                        <View style={styles2.seat}> 
+                            <Text style={styles2.seatImage}></Text>
+                        </View>
+                        <Text>Ghế Thường</Text>
+                    </View>
+                    <View style={{alignItems: "center", marginHorizontal: 10}}>
+                        <View style={[styles2.seat, styles2.seatVip]}> 
+                            <Text style={[styles2.seatImage, styles2.seatVipImage]}></Text>
+                        </View>
+                        <Text>Ghế Vip</Text>
+                    </View>
+                    <View style={{alignItems: "center", marginHorizontal: 10}}>
+                        <View style={[styles2.seat, styles2.seatTogether]}> 
+                            <Text style={[styles2.seatImage, styles2.seatTogetherImage]}></Text>
+                        </View>
+                        <Text>Ghế Đôi</Text>
+                    </View>
+                </View>
             </ScrollView>
             <View style={styles.area}>
                 <Text style={styles.nameFilm}>{film.name}</Text>
