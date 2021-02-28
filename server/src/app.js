@@ -18,6 +18,7 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 // app.use(authen) check token
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser('login123123'));
 app.use(
   session({
@@ -62,7 +63,8 @@ app.use('/api/room', require('./modules/rooms'));
 app.use('/api/permission', require('./modules/permissions'));
 // app.use('/api/admin_permission', require('./modules/admins_permissions'));
 app.use('/api/voucher', require('./modules/vouchers'));
-
+app.use('/api/file', require('./util/file'));
+app.use('/api/payment',require('./modules/paymenGetway'))
 app.use(errorHandler);
 
 app.use((req, res) => {

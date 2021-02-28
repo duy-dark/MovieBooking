@@ -42,7 +42,8 @@ const getNowShowing = async () => {
     };
 
     let data = await Model.getNowShowing(lambda);
-
+    data[0].theaters = data[0].theaters.filter((item) => item._id !== null);
+    data[0].films = data[0].films.filter((item) => item._id !== null);
     return resSuccess(data[0]);
   } catch (error) {
     // throw {status: 400, detail: error};
@@ -60,11 +61,12 @@ const getList = async (params) => {
         time_end: 1,
         film_id: 1,
         theater_id: 1,
-        // room_id: 1,
-        room: 1
+        room_id: 1,
+        room: 1,
+        theater: 1
       }
     };
-    let data = await Model.findByLambda(lambda);
+    let data = await Model.findByLambda_detail(lambda);
     return resSuccess(data);
   } catch (error) {
     throw {status: 400, detail: error};
@@ -81,8 +83,9 @@ const findById = async (id) => {
         time_end: 1,
         film_id: 1,
         theater_id: 1,
-        // room_id: 1,
-        room: 1
+        room_id: 1,
+        room: 1,
+        theater: 1
       }
     };
     let data = await Model.findByLambda_detail(lambda);
@@ -126,7 +129,12 @@ const putUpdate = async (id, params) => {
     };
     lambda.params = omitBy(lambda.params, isNil);
     let data = await Model.updateByLambda(lambda);
-    return resSuccess(data);
+    if (data.ok) {
+      let result = await findById(id);
+      return result;
+    } else {
+      throw {status: 400, detail: data};
+    }
   } catch (error) {
     throw {status: 400, detail: error};
   }

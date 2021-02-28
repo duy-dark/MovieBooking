@@ -4,12 +4,14 @@ import { Collapse } from 'react-collapse';
 import * as moment from 'moment';
 import CardTime from './CardTime';
 import CardComment from './CardComment';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 const days = ['CN', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7']
 export default function TabsSchedule(props) {
 
   const [activeIndex, setActiveIndex] = useState([1, 2, 3]);
-  const [listDate, setListDate] = useState([])
+  const [listDate, setListDate] = useState([{}, {}, {}, {}, {}, {}, {}])
 
 
 
@@ -42,102 +44,155 @@ export default function TabsSchedule(props) {
   }, [])
   const [tabSelect, setTabSelect] = useState(0);
 
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const showTheater = (item) => {
+    if (item.length > 0) {
+      return item.map(theater => {
+        return (
+          <div key={theater._id} className="theater__item">
+            <div className="theater__item__header" onClick={() => changeCollapse(1)}>
+              <div className="theater__item__image">
+                <img src={`${theater.url_image}`} alt=""/>
+              </div>
+              <div className="theater__item__film">
+              <span>{`${theater.name}`}</span>
+              <span>{`${theater.address}`}</span>
+              </div>
+            </div>
+            <Collapse className="theater__item__schedule" isOpened={activeIndex.includes(1)}>
+              <div className="theater__item__title">2D Digital</div>
+              <div className="theater__item__schedules">
+               { theater.film_schedules.map(film => <CardTime key={film._id} schedule={film} name={props.detail.name} theater_url_image={theater.url_image} theater_name={theater.name} film={props.detail} />)}
+              </div>
+            </Collapse>
+          </div>
+        )
+      })
+    } else {
+      return (<p>Không có lịch chiếu</p>)
+    }
+  }
+  const [rated, setRated] = useState(5);
+  const [ratedHover, setRatedHover] = useState(5);
+
+
   return (
-    <Tabs className="tab-detail">
-      <TabList className="tab-detail__header">
-        <Tab className="tab-detail__header__item">Lịch Chiếu</Tab>
-        <Tab className="tab-detail__header__item">Thông Tin</Tab>
-        <Tab className="tab-detail__header__item">Đánh Giá</Tab>
-      </TabList>
-      <TabPanel className="tab-detail__date">
-        <Tabs className="tab-detail__date-list" selectedIndex={tabSelect} onSelect={tab => setTabSelect(tab)}>
-          <TabList className="date-list">
-            {
-              listDate.map((item, index) => {
-                return (
-                  <Tab key={index} className="date-list__item"><span>{item.name}</span><span>{item.day}</span></Tab>
-                )
-              })
-            }
-          </TabList>
-          { props.dayOfWeeks.map((item, index) => {
-              return (
-              <TabPanel key={index} className="tab-detail__theater">
-                <div>
+    <>
+      <Tabs className="tab-detail">
+        <TabList className="tab-detail__header">
+          {props.future > 0 && (<Tab className="tab-detail__header__item">Lịch Chiếu</Tab>)}
+          <Tab className="tab-detail__header__item">Thông Tin</Tab>
+          <Tab className="tab-detail__header__item">Đánh Giá</Tab>
+        </TabList>
+        {props.future > 0 && (
+          <TabPanel className="tab-detail__date">
+            <Tabs className="tab-detail__date-list" selectedIndex={tabSelect} onSelect={tab => setTabSelect(tab)}>
+              <TabList className="date-list">
                 {
-                  item.map(theater => {
+                  listDate.map((item, index) => {
                     return (
-                      <div key={theater._id} className="theater__item">
-                        <div className="theater__item__header" onClick={() => changeCollapse(1)}>
-                          <div className="theater__item__image">
-                            <img src={`${theater.url_image}`} alt=""/>
-                          </div>
-                          <div className="theater__item__film">
-                          <span>{`${theater.name}`}</span>
-                          <span>{`${theater.address}`}</span>
-                          </div>
-                        </div>
-                        <Collapse className="theater__item__schedule" isOpened={activeIndex.includes(1)}>
-                          <div className="theater__item__title">2D Digital</div>
-                          <div className="theater__item__schedules">
-                           { theater.film_schedules.map(film => <CardTime key={film._id} schedule={film} name={props.detail.name} theater_url_image={theater.url_image} theater_name={theater.name} film={props.detail} />)}
-                          </div>
-                        </Collapse>
-                      </div>
+                      <Tab key={index} className={`date-list__item ${props.dayOfWeeks[index].length > 0 ? 'date-list__item-show' : ''}`}><span>{item.name}</span><span>{item.day}</span></Tab>
                     )
                   })
                 }
-                </div>
-              </TabPanel>
-              )
-            })}
+              </TabList>
+              { props.dayOfWeeks.map((item, index) => {
+                    return (
+                    <TabPanel key={index} className="tab-detail__theater">
+                      <div>
+                      { showTheater(item) }
+                      </div>
+                    </TabPanel>
+                    )
+                })}
 
-        </Tabs>
-      </TabPanel>
-      <TabPanel className="detail-tab-info">
-        <div className="detail-info__info">
-          <table>
-            <tbody>
-              <tr>
-                <th>Ngày công chiếu</th>
-                <td>{`${moment(props.detail.start_date).format("MM-DD-  YYYY")}`}</td>
-              </tr>
-              <tr>
-                <th>Đạo diễn</th>
-                <td>{`${props.detail.directors}`}</td>
-              </tr>
-              <tr>
-                <th>Diễn viên</th>
-                <td>{`${props.detail.actors}`}</td>
-              </tr>
-              <tr>
-                <th>Thể Loại</th>
-                <td>{ `${props.detail.actors}` }</td>
-              </tr>
-              <tr>
-                <th>Định dạng</th>
-                <td>{ `${props.detail.digitals}` }</td>
-              </tr>
-              <tr>
-                <th>Quốc Gia SX</th>
-                <td>{ `${props.detail.countries}` }</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div className="detail-info__content">
-          <p className="detail-info__content__title">Nội dung</p>
-          <p>{ `${props.detail.content}` }</p>
-        </div>
-      </TabPanel>
-      <TabPanel className="tab-detail__comment">
-          <div className="comment-block" onClick={()=> {}}>
-            <span className="comment-block__image"><img src="https://tix.vn/app/assets/img/avatar.png" alt="avatar"/></span>
-            <input type="text" placeholder="Bạn nghĩ gì về phim này?"/>
-            <span class="comment-block__rate"><img src="https://tix.vn/app/assets/img/icons/listStar.png" alt="star"/></span>
+            </Tabs>
+          </TabPanel>
+        )}
+        <TabPanel className="detail-tab-info">
+          <div className="detail-info__info">
+            <table>
+              <tbody>
+                <tr>
+                  <th>Ngày công chiếu</th>
+                  <td>{`${moment(props.detail.start_date).format("MM-DD-  YYYY")}`}</td>
+                </tr>
+                <tr>
+                  <th>Đạo diễn</th>
+                  <td>{`${props.detail.directors}`}</td>
+                </tr>
+                <tr>
+                  <th>Diễn viên</th>
+                  <td>{`${props.detail.actors}`}</td>
+                </tr>
+                <tr>
+                  <th>Thể Loại</th>
+                  <td>{ `${props.detail.actors}` }</td>
+                </tr>
+                <tr>
+                  <th>Định dạng</th>
+                  <td>{ `${props.detail.digitals}` }</td>
+                </tr>
+                <tr>
+                  <th>Quốc Gia SX</th>
+                  <td>{ `${props.detail.countries}` }</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <CardComment/>
-      </TabPanel>
-    </Tabs>
+          <div className="detail-info__content">
+            <p className="detail-info__content__title">Nội dung</p>
+            <p>{ `${props.detail.content}` }</p>
+          </div>
+        </TabPanel>
+        <TabPanel className="tab-detail__comment">
+            <div className="comment-block" onClick={handleShow}>
+              <span className="comment-block__image"><img src="https://tix.vn/app/assets/img/avatar.png" alt="avatar"/></span>
+              <input type="text" placeholder="Bạn nghĩ gì về phim này?"/>
+              <span className="comment-block__rate"><img src="https://tix.vn/app/assets/img/icons/listStar.png" alt="star"/></span>
+            </div>
+            { props.comments.map(comment => (<CardComment key={comment._id} username={comment.customers.name} {...comment}/>))}
+
+        </TabPanel>
+      </Tabs>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <div className="modal-comment__header">
+            Comment
+          </div>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="modal-comment">
+            <div className="modal-comment__number">
+              <p>{rated}</p>
+            </div>
+            <div className="modal-comment__select">
+              <img onClick={() => setRated(1)} onMouseOver={() => setRatedHover(1)} onMouseOut={() => setRatedHover(0)} className={`star ${rated >= 1 || ratedHover >= 1 ? 'star--selected' : ''}`} src={`https://tix.vn/app/assets/img/icons/star1.png`} alt=""/>
+              <img onClick={() => setRated(2)} onMouseOver={() => setRatedHover(2)} onMouseOut={() => setRatedHover(0)} className={`star ${rated >= 2 || ratedHover >= 2 ? 'star--selected' : ''}`} src={`https://tix.vn/app/assets/img/icons/star1.png`} alt=""/>
+              <img onClick={() => setRated(3)} onMouseOver={() => setRatedHover(3)} onMouseOut={() => setRatedHover(0)} className={`star ${rated >= 3 || ratedHover >= 3 ? 'star--selected' : ''}`} src={`https://tix.vn/app/assets/img/icons/star1.png`} alt=""/>
+              <img onClick={() => setRated(4)} onMouseOver={() => setRatedHover(4)} onMouseOut={() => setRatedHover(0)} className={`star ${rated >= 4 || ratedHover >= 4 ? 'star--selected' : ''}`} src={`https://tix.vn/app/assets/img/icons/star1.png`} alt=""/>
+              <img onClick={() => setRated(5)} onMouseOver={() => setRatedHover(5)} onMouseOut={() => setRatedHover(0)} className={`star ${rated >= 5 || ratedHover >= 5 ? 'star--selected' : ''}`} src={`https://tix.vn/app/assets/img/icons/star1.png`} alt=""/>
+              <img onClick={() => setRated(6)} onMouseOver={() => setRatedHover(6)} onMouseOut={() => setRatedHover(0)} className={`star ${rated >= 6 || ratedHover >= 6 ? 'star--selected' : ''}`} src={`https://tix.vn/app/assets/img/icons/star1.png`} alt=""/>
+              <img onClick={() => setRated(7)} onMouseOver={() => setRatedHover(7)} onMouseOut={() => setRatedHover(0)} className={`star ${rated >= 7 || ratedHover >= 7 ? 'star--selected' : ''}`} src={`https://tix.vn/app/assets/img/icons/star1.png`} alt=""/>
+              <img onClick={() => setRated(8)} onMouseOver={() => setRatedHover(8)} onMouseOut={() => setRatedHover(0)} className={`star ${rated >= 8 || ratedHover >= 8 ? 'star--selected' : ''}`} src={`https://tix.vn/app/assets/img/icons/star1.png`} alt=""/>
+              <img onClick={() => setRated(9)} onMouseOver={() => setRatedHover(9)} onMouseOut={() => setRatedHover(0)} className={`star ${rated >= 9 || ratedHover >= 9 ? 'star--selected' : ''}`} src={`https://tix.vn/app/assets/img/icons/star1.png`} alt=""/>
+              <img onClick={() => setRated(10)} onMouseOver={() => setRatedHover(10)} onMouseOut={() => setRatedHover(0)} className={`star ${rated === 10 || ratedHover === 10 ? 'star--selected' : ''}`} src={`https://tix.vn/app/assets/img/icons/star1.png`} alt=""/>
+            </div>
+            <div className="modal-comment__content">
+              <textarea name="" id="" cols="10" rows="6"></textarea>
+            </div>
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="primary modal-comment__button" onClick={handleClose}>
+            Đăng
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   )
 }

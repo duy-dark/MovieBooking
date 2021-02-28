@@ -4,8 +4,10 @@ const handler = require('./handler');
 const {omitBy, isNil} = require('lodash');
 
 router.get('/', (req, res, next) => {
+  const {_id = undefined} = req.query;
+
   let conditions = {
-    _id: req.query._id,
+    _id: !_id ? undefined : require('mongodb').ObjectId(req.query._id),
     name: req.query.name,
     address: req.query.address,
     url_image: req.query.url_image,

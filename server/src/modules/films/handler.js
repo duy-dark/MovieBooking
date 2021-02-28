@@ -130,29 +130,30 @@ const findById = async (id) => {
     };
     let data = await Model.getDetail(lambda);
 
-    let days = [
-      'chủ nhật',
-      'thứ 2',
-      'thứ 3',
-      'thứ 4',
-      'thứ 5',
-      'thứ 6',
-      'thứ 7'
-    ];
-    let arr = [];
-    let now = moment();
-    for (let i = 0; i < 7; i++) {
-      arr.push({
-        name: days[moment(now).add(i, 'days').day()],
-        date: moment(now).add(i, 'days').format('DD/MM/YYYY'),
-        day: moment(now).add(i, 'days').format('DD'),
-        dateISO_8601: moment(now, moment.ISO_8601).add(i, 'days')
-      });
-    }
+    // let days = [
+    //   'chủ nhật',
+    //   'thứ 2',
+    //   'thứ 3',
+    //   'thứ 4',
+    //   'thứ 5',
+    //   'thứ 6',
+    //   'thứ 7'
+    // ];
+    // let arr = [];
+    // let now = moment();
+    // for (let i = 0; i < 7; i++) {
+    //   arr.push({
+    //     name: days[moment(now).add(i, 'days').day()],
+    //     date: moment(now).add(i, 'days').format('DD/MM/YYYY'),
+    //     day: moment(now).add(i, 'days').format('DD'),
+    //     dateISO_8601: moment(now, moment.ISO_8601).add(i, 'days')
+    //   });
+    // }
 
-    console.log('arr:', arr);
-    // let data = await Model.getDetail(lambda);
-    data[0] = {...data[0], listday: arr};
+    // console.log('arr:', arr);
+    // // let data = await Model.getDetail(lambda);
+    // // data[0] = {...data[0], listday: arr};
+    // data[0] = {...data};
 
     return resSuccess(data[0]);
   } catch (error) {
@@ -256,9 +257,9 @@ const postCreate = async (params) => {
       created_at: moment.now(),
       updated_at: moment.now()
     };
+    console.log('lambda', lambda);
     let data = await Model.createByLambda(lambda);
-
-    return resSuccess(data);
+    return resSuccess(data[0]);
   } catch (error) {
     throw {status: 400, detail: error};
   }
@@ -289,7 +290,12 @@ const putUpdate = async (id, params) => {
     };
     lambda.params = omitBy(lambda.params, isNil);
     let data = await Model.updateByLambda(lambda);
-    return resSuccess(data);
+    if (data.ok) {
+      let result = await findById(id);
+      return result;
+    } else {
+      throw {status: 400, detail: data};
+    }
   } catch (error) {
     throw {status: 400, detail: error};
   }
@@ -358,15 +364,53 @@ const getNowShowing = async () => {
   }
 };
 
-let getCommingSoon = async (params) => {
+const getCommingSoon = async () => {
   try {
-    console.log('helloworld: ', params);
-    let data = await Model.getCommingSoon(params);
+    let time_start = new Date(moment());
+
+    let date = new Date(moment().add(7, 'days')).getDate();
+
+    let month = new Date(moment().add(7, 'days')).getMonth();
+    let year = new Date(moment().add(7, 'days')).getFullYear();
+
+    let time_end1 = new Date(
+      moment(
+        `${year}-${month > 8 ? month + 1 : '0' + (month + 1)}-${
+          date > 9 ? date : '0' + date
+        }`,
+        moment.ISO_8601
+      )
+    );
+
+    console.log('time_start: ', time_start);
+    console.log('time_end1:   ', time_end1);
+    console.log('date:       ', date);
+    console.log('month:      ', month + 1);
+    console.log('year:       ', year);
+
+    let lambda = {
+      conditions: {
+        time_start: time_end1,
+        time_end1: new Date(moment(time_end1).add(1, 'days')),
+        time_end2: new Date(moment(time_end1).add(2, 'days')),
+        time_end3: new Date(moment(time_end1).add(3, 'days')),
+        time_end4: new Date(moment(time_end1).add(4, 'days')),
+        time_end5: new Date(moment(time_end1).add(5, 'days')),
+        time_end6: new Date(moment(time_end1).add(6, 'days')),
+        time_end7: new Date(moment(time_end1).add(7, 'days')),
+        is_deleted: false
+      }
+    };
+
+    let data = await Model.getNowShowing(lambda);
+
     return resSuccess(data);
   } catch (error) {
-    return error;
+    // throw {status: 400, detail: error};
+    throw {status: 400, detail: error};
   }
 };
+
 module.exports = {
   getList,
   getDetail,

@@ -30,7 +30,7 @@ module.exports = {
     return await Collection.aggregate([
       {
         $match: {
-          _id: lambda.conditions._id
+          $and: [lambda.conditions]
         }
       },
       {
@@ -41,10 +41,39 @@ module.exports = {
           as: 'room'
         }
       },
-      {$unset: ['room.is_deleted', 'room.created_at', 'room.updated_at']},
+      {
+        $unset: [
+          'room.is_deleted',
+          'room.created_at',
+          'room.updated_at',
+          'room.seats'
+        ]
+      },
+      {
+        $lookup: {
+          from: 'theaters',
+          localField: 'theater_id',
+          foreignField: '_id',
+          as: 'theater'
+        }
+      },
+      {
+        $unset: [
+          'theater.is_deleted',
+          'theater.created_at',
+          'theater.updated_at',
+          'theater.rooms'
+        ]
+      },
       {
         $unwind: {
           path: '$room',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $unwind: {
+          path: '$theater',
           preserveNullAndEmptyArrays: true
         }
       },
@@ -163,6 +192,7 @@ module.exports = {
                 preserveNullAndEmptyArrays: true
               }
             },
+            {$sort: {'schedules.time_start': 1}},
             {
               $lookup: {
                 from: 'rooms',
@@ -187,7 +217,8 @@ module.exports = {
                   $push: '$schedules'
                 }
               }
-            }
+            },
+            {$sort: {'schedules.time_start': 1}}
           ]
         }
       },
@@ -206,7 +237,64 @@ module.exports = {
           }
         }
       },
-      {$unset: ['dayOfWeek._id']}
+      {$unset: ['dayOfWeek._id', 'dayOfWeek.schedules.rooms.seats']}
+    ]);
+  },
+
+  getRoomInfoForTicket: async function (lambda) {
+    return await Collection.aggregate([
+      {
+        $match: {
+          $and: [lambda.conditions]
+        }
+      },
+      {
+        $lookup: {
+          from: 'rooms',
+          localField: 'room_id',
+          foreignField: '_id',
+          as: 'room'
+        }
+      },
+      {
+        $unset: [
+          'room.is_deleted',
+          'room.created_at',
+          'room.updated_at'
+          // 'room.seats'
+        ]
+      },
+      {
+        $lookup: {
+          from: 'theaters',
+          localField: 'theater_id',
+          foreignField: '_id',
+          as: 'theater'
+        }
+      },
+      {
+        $unset: [
+          'theater.is_deleted',
+          'theater.created_at',
+          'theater.updated_at',
+          'theater.rooms'
+        ]
+      },
+      {
+        $unwind: {
+          path: '$room',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $unwind: {
+          path: '$theater',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $project: lambda.views
+      }
     ]);
   }
 };

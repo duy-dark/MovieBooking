@@ -1,12 +1,13 @@
 import routes from "./router";
-import React from "react";
+import React,{ Component } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Layout } from 'antd';
-
+import { connect } from 'react-redux';
 import MenuHome from "./views/home/menu/MenuHome";
 
 const { Header, Footer, Sider, Content } = Layout; 
-export default function App() {
+class App extends Component {
+  render(){
   function showRouteComponent(routes) {
     let result = null;
     if (routes.length > 0) {
@@ -39,5 +40,11 @@ export default function App() {
         </Layout>
       </Layout>
     </Router>
-  );
+  );}
 }
+const mapStateToProps = state => {
+  return {
+  header: !!state.users.header,
+  footer: !!state.users.footer
+}};
+export default connect(mapStateToProps)(App);

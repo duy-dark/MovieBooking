@@ -4,7 +4,12 @@ import { useHistory } from 'react-router-dom';
 export default function CardFilm(props) {
   const history = useHistory();
   const goDetail = (id) => {
-    history.push(`/${id}/detail`);
+    history.push({
+      pathname: `/${id}/detail`,
+      state: {
+        future: props.future
+      }
+    })
   };
   return (
     <div className="card-film">

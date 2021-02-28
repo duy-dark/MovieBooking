@@ -5,7 +5,7 @@ import "react-wheel-of-prizes/dist/index.css";
 import "../../../styles/customers/game/game.scss"
 const Table = () => {
     return (
-        <div className="game__history"> 
+        <div className="game__history">
         <table id="customers">
             <caption className="game__history__caption">Lịch sử lượt chơi</caption>
             <tr>
@@ -81,11 +81,10 @@ const Circle = () => {
     "#FF9000",
   ];
   const onFinished = (winner) => {
-    console.log(winner);
   }
   return (
     <div className="game__circle">
-        <WheelComponent 
+        <WheelComponent
             segments = {segments}
             segColors = {segColors}
             winningSegment ='won 10'
