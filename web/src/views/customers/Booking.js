@@ -6,6 +6,7 @@ import "../../styles/customers/booking/booking.scss";
 import { getFilmDetails, getSeats, postBookingInfo } from "../../redux/films/actions";
 // import { getToken } from "../../redux/users/selector";
 import * as moment from "moment"
+import { getUserInfo } from "../../redux/users/actions";
 
 const SeatEl = (props) => {
   const [status, setStatus] = useState();
@@ -33,7 +34,7 @@ const SeatEl = (props) => {
   let classSeatChil = () => {
     let str = "seat"
     if (props.seatsSelected.includes(props.seat)) str += " seat--hide"
-    if (status) str += " seat--selected"
+    if (props.seats.includes(props.seat)) str += " seat--selected"
     if (props.vip === "1") str += " seat--vip"
     if (props.type === "2-1") str += " seat--together seat--two-1"
     if (props.type === "2-2") str += " seat--together seat--two-2"
@@ -50,7 +51,7 @@ const SeatEl = (props) => {
   return (
     <span className={classSeatPar()} onClick={() => clickSeat(props)}>
       <span className={classSeatChil()}>
-        <span className="s-img">{formatSeat(status)}</span>
+        <span className="s-img">{ props.seats.includes(props.seat) ? formatSeat(props.seat) : formatSeat(status)}</span>
       </span>
     </span>
   );
@@ -109,10 +110,44 @@ export default function Booking(props) {
       if (seats.includes(seat)) {
         const arr = [...seats];
         const index = arr.indexOf(seat);
+
+        let nameRow = seat.slice(0, 1)
+        let indexRowItem = words.indexOf(nameRow)
+        let indexValueItem = arrSeats[indexRowItem].rows.indexOf(seat)
+        if (arrSeats[indexRowItem].types[indexValueItem] === "2-1") {
+          let number = +seat.substr(seat.length - 1)
+          let name = seat.slice(0, seat.length - 1)
+          let numberNext = ++number
+          const index1 = arr.indexOf(name + numberNext);
+          arr.splice(index1, 1);
+
+        } else if (arrSeats[indexRowItem].types[indexValueItem] === "2-2") {
+          let number = +seat.substr(seat.length - 1)
+          let name = seat.slice(0, seat.length - 1)
+          let numberPrev = --number
+          const index1 = arr.indexOf(name + numberPrev);
+          arr.splice(index1, 1);
+
+        }
         arr.splice(index, 1);
         setSeats([...arr]);
       } else {
-        setSeats([...seats, seat]);
+        let nameRow = seat.slice(0, 1)
+        let indexRowItem = words.indexOf(nameRow)
+        let indexValueItem = arrSeats[indexRowItem].rows.indexOf(seat)
+        if (arrSeats[indexRowItem].types[indexValueItem] === "2-1") {
+          let number = +seat.substr(seat.length - 1)
+          let name = seat.slice(0, seat.length - 1)
+          let numberNext = ++number
+          setSeats([...seats, seat, name + numberNext])
+        } else if (arrSeats[indexRowItem].types[indexValueItem] === "2-2") {
+          let number = +seat.substr(seat.length - 1)
+          let name = seat.slice(0, seat.length - 1)
+          let numberPrev = --number
+          setSeats([...seats, seat, name + numberPrev])
+        } else {
+          setSeats([...seats, seat]);
+        }
       }
     }
   };
@@ -120,12 +155,6 @@ export default function Booking(props) {
   const formatMoney = (number) => {
     return new Intl.NumberFormat().format(number);
   };
-
-  useEffect(() => {
-    if (!user) {
-      history.push('/login')
-    }
-  }, [user])
 
   const bookingTicket = () => {
     const bookingInfo = {
@@ -154,30 +183,38 @@ export default function Booking(props) {
       let nameRow = item.slice(0, 1)
       let indexRowItem = words.indexOf(nameRow)
       let indexValueItem = arrSeats[indexRowItem].rows.indexOf(item)
-      let valueNearL1 = arrSeats[indexRowItem].rows[indexValueItem - 1]
-      let valueNearL2 = arrSeats[indexRowItem].rows[indexValueItem - 2]
-      let valueNearR1 = arrSeats[indexRowItem].rows[indexValueItem + 1]
-      let valueNearR2 = arrSeats[indexRowItem].rows[indexValueItem + 2]
-
-      if (valueNearL1 && !listSeatsSelected.includes(valueNearL1) && !seats.includes(valueNearL1) && (valueNearL2 === "0" || valueNearL2 === undefined)) {
-        setIsSelectBug(true)
-        setShowError(true)
-      } else if (valueNearR1 && !listSeatsSelected.includes(valueNearR1) && !seats.includes(valueNearR1) && (valueNearR2 === "0" || valueNearR2 === undefined)) {
-        setIsSelectBug(true)
-        setShowError(true)
-      } else {
-        setIsSelectBug(false)
-        setShowError(false)
+      if (arrSeats[indexRowItem].types[indexValueItem] !== "2-1" && arrSeats[indexRowItem].types[indexValueItem] !== "2-2") {
+        let valueNearL1 = arrSeats[indexRowItem].rows[indexValueItem - 1]
+        let valueNearL2 = arrSeats[indexRowItem].rows[indexValueItem - 2]
+        let valueNearR1 = arrSeats[indexRowItem].rows[indexValueItem + 1]
+        let valueNearR2 = arrSeats[indexRowItem].rows[indexValueItem + 2]
+        if (valueNearL1 && !listSeatsSelected.includes(valueNearL1) && !seats.includes(valueNearL1) && (valueNearL2 === "0" || valueNearL2 === undefined)) {
+          setIsSelectBug(true)
+          setShowError(true)
+        } else if (valueNearR1 && !listSeatsSelected.includes(valueNearR1) && !seats.includes(valueNearR1) && (valueNearR2 === "0" || valueNearR2 === undefined)) {
+          setIsSelectBug(true)
+          setShowError(true)
+        } else {
+          setIsSelectBug(false)
+          setShowError(false)
+        }
       }
     })
   }, [seats])
-  
+
   useEffect(() => {
     const info = {
       id: id
     };
     dispatch(getFilmDetails(info));
     dispatch(getSeats(movies.schedule_id));
+    const token = localStorage.getItem("token");
+    const userID = localStorage.getItem("userID");
+    if (token && userID) {
+      dispatch(getUserInfo({ token, userID }));
+    } else {
+      history.push("/login")
+    }
   }, [])
 
   const formatDate = (date) => {

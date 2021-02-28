@@ -32,6 +32,7 @@
   flex-direction: row;
   flex-flow: row wrap;
   padding: 0 calc(50% - 170px);
+  justify-content: center;
 }
 
 
@@ -125,5 +126,11 @@
     span:nth-child(1) {
       color: #fb4226;
     }
+  }
+}
+
+@media only screen and (max-width: $breakpoint_xs) {
+  .card-film {
+    width: 190px;
   }
 }
