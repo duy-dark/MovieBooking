@@ -105,6 +105,8 @@ export default function Home() {
           let arrTheater = arrTemp1.filter((item, index) => arrTemp1.indexOf(item) === index)
           let option = search.theaters.filter(val => arrTheater.includes(val._id))
           setOptionTheater(option.map(val => ({ ...val, label: val.name, value: val._id })))
+          setSelectThreater('')
+          setSelectTime('')
         }
       }
     }
