@@ -84,7 +84,8 @@ const postCreate = async (params) => {
       if (customerExisted && customerExisted.length) {
         return resSuccess({
           token: jwt.encode(customerExisted[0]),
-          customer: customerExisted[0]
+          customer: customerExisted[0],
+          is_newbie: false
         });
       }
     }
@@ -97,7 +98,8 @@ const postCreate = async (params) => {
       if (customerExisted && customerExisted.length) {
         return resSuccess({
           token: jwt.encode(customerExisted[0]),
-          customer: customerExisted[0]
+          customer: customerExisted[0],
+          is_newbie: false
         });
       }
     }
@@ -122,7 +124,8 @@ const postCreate = async (params) => {
     // return resSuccess(data);
     return resSuccess({
       token: jwt.encode(data[0]),
-      customer: data[0]
+      customer: data[0],
+      is_newbie: true
     });
   } catch (error) {
     throw {status: 400, detail: error};
@@ -141,6 +144,7 @@ const putUpdate = async (id, params) => {
         gender: params.gender || undefined,
         avatar: params.avatar || undefined,
         adress: params.adress || undefined,
+        favorite_ids: params.favorite_ids || undefined,
         updated_at: moment.now()
       }
     };

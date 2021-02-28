@@ -12,6 +12,7 @@ let schema = new mongoose.Schema(
     gender: String,
     avatar: String,
     address: String,
+    favorite_ids: [require('mongodb').ObjectID],
     is_deleted: Boolean,
     created_at: Date,
     updated_at: Date
