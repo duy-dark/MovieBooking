@@ -50,6 +50,7 @@ $wContainer: 940px;
   display: flex !important;
   flex-direction: row;
   flex-flow: row wrap;
+  justify-content: center;
 }
 
 .card-film {
@@ -173,11 +174,11 @@ $wContainer: 940px;
 
   &.s-arrow--prev {
     background-image: url('/assets/ic-arrow.png');
-    left: -50px;
+    left: -40px;
   }
 
   &.s-arrow--next {
-    right: -50px;
+    right: -40px;
     background-image: url('/assets/ic-arrow-n.png');
   }
 }
@@ -338,4 +339,21 @@ $wContainer: 940px;
 
 .ReactCollapse--collapse {
   transition: height 0.3s;
+}
+
+@media only screen and (max-width: $breakpoint_md - 1px) {
+  .list-film {
+    padding: 30px;
+  }
+  .s-arrow {
+    &.s-arrow--prev {
+      background-image: url('/assets/ic-arrow.png');
+      left: 0;
+    }
+
+    &.s-arrow--next {
+      right: 0;
+      background-image: url('/assets/ic-arrow-n.png');
+    }
+  }
 }
