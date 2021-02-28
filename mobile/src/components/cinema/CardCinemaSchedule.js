@@ -26,7 +26,7 @@ const CardCinemaSchedule = (props) => {
                 {showtimes &&
                     <View style={styles.showtimes}>
                         <Text style={{color: "gray"}}>{props.film.digitals}</Text>
-                        <View style={{flexDirection: "row"}}>
+                        <View style={{flexDirection: "row", flexWrap: "wrap"}}>
                             {props.cinema.film_schedules.map((film_schedule, index) => (
                                 <TouchableOpacity key={index} style={styles.hoursArea} onPress={() => bookTicket(film_schedule)}>
                                     <Text style={styles.hoursStart}>{moment(film_schedule.time_start).format('hh:mm')}</Text>

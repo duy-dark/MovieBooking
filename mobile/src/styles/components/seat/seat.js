@@ -39,10 +39,43 @@ const styles = StyleSheet.create({
         backgroundColor: "#f7b500"
     },
     seatTogether: {
-        borderColor: "#701010"
+        borderColor: "#701010",
     },
     seatTogetherImage: {
         backgroundColor: "#701010"
+    },
+
+    seatTogether1: {
+        marginRight: 0,
+        borderBottomRightRadius: 0
+    },
+    seatTogether1Image: {
+        backgroundColor: "#701010"
+    },
+    seatTogether2: {
+        marginLeft: 0,
+        borderBottomLeftRadius: 0
+    },
+    seatTogether2Image: {
+        backgroundColor: "#701010"
+    },
+    seatHidden: {
+        borderColor: 'rgba(0, 0, 0, 0)',
+    },
+    seatHiddenImage: {
+        backgroundColor: 'rgba(0, 0, 0, 0)',
+    },
+    seatBuyed: {
+        borderColor: "orange"
+    },
+    seatBuyedImage: {
+        backgroundColor: "orange"
+    },
+    seatSelected: {
+        borderColor: "red"
+    },
+    seatSelectedImage: {
+        backgroundColor: "red"
     },
 });
 

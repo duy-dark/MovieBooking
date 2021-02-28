@@ -4,7 +4,8 @@ const styles = StyleSheet.create({
     areaSeats: {
         height: 350,
         backgroundColor: "lightgray",
-        marginBottom: 15
+        marginBottom: 15,
+        
     },
     area: {
         margin: 15,
@@ -32,6 +33,12 @@ const styles = StyleSheet.create({
     textGray: {
         color: "darkgray",
         fontSize: 13,
+    },
+    textSeat: {
+        color: "orange",
+        fontWeight: "bold",
+        fontSize: 13,
+        marginRight: 5
     },
     nameCinema: {
         color: "green",
@@ -67,7 +74,8 @@ const styles = StyleSheet.create({
     },
     moneyText: {
         fontSize: 20,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "red"
     },
     input: {
         paddingVertical: 5,

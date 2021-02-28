@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { ScrollView, View, Text, TextInput, Image, Button, TouchableOpacity } from 'react-native'
 import styles from '../../styles/views/book-ticket/book-ticket'
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import Seat from '../../components/seat/Seat'
 import moment from 'moment'
+import SeatRow from '../../components/seat/SeatRow'
+import { useSelector, useDispatch } from "react-redux";
+import { getSeats } from '../../redux/films/actions'
 
 const BookTicketScreen = (props) => {
     const film = props.route.params.film
@@ -16,21 +18,42 @@ const BookTicketScreen = (props) => {
     const iconMomo = {uri: "https://static.mservice.io/img/logo-momo.png"}
     
     const [payment, setPayment] = useState("momo")
+    const [seats, setSeats] = useState([])
+
+    const formatMoney = (number) => {
+        if (number === 0) return 0
+        var number = number / 1000
+        return number.toFixed(3)
+    }
+    const cost = formatMoney(seats.length * 80000)
+
+    const selectSeat = (seat) => {
+        if (seats.length <= 10) {
+            if (seats.includes(seat)) {
+                const arr = [...seats];
+                const index = arr.indexOf(seat);
+                arr.splice(index, 1);
+                setSeats([...arr]);
+            } else {
+                setSeats([...seats, seat]);
+            }
+        }
+    }
     
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(getSeats(film_schedule._id))
+    }, [])
+    const arrSeatsModel = useSelector((state) => state.films.seats)
+    const arrSeatsSelected = useSelector((state) => state.films.seated)
+
     return (
         <ScrollView style={styles.container}>
-            <View style={styles.areaSeats}>
-            <Seat />
-            <Seat />
-            <Seat />
-            <Seat />
-            <Seat />
-            <Seat />
-            <Seat />
-            <Seat />
-            <Seat />
-            <Seat />
-            </View>
+            <ScrollView style={styles.areaSeats} contentContainerStyle={{padding: 15, flexDirection: "column"}} horizontal={true}>
+                {arrSeatsModel.map((seatRow, index) => 
+                    <SeatRow key={index} {...seatRow} seats={seats} selected={seat => selectSeat(seat)} arrSeatsSelected={arrSeatsSelected}/>
+                )}
+            </ScrollView>
             <View style={styles.area}>
                 <Text style={styles.nameFilm}>{film.name}</Text>
                 <View style={styles.row}>
@@ -57,13 +80,15 @@ const BookTicketScreen = (props) => {
                 <View style={styles.areaDisplaySeats}>
                     <View style={{flex: 1}}>
                         <Text style={styles.textGray}>Số ghế</Text>
-                        <Text style={styles.seatsText}>Vui lòng chọn ghế</Text>
+                        <View style={{flexDirection: "row"}}>
+                            {seats.map((seat, index) => <Text key={index} style={styles.textSeat}>{seat}</Text>)}
+                        </View>
                     </View>
-                    <Text style={[styles.textGray, {flex: 1}]}>Combo</Text>
+                    {/* <Text style={[styles.textGray, {flex: 1}]}>Combo</Text> */}
                 </View>
                 <View style={styles.areaSumMoney}>
                     <Text style={styles.sumText}>Tổng tiền: </Text>
-                    <Text style={styles.moneyText}>0đ</Text>
+                    <Text style={styles.moneyText}>{cost} đ</Text>
                 </View>
             </View>
             <View style={styles.area}>
