@@ -2,14 +2,6 @@ let Model = require('./model');
 const resSuccess = require('../../responses/res-success');
 const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
-let path = require('path');
-
-let cloudinary = require('cloudinary').v2;
-cloudinary.config({
-  cloud_name: 'dkpv3a73a',
-  api_key: '319327752335849',
-  api_secret: 'bZSWKqMyIW8E8uH9gSbyJnJ_j9w'
-});
 
 const getList = async (params) => {
   try {
@@ -243,44 +235,8 @@ const getFilm7Day = async (id) => {
   }
 };
 
-const postCreate = async (params, avatar, background) => {
+const postCreate = async (params) => {
   try {
-    console.log(avatar, background);
-    let avatarFile = path.join(
-      `${process.cwd()}/uploads/${avatar[0].filename}`
-    );
-    let backgroundFile = path.join(
-      `${process.cwd()}/uploads/${background[0].filename}`
-    );
-
-    let uploadAvatar = await cloudinary.uploader.upload(
-      avatarFile,
-      {
-        resource_type: 'image',
-        public_id: `film/${avatar[0].filename}`,
-        overwrite: true,
-        notification_url:
-          'https://cloudinary.com/console/c-4205030a9f5c35e013957834134f1a/media_library/folders/5d68242865dc959266460583adbed53d'
-      },
-      function (error, result) {
-        return {error: error, result: result};
-      }
-    );
-
-    let uploadBackground = await cloudinary.uploader.upload(
-      backgroundFile,
-      {
-        resource_type: 'image',
-        public_id: `film/${background[0].filename}`,
-        overwrite: true,
-        notification_url:
-          'https://cloudinary.com/console/c-4205030a9f5c35e013957834134f1a/media_library/folders/5d68242865dc959266460583adbed53d'
-      },
-      function (error, result) {
-        return {error: error, result: result};
-      }
-    );
-
     let lambda = {
       name: params.name || undefined,
       content: params.content || undefined,
@@ -301,10 +257,9 @@ const postCreate = async (params, avatar, background) => {
       created_at: moment.now(),
       updated_at: moment.now()
     };
+    console.log('lambda', lambda);
     let data = await Model.createByLambda(lambda);
-
-    return resSuccess({avatar: uploadAvatar, background: uploadBackground});
-    // return image;
+    return resSuccess(data[0]);
   } catch (error) {
     throw {status: 400, detail: error};
   }
@@ -455,16 +410,6 @@ const getCommingSoon = async () => {
     throw {status: 400, detail: error};
   }
 };
-
-// let getCommingSoon = async (params) => {
-//   try {
-//     console.log('helloworld: ', params);
-//     let data = await Model.getCommingSoon(params);
-//     return resSuccess(data);
-//   } catch (error) {
-//     return error;
-//   }
-// };
 
 module.exports = {
   getList,
