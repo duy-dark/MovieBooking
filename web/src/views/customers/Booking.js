@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useHistory, useParams } from "react-router-dom";
-import { useStore, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import { updateHeaderFooter } from "../../redux/users/actions";
 import "../../styles/customers/booking/booking.scss";
 import { getFilmDetails, getSeats, postBookingInfo } from "../../redux/films/actions";
@@ -80,6 +80,8 @@ function validateEmail(email) {
   return re.test(String(email).toLowerCase());
 }
 
+const words = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+
 export default function Booking(props) {
   const location = useLocation();
   const history = useHistory();
@@ -90,14 +92,18 @@ export default function Booking(props) {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [payment, setPayment] = useState("");
-  const { users } = useStore().getState();
-
+  const [isSelectBug, setIsSelectBug] = useState(false);
+  const listSeatsSelected = useSelector((state) => state.films.seated)
+  const arrSeats = useSelector((state) => state.films.seats)
+  const roomBooking = useSelector((state) => state.films.roomBooking)
+  // const data = useSelector((state) => state.films.filmDetail)
   const [disabledBtn, setDisabledBtn] = useState(false);
   let { id } = useParams();
 
   useEffect(() => {
-    setDisabledBtn(!(seats.length > 0 && validateEmail(email) && phone && payment));
-  }, [seats, email, phone, payment]);
+    setDisabledBtn(!(seats.length > 0 && !isSelectBug && validateEmail(email) && phone && payment));
+  }, [seats, email, phone, payment, isSelectBug]);
+
   const selectSeat = (seat) => {
     if (seats.length <= 10) {
       if (seats.includes(seat)) {
@@ -110,9 +116,17 @@ export default function Booking(props) {
       }
     }
   };
+
   const formatMoney = (number) => {
     return new Intl.NumberFormat().format(number);
   };
+
+  useEffect(() => {
+    if (!user) {
+      history.push('/login')
+    }
+  }, [user])
+
   const bookingTicket = () => {
     const bookingInfo = {
       count: seats.length,
@@ -127,21 +141,37 @@ export default function Booking(props) {
     dispatch(postBookingInfo(bookingInfo, history));
     setDisabledBtn(true);
   };
+  const [showError, setShowError] = useState(false)
 
-      // useEffect(() => {
-      //   dispatch(
-      //     updateHeaderFooter({
-      //       header: true,
-      //       footer: true,
-      //     })
-      //   );
+  useEffect(() => {
+    if (showError) {
+      alert('không thể chừa trống 1 ghế')
+      setShowError(false)
+    }
+  }, [showError])
+  useEffect(() => {
+    seats.map(item => {
+      let nameRow = item.slice(0, 1)
+      let indexRowItem = words.indexOf(nameRow)
+      let indexValueItem = arrSeats[indexRowItem].rows.indexOf(item)
+      let valueNearL1 = arrSeats[indexRowItem].rows[indexValueItem - 1]
+      let valueNearL2 = arrSeats[indexRowItem].rows[indexValueItem - 2]
+      let valueNearR1 = arrSeats[indexRowItem].rows[indexValueItem + 1]
+      let valueNearR2 = arrSeats[indexRowItem].rows[indexValueItem + 2]
 
-      //   const token = getToken(users);
-      //   if (!token) {
-      //     history.push("/login");
-      //   }
-      //   // eslint-disable-next-line react-hooks/exhaustive-deps
-      // }, []);
+      if (valueNearL1 && !listSeatsSelected.includes(valueNearL1) && !seats.includes(valueNearL1) && (valueNearL2 === "0" || valueNearL2 === undefined)) {
+        setIsSelectBug(true)
+        setShowError(true)
+      } else if (valueNearR1 && !listSeatsSelected.includes(valueNearR1) && !seats.includes(valueNearR1) && (valueNearR2 === "0" || valueNearR2 === undefined)) {
+        setIsSelectBug(true)
+        setShowError(true)
+      } else {
+        setIsSelectBug(false)
+        setShowError(false)
+      }
+    })
+  }, [seats])
+  
   useEffect(() => {
     const info = {
       id: id
@@ -149,10 +179,6 @@ export default function Booking(props) {
     dispatch(getFilmDetails(info));
     dispatch(getSeats(movies.schedule_id));
   }, [])
-  // const data = useSelector((state) => state.films.filmDetail)
-  const listSeatsSelected = useSelector((state) => state.films.seated)
-  const arrSeats = useSelector((state) => state.films.seats)
-  const roomBooking = useSelector((state) => state.films.roomBooking)
 
   const formatDate = (date) => {
     return moment(date).format('dddd DD/MM/YYYY hh:mm');
