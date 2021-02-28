@@ -4,7 +4,6 @@ const styles = StyleSheet.create({
     areaSeats: {
         backgroundColor: "lightgray",
         marginBottom: 15,
-        
     },
     area: {
         margin: 15,

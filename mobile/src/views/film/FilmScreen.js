@@ -25,25 +25,25 @@ const FilmScreen = (props) => {
     const comments = useSelector((state) => state.films.comments)
     
     return (
-        <Tab.Navigator 
-          tabBarOptions={{
-            activeTintColor: "orangered",
-            inactiveTintColor: "darkgray",
-            labelStyle: { fontSize: 11 },
-            indicatorStyle: { backgroundColor: "orangered" },
-          }}
-        >
-          <Tab.Screen name="TabSchedules" options={{title: "Lịch chiếu"}}>
-            {() => <TabSchedules film={film} dayOfWeeks={dayOfWeeks} navigation={props.navigation} />}
-          </Tab.Screen>
-          <Tab.Screen name="TabComments" options={{title: "Bình luận"}}>
-            {() => <TabComments comments={comments} imdb={film.imdb} rateCount={film.rate_count} navigation={props.navigation} />}
-          </Tab.Screen>
-          <Tab.Screen name="TabInfomation" options={{title: "Thông tin"}}>
-            {() => <TabInfomation film={film} />}
-          </Tab.Screen>
-        </Tab.Navigator>
-      );
+      <Tab.Navigator 
+        tabBarOptions={{
+          activeTintColor: "orangered",
+          inactiveTintColor: "darkgray",
+          labelStyle: { fontSize: 11 },
+          indicatorStyle: { backgroundColor: "orangered" },
+        }}
+      >
+        <Tab.Screen name="TabSchedules" options={{title: "Lịch chiếu"}}>
+          {() => <TabSchedules film={film} dayOfWeeks={dayOfWeeks} navigation={props.navigation} />}
+        </Tab.Screen>
+        <Tab.Screen name="TabComments" options={{title: "Bình luận"}}>
+          {() => <TabComments comments={comments} imdb={film.imdb} rateCount={film.rate_count} navigation={props.navigation} />}
+        </Tab.Screen>
+        <Tab.Screen name="TabInfomation" options={{title: "Thông tin"}}>
+          {() => <TabInfomation film={film} />}
+        </Tab.Screen>
+      </Tab.Navigator>
+    );
 }
 
 export default FilmScreen

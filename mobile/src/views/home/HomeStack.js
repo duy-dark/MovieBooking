@@ -6,7 +6,6 @@ import BookTicketScreen from '../book-ticket/BookTicketScreen'
 import TabInfomation from '../film/TabInfomation';
 import CommentScreen from '../comment/CommentScreen';
 import ReviewFilmScreen from '../comment/ReviewFilmScreen';
-import { Button } from 'react-native';
 import { TouchableOpacity, Text } from 'react-native';
 
 const Stack = createStackNavigator();

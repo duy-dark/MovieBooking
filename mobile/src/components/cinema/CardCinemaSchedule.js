@@ -16,30 +16,30 @@ const CardCinemaSchedule = (props) => {
     }
 
     return (
-            <View>
-                <TouchableWithoutFeedback onPress={() => setShowtimes(!showtimes)}>
-                    <View style={styles.cinema}>
-                        <Image style={styles.imageCinema} source={imageCinema} />
-                        <Text style={styles.nameCinema}>{props.cinema.name}</Text>
+        <View>
+            <TouchableWithoutFeedback onPress={() => setShowtimes(!showtimes)}>
+                <View style={styles.cinema}>
+                    <Image style={styles.imageCinema} source={imageCinema} />
+                    <Text style={styles.nameCinema}>{props.cinema.name}</Text>
+                </View>
+            </TouchableWithoutFeedback>
+            {showtimes &&
+                <View style={styles.showtimes}>
+                    <Text style={{color: "gray"}}>{props.film.digitals}</Text>
+                    <View style={{flexDirection: "row", flexWrap: "wrap"}}>
+                        {props.cinema.film_schedules.map((film_schedule, index) => (
+                            <TouchableOpacity key={index} style={styles.hoursArea} onPress={() => bookTicket(film_schedule)}>
+                                <Text style={styles.hoursStart}>{moment(film_schedule.time_start).format('hh:mm')}</Text>
+                                <Text style={styles.hoursEnd}>{moment(film_schedule.time_end).format('hh:mm')}</Text>
+                            </TouchableOpacity>
+                        ))
+                        
+                    }
                     </View>
-                </TouchableWithoutFeedback>
-                {showtimes &&
-                    <View style={styles.showtimes}>
-                        <Text style={{color: "gray"}}>{props.film.digitals}</Text>
-                        <View style={{flexDirection: "row", flexWrap: "wrap"}}>
-                            {props.cinema.film_schedules.map((film_schedule, index) => (
-                                <TouchableOpacity key={index} style={styles.hoursArea} onPress={() => bookTicket(film_schedule)}>
-                                    <Text style={styles.hoursStart}>{moment(film_schedule.time_start).format('hh:mm')}</Text>
-                                    <Text style={styles.hoursEnd}>{moment(film_schedule.time_end).format('hh:mm')}</Text>
-                                </TouchableOpacity>
-                            ))
-                            
-                        }
-                        </View>
-   
-                    </View>
-                }
-            </View>
+
+                </View>
+            }
+        </View>
     )
 }
 

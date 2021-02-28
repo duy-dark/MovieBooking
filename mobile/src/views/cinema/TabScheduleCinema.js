@@ -1,53 +1,37 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { View, Text, TouchableOpacity, SafeAreaView, FlatList } from 'react-native'
 import CardFilmSchedule from '../../components/film/CardFilmSchedule'
 import styles from '../../styles/views/schedule/tab-schedules'
-const DATA = [  
-    {id: '1', key1: 'Lừa Đểu Gặp Lừa Đảo',key2:'C18',key3:'128 phút',key4:'2D - Phụ Đề',
-    time:[{start:'21:45',end:'23:15'},{start:'21:45',end:'23:15'}]},
-    {id: '2', key1: 'Lừa Đểu Gặp Lừa Đảo',key2:'C18',key3:'128 phút',key4:'2D - Phụ Đề',
-    time:[{start:'21:45',end:'23:15'},{start:'21:45',end:'23:15'}]},
-    {id: '3', key1: 'Lừa Đểu Gặp Lừa Đảo',key2:'C18',key3:'128 phút',key4:'2D - Phụ Đề',
-    time:[{start:'21:45',end:'23:15'},{start:'21:45',end:'23:15'}]},
-    {id: '4', key1: 'Lừa Đểu Gặp Lừa Đảo',key2:'C18',key3:'128 phút',key4:'2D - Phụ Đề',
-    time:[{start:'21:45',end:'23:15'},{start:'21:45',end:'23:15'}]},                  
-]
+import moment from 'moment'
+
+const days = ['CN', 'Th 2', 'Th 3', 'Th 4', 'Th 5', 'Th 6', 'Th 7']
 
 const TabScheduleCinema = (props) => {
-    const arrayDefault = [
-        {
-            day: "Hôm nay",
-            dayNumber: 4,
-            selected: true
-        },
-        {
-            day: "Th 6",
-            dayNumber: 5,
-            selected: false
-        },
-        {
-            day: "Th 7",
-            dayNumber: 6,
-            selected: false
-        },
-        {
-            day: "CN",
-            dayNumber: 7,
-            selected: false
-        },
-        {
-            day: "Th 2",
-            dayNumber: 8,
-            selected: false
-        },
-        {
-            day: "Th 3",
-            dayNumber: 9,
-            selected: false
-        },
+    const arr = []
+    for(let i = 0; i < 7; i++) {
+        let date = moment().add(i, 'day')
+        if (i == 0) {
+            arr.push({
+                name: days[date.day()],
+                date: date.format('DD-MM-YYYY'),
+                day: date.format('DD'),
+                dayofweek: date.day(),
+                selected: true,
+            })
+        }
+        else {
+            arr.push({
+                name: days[date.day()],
+                date: date.format('DD-MM-YYYY'),
+                day: date.format('DD'),
+                dayofweek: date.day(),
+                selected: false,
+            })
+        }
+    }
 
-    ]
-    const [schedules, setSchedules] = useState(arrayDefault)
+    const [schedules, setSchedules] = useState(arr)
+    const [DATA, setDATA] = useState(props.dayOfWeeks[0])
     const selectDate = (index) => {
         let updateSchedules = schedules.map((schedule, i) => {
             if(schedule.selected) schedule.selected = false
@@ -55,12 +39,10 @@ const TabScheduleCinema = (props) => {
             return schedule
         })
         setSchedules(updateSchedules)
+        setDATA(props.dayOfWeeks[index])
     }  
-    useEffect(() => {
-        // DATA = []
-        // update DATA
-    }, [schedules])
-    const renderListFilms = ({ item }) => <CardFilmSchedule navigation={props.navigation} item={item} /> 
+
+    const renderListFilms = ({ item }) => <CardFilmSchedule navigation={props.navigation} cinema={props.cinema}film={item} /> 
     const schedulesHeader = (
         <View style={styles.schedules}>
             <View style={{flexDirection: "row"}}>
@@ -68,22 +50,22 @@ const TabScheduleCinema = (props) => {
                     if(schedule.selected) {
                         return (
                             <View style={styles.date} key={index}>
-                                <Text style={styles.today}>{schedule.day}</Text>
-                                <Text style={styles.todayNumber}>{schedule.dayNumber}</Text>
+                                <Text style={styles.today}>{schedule.name}</Text>
+                                <Text style={styles.todayNumber}>{schedule.day}</Text>
                             </View>
                         )
                     }
                     else {
                         return (
                             <TouchableOpacity style={styles.date} key={index} onPress={() => selectDate(index)}>
-                                <Text style={styles.day}>{schedule.day}</Text>
-                                <Text style={styles.number}>{schedule.dayNumber}</Text>
+                                <Text style={styles.day}>{schedule.name}</Text>
+                                <Text style={styles.number}>{schedule.day}</Text>
                             </TouchableOpacity>
                         )
                     }
                 })}
             </View>
-            <Text style={styles.fullToday}>Hôm nay, 4 tháng 2, 2021</Text>
+            <Text style={styles.fullToday}>{schedules[0].name}, {schedules[0].date}</Text>
         </View>
     )
     return (
@@ -92,7 +74,7 @@ const TabScheduleCinema = (props) => {
                 ListHeaderComponent={schedulesHeader}
                 data={DATA}
                 renderItem={renderListFilms}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item._id}
             />
         </SafeAreaView>
     )

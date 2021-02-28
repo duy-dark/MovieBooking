@@ -1,11 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import TabFindByFilm from './TabFindByFilm';
 import TabFindByDate from './TabFindByDate';
 import TabFindByCinema from './TabFindByCinema';
+import { useDispatch, useSelector } from "react-redux"
+import { getSearch } from '../../redux/films/actions';
 
 const Tab = createMaterialTopTabNavigator();
 const SearchScreen = () => {
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getSearch())
+    }, [])
+
     return (
        <Tab.Navigator 
             tabBarOptions={{

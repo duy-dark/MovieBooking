@@ -28,7 +28,7 @@ const Seat = (props) => {
         array1.push(styles.seatHidden)
         array2.push(styles.seatHiddenImage)
     }
-    if (status) {
+    if (props.seats.includes(props.value)) {
         array1.push(styles.seatSelected)
         array2.push(styles.seatSelectedImage)
     }

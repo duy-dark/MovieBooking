@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { SafeAreaView, View, Text, TouchableOpacity, FlatList } from 'react-native'
 import styles from '../../styles/views/schedule/tab-schedules'
 import CardCinemaSchedule from '../../components/cinema/CardCinemaSchedule'
