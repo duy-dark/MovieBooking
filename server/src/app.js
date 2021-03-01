@@ -48,6 +48,7 @@ app.use('/api/customer', require('./modules/customers'));
 app.use('/api/admin', require('./modules/admins'));
 app.use('/api/film', require('./modules/films'));
 app.use('/api/film_comment', require('./modules/film_comments'));
+app.use('/api/film_rate', require('./modules/film_rates'));
 // app.use('/api/film_category', require('./modules/old.film_category'));
 app.use('/api/film_schedule', require('./modules/film_schedules'));
 app.use('/api/category', require('./modules/categories'));
