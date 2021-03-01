@@ -125,6 +125,11 @@ const postCreate = async (params) => {
       'DD/MM/YYYY, HH:mm'
     );
 
+    let room = await require('../rooms/handler').findById(
+      ticketView[0].film_schedules.room_id
+    );
+    console.log('room:', room.data.name);
+
     const objSender = {
       id: ticketView[0]._id,
       seats: seats,
@@ -136,8 +141,9 @@ const postCreate = async (params) => {
       time_start: timeStart,
       time_end: time_end,
       theater: ticketView[0].film_schedules.theater,
-      room_id: ticketView[0].film_schedules.room_id
+      room: room.data.name
     };
+
     console.log('objSender:', objSender);
 
     let mainOptions = {
