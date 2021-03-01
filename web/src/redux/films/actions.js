@@ -51,3 +51,11 @@ export function getComments(id) {
     payload: id
   };
 }
+
+export function paymentGateway({ params, history }) {
+  return {
+    type: FilmTypes.PAYMENT_MOMO,
+    payload: params,
+    history: history
+  }
+}

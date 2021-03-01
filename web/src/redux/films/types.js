@@ -17,5 +17,7 @@ export default {
   SEARCH: _prefix + "SEARCH",
   SEARCH_SUCCESS: _prefix + "SEARCH_SUCCESS",
   COMMENT: _prefix + "COMMENT",
-  COMMENT_SUCCESS: _prefix + "COMMENT_SUCCESS"
+  COMMENT_SUCCESS: _prefix + "COMMENT_SUCCESS",
+  PAYMENT_MOMO: _prefix + "PAYMENT_MOMO",
+  PAYMENT_MOMO_SUCCESS: _prefix + "PAYMENT_MOMO_SUCCESS"
 };

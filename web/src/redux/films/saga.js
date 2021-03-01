@@ -99,6 +99,17 @@ function* fetchComments(action) {
   } catch (error) { console.log(error); }
 }
 
+function* fetchPaymentGate(action) {
+  try {
+    const { payload, history } = action
+    // console.log(history)
+
+    const res = yield call(httpFilms.paymentMomo, payload);
+    const { data } = res
+    history.location.href = data
+  } catch (error) { console.log(error); }
+}
+
 function* postBookingInfo() {
   yield takeEvery(FilmsType.POST_BOOKING_INFO, fetchPostBookingInfo);
 }
@@ -131,6 +142,10 @@ function* getComments() {
   yield takeEvery(FilmsType.COMMENT, fetchComments);
 }
 
+function* paymentGateway() {
+  yield takeEvery(FilmsType.PAYMENT_MOMO, fetchPaymentGate);
+
+}
 
 export default function* filmsSaga() {
   yield all([
@@ -141,6 +156,7 @@ export default function* filmsSaga() {
     getFilmsToday(),
     getSeats(),
     getSearch(),
-    getComments()
+    getComments(),
+    paymentGateway()
   ]);
 }
