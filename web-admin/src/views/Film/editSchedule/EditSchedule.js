@@ -55,21 +55,28 @@ export default function EditableTable (props) {
   const [data, setData] = useState();
   const [editingKey, setEditingKey] = useState('');
   const  dispatch = useDispatch();
+  const data1 = [{ key: 1,
+    Theater:"Dong Da",
+    TimeStart:"9:45 AM",    
+    TimeEnd:"11:00 Am",
+    Room : "Room 5",
+    Date: "30-5-2021"
+}];
   useEffect(()=>{
-    let arr=[];
-    arr.push(props.detail);
-    setData(arr);
+    
+   
+    setData(data1);
   },[])
 
   const isEditing = (record) => record.key === editingKey;
 
   const edit = (record) => {
     form.setFieldsValue({
-      name: '',
-      trailer: '',
-      long_time: '',
-      url_avatar:'',
-      url_background:'',
+      Theater: '',
+      Start_Time: '',
+      End_Time: '',
+      Room:'',
+      Date:'',
       ...record,
     });
     setEditingKey(record.key);
@@ -106,32 +113,32 @@ export default function EditableTable (props) {
 
   const columns = [
     {
-      title: 'name',
-      dataIndex: 'name',
+      title: 'Theater',
+      dataIndex: 'Theater',
       width: '25%',
       editable: true,
     },
     {
-      title: 'trailer',
-      dataIndex: 'trailer',
+      title: 'Start_Time',
+      dataIndex: 'Start_Time',
       width: '15%',
       editable: true,
     },
     {
-      title: 'long_time',
-      dataIndex: 'long_time',
+      title: 'End_Time',
+      dataIndex: 'End_Time',
       width: '40%',
       editable: true,
     },
     {
-      title: 'url_avatar',
-      dataIndex: 'url_avatar',
+      title: 'Room',
+      dataIndex: 'Room',
       width: '40%',
       editable: true,
     },
     {
-      title: 'url_background',
-      dataIndex: 'url_background',
+      title: 'Date',
+      dataIndex: 'Date',
       width: '40%',
       editable: true,
     },
