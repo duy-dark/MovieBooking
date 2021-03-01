@@ -9,8 +9,8 @@ let schema = new mongoose.Schema(
     start_date: Date,
     directors: String,
     actors: String,
-    rates: Number,
-    rate_count: Number,
+    rate_average: Number,
+    rates: Object,
     imdb: Number,
     digitals: String,
     url_avatar: String,
@@ -198,8 +198,8 @@ module.exports = {
           rates: {
             $first: '$rates'
           },
-          rate_count: {
-            $first: '$rate_count'
+          rate_average: {
+            $first: '$rate_average'
           },
           content: {
             $first: '$content'
@@ -320,8 +320,8 @@ module.exports = {
           rates: {
             $first: '$rates'
           },
-          rate_count: {
-            $first: '$rate_count'
+          rate_average: {
+            $first: '$rate_average'
           },
           content: {
             $first: '$content'
@@ -391,8 +391,8 @@ module.exports = {
                 rates: {
                   $first: '$rates'
                 },
-                rate_count: {
-                  $first: '$rate_count'
+                rate_average: {
+                  $first: '$rate_average'
                 },
                 imdb: {
                   $first: '$imdb'
@@ -893,7 +893,7 @@ module.exports = {
           'start_date',
           'actors',
           'rates',
-          'rate_count',
+          'rate_average',
           'is_blockbuster',
           'directors',
           'category_ids'

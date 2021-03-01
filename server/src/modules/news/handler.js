@@ -56,7 +56,12 @@ const postCreate = async (params) => {
       updated_at: moment.now()
     };
     let data = await Model.createByLambda(lambda);
-    return resSuccess(data);
+    if (data.ok) {
+      let result = await findById(id);
+      return result;
+    } else {
+      throw {status: 400, detail: data};
+    }
   } catch (error) {
     throw {status: 400, detail: error};
   }

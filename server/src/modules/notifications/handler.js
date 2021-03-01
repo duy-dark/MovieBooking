@@ -9,7 +9,11 @@ const getList = async (params) => {
       conditions: {...params, is_deleted: false},
       views: {
         _id: 1,
-        content: 1,
+        content_web: 1,
+        content_mobile: 1,
+        content_mail: 1,
+        content_sms: 1,
+        customers: 1,
         type: 1
       }
     };
@@ -26,7 +30,11 @@ const findById = async (id) => {
       conditions: {_id: id, is_deleted: false},
       views: {
         _id: 1,
-        content: 1,
+        content_web: 1,
+        content_mobile: 1,
+        content_mail: 1,
+        content_sms: 1,
+        customers: 1,
         type: 1
       }
     };
@@ -41,7 +49,11 @@ const postCreate = async (params) => {
   try {
     let lambda = {
       type: params.type || undefined,
-      content: params.content || undefined,
+      customers: params.customers || undefined,
+      content_web: params.content_web || undefined,
+      content_mobile: params.content_mobile || undefined,
+      content_mail: params.content_mail || undefined,
+      content_sms: params.content_sms || undefined,
       is_deleted: false,
       created_at: moment.now(),
       updated_at: moment.now()
@@ -59,13 +71,22 @@ const putUpdate = async (id, params) => {
       conditions: {_id: id, is_deleted: false},
       params: {
         type: params.type || undefined,
-        content: params.content || undefined,
+        customers: params.customers || undefined,
+        content_web: params.content_web || undefined,
+        content_mobile: params.content_mobile || undefined,
+        content_mail: params.content_mail || undefined,
+        content_sms: params.content_sms || undefined,
         updated_at: moment.now()
       }
     };
     lambda.params = omitBy(lambda.params, isNil);
     let data = await Model.updateByLambda(lambda);
-    return resSuccess(data);
+    if (data.ok) {
+      let result = await findById(id);
+      return result;
+    } else {
+      throw {status: 400, detail: data};
+    }
   } catch (error) {
     throw {status: 400, detail: error};
   }
