@@ -4,8 +4,7 @@ let schema = new mongoose.Schema(
   {
     film_id: require('mongodb').ObjectId,
     customer_id: require('mongodb').ObjectID,
-    content: String,
-    rate: Number,
+    rate: Object,
     is_deleted: Boolean,
     created_at: Date,
     updated_at: Date
@@ -13,7 +12,7 @@ let schema = new mongoose.Schema(
   {versionKey: false}
 );
 
-let Collection = mongoose.model('FilmComment', schema, 'film_comments');
+let Collection = mongoose.model('FilmRate', schema, 'film_rates');
 
 module.exports = {
   findByLambda: async function (lambda) {
@@ -47,9 +46,7 @@ module.exports = {
           path: '$customers',
           preserveNullAndEmptyArrays: true
         }
-      },
-      {$sort: {created_at: -1}},
-      {$limit: 5}
+      }
     ]);
   }
 };

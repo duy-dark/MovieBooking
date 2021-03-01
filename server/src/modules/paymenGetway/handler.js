@@ -15,7 +15,7 @@ var accessKey = 'X46UaeYeKNwQ1Sg1';
 var serectkey = 'TR1BbUHAIVuhHII1HvuJlzcTgqp1R73E';
 var orderInfo = 'pay with MoMo';
 var returnUrl = 'https://momo.vn/return';
-var notifyurl = 'https://3d65eda1e8a8.ngrok.io/api/payment/checkStatusPayment';
+var notifyurl = 'https://1e9c7092c644.ngrok.io/api/payment/checkStatusPayment';
 var requestType = 'captureMoMoWallet';
 var extraData = 'merchantName=;merchantId=';
 var amount;
@@ -65,7 +65,9 @@ const momoApi = async (params) => {
       '&notifyUrl=' +
       notifyurl +
       '&extraData=' +
-      extraData;
+      extraData +
+      '&email' +
+      params.email;
 
     signature = crypto
       .createHmac('sha256', serectkey)
@@ -146,15 +148,16 @@ const checkStatusMomoApi = async (params) => {
       '&payType=' +
       params.payType +
       '&extraData=' +
-      params.extraData;
+      params.extraData +
+      '&email' +
+      params.email;
 
-    console.log('s2:', _signature);
     console.log(_signature);
     let newsignature = crypto
       .createHmac('sha256', serectkey)
       .update(_signature)
       .digest('hex');
-
+    console.log('s2:', newsignature);
     console.log(newsignature == params.signature);
     if (newsignature == params.signature) {
       if (params.errorCode == '0') {

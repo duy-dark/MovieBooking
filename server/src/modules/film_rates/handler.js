@@ -11,7 +11,6 @@ const getList = async (params) => {
         _id: 1,
         film_id: 1,
         customer_id: 1,
-        content: 1,
         rate: 1
       }
     };
@@ -32,7 +31,6 @@ const findById = async (id) => {
         _id: 1,
         film_id: 1,
         customer_id: 1,
-        content: 1,
         rate: 1
       }
     };
@@ -48,25 +46,13 @@ const postCreate = async (params) => {
     let lambda = {
       film_id: params.film_id || undefined,
       customer_id: params.customer_id || undefined,
-      content: params.content || undefined,
       rate: params.rate || undefined,
       is_deleted: false,
       created_at: moment.now(),
       updated_at: moment.now()
     };
     let data = await Model.createByLambda(lambda);
-    console.log('data:', data);
-    let customer = await require('../customers/model').findByLambda({
-      conditions: {_id: params.customer_id, is_deleted: false}
-    });
-    data[0] = {
-      ...data[0]._doc,
-      customers: customer[0]
-    };
-
-    console.log(data[0]);
-    console.log('customer:', customer);
-    return resSuccess({comment: data[0]});
+    return resSuccess(data);
   } catch (error) {
     throw {status: 400, detail: error};
   }
@@ -79,7 +65,6 @@ const putUpdate = async (id, params) => {
       params: {
         film_id: params.film_id || undefined,
         customer_id: params.customer_id || undefined,
-        content: params.content || undefined,
         rate: params.rate || undefined,
         updated_at: moment.now()
       }
