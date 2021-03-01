@@ -6,7 +6,8 @@ const nexmo = new Nexmo({
 });
 const sendSMS = (objectSms) => {
   const from = 'Vonage APIs';
-  const to = '+84838263357';
+  // const to = '+84838263357';
+  const to = '+84399595500';
   const text = `Dat ve thanh cong
   Ma: ${objectSms.id}
   So ghe:${objectSms.count}
@@ -19,6 +20,7 @@ const sendSMS = (objectSms) => {
   Het:${objectSms.time_end}
   Rap:${objectSms.theater}
   Phong:${objectSms.room}`;
+  console.log(('text :', text));
   return nexmo.message.sendSms(from, to, text);
 };
 module.exports = {nexmo, sendSMS};
