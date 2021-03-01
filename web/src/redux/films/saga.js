@@ -22,10 +22,12 @@ function* fetchPostBookingInfo(action) {
 
 function* fetchFilmDetails(action) {
   try {
+    yield put({ type: FilmsType.LOADING_SHOW });
     const { payload } = action;
     const res = yield call(httpFilms.getDetail, payload);
     const { status, data } = res
     if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.FILM_DETAIL_SUCCESS, payload: data });
     }
 
@@ -34,10 +36,12 @@ function* fetchFilmDetails(action) {
 
 function* fetchListFilmsNow() {
   try {
+    yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.getListFilmNow, {});
     const { status, data } = res
     if (status === "ok") {
       yield put({ type: FilmsType.LIST_FILM_NOW_SUCCESS, payload: data });
+      yield put({ type: FilmsType.LOADING_HIDE });
     }
 
   } catch (error) { console.log(error); }
@@ -45,9 +49,11 @@ function* fetchListFilmsNow() {
 
 function* fetchListFilmsFuture() {
   try {
+    yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.getListFilmFuture, {});
     const { status, data } = res
     if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.LIST_FILM_FUTURE_SUCCESS, payload: data });
     }
 
@@ -56,9 +62,11 @@ function* fetchListFilmsFuture() {
 
 function* fetchListFilmsToday() {
   try {
+    yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.getListFilmToday, {});
     const { status, data } = res
     if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.LIST_FILM_TODAY_SUCCESS, payload: data });
     }
 
@@ -67,10 +75,12 @@ function* fetchListFilmsToday() {
 
 function* fetchSeats(action) {
   try {
+    yield put({ type: FilmsType.LOADING_SHOW });
     const { payload } = action
     const res = yield call(httpFilms.getSeats, payload);
     const { status, data } = res
     if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.LIST_SEATS_SUCCESS, payload: data });
     }
 
@@ -79,9 +89,11 @@ function* fetchSeats(action) {
 
 function* fetchSearch() {
   try {
+    yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.search, {});
     const { status, data } = res
     if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.SEARCH_SUCCESS, payload: data });
     }
 
@@ -90,21 +102,39 @@ function* fetchSearch() {
 
 function* fetchComments(action) {
   try {
+    yield put({ type: FilmsType.LOADING_SHOW });
     const { payload } = action
     const res = yield call(httpFilms.getComments, payload);
     const { status, data } = res
     if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.COMMENT_SUCCESS, payload: data });
     }
   } catch (error) { console.log(error); }
 }
 
+function* fetchCreateComment(action) {
+  try {
+    yield put({ type: FilmsType.LOADING_SHOW });
+    const { payload } = action
+    const res = yield call(httpFilms.createComment, payload);
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
+      yield put({ type: FilmsType.CREATE_COMMENT_SUCCESS, payload: data.comment });
+    }
+
+  } catch (error) { console.log(error); }
+}
+
 function* fetchPaymentGate(action) {
   try {
+    yield put({ type: FilmsType.LOADING_SHOW });
     const { payload, history } = action
     // console.log(history)
 
     const res = yield call(httpFilms.paymentMomo, payload);
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { data } = res
     history.location.href = data
   } catch (error) { console.log(error); }
@@ -144,7 +174,10 @@ function* getComments() {
 
 function* paymentGateway() {
   yield takeEvery(FilmsType.PAYMENT_MOMO, fetchPaymentGate);
+}
 
+function* createComment() {
+  yield takeEvery(FilmsType.CREATE_COMMENT, fetchCreateComment);
 }
 
 export default function* filmsSaga() {
@@ -157,6 +190,7 @@ export default function* filmsSaga() {
     getSeats(),
     getSearch(),
     getComments(),
-    paymentGateway()
+    paymentGateway(),
+    createComment()
   ]);
 }

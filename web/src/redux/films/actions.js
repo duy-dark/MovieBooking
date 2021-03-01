@@ -52,6 +52,13 @@ export function getComments(id) {
   };
 }
 
+export function createComment(params) {
+  return {
+    type: FilmTypes.CREATE_COMMENT,
+    payload: params
+  }
+}
+
 export function paymentGateway({ params, history }) {
   return {
     type: FilmTypes.PAYMENT_MOMO,

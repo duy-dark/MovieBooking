@@ -3,7 +3,7 @@ import { useLocation, useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 // import { updateHeaderFooter } from "../../redux/users/actions";
 import "../../styles/customers/booking/booking.scss";
-import { getFilmDetails, getSeats, postBookingInfo, paymentGateway } from "../../redux/films/actions";
+import { getFilmDetails, getSeats, paymentGateway } from "../../redux/films/actions";
 // import { getToken } from "../../redux/users/selector";
 import * as moment from "moment"
 import { getUserInfo } from "../../redux/users/actions";
