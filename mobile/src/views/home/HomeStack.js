@@ -6,7 +6,6 @@ import BookTicketScreen from '../book-ticket/BookTicketScreen'
 import TabInfomation from '../film/TabInfomation';
 import CommentScreen from '../comment/CommentScreen';
 import ReviewFilmScreen from '../comment/ReviewFilmScreen';
-import { TouchableOpacity, Text } from 'react-native';
 
 const Stack = createStackNavigator();
 const HomeStack = () => {
@@ -40,12 +39,7 @@ const HomeStack = () => {
             />
             <Stack.Screen name="ReviewFilmScreen" component={ReviewFilmScreen}
                 options={{
-                    title: "Viết bình luận",
-                    headerRight: () => (
-                        <TouchableOpacity onPress={() => alert("Đăng")}>
-                            <Text style={{marginRight: 15, fontSize: 16, color: "#3b5998"}}>Đăng</Text>
-                        </TouchableOpacity>
-                    )
+                    title: "Viết bình luận"
                 }}
             
             />

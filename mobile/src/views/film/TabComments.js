@@ -7,7 +7,9 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const TabComments = (props) => {
     const onPressReviewFilm = () => {
-        props.navigation.navigate("ReviewFilmScreen")
+        props.navigation.navigate("ReviewFilmScreen", {
+            filmId: props.filmId
+        })
     }
     
     return (
@@ -17,7 +19,7 @@ const TabComments = (props) => {
                 <StarRating
                     disabled={true}
                     maxStars={5}
-                    rating={props.imdb / 2}
+                    rating={props.rate_average / 2}
                     fullStarColor={"orangered"}
                     starSize={15}
                 />

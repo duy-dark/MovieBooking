@@ -29,7 +29,11 @@ const getSeats = (id) => {
 }
 
 const getComments = (params) => {
-  return Api.get(`/api/film_comment?film_id=${params}`).then(res => res.data)
+  return Api.get(`/api/film_comment?film_id=${params}&limit=1`).then(res => res.data)
+}
+
+const createComment = (params) => {
+  return Api.post(`/api/film_comment`, params).then(res => res.data)
 }
 
 const search = () => {
@@ -46,5 +50,6 @@ export default {
   getListFilmToday,
   getSeats,
   search,
-  getComments
+  getComments,
+  createComment
 };

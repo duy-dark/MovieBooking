@@ -33,7 +33,7 @@ const BookTicketScreen = (props) => {
     const [payment, setPayment] = useState("momo")
     const [seats, setSeats] = useState([])
     const [isSelectBug, setIsSelectBug] = useState(false);
-    const [disabledBtn, setDisabledBtn] = useState(true);
+    const [disabledBtn, setDisabledBtn] = useState(false);
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [showError, setShowError] = useState(false)

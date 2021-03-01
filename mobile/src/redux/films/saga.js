@@ -22,10 +22,12 @@ function* fetchPostBookingInfo(action) {
 
 function* fetchFilmDetails(action) {
   try {
+    yield put({ type: FilmsType.LOADING_SHOW });
     const { payload } = action;
     const res = yield call(httpFilms.getDetail, payload);
     const { status, data } = res
     if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.FILM_DETAIL_SUCCESS, payload: data });
     }
 
@@ -34,9 +36,11 @@ function* fetchFilmDetails(action) {
 
 function* fetchListFilmsNow() {
   try {
+    yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.getListFilmNow, {});
     const { status, data } = res
     if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.LIST_FILM_NOW_SUCCESS, payload: data });
     }
 
@@ -45,9 +49,11 @@ function* fetchListFilmsNow() {
 
 function* fetchListFilmsFuture() {
   try {
+    yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.getListFilmFuture, {});
     const { status, data } = res
     if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.LIST_FILM_FUTURE_SUCCESS, payload: data });
     }
 
@@ -90,14 +96,33 @@ function* fetchSearch() {
 
 function* fetchComments(action) {
   try {
+    yield put({ type: FilmsType.LOADING_SHOW });
     const { payload } = action
     const res = yield call(httpFilms.getComments, payload);
     const { status, data } = res
     if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.COMMENT_SUCCESS, payload: data });
     }
   } catch (error) { console.log(error); }
 }
+
+function* fetchCreateComment(action) {
+  const { navigation } = action
+  try {
+    // yield put({ type: FilmsType.LOADING_SHOW });
+    const { payload } = action
+    const res = yield call(httpFilms.createComment, payload);
+    const { status, data } = res
+    if (status === "ok") {
+      // yield put({ type: FilmsType.LOADING_HIDE });
+      yield put({ type: FilmsType.CREATE_COMMENT_SUCCESS, payload: data.comment });
+      navigation.goBack()
+    }
+
+  } catch (error) { console.log(error); }
+}
+
 
 function* postBookingInfo() {
   yield takeEvery(FilmsType.POST_BOOKING_INFO, fetchPostBookingInfo);
@@ -131,6 +156,10 @@ function* getComments() {
   yield takeEvery(FilmsType.COMMENT, fetchComments);
 }
 
+function* createComment() {
+  yield takeEvery(FilmsType.CREATE_COMMENT, fetchCreateComment);
+}
+
 
 export default function* filmsSaga() {
   yield all([
@@ -141,6 +170,7 @@ export default function* filmsSaga() {
     getFilmsToday(),
     getSeats(),
     getSearch(),
-    getComments()
+    getComments(),
+    createComment()
   ]);
 }

@@ -51,3 +51,11 @@ export function getComments(id) {
     payload: id
   };
 }
+
+export function createComment(params, navigation) {
+  return {
+    type: FilmTypes.CREATE_COMMENT,
+    payload: params,
+    navigation: navigation
+  }
+}

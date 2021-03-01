@@ -6,11 +6,11 @@ import Icon from "react-native-vector-icons/FontAwesome"
 import moment from "moment"
 
 const CardCommentFilm = (props) => {
-    const avatarReviewer = { uri: " "}
+    const avatarReviewer = { uri: props.comment.customers.avatar}
     const imageFilm = { uri: "https://media.vov.vn/sites/default/files/styles/large/public/2021-01/tch_poster_vn_final.jpg.jpg" }
     const icon = { uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png"}
     const handleClickComment = () => {
-        props.navigation.navigate("CommentScreen")
+        alert("Cập nhật sắp tới")
     }
     return (
         <View style={styles.container}>
@@ -18,7 +18,7 @@ const CardCommentFilm = (props) => {
                 <View style={styles.reviewer}>
                     <View style={styles.containerImages}>
                         <Image style={styles.avatarReviewer} source={avatarReviewer} />
-                        <Image style={styles.icon} source={icon} />
+                        {/* <Image style={styles.icon} source={icon} /> */}
                     </View>
                     <View style={styles.reviewerInfo}>
                         <Text style={styles.nameReviewer}>{props.comment.customers.name}</Text>

@@ -1,17 +1,40 @@
-import React, { useState } from 'react'
-import { View, Text, Image, TextInput } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
 import styles from '../../styles/views/comment/reviewfilm-screen'
 import StarRating from 'react-native-star-rating'
+import { useSelector, useDispatch } from 'react-redux'
+import { createComment } from '../../redux/films/actions'
 
 
-const ReviewFilmScreen = () => {
-    // const image = { uri: "" }
-    const avatarReviewer = { uri: "https://scontent.fsgn5-3.fna.fbcdn.net/v/t1.0-9/132855827_3327445237361772_7305091957233836118_n.jpg?_nc_cat=110&ccb=2&_nc_sid=09cbfe&_nc_ohc=s4r_8MOLOXUAX8g3h5y&_nc_ht=scontent.fsgn5-3.fna&oh=8893babdf97583fefc92305155f30638&oe=603880DE"}
+const ReviewFilmScreen = (props) => {
+    const user = useSelector((state) => state.users.user)
+    const filmId = props.route.params.filmId
+
+    const avatarReviewer = { uri: user.avatar}
 
     const [starCount, setStarCount] = useState(0)
+    const [isDisabled, setIsDisabled] = useState(false)
+    const [value, onChangeText] = useState('')
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        setIsDisabled(!(value.length > 0 && starCount > 0))
+    }, [value, starCount])
+
     const onPressRating = (rating) => {
         setStarCount(rating)
     }
+    const postComment = () => {
+        const params = {
+            film_id: filmId,
+            customer_id: user._id,
+            content: value,
+            rate: starCount*2,
+        }
+        dispatch(createComment(params, props.navigation))
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.areaReview}>
@@ -24,11 +47,14 @@ const ReviewFilmScreen = () => {
                     rating={starCount}
                     selectedStar={onPressRating}
                 />
-                <Text style={styles.text}>{starCount}</Text>
+                <Text style={styles.text}>{starCount*2}/10</Text>
             </View>
             <View style={styles.areaInput}>
                 <Image style={styles.avatarReviewer} source={avatarReviewer} />
-                <TextInput style={styles.input} placeholder="Viết trả lời..." />
+                <TextInput style={styles.input} placeholder="Viết trả lời..." value={value} onChangeText={text => onChangeText(text)}/>
+                <TouchableOpacity onPress={postComment} disabled={isDisabled}>
+                    <Text style={{marginRight: 15, fontSize: 16, color: "#3b5998"}}>Đăng</Text>
+                </TouchableOpacity>
             </View>
         </View>
     )

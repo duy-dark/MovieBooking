@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { ScrollView } from 'react-native'
+import { ScrollView, ActivityIndicator } from 'react-native'
 import styles from "../../styles/views/home/tabfilms-nowshowing"
 import CardFilmNowShowing from "../../components/film/CardFilmNowShowing"
 import { useSelector, useDispatch } from "react-redux";
@@ -13,8 +13,10 @@ const TabFilmsNowShowing = (props) => {
     }, [])
 
     const films = useSelector((state) => state.films.filmsNow);
-    
-    return (
+    const indicator = useSelector((state) => state.films.loading);
+
+    if(indicator) return <ActivityIndicator style={{alignSelf: 'center', marginTop: 200}} size="large" color="orangered" /> 
+    else return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             {films.map((film, index) => 
                 <CardFilmNowShowing key={index} film={film} navigation={props.navigation} />

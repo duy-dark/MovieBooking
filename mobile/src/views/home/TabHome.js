@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native'
 import styles from "../../styles/views/home/tabhome"
 import CardFilmFavorite from "../../components/film/CardFilmFavorite"
 import CardFilm from "../../components/film/CardFilm"
@@ -16,9 +16,10 @@ const TabHome = (props) => {
         dispatch(getListFilmNow())
     }, [])
 
-    const films = useSelector((state) => state.films.filmsNow);
+    const films = useSelector((state) => state.films.filmsNow)
     const filmsFavorite = films.slice(0, 3)
     const filmsSuggest = films.slice(3,6)
+    const indicator = useSelector((state) => state.films.loading)
 
     const seeAllFilm = () => {
         props.navigation.navigate("TabFilmsNowShowing")
@@ -26,9 +27,9 @@ const TabHome = (props) => {
     const seeAllNews = () => {
         props.navigation.navigate("NewsStack")
     }
-
-
-    return (
+    console.log(indicator, "abcdef")
+    if(indicator == 0) return <ActivityIndicator style={{alignSelf: 'center', marginTop: 200}} size="large" color="orangered" /> 
+    else return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <Text style={styles.section}>Phim được yêu thích nhất</Text>
             {filmsFavorite.map((film, index) => 

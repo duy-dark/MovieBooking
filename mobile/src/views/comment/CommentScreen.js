@@ -9,11 +9,18 @@ const CommentScreen = () => {
     const user = useSelector((state) => state.users.user)
 
     const avatarReviewer = { uri: user.avatar}
-    const imageFilm = { uri: "https://media.vov.vn/sites/default/files/styles/large/public/2021-01/tch_poster_vn_final.jpg.jpg" }
+    
     const icon = { uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png"}
 
     const [like, setLike] = useState(0)
     const [selectLike, setSelectLike] = useState(false)
+    const [isDisabled, setIsDisabled] = useState(true)
+    const [contentCm, setContentCm] = useState('')
+
+    useEffect(() => {
+        alert("a")
+        setIsDisabled(contentCm.length > 0)
+    }, [contentCm])
 
     useEffect(() => {
         if(selectLike) {
@@ -23,6 +30,8 @@ const CommentScreen = () => {
             setLike(like - 1)
         }
     }, [selectLike])
+
+    
     return (
         <View style={styles.container}>
             <View style={styles.area}>
@@ -67,8 +76,8 @@ const CommentScreen = () => {
             </View>
             <View style={styles.areaInput}>
                 <Image style={styles.avatarReviewer} source={avatarReviewer} />
-                <TextInput style={styles.input} placeholder="Viết trả lời..." />
-                <TouchableOpacity style={styles.post}>
+                <TextInput style={styles.input} placeholder="Viết trả lời..." value={contentCm} onChangeText={text => setContentCm(text)}/>
+                <TouchableOpacity style={styles.post} disabled={isDisabled}>
                     <Text style={{color: "dodgerblue"}}>Đăng</Text>
                 </TouchableOpacity>
             </View>

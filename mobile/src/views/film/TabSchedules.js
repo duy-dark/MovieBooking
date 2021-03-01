@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity, FlatList } from 'react-native'
+import { SafeAreaView, View, Text, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native'
 import styles from '../../styles/views/schedule/tab-schedules'
 import CardCinemaSchedule from '../../components/cinema/CardCinemaSchedule'
 import moment from 'moment'
+import { useSelector } from "react-redux";
 
 const days = ['CN', 'Th 2', 'Th 3', 'Th 4', 'Th 5', 'Th 6', 'Th 7']
 
@@ -68,7 +69,11 @@ const TabSchedules = (props) => {
             <Text style={styles.fullToday}>{schedules[0].name}, {schedules[0].date}</Text>
         </View>
     )
-    return (
+
+    const indicator = useSelector((state) => state.films.loading)
+
+    if(indicator) return <ActivityIndicator style={{alignSelf: 'center', marginTop: 200}} size="large" color="orangered" /> 
+    else return (
         <SafeAreaView>
            <FlatList
                 ListHeaderComponent={schedulesHeader}
