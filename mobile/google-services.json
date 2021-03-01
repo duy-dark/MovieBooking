@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "975327969637",
+    "project_id": "mobile-app-1fa2e",
+    "storage_bucket": "mobile-app-1fa2e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:975327969637:android:ef2a4639af06a7ae2da18c",
+        "android_client_info": {
+          "package_name": "com.khtn.moviebookingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "975327969637-13ja0b6a2nn6fj024bm875s2476oheb1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-vC-FbIyJ3VHoo6NGGZ5EeRq7-1MWd3U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "975327969637-13ja0b6a2nn6fj024bm875s2476oheb1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

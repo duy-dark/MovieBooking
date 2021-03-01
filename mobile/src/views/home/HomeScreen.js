@@ -7,6 +7,7 @@ import TabFilmsComingSoon from "./TabFilmsComingSoon"
 const Tab = createMaterialTopTabNavigator();
 
 function HomeScreen(props) {
+
   return (
     <Tab.Navigator 
       tabBarOptions={{
