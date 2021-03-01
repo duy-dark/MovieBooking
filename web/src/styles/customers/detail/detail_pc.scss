@@ -97,6 +97,13 @@
             transform: scaleY(1.2);
           }
         }
+
+        &>div {
+          img {
+            width: 15px;
+            height: 15px;
+          }
+        }
       }
     }
   }
@@ -349,6 +356,34 @@
         img {
           width: auto;
           height: 24px;
+        }
+      }
+    }
+
+    .tab-detail__comment__more {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      button {
+        font-size: 14px;
+        color: #949494;
+        border: 1px solid #949494;
+        border-radius: 4px;
+        text-align: center;
+        background: 0 0;
+        padding: 7px 25px;
+        transition: all .2s;
+        margin: auto;
+        margin-top: 35px;
+        margin-bottom: 20px;
+        display: block;
+        transition: all .3s ease-in-out;
+
+        &:hover {
+          background-color: #fb4226;
+          border-color: #fb4226;
+          color: #fff!important;
         }
       }
     }

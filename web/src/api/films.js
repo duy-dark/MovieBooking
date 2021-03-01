@@ -29,7 +29,7 @@ const getSeats = (id) => {
 }
 
 const getComments = (params) => {
-  return Api.get(`/api/film_comment?film_id=${params}`).then(res => res.data)
+  return Api.get(`/api/film_comment?film_id=${params.id}&limit=${params.limit}`).then(res => res.data)
 }
 
 const createComment = (params) => {

@@ -9,10 +9,6 @@ import MyLoading from './components/MyLoading'
 import { useSelector } from "react-redux"
 class App extends Component {
   render() {
-    // let [isLoading, setIsLoading] = useState(false)
-
-    // let loading1 = useSelector(state=>state.films.loading)
-    // let loading2 = useSelector(state=>state.users.loading)
 
     let showRouteComponent = (routes) => {
       let result = null;
@@ -23,13 +19,9 @@ class App extends Component {
       }
       return result;
     };
-
-    // useEffect(() => {
-    //   setIsLoading(loading1 + loading2 > 0 ? true : false)
-    // }, [loading1, loading2])
     return (
       <>
-      {/* <MyLoading active={isLoading}/> */}
+      {/* <MyLoading active={this.props.isLoading}/> */}
       <Router>
         {this.props.header && <Header/>}
         <Switch>
@@ -45,7 +37,8 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
   header: !!state.users.header,
-  footer: !!state.users.footer
+  footer: !!state.users.footer,
+  isLoading: state.users.loading + state.films.loading > 0 ? true : false
 }};
 
 export default connect(mapStateToProps)(App);
