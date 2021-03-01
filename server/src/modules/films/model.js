@@ -10,6 +10,7 @@ let schema = new mongoose.Schema(
     directors: String,
     actors: String,
     rate_average: Number,
+    rate_count: Number,
     rates: Object,
     imdb: Number,
     digitals: String,
@@ -201,6 +202,9 @@ module.exports = {
           rate_average: {
             $first: '$rate_average'
           },
+          rate_count: {
+            $first: '$rate_count'
+          },
           content: {
             $first: '$content'
           },
@@ -323,6 +327,9 @@ module.exports = {
           rate_average: {
             $first: '$rate_average'
           },
+          rate_count: {
+            $first: '$rate_count'
+          },
           content: {
             $first: '$content'
           },
@@ -393,6 +400,9 @@ module.exports = {
                 },
                 rate_average: {
                   $first: '$rate_average'
+                },
+                rate_count: {
+                  $first: '$rate_count'
                 },
                 imdb: {
                   $first: '$imdb'
@@ -892,8 +902,6 @@ module.exports = {
           'countries',
           'start_date',
           'actors',
-          'rates',
-          'rate_average',
           'is_blockbuster',
           'directors',
           'category_ids'
@@ -963,6 +971,15 @@ module.exports = {
           },
           digitals: {
             $first: '$digitals'
+          },
+          rates: {
+            $first: '$rates'
+          },
+          rate_count: {
+            $first: '$rate_count'
+          },
+          rate_average: {
+            $first: '$rate_average'
           },
           url_avatar: {
             $first: '$url_avatar'
@@ -1037,6 +1054,15 @@ module.exports = {
           },
           digitals: {
             $first: '$digitals'
+          },
+          rates: {
+            $first: '$rates'
+          },
+          rate_count: {
+            $first: '$rate_count'
+          },
+          rate_average: {
+            $first: '$rate_average'
           },
           url_avatar: {
             $first: '$url_avatar'

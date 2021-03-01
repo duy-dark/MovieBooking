@@ -15,7 +15,7 @@ var accessKey = 'X46UaeYeKNwQ1Sg1';
 var serectkey = 'TR1BbUHAIVuhHII1HvuJlzcTgqp1R73E';
 var orderInfo = 'pay with MoMo';
 var returnUrl = 'https://momo.vn/return';
-var notifyurl = 'https://1e9c7092c644.ngrok.io/api/payment/checkStatusPayment';
+var notifyurl = 'https://2012665cc893.ngrok.io/api/payment/checkStatusPayment';
 var requestType = 'captureMoMoWallet';
 var extraData = 'merchantName=;merchantId=';
 var amount;
