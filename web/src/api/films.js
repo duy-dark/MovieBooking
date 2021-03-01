@@ -32,8 +32,16 @@ const getComments = (params) => {
   return Api.get(`/api/film_comment?film_id=${params}`).then(res => res.data)
 }
 
+const createComment = (params) => {
+  return Api.post(`/api/film_comment`, params).then(res => res.data)
+}
+
 const search = () => {
   return Api.get('/api/film_schedule/nowshowing').then(res => res.data)
+}
+
+const paymentMomo = (params) => {
+  return Api.post('/api/payment/momoPayment', params).then(res => res.data)
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -46,5 +54,7 @@ export default {
   getListFilmToday,
   getSeats,
   search,
-  getComments
+  getComments,
+  paymentMomo,
+  createComment
 };

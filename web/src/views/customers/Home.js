@@ -369,7 +369,7 @@ export default function Home() {
         </Tabs>
 
         <TabListFilm id="homeSchedule" filmsNow={filmsNow} filmsFuture={filmsFuture} clickTrailer={showTrailer} />
-        <TabsTheater id="listTheater" theaters={filmsToday} />
+        { filmsToday.length > 0 && (<TabsTheater id="listTheater" theaters={filmsToday} />) }
         <TabsNew id="listNews"/>
       </div>
       <ModalTrailer show={modalShow} onHide={() => setModalShow(false)} trailer={modalId} />

@@ -50,7 +50,6 @@ $wContainer: 940px;
   display: flex !important;
   flex-direction: row;
   flex-flow: row wrap;
-  justify-content: center;
 }
 
 .card-film {
@@ -189,7 +188,7 @@ $wContainer: 940px;
   max-width: $wContainer;
   margin: 0 auto;
   border: 1px solid #ccc;
-  height: 600px;
+  max-height: 600px;
   border-radius: 4px;
   margin-bottom: 80px;
 
@@ -247,6 +246,7 @@ $wContainer: 940px;
   .tab-theater__content {
     &.react-tabs__tab-panel--selected {
       width: calc(100% - 300px);
+      overflow-y: scroll;
     }
 
     .tab-theater__item {
@@ -344,6 +344,7 @@ $wContainer: 940px;
 @media only screen and (max-width: $breakpoint_md - 1px) {
   .list-film {
     padding: 30px;
+    justify-content: center;
   }
   .s-arrow {
     &.s-arrow--prev {
@@ -355,5 +356,11 @@ $wContainer: 940px;
       right: 0;
       background-image: url('/assets/ic-arrow-n.png');
     }
+  }
+}
+
+@media only screen and (max-width: $breakpoint_md) {
+  .tab-theater {
+    margin: 0 40px;
   }
 }
