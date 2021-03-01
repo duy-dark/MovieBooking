@@ -13,7 +13,7 @@ const TabComments = (props) => {
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.review}>
-                <Text style={styles.reviewText}>{props.imdb}</Text>
+                <Text style={styles.reviewText}>{props.rate_average}</Text>
                 <StarRating
                     disabled={true}
                     maxStars={5}
@@ -21,7 +21,7 @@ const TabComments = (props) => {
                     fullStarColor={"orangered"}
                     starSize={15}
                 />
-                <Text style={styles.countReview}>{props.rateCount} người đánh giá</Text>
+                <Text style={styles.countReview}>{props.rate_count} người đánh giá</Text>
             </View>
             <TouchableOpacity style={styles.inputArea} onPress={onPressReviewFilm}>
                 <Text style={styles.inputText}>Bạn nghĩ gì về phim này...</Text>

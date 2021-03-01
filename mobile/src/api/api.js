@@ -2,7 +2,7 @@ import axios from "axios";
 import interceptors from "./interceptors";
 
 const Api = axios.create({
-  baseURL: "https://0a5c09ed79fc.ngrok.io",
+  baseURL: 'https://2012665cc893.ngrok.io',
   withCredentials: false,
   headers: {
     Accept: "application/json",

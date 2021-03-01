@@ -3,12 +3,12 @@ import UsersTypes from "./types";
 import httpUser from "../../api/customers";
 
 function* fetchLogin(action) {
+  const { navigation } = action
   try {
-    let { history } = action;
     const res = yield call(httpUser.login, action.payload);
     if (res.status === "ok") {
       yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: res.data });
-      history.push("/");
+      navigation.navigate("MainTabs")
     }
   } catch (err) {
     throw err;
@@ -49,7 +49,7 @@ function* fetchUDSFriend(action) {
 
 function* fetchLogout(action) {
   try {
-    let { history } = action;
+    // let { history } = action;
     yield put({ type: UsersTypes.LOGOUT_SUCCESS });
     history.push("/login");
   } catch (err) {

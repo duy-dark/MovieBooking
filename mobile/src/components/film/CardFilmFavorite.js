@@ -20,12 +20,12 @@ const CardFilmFavorite = (props) => {
             >
                 <View style={styles.content}>
                     <View style={styles.review}>
-                        <Text style={styles.reviewText}>{props.film.imdb}</Text>
+                        <Text style={styles.reviewText}>{props.film.rate_average}</Text>
                         <StarRating 
                             disabled={true}
                             fullStarColor={"orangered"}
                             maxStars={5}
-                            rating={props.film.imdb / 2}
+                            rating={props.film.rate_average / 2}
                             starSize={10}
                         />
                     </View>

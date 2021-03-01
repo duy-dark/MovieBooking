@@ -37,7 +37,7 @@ const FilmScreen = (props) => {
           {() => <TabSchedules film={film} dayOfWeeks={dayOfWeeks} navigation={props.navigation} />}
         </Tab.Screen>
         <Tab.Screen name="TabComments" options={{title: "Bình luận"}}>
-          {() => <TabComments comments={comments} imdb={film.imdb} rateCount={film.rate_count} navigation={props.navigation} />}
+          {() => <TabComments comments={comments} rate_average={film.rate_average} rate_count={film.rate_count} navigation={props.navigation} />}
         </Tab.Screen>
         <Tab.Screen name="TabInfomation" options={{title: "Thông tin"}}>
           {() => <TabInfomation film={film} />}

@@ -1,10 +1,10 @@
 import UsersTypes from "./types";
 
-export function signIn(user, history) {
+export function signIn(user, navigation) {
   return {
     type: UsersTypes.LOGIN,
     payload: user,
-    history,
+    navigation: navigation
   };
 }
 
