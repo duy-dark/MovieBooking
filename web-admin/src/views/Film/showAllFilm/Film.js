@@ -32,7 +32,7 @@ const columns = [
       <Space size="middle">
        <Detail index={index} detail={record} />
         <a>Delete</a>
-       <Schedule/>
+       <Schedule schedule={record}/>
         <a>Add Schedules</a>
       </Space>
     ),

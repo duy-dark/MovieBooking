@@ -2,11 +2,11 @@ import { Modal, Button } from 'antd';
 import React from "react";
 import EditSchedule from './EditSchedule'
 import "./../../../styles/Film/detailPopup.scss";
-const Schedule = () => {
+const Schedule = (props) => {
   const [visible, setVisible] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
   const [modalText, setModalText] = React.useState();
-
+  
   const showModal = () => {
     setVisible(true);
   };
@@ -40,7 +40,7 @@ const Schedule = () => {
         onCancel={handleCancel}
         pagination={false}
       >
-        <EditSchedule />
+        <EditSchedule schedule={props.schedule._id}/>
       </Modal>
     </>
   );
