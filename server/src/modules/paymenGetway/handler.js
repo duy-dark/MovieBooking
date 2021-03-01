@@ -47,7 +47,8 @@ const momoApi = async (params) => {
       booking_time: params.booking_time
     };
     console.log('lambda:', lambda);
-    returnUrl += 'email=' + params.email;
+    returnUrl = 'http://localhost:3000/complete?' + 'email=' + params.email;
+
     var rawSignature =
       'partnerCode=' +
       partnerCode +

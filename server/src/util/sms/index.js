@@ -1,13 +1,13 @@
 const Nexmo = require('nexmo');
 
 const nexmo = new Nexmo({
-  apiKey: '329ecc32',
-  apiSecret: 'h62S1bZqYNc0m9N1'
+  apiKey: '05dfc6fc',
+  apiSecret: 'VR1xFhIVah5ejYGO'
 });
 const sendSMS = (objectSms) => {
   const from = 'Vonage APIs';
   // const to = '+84838263357';
-  const to = '+84399595500';
+  const to = objectSms.phone;
   const text = `Dat ve thanh cong
   Ma: ${objectSms.id}
   So ghe:${objectSms.count}

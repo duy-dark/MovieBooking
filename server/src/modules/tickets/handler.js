@@ -136,7 +136,7 @@ const postCreate = async (params) => {
       count: ticketView[0].count,
       cost: ticketView[0].cost,
       customers: ticketView[0].customers.name,
-      phone_number: ticketView[0].phone_number,
+      phone_number: ticketView[0].phone_number.toString(),
       payment: ticketView[0].payment,
       time_start: timeStart,
       time_end: time_end,
