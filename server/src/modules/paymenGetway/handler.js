@@ -14,8 +14,8 @@ var partnerCode = 'MOMOESSA20200911';
 var accessKey = 'X46UaeYeKNwQ1Sg1';
 var serectkey = 'TR1BbUHAIVuhHII1HvuJlzcTgqp1R73E';
 var orderInfo = 'pay with MoMo';
-var returnUrl = 'https://momo.vn/return';
-var notifyurl = 'https://3d65eda1e8a8.ngrok.io/api/payment/checkStatusPayment';
+var returnUrl = 'http://localhost:3000/complete?';
+var notifyurl = 'https://b6f779ec3a34.ngrok.io/api/payment/checkStatusPayment';
 var requestType = 'captureMoMoWallet';
 var extraData = 'merchantName=;merchantId=';
 var amount;
@@ -47,6 +47,7 @@ const momoApi = async (params) => {
       booking_time: params.booking_time
     };
     console.log('lambda:', lambda);
+    returnUrl += 'email=' + params.email;
     var rawSignature =
       'partnerCode=' +
       partnerCode +
@@ -148,13 +149,12 @@ const checkStatusMomoApi = async (params) => {
       '&extraData=' +
       params.extraData;
 
-    console.log('s2:', _signature);
     console.log(_signature);
     let newsignature = crypto
       .createHmac('sha256', serectkey)
       .update(_signature)
       .digest('hex');
-
+    console.log('s2:', newsignature);
     console.log(newsignature == params.signature);
     if (newsignature == params.signature) {
       if (params.errorCode == '0') {

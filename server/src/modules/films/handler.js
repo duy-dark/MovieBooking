@@ -253,6 +253,7 @@ const postCreate = async (params) => {
         star1: 0
       },
       rate_average: 0,
+      rate_count: 0,
       imdb: params.imdb || undefined,
       digitals: params.digitals || undefined,
       url_avatar: params.url_avatar || undefined,
@@ -284,6 +285,7 @@ const putUpdate = async (id, params) => {
         directors: params.directors || undefined,
         actors: params.actors || undefined,
         rates: params.rates || undefined,
+        rate_count: params.rate_count || undefined,
         rate_average: params.rate_average || undefined,
         imdb: params.imdb || undefined,
         digitals: params.digitals || undefined,
