@@ -5,19 +5,23 @@ const moment = require('moment');
 
 const getList = async (params) => {
   try {
+    let conditions = {...params, is_deleted: false};
+    delete conditions.limit;
+    console.log('conditions', conditions);
     let lambda = {
-      conditions: {...params, is_deleted: false},
+      conditions: conditions,
       views: {
         _id: 1,
         film_id: 1,
         customer_id: 1,
         content: 1,
         rate: 1
-      }
+      },
+      limit: params.limit * 5 || 100000
     };
     // console.log('type:', typeof lambda.conditions._id);
     // console.log('_id:', lambda.conditions);
-    let data = await Model.findByLambda_detail(lambda.conditions);
+    let data = await Model.findByLambda_detail(lambda);
     return resSuccess(data);
   } catch (error) {
     throw {status: 400, detail: error};
