@@ -49,10 +49,12 @@ export default function filmsReducer(state = initialState, action) {
       newState = Object.assign({}, state, { comments: [payload, ...comments]})
       break;
     case FilmTypes.LOADING_SHOW:
-      newState = Object.assign({}, state, { loading: state.loading++ });
+      let newLoading1 = state.loading + 1
+      newState = Object.assign({}, state, { loading: newLoading1 < 0 ? 0 : newLoading1 });
       break;
     case FilmTypes.LOADING_HIDE:
-      newState = Object.assign({}, state, { loading: state.loading-- });
+      let newLoading2 = state.loading - 1
+      newState = Object.assign({}, state, { loading: newLoading2 < 0 ? 0 : newLoading2  });
       break;
     default:
       newState = state;
