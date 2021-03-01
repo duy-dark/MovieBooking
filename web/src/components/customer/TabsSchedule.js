@@ -54,7 +54,9 @@ export default function TabsSchedule(props) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
+  const showMoreComment = () => {
+    props.onShowMoreComment(props.showMore + 1)
+  }
   const showblockComment = () => {
     if (user) {
       handleShow()
@@ -69,6 +71,7 @@ export default function TabsSchedule(props) {
       content: commentText,
       rate: rated,
     }))
+    setRated(5)
     handleClose()
   }
 
@@ -177,7 +180,9 @@ export default function TabsSchedule(props) {
               <span className="comment-block__rate"><img src="https://tix.vn/app/assets/img/icons/listStar.png" alt="star"/></span>
             </div>
             { props.comments.map(comment => (<CardComment key={comment._id} username={comment.customers.name} {...comment}/>))}
-
+            <div className="tab-detail__comment__more">
+              <button onClick={showMoreComment}>Xem thêm</button>
+            </div>
         </TabPanel>
       </Tabs>
       <Modal show={show} onHide={handleClose}>
