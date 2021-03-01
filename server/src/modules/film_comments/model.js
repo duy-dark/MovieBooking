@@ -47,7 +47,9 @@ module.exports = {
           path: '$customers',
           preserveNullAndEmptyArrays: true
         }
-      }
+      },
+      {$sort: {created_at: -1}},
+      {$limit: 5}
     ]);
   }
 };

@@ -55,12 +55,18 @@ const postCreate = async (params) => {
       updated_at: moment.now()
     };
     let data = await Model.createByLambda(lambda);
-    let customer = await require('../customers/handler').findById({
+    console.log('data:', data);
+    let customer = await require('../customers/model').findByLambda({
       conditions: {_id: params.customer_id, is_deleted: false}
     });
-    return resSuccess({
-      comment: {...data[0], customers: customer[0]}
-    });
+    data[0] = {
+      ...data[0]._doc,
+      customers: customer[0]
+    };
+
+    console.log(data[0]);
+    console.log('customer:', customer);
+    return resSuccess({comment: data[0]});
   } catch (error) {
     throw {status: 400, detail: error};
   }
