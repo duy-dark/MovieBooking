@@ -1,13 +1,11 @@
 import Api from "./api";
 
-const getListFilmShowing = (params) => {
-  return Api.get("/api/film", params).then((res) => res.data);
-};
+
 const updateFilmDetail = (params,data)=>{
   return Api.put(`api/film/${params.id}`,data).then((res) => res.data);
 }
 const getListFilmNow = () => {
-  return Api.get("/api/film/nowshowing").then((res) => res.data);
+  return Api.get("/api/film").then((res) => res.data);
 };
 
 const getListFilmFuture = () => {
@@ -33,9 +31,13 @@ const getSeats = (id) => {
 const getCategories = ()=>{
   return Api.get(`api/category`).then((res) => res.data)
 }
+
+const addNewFilm= (params) =>{
+  return Api.post(`api/film`,params).then((res) => res.data)
+}
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-  getListFilmShowing,
+  
   postBookingInfo,
   getDetail,
   getListFilmNow,
@@ -43,5 +45,6 @@ export default {
   getListFilmToday,
   getSeats,
   updateFilmDetail,
-  getCategories
+  getCategories,
+  addNewFilm
 };
