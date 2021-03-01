@@ -46,7 +46,7 @@ const momoApi = async (params) => {
       is_deleted: params.is_deleted,
       booking_time: params.booking_time
     };
-    console.log('lambda:', lambda);
+    console.log('email:', params.email);
     returnUrl += 'email=' + params.email;
     var rawSignature =
       'partnerCode=' +
