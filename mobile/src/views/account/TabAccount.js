@@ -6,7 +6,6 @@ import { useSelector } from 'react-redux'
 
 const TabAccount = () => {
     const user = useSelector((state) => state.users.user)
-
     const avatar = { uri: user.avatar }
     const logoUni = { uri: "https://truyenthongdaiphuc.files.wordpress.com/2015/09/dai_hoc_khoa_hoc_tu_nhien_dhqg-hcm.png" }
     const logo = { uri: "https://s3img.vcdn.vn/123phim/2020/03/d1e6bd560daa9e20131ea8a0f62e87f8.png" }

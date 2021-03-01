@@ -20,10 +20,10 @@ const FilmScreen = (props) => {
       dispatch(getComments(idFilm))
     }, [])
 
-    const film = useSelector((state) => state.films.filmDetail);
-    const dayOfWeeks = useSelector((state) => state.films.dayOfWeeks);
+    const film = useSelector((state) => state.films.filmDetail)
+    const dayOfWeeks = useSelector((state) => state.films.dayOfWeeks)
     const comments = useSelector((state) => state.films.comments)
-    
+ 
     return (
       <Tab.Navigator 
         tabBarOptions={{

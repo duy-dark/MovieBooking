@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView, View, Text, TextInput, Image, Button, TouchableOpacity } from 'react-native'
+import { ScrollView, View, Text, TextInput, Image, Button, TouchableOpacity, ActivityIndicator } from 'react-native'
 import styles from '../../styles/views/book-ticket/book-ticket'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import moment from 'moment'
@@ -126,11 +126,14 @@ const BookTicketScreen = (props) => {
     useEffect(() => {
         setDisabledBtn(!(seats.length > 0 && !isSelectBug && validateEmail(email) && phone && payment));
     }, [seats, email, phone, payment, isSelectBug])
+
+    const indicator = useSelector((state) => state.films.loading)
     
-    return (
-        <ScrollView style={styles.container}>
+    if(indicator) return <ActivityIndicator style={{alignSelf: 'center', marginTop: 200}} size="large" color="orangered" /> 
+    else return (
+        <ScrollView style={styles.container}> 
             <ScrollView style={styles.areaSeats} contentContainerStyle={{padding: 15, flexDirection: "column"}} horizontal={true}>
-                {arrSeatsModel.length > 0 && arrSeatsModel.map((seatRow, index) => 
+                {arrSeatsModel.length > 0 && arrSeatsModel.map((seatRow, index) =>
                     <SeatRow key={index} {...seatRow} seats={seats} selected={seat => selectSeat(seat)} arrSeatsSelected={arrSeatsSelected}/>
                 )}
                 <View style={{flexDirection: "row", justifyContent: "center", marginTop: 25}}>

@@ -1,12 +1,16 @@
-import React, { useEffect } from 'react'
-import { View, Text, ScrollView, Image } from 'react-native'
+import React from 'react'
+import { View, Text, ScrollView, Image, ActivityIndicator } from 'react-native'
 import styles from '../../styles/views/cinema/tab-infomation'
 import Ionicons from 'react-native-vector-icons/Ionicons'
+import { useSelector } from "react-redux"
 
 const TabInfoCinema = (props) => {
     const image = { uri: props.cinema.url_image }
 
-    return (
+    const indicator = useSelector((state) => state.cinemas.loading)
+    
+    if(indicator) return <ActivityIndicator style={{alignSelf: 'center', marginTop: 200}} size="large" color="orangered" /> 
+    else return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <Image style={styles.image} source={image}/>
             <Text style={styles.nameCinema}>{props.cinema.name}</Text>

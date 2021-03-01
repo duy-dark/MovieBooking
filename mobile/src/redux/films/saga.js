@@ -73,10 +73,12 @@ function* fetchListFilmsToday() {
 
 function* fetchSeats(action) {
   try {
+    yield put({ type: FilmsType.LOADING_SHOW });
     const { payload } = action
     const res = yield call(httpFilms.getSeats, payload);
     const { status, data } = res
     if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.LIST_SEATS_SUCCESS, payload: data });
     }
 

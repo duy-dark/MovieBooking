@@ -17,7 +17,6 @@ const SeatRow = (props) => {
                 </>
             ))}
             </View>
-            
         </View>
     )
 }

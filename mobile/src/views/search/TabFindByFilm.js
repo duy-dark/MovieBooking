@@ -67,7 +67,6 @@ const TabFindByFilm = (props) => {
     }, [selectDate])
 
     useEffect(() => {
-        console.log(search)
         if (search) {
             setOptionFilm(search.films.map(val => ({ ...val, label: val.name, value: val._id })))
         }

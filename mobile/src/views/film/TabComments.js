@@ -1,9 +1,10 @@
 import React from 'react'
-import { ScrollView, View, Text, TextInput } from 'react-native'
+import { ScrollView, View, Text, ActivityIndicator } from 'react-native'
 import styles from '../../styles/views/comment/tab-comments'
 import StarRating from 'react-native-star-rating'
 import CardCommentFilm from '../../components/comment/CardCommentFilm'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import { useSelector } from "react-redux"
 
 const TabComments = (props) => {
     const onPressReviewFilm = () => {
@@ -11,8 +12,10 @@ const TabComments = (props) => {
             filmId: props.filmId
         })
     }
-    
-    return (
+    const indicator = useSelector((state) => state.films.loading)
+
+    if(indicator) return <ActivityIndicator style={{alignSelf: 'center', marginTop: 200}} size="large" color="orangered" /> 
+    else return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.review}>
                 <Text style={styles.reviewText}>{props.rate_average}</Text>

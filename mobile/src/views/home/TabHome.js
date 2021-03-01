@@ -27,9 +27,8 @@ const TabHome = (props) => {
     const seeAllNews = () => {
         props.navigation.navigate("NewsStack")
     }
-    console.log(indicator, "abcdef")
-    if(indicator == 0) return <ActivityIndicator style={{alignSelf: 'center', marginTop: 200}} size="large" color="orangered" /> 
-    else return (
+    if(indicator) return <ActivityIndicator style={{alignSelf: 'center', marginTop: 200}} size="large" color="orangered" /> 
+    return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <Text style={styles.section}>Phim được yêu thích nhất</Text>
             {filmsFavorite.map((film, index) => 

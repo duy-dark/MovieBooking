@@ -1,8 +1,9 @@
 import React from 'react'
-import { ScrollView, View, Text, Image } from 'react-native'
+import { ScrollView, View, Text, ActivityIndicator } from 'react-native'
 import styles from '../../styles/views/film/tab-infomation'
 import { WebView } from 'react-native-webview'
 import moment from "moment"
+import { useSelector } from "react-redux"
 
 const TabInfomation = (props) => {
     var film
@@ -13,8 +14,10 @@ const TabInfomation = (props) => {
         film = props.film
     }
     const date = moment(film.start_date).format("DD/MM")
+    const indicator = useSelector((state) => state.films.loading)
 
-    return (
+    if(indicator) return <ActivityIndicator style={{alignSelf: 'center', marginTop: 200}} size="large" color="orangered" /> 
+    else return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <WebView
                 scalesPageToFit={true}

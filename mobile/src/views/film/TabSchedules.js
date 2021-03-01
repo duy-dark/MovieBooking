@@ -3,7 +3,7 @@ import { SafeAreaView, View, Text, TouchableOpacity, FlatList, ActivityIndicator
 import styles from '../../styles/views/schedule/tab-schedules'
 import CardCinemaSchedule from '../../components/cinema/CardCinemaSchedule'
 import moment from 'moment'
-import { useSelector } from "react-redux";
+import { useSelector } from "react-redux"
 
 const days = ['CN', 'Th 2', 'Th 3', 'Th 4', 'Th 5', 'Th 6', 'Th 7']
 

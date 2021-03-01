@@ -73,7 +73,6 @@ const TabFindByDate = (props) => {
     }, [selectDate])
 
     useEffect(() => {
-        console.log(search)
         if (search) {
             setOptionDate(search.dayOfWeek.map((val, index) => ({ ...val, label: days[moment(val.date).day()], value: index })))
         }

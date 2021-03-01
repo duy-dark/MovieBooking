@@ -3,7 +3,7 @@ import FilmTypes from './types';
 
 const initialState = {
   status: true,
-  loading: 0,
+  loading: true,
   filmsNow: [],
   filmsFuture: [],
   filmsToday: [],
@@ -49,10 +49,10 @@ export default function filmsReducer(state = initialState, action) {
       newState = Object.assign({}, state, { comments: [payload, ...comments]})
       break;
     case FilmTypes.LOADING_SHOW:
-      newState = Object.assign({}, state, { loading: state.loading++ });
+      newState = Object.assign({}, state, { loading: true });
       break;
     case FilmTypes.LOADING_HIDE:
-      newState = Object.assign({}, state, { loading: state.loading-- });
+      newState = Object.assign({}, state, { loading: false });
       break;
     default:
       newState = state;

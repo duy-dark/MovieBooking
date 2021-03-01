@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react'
-import { SafeAreaView, FlatList } from 'react-native'
+import { SafeAreaView, FlatList, ActivityIndicator } from 'react-native'
 import CardCinema from '../../components/cinema/CardCinema'
-import { useSelector, useDispatch } from "react-redux";
-import { getListCinemas } from '../../redux/cinemas/action';
-
+import { useSelector, useDispatch } from "react-redux"
+import { getListCinemas } from '../../redux/cinemas/action'
 
 const CinemaScreen = (props) => {
     const dispatch = useDispatch()
@@ -12,8 +11,11 @@ const CinemaScreen = (props) => {
         dispatch(getListCinemas())
     }, [])
 
-    const cinemas = useSelector((state) => state.cinemas.cinemasList);
-    return (
+    const cinemas = useSelector((state) => state.cinemas.cinemasList)
+    const indicator = useSelector((state) => state.cinemas.loading)
+    
+    if(indicator) return <ActivityIndicator style={{alignSelf: 'center', marginTop: 200}} size="large" color="orangered" /> 
+    else return (
         <SafeAreaView>
             <FlatList  
                 data={cinemas}  

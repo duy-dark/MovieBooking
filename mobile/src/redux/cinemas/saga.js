@@ -4,9 +4,11 @@ import httpCinemas from "../../api/cinemas";
  
 function* fetchListCinemas() {
     try {
+      yield put({ type: CinemaType.LOADING_SHOW });
       const res = yield call(httpCinemas.getListCinemas, {});
       const { status, data } = res
       if (status === "ok") {
+        yield put({ type: CinemaType.LOADING_HIDE });
         yield put({ type: CinemaType.LIST_CINEMAS_SUCCESS, payload: data });
       }
   
@@ -15,10 +17,12 @@ function* fetchListCinemas() {
 
 function* fetchCinemaDetails(action) {
     try {
+      yield put({ type: CinemaType.LOADING_SHOW });
       const { payload } = action;
       const res = yield call(httpCinemas.getCinemaDetails, payload);
       const { status, data } = res
       if (status === "ok") {
+        yield put({ type: CinemaType.LOADING_HIDE });
         yield put({ type: CinemaType.CINEMA_DETAIL_SUCCESS, payload: data });
       }
   
