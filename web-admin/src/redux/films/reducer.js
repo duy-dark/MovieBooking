@@ -35,10 +35,11 @@ export default function filmsReducer(state = initialState, action) {
       break;
     case FilmTypes.UPDATE_FILM_DETAIL_SUCCESS:
       newState = Object.assign({},state,{filmUpdate : payload})
+      break;
     case FilmTypes.LIST_CATEGOGY_SUCCESS:
       
       newState = Object.assign({},state,{categories : payload})
-      
+      break;
     default:
       newState = state;
   }

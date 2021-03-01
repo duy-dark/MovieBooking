@@ -26,10 +26,15 @@ const validateMessages = {
 };
 
 export default function AddFilm  (props) {
-
+  let selectCategories=[];
   
   const onFinish = (values) => {
-    console.log(values);
+    selectCategories=props.categories.filter((item,index)=> values.film.category_ids.includes(index.toString())==true?item:null);
+    let idCategories=[]
+    for(let item of selectCategories)
+    idCategories.push(item._id)
+    values.film.category_ids=idCategories;
+    console.log(values)
   };
 
   return (
@@ -120,29 +125,32 @@ export default function AddFilm  (props) {
           },
         ]}
       >
+        
         <Select
     mode="multiple"
     style={{ width: '100%' }}
     placeholder="select categories"
     optionLabelProp="label"
    
-    onChange={(value) => {
-        alert(value)
+    onChange={(value2) => {
+        let temp=[value2]
+    
       }} 
   >
-  
-    <Option  value="china" label="China">
+     { props.categories.map((item,index)=>{
+       return(
+    <Option key={index} value1={item.name} value2={item._id}label={item.name}>
       <div className="demo-option-label-item">
-      
+      { `${item.name}` }
     
       </div>
-    </Option>
-
+    </Option>)
+    })}
     </Select>
 
       </Form.Item>
       <Form.Item
-        name={['film', 'category_ids']}
+        name={['film', 'Url_background']}
         label="Url_background"
         rules={[
           {

@@ -41,7 +41,7 @@ const AddNewFilm = (props) => {
         onCancel={handleCancel}
         pagination={false}
       >
-        <AddFilm/>
+        <AddFilm categories={props.categories}/>
       </Modal>
     </>
   );
