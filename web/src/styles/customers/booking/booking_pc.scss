@@ -18,22 +18,32 @@
       width: 800px;
       margin-bottom: 20px;
       align-items: center;
-
-      img {
-        width: 50px;
-        height: 50px;
-        margin-right: 20px;
-      }
+      justify-content: space-between;
 
       .booking-content__threater {
+        display: flex;
+        flex-direction: row;
+        img {
+          width: 50px;
+          height: 50px;
+          margin-right: 20px;
+        }
+        .booking-content__content {
+          display: flex;
+          flex-direction: column;
+          .booking-content__threater__name {
+            font-size: 20px;
+            font-weight: 500;
+          }
+          .booking-content__threater__room {
+            font-size: 16px;
+          }
 
-        &__name {
-          font-size: 20px;
-          font-weight: 500;
         }
-        &__room {
-          font-size: 16px;
-        }
+      }
+
+      .booking-content__countdown {
+
       }
     }
     .booking-content__list-seats {
