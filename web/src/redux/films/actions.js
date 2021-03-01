@@ -45,10 +45,10 @@ export function getSearch() {
   };
 }
 
-export function getComments(id) {
+export function getComments(params) {
   return {
     type: FilmTypes.COMMENT,
-    payload: id
+    payload: params
   };
 }
 

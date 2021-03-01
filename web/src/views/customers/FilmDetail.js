@@ -22,13 +22,19 @@ export default function FilmDetail() {
   // eslint-disable-next-line
   const [future, setFuture] = useState(location.state || {});
 
+  const [showMore, setShowMore] = useState(1);
+
+  useEffect(() => {
+    dispatch(getComments({id: id, limit: showMore}));
+  }, [showMore])
+
   const  dispatch = useDispatch();
   useEffect(() =>{
     const info = {
       id: id
     };
     dispatch(getFilmDetails(info));
-    dispatch(getComments(id));
+    // dispatch(getComments({id: id, limit: showMore}));
     const token = localStorage.getItem("token");
     const userID = localStorage.getItem("userID");
     if (token && userID) {
@@ -59,11 +65,11 @@ export default function FilmDetail() {
             <div className="detail-slider__rates">
               <span>{data.rate_average}</span>
               <div>
-                { data.rate_average >= 1 && (<img src={`https://tix.vn/app/assets/img/icons/star1.png`} alt="star"/>)}
-                { data.rate_average >= 2 && (<img src={`https://tix.vn/app/assets/img/icons/star1.png`} alt="star"/>)}
-                { data.rate_average >= 3 && (<img src={`https://tix.vn/app/assets/img/icons/star1.png`} alt="star"/>)}
-                { data.rate_average >= 4 && (<img src={`https://tix.vn/app/assets/img/icons/star1.png`} alt="star"/>)}
-                { data.rate_average === 5 && (<img src={`https://tix.vn/app/assets/img/icons/star1.png`} alt="star"/>)}
+                { data.rate_average / 2 >= 1 && (<img src={`https://tix.vn/app/assets/img/icons/star1.png`} alt="star"/>)}
+                { data.rate_average / 2 >= 2 && (<img src={`https://tix.vn/app/assets/img/icons/star1.png`} alt="star"/>)}
+                { data.rate_average / 2 >= 3 && (<img src={`https://tix.vn/app/assets/img/icons/star1.png`} alt="star"/>)}
+                { data.rate_average / 2 >= 4 && (<img src={`https://tix.vn/app/assets/img/icons/star1.png`} alt="star"/>)}
+                { data.rate_average / 2 === 5 && (<img src={`https://tix.vn/app/assets/img/icons/star1.png`} alt="star"/>)}
                 { data.rate_average !== 0 && (<img src={`https://tix.vn/app/assets/img/icons/star1.2.png`} alt="star"/>)}
               </div>
             </div>
@@ -71,7 +77,7 @@ export default function FilmDetail() {
         </div>
       </div>
       <div className="detail-wrapper">
-       {data && dayOfWeeks && <TabsSchedule future={future.future ? 0 : 1} detail={data} dayOfWeeks={dayOfWeeks} comments={comments}/>}
+       {data && dayOfWeeks && <TabsSchedule showMore={showMore} onShowMoreComment={more => setShowMore(more)} future={future.future ? 0 : 1} detail={data} dayOfWeeks={dayOfWeeks} comments={comments}/>}
       </div>
       <ModalTrailer
         show={modalShow}
