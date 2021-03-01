@@ -3,6 +3,7 @@ import UsersTypes from "./types";
 
 const initialState = {
   status: true,
+  loading: 0,
   user: null,
   token: null,
   isRegister: false,
@@ -57,6 +58,12 @@ export default function userReducer(state = initialState, action) {
         header: payload.header,
         footer: payload.footer,
       });
+      break;
+    case UsersTypes.LOADING_SHOW:
+      newState = Object.assign({}, state, { loading: state.loading++ });
+      break;
+    case UsersTypes.LOADING_HIDE:
+      newState = Object.assign({}, state, { loading: state.loading-- });
       break;
     default:
       newState = state;

@@ -3,9 +3,11 @@ import { useLocation, useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 // import { updateHeaderFooter } from "../../redux/users/actions";
 import "../../styles/customers/booking/booking.scss";
-import { getFilmDetails, getSeats, postBookingInfo } from "../../redux/films/actions";
+import { getFilmDetails, getSeats, paymentGateway } from "../../redux/films/actions";
 // import { getToken } from "../../redux/users/selector";
 import * as moment from "moment"
+import { getUserInfo } from "../../redux/users/actions";
+import MyCountdownTimer from '../../components/MyCountdownTimer';
 
 const SeatEl = (props) => {
   const [status, setStatus] = useState();
@@ -33,7 +35,10 @@ const SeatEl = (props) => {
   let classSeatChil = () => {
     let str = "seat"
     if (props.seatsSelected.includes(props.seat)) str += " seat--hide"
-    if (status) str += " seat--selected"
+    if (props.seats.includes(props.seat)) {
+      str += " seat--selected"
+      console.log('run here')
+    }
     if (props.vip === "1") str += " seat--vip"
     if (props.type === "2-1") str += " seat--together seat--two-1"
     if (props.type === "2-2") str += " seat--together seat--two-2"
@@ -50,7 +55,7 @@ const SeatEl = (props) => {
   return (
     <span className={classSeatPar()} onClick={() => clickSeat(props)}>
       <span className={classSeatChil()}>
-        <span className="s-img">{formatSeat(status)}</span>
+        <span className="s-img">{ props.seats.includes(props.seat) ? formatSeat(props.seat) : formatSeat(status)}</span>
       </span>
     </span>
   );
@@ -81,7 +86,7 @@ function validateEmail(email) {
 }
 
 const words = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-
+const Completionist = () => <span>You are good to go!</span>;
 export default function Booking(props) {
   const location = useLocation();
   const history = useHistory();
@@ -110,9 +115,42 @@ export default function Booking(props) {
         const arr = [...seats];
         const index = arr.indexOf(seat);
         arr.splice(index, 1);
+
+        let nameRow = seat.slice(0, 1)
+        let indexRowItem = words.indexOf(nameRow)
+        let indexValueItem = arrSeats[indexRowItem].rows.indexOf(seat)
+        if (arrSeats[indexRowItem].types[indexValueItem] === "2-1") {
+          let number = +seat.substr(seat.length - 1)
+          let name = seat.slice(0, seat.length - 1)
+          let numberNext = ++number
+          const index1 = arr.indexOf(name + numberNext);
+          arr.splice(index1, 1);
+
+        } else if (arrSeats[indexRowItem].types[indexValueItem] === "2-2") {
+          let number = +seat.substr(seat.length - 1)
+          let name = seat.slice(0, seat.length - 1)
+          let numberPrev = --number
+          const index1 = arr.indexOf(name + numberPrev);
+          arr.splice(index1, 1);
+        }
         setSeats([...arr]);
       } else {
-        setSeats([...seats, seat]);
+        let nameRow = seat.slice(0, 1)
+        let indexRowItem = words.indexOf(nameRow)
+        let indexValueItem = arrSeats[indexRowItem].rows.indexOf(seat)
+        if (arrSeats[indexRowItem].types[indexValueItem] === "2-1") {
+          let number = +seat.substr(seat.length - 1)
+          let name = seat.slice(0, seat.length - 1)
+          let numberNext = ++number
+          setSeats([...seats, seat, name + numberNext])
+        } else if (arrSeats[indexRowItem].types[indexValueItem] === "2-2") {
+          let number = +seat.substr(seat.length - 1)
+          let name = seat.slice(0, seat.length - 1)
+          let numberPrev = --number
+          setSeats([...seats, seat, name + numberPrev])
+        } else {
+          setSeats([...seats, seat]);
+        }
       }
     }
   };
@@ -121,24 +159,19 @@ export default function Booking(props) {
     return new Intl.NumberFormat().format(number);
   };
 
-  useEffect(() => {
-    if (!user) {
-      history.push('/login')
-    }
-  }, [user])
-
   const bookingTicket = () => {
     const bookingInfo = {
       count: seats.length,
       cost: seats.length * 80000,
       customer_id: user._id,
       film_schedule_id: movies.schedule_id,
-      seat_ids: seats,
-      email,
+      seats: seats,
+      email: email,
       phone_number: phone,
-      payment,
+      payment: "momo",
+      voucher_id: ""
     };
-    dispatch(postBookingInfo(bookingInfo, history));
+    dispatch(paymentGateway({ params: bookingInfo, history: window}));
     setDisabledBtn(true);
   };
   const [showError, setShowError] = useState(false)
@@ -154,50 +187,76 @@ export default function Booking(props) {
       let nameRow = item.slice(0, 1)
       let indexRowItem = words.indexOf(nameRow)
       let indexValueItem = arrSeats[indexRowItem].rows.indexOf(item)
-      let valueNearL1 = arrSeats[indexRowItem].rows[indexValueItem - 1]
-      let valueNearL2 = arrSeats[indexRowItem].rows[indexValueItem - 2]
-      let valueNearR1 = arrSeats[indexRowItem].rows[indexValueItem + 1]
-      let valueNearR2 = arrSeats[indexRowItem].rows[indexValueItem + 2]
-
-      if (valueNearL1 && !listSeatsSelected.includes(valueNearL1) && !seats.includes(valueNearL1) && (valueNearL2 === "0" || valueNearL2 === undefined)) {
-        setIsSelectBug(true)
-        setShowError(true)
-      } else if (valueNearR1 && !listSeatsSelected.includes(valueNearR1) && !seats.includes(valueNearR1) && (valueNearR2 === "0" || valueNearR2 === undefined)) {
-        setIsSelectBug(true)
-        setShowError(true)
-      } else {
-        setIsSelectBug(false)
-        setShowError(false)
+      if (arrSeats[indexRowItem].types[indexValueItem] !== "2-1" && arrSeats[indexRowItem].types[indexValueItem] !== "2-2") {
+        let valueNearL1 = arrSeats[indexRowItem].rows[indexValueItem - 1]
+        let valueNearL2 = arrSeats[indexRowItem].rows[indexValueItem - 2]
+        let valueNearR1 = arrSeats[indexRowItem].rows[indexValueItem + 1]
+        let valueNearR2 = arrSeats[indexRowItem].rows[indexValueItem + 2]
+        if (valueNearL1 && !listSeatsSelected.includes(valueNearL1) && !seats.includes(valueNearL1) && (valueNearL2 === "0" || valueNearL2 === undefined)) {
+          setIsSelectBug(true)
+          setShowError(true)
+        } else if (valueNearR1 && !listSeatsSelected.includes(valueNearR1) && !seats.includes(valueNearR1) && (valueNearR2 === "0" || valueNearR2 === undefined)) {
+          setIsSelectBug(true)
+          setShowError(true)
+        } else {
+          setIsSelectBug(false)
+          setShowError(false)
+        }
       }
     })
   }, [seats])
-  
+
   useEffect(() => {
     const info = {
       id: id
     };
     dispatch(getFilmDetails(info));
     dispatch(getSeats(movies.schedule_id));
+    const token = localStorage.getItem("token");
+    const userID = localStorage.getItem("userID");
+    if (token && userID) {
+      dispatch(getUserInfo({ token, userID }));
+    } else {
+      history.push("/login")
+    }
   }, [])
 
   const formatDate = (date) => {
     return moment(date).format('dddd DD/MM/YYYY hh:mm');
   }
 
+  // const renderer = ({ hours, minutes, seconds, completed }) => {
+  //   if (completed) {
+  //     // Render a completed state
+  //     setSeats([])
+  //     alert('quá thời gian quy định')
+  //     return <span>You are good to go!</span>;
+  //     // console.log("Completed")
+  //   } else {
+  //     // Render a countdown
+  //     return <span> {"0" +minutes}:{seconds < 10 ? '0' + seconds : seconds}</span>;
+  //   }
+  // };
+
   return (
     <div className="booking">
       <div className="booking-content">
         <div className="booking-content__header">
-          <img src={movies.theater_url_image} alt="" />
           <div className="booking-content__threater">
-            <div className="booking-content__threater__name">{movies && movies.theater_name}</div>
-            <div className="booking-content__threater__room">{`${formatDate(movies.schedule.time_start)} - ${roomBooking}`}</div>
+            <img src={movies.theater_url_image} alt="" />
+            <div className="booking-content__content">
+              <div className="booking-content__threater__name">{movies && movies.theater_name}</div>
+              <div className="booking-content__threater__room">{`${formatDate(movies.schedule.time_start)} - ${roomBooking}`}</div>
+            </div>
+          </div>
+          <div className="booking-content__countdown">
+
           </div>
         </div>
         <div className="booking-content__screen">
           <img src="/assets/screen.png" alt="" />
         </div>
-        <div className="booking-content__list-seats">
+        <div id="" className="booking-content__list-seats">
           {arrSeats.map((row, index) => (
             <RowSeatEl key={index} seats={seats} seatsSelected={listSeatsSelected} {...row} onSelectSeat={(seat) => selectSeat(seat)} />
           ))}

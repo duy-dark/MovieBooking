@@ -5,6 +5,7 @@ import Home from "./views/customers/Home";
 import MovieDetail from "./views/customers/FilmDetail.js";
 import Booking from "./views/customers/Booking.js";
 import New from "./views/customers/New.js"
+import Completed from "./views/customers/Completed.js"
 const routes = [
   {
     path: "/",
@@ -30,6 +31,11 @@ const routes = [
     path: "/new",
     exact: true,
     component: () => <New />
+  },
+  {
+    path: "/complete",
+    exact: true,
+    component: () => <Completed />
   }
 ];
 

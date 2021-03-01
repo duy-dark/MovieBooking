@@ -6,7 +6,7 @@ const encode = (data) => {
     account: data,
     info: 'Token is valid'
   };
-  return jwt.sign(payload, privateKey, {algorithm: 'RS256'});
+  return jwt.sign(payload, privateKey, { algorithm: 'RS256', expiresIn: '30 days' });
 };
 
 const decode = (token) => {

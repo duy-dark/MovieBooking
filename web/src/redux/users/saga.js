@@ -4,10 +4,13 @@ import httpUser from "../../api/customers";
 
 function* fetchLogin(action) {
   try {
+    yield put({ type: UsersTypes.LOADING_SHOW});
     let { history } = action;
     const res = yield call(httpUser.login, action.payload);
     if (res.status === "ok") {
       yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: res.data });
+      yield put({ type: UsersTypes.LOADING_HIDE});
+
       history.push("/");
     }
   } catch (err) {
@@ -29,10 +32,12 @@ function* fetchListFriend() {
 
 function* fetchUserInfo(action) {
   try {
+    yield put({ type: UsersTypes.LOADING_SHOW});
     const res = yield call(httpUser.getUserInfo, action.payload);
 
     if (res.status === "ok") {
       yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: res.data });
+      yield put({ type: UsersTypes.LOADING_HIDE});
     }
   } catch (err) {
     throw err;
