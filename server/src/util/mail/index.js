@@ -7,7 +7,7 @@ const transporter = nodemailer.createTransport({
     pass: 'doantotnghiep'
   }
 });
-let contentMail = (ticket) => {
+let contentMail = (objSender) => {
   return `
     <div style="display:flex;flex-direction: column; border: 2px #CCFFFF solid; border-width: 10px; max-width :700px; font-size: 20px; padding: 10px; color:#000066 ; background-image: url('ticket.jpg');">
     <div style="text-align: center; padding: 10px;">
@@ -24,7 +24,7 @@ let contentMail = (ticket) => {
         <p>Số ghế: ${objSender.seats}</p> 
       </div>
       <div style="display:flex;">
-        <p>Phòng: 5</p>
+        <p>Phòng: ${objSender.room}</p>
       </div>
     </div>
     <div style="width: 50%">
