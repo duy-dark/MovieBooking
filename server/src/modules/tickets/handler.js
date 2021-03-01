@@ -5,6 +5,7 @@ const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
 const {transporter, contentMail, contentCode} = require('../../util/mail');
 const {nexmo, sendSMS} = require('../../util/sms');
+const shortid = require('shortid');
 
 const getList = async (params) => {
   try {
@@ -12,6 +13,7 @@ const getList = async (params) => {
       conditions: {...params, is_deleted: false},
       views: {
         _id: 1,
+        code: 1,
         count: 1,
         booking_time: 1,
         cost: 1,
@@ -37,6 +39,7 @@ const findById = async (id) => {
       conditions: {_id: id, is_deleted: false},
       views: {
         _id: 1,
+        code: 1,
         count: 1,
         booking_time: 1,
         cost: 1,
@@ -65,7 +68,9 @@ const findById = async (id) => {
 
 const postCreate = async (params) => {
   try {
+    let code = shortid.generate().toUpperCase();
     let lambda = {
+      code: code,
       count: params.count || undefined,
       booking_time: moment(params.booking_time) || undefined,
       cost: params.cost || undefined,
@@ -81,13 +86,13 @@ const postCreate = async (params) => {
       created_at: moment.now(),
       updated_at: moment.now()
     };
-    // console.log('lambda:', lambda);
     let data = await Model.createByLambda(lambda);
 
     let view = {
       conditions: {_id: data[0]._id, is_deleted: false},
       views: {
         _id: 1,
+        code: 1,
         count: 1,
         booking_time: 1,
         cost: 1,
@@ -102,25 +107,22 @@ const postCreate = async (params) => {
         room: 1
       }
     };
-    // console.log('data:', data);
-
-    // console.log('view:', view);
 
     let ticketView = await Model.getDetail(view);
-    console.log('ticketView:', ticketView);
 
-    console.log();
+    let film = await require('../films/model').findByLambda({
+      conditions: {_id: ticketView[0].film_schedules.film_id}
+    });
+    console.log('film:', film[0]);
+
     let theater = await require('../theaters/model').findByLambda({
       conditions: {_id: ticketView[0].film_schedules.theater}
     });
     ticketView[0].film_schedules.theater = theater[0].name;
-
     let seats = ticketView[0].seats.toString();
-
     let timeStart = moment(ticketView[0].film_schedules.time_start).format(
       'DD/MM/YYYY, HH:mm'
     );
-
     let time_end = moment(ticketView[0].film_schedules.time_end).format(
       'DD/MM/YYYY, HH:mm'
     );
@@ -128,10 +130,12 @@ const postCreate = async (params) => {
     let room = await require('../rooms/handler').findById(
       ticketView[0].film_schedules.room_id
     );
-    console.log('room:', room.data.name);
 
     const objSender = {
       id: ticketView[0]._id,
+      code: code,
+      film: film[0].name,
+      address: theater[0].address,
       seats: seats,
       count: ticketView[0].count,
       cost: ticketView[0].cost,
@@ -153,8 +157,7 @@ const postCreate = async (params) => {
       subject: 'Đặt vé thành công',
       html: contentMail(objSender) //Nội dung html mình đã tạo trên kia :))
     };
-    let result = await sendSMS(objSender);
-    console.log('result sms', result);
+
     let p1 = await transporter.sendMail(mainOptions);
     await Promise.all([p1]).then((row) => {
       let {err, info} = row[0];
@@ -165,7 +168,10 @@ const postCreate = async (params) => {
         };
       }
     });
+    console.log('p1', p1);
 
+    let result = await sendSMS(objSender);
+    console.log('result sms', result);
     return resSuccess(data[0]);
   } catch (error) {
     console.log('error booking', error);
@@ -178,6 +184,7 @@ const putUpdate = async (id, params) => {
     let lambda = {
       conditions: {_id: id, is_deleted: false},
       params: {
+        code: params.code || undefined,
         count: params.count || undefined,
         booking_time: params.booking_time || undefined,
         cost: params.cost || undefined,
