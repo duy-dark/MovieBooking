@@ -26,7 +26,7 @@ export default function Login(props) {
       name: response.profileObj.name,
       email: response.profileObj.email,
       avatar: response.profileObj.imageUrl,
-      account_type: "facebook",
+      account_type: "Google",
     };
     dispatch(signIn(user, history));
   };
@@ -50,7 +50,7 @@ export default function Login(props) {
             <p className="login-form__groups__title">Đăng nhập để được nhiều ưu đãi, mua vé và bảo mật thông tin!</p>
             <div className="groups-btn">
               <FacebookLogin
-                appId="409505490301267"
+                appId="1380395492300580"
                 callback={responseFacebook}
                 fields="name,email,picture"
                 render={(renderProps) => (
@@ -60,7 +60,7 @@ export default function Login(props) {
                 )}
               />
               <GoogleLogin
-                clientId="827380774255-d0ksdk40jlq25n7g7okdgdl7hm073iip.apps.googleusercontent.com"
+                clientId="420984700024-mtmtndn31tamjca6g6tuqriveu3afrng.apps.googleusercontent.com"
                 onSuccess={responseGoogle}
                 onFailure={responseGoogle}
                 cookiePolicy="single_host_origin"

@@ -12,7 +12,7 @@ router.get('/', (req, res, next) => {
     customer_id: req.query.customer_id,
     film_schedule_id: req.query.film_schedule_id,
     voucher_id: req.query.voucher_id,
-    seat_ids: req.query.seat_ids
+    seats: req.query.seats
   };
   conditions = omitBy(conditions, isNil);
   handler

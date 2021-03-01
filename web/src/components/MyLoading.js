@@ -1,21 +1,17 @@
 import React from 'react';
-import LoadingOverlay from 'react-loading-overlay'
-import BounceLoader from 'react-spinners/BounceLoader'
 
-export default function MyLoading({ active}) {
+export default function MyLoading({active}) {
+  if (active) {
+    let body = document.getElementsByTagName('body')[0]
+    body.style.overflow = 'hidden'
+  } else {
+    let body = document.getElementsByTagName('body')[0]
+    body.style.overflow = 'auto'
+
+  }
   return (
-    <LoadingOverlay
-      active={active}
-      spinner={<BounceLoader />}
-      fadeSpeed={500}
-      styles={{
-        wrapper: {
-          // width: window.innerWidth + 'px',
-          // height: window.innerHeight + 'px',
-          overflow: active ? 'hidden' : 'scroll'
-        }
-      }}
-    >
-    </LoadingOverlay>
+    <div className={`my-loading ${active ? 'my-loading--show' : ''}`} style={{width: window.innerWidth + 'px', height: window.innerHeight + 'px'}}>
+      <img src={`/assets/web-logo.png`} alt=""/>
+    </div>
   )
 }

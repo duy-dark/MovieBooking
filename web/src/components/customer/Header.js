@@ -24,6 +24,22 @@ export default function Header(props) {
     dispatch(signOut(history))
   }
 
+  const showNavbar = () => {
+    let element = document.getElementById('burger')
+    let body = document.getElementsByTagName('body')[0]
+    let navbar = document.getElementsByClassName('header__info')[0]
+    if (document.getElementsByClassName("header__toggle").length > 0) {
+      element.classList.remove('header__toggle')
+      navbar.classList.remove('nav-active')
+      body.style.overflow = 'auto'
+    } else {
+      body.style.overflow = 'hidden'
+      navbar.classList.add('nav-active')
+      element.classList.add('header__toggle')
+    }
+  }
+
+
   return (
     <div className="header">
       <div className="header__icon">
@@ -31,33 +47,40 @@ export default function Header(props) {
       </div>
       <Navbar />
       <div className="header__info">
-        <div className="header__customer">
-          { user ? (
-            <>
-              <div className="header__login" onClick={() => setShowLogout(!showLogout)}>
-                <img src={`/assets/avatar.png`} alt="avatar"/><span>{user.name}</span>
-              </div>
-              <div className="hl-dropdown" style={showLogout ? { display: 'block' } : {}}>
-                <div className="hl-dropdown__item">
-                  <div className="header__logout" onClick={() => onLogout()}>Đăng Xuất</div>
+        <div className="header__info__content">
+          <div className="header__customer">
+            { user ? (
+              <>
+                <div className="header__login" onClick={() => setShowLogout(!showLogout)}>
+                  <img src={`${user.avatar ? user.avatar : '/assets/avatar.png'}`} alt="avatar"/><span>{user.name}</span>
                 </div>
-              </div>
-            </>
-            ) : (
-          <Link to="/login" className="header__login">
-            <img src={`/assets/avatar.png`} alt="avatar"/>
-            Đăng nhập
-          </Link>)}
-        </div>
-        <div className="header__position">
-          <div className="header__position__name">{position}</div>
-          <div className="header__dropdown" style={{ display: 'none'}}>
-            <div className="header__dropdown__option" onClick={() => changePosition('Hà Nội')}>Hà Nội</div>
-            <div className="header__dropdown__option" onClick={() => changePosition('Đà Nẵng')}>Đà Nẵng</div>
-            <div className="header__dropdown__option" onClick={() => changePosition('Nha Trang')}>Nha Trang</div>
-            <div className="header__dropdown__option" onClick={() => changePosition('Hải Phòng')}>Hải Phòng</div>
+                <div className="hl-dropdown" style={showLogout ? { display: 'block' } : {}}>
+                  <div className="hl-dropdown__item">
+                    <div className="header__logout" onClick={() => onLogout()}>Đăng Xuất</div>
+                  </div>
+                </div>
+              </>
+              ) : (
+            <Link to="/login" className="header__login">
+              <img src={`/assets/avatar.png`} alt="avatar"/>
+              Đăng nhập
+            </Link>)}
+          </div>
+          <div className="header__position">
+            <div className="header__position__name">{position}</div>
+            <div className="header__dropdown" style={{ display: 'none'}}>
+              <div className="header__dropdown__option" onClick={() => changePosition('Hà Nội')}>Hà Nội</div>
+              <div className="header__dropdown__option" onClick={() => changePosition('Đà Nẵng')}>Đà Nẵng</div>
+              <div className="header__dropdown__option" onClick={() => changePosition('Nha Trang')}>Nha Trang</div>
+              <div className="header__dropdown__option" onClick={() => changePosition('Hải Phòng')}>Hải Phòng</div>
+            </div>
           </div>
         </div>
+      </div>
+      <div id="burger" className="header__burger" onClick={showNavbar}>
+        <div className="line1"></div>
+        <div className="line2"></div>
+        <div className="line3"></div>
       </div>
     </div>
   );
