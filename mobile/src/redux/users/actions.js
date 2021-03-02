@@ -1,10 +1,10 @@
 import UsersTypes from "./types";
 
-export function signIn(user, history) {
+export function signIn(user, navigation) {
   return {
     type: UsersTypes.LOGIN,
     payload: user,
-    history,
+    navigation: navigation
   };
 }
 
@@ -23,7 +23,7 @@ export function updateStatusFriend(user) {
 
 export function getUserInfo(payload) {
   return {
-    payload,
+    payload: payload,
     type: UsersTypes.USER_INFO,
   };
 }

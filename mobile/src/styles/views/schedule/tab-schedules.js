@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     },
     date: {
         alignItems: "center",
-        paddingHorizontal: 15
+        paddingHorizontal: 13,
     },
     today: {
         color: "orangered",

@@ -12,15 +12,15 @@ const styles = StyleSheet.create({
   },
   item: {    
     marginTop:10,  
-    paddingLeft:10,
-    borderColor: '#c9c9c9',  
-    flexWrap: 'wrap', 
+    paddingHorizontal:10,
+    borderColor: '#c9c9c9',
+    flex: 1
   },
   image: {
     paddingLeft:10,
     borderRadius: 5,
-    width: 35,
-    height: 45,
+    width: 50,
+    height: 50,
   },
 });
 
