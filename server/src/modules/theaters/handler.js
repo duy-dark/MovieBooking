@@ -16,7 +16,7 @@ const getList = async (params) => {
         room_ids: 1
       }
     };
-    let data = await Model.findByLambda(lambda);
+    let data = await Model.getDetail(lambda);
     return resSuccess(data);
   } catch (error) {
     throw {status: 400, detail: error};

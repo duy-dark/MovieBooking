@@ -860,5 +860,32 @@ module.exports = {
         ]
       }
     ]);
+  },
+
+  getDetail: async function (lambda) {
+    return await Collection.aggregate([
+      {
+        $match: {
+          $and: [lambda.conditions]
+        }
+      },
+      {
+        $lookup: {
+          from: 'rooms',
+          localField: '_id',
+          foreignField: 'theater_id',
+          as: 'rooms'
+        }
+      },
+      {
+        $unset: [
+          'rooms.seats',
+          'rooms.theater_id',
+          'rooms.is_deleted',
+          'rooms.created_at',
+          'rooms.updated_at'
+        ]
+      }
+    ]);
   }
 };

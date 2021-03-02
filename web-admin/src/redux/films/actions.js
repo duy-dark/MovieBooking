@@ -73,3 +73,9 @@ export function getTheaters(){
     type: FilmTypes.LIST_THEATER,
   };
 }
+export function createNewPaper(params) {
+  return {
+    type: FilmTypes.CREATE_NEW,
+    payload: params
+  }
+}
