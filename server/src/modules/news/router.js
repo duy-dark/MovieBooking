@@ -8,8 +8,6 @@ router.get('/', (req, res, next) => {
     _id: req.query._id,
     title: req.query.title,
     content: req.query.content,
-    hastag: req.query.hastag,
-    public_date: req.query.public_date,
     film_id: req.query.film_id
   };
   conditions = omitBy(conditions, isNil);
