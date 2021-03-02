@@ -20,7 +20,8 @@ router.get('/', (req, res, next) => {
       : require('mongodb').ObjectId(req.query.customer_id),
     content: req.query.content,
     rate: req.query.rate,
-    limit: req.query.limit
+    limit: req.query.limit,
+    is_mobile: req.query.is_mobile
   };
   conditions = omitBy(conditions, isNil);
   console.log('conditions:', conditions);

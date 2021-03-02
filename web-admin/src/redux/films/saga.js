@@ -119,6 +119,17 @@ function* fetchFilmSchedule(action) {
 
   } catch (error) { console.log(error); }
 }
+function* fetchGetTheater() {
+  try {
+    const res = yield call(httpFilms.getTheater, {});
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.LIST_THEATER_SUCCESS, payload: data });
+     
+    }
+
+  } catch (error) { console.log(error); }
+}
 
 function* fetchCreateNewPaper(action) {
   try {
@@ -167,6 +178,9 @@ function* addNewFilm(){
 function* filmSchedule(){
   yield takeEvery(FilmsType.FILM_SCHEDULE,fetchFilmSchedule)
 }
+function* getTheaters(){
+  yield takeEvery(FilmsType.LIST_THEATER,fetchGetTheater)
+}
 
 function* createNewPaper() {
   yield takeEvery(FilmsType.CREATE_NEW, fetchCreateNewPaper);
@@ -184,6 +198,7 @@ export default function* filmsSaga() {
     getCategories(),
     addNewFilm(),
     filmSchedule(),
+    getTheaters(),
     createNewPaper()
   ]);
 }
