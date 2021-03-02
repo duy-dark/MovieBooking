@@ -5,20 +5,35 @@ import CardFilmFavorite from "../../components/film/CardFilmFavorite"
 import CardFilm from "../../components/film/CardFilm"
 import CardNews from "../../components/news/CardNews"
 import CardNewsSummary from "../../components/news/CardNewsSummary"
-import CardCommment from "../../components/comment/CardComment"
+// import CardCommment from "../../components/comment/CardComment"
 import { useSelector, useDispatch } from "react-redux";
 import { getListFilmNow } from "../../redux/films/actions"
+import { getListNews } from '../../redux/news/action'
 
 const TabHome = (props) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(getListFilmNow())
+        dispatch(getListNews())
     }, [])
 
     const films = useSelector((state) => state.films.filmsNow)
     const filmsFavorite = films.slice(0, 3)
     const filmsSuggest = films.slice(3,6)
+    const tempNews = useSelector((state) => state.news.newsList)
+    const news = tempNews.map(item => {
+        let arr = item.content.filter(val => val.image)
+        return {
+          ...item,
+          image: arr[0].image,
+          subtitle: item.content[0].text
+        }
+    })
+    
+    const newsHome = news.slice(0,3)
+    const newsSummary = news.slice(3,6)
+
     const indicator = useSelector((state) => state.films.loading)
 
     const seeAllFilm = () => {
@@ -46,21 +61,19 @@ const TabHome = (props) => {
                 )}
             </View>
             <Text style={styles.section}>Tin nóng nhất hôm nay</Text>
-            <CardNews />
-            <CardNews />
-            <CardNews />
+            {newsHome.map((news, index) => 
+                <CardNews key={index} news={news} navigation={props.navigation} />
+            )}
             <View style={styles.area}>
                 <View style={styles.row}>
                     <Text style={styles.textRow}>Lướt thêm tin mới nhé!</Text>
                     <TouchableOpacity onPress={seeAllNews}><Text style={styles.seeAll}>Xem Tất Cả</Text></TouchableOpacity>
                 </View>
-                <CardNewsSummary />
-                <CardNewsSummary />
-                <CardNewsSummary />
-                <CardNewsSummary />
-                <CardNewsSummary />
+                {newsSummary.map((news, index) => 
+                    <CardNewsSummary key={index} news={news} navigation={props.navigation} />
+                )}
             </View>
-            <View>
+            {/* <View>
                 <View style={[styles.row, {marginBottom: 15}] }>
                     <Text style={styles.textRow}>Cộng đồng bình luận phim</Text>
                     <TouchableOpacity><Text style={styles.seeAll}>Xem Tất Cả</Text></TouchableOpacity>
@@ -71,6 +84,7 @@ const TabHome = (props) => {
                 <CardCommment navigation={props.navigation} />
                 <CardCommment navigation={props.navigation} />
             </View>
+         */}
         </ScrollView>
     )
 }

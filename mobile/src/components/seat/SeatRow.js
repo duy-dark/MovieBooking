@@ -8,13 +8,13 @@ const SeatRow = (props) => {
             <Text style={{fontSize: 20, color: "black", marginRight: 10}}>{props.name}</Text>
             <View style={{flexDirection: "row"}}>
             {props.rows.map((item, index) => (
-                <>
+                <View key={index}>
                 {props.types[index] === "0" ? (
-                    <View key={index} style={{height: 21, width: 22.5}}></View>
+                    <View style={{height: 21, width: 22.5}}></View>
                 ) : (
-                    <Seat key={index} value={item} type={props.types[index]} isBuy={props.buys[index]} isVip={props.vips[index]} seats={props.seats} selected={seat => props.selected(seat)} arrSeatsSelected={props.arrSeatsSelected}/>
+                    <Seat value={item} type={props.types[index]} isBuy={props.buys[index]} isVip={props.vips[index]} seats={props.seats} selected={seat => props.selected(seat)} arrSeatsSelected={props.arrSeatsSelected}/>
                 )}
-                </>
+                </View>
             ))}
             </View>
         </View>

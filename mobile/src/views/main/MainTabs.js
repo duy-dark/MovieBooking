@@ -6,7 +6,6 @@ import CinemaStack from '../cinema/CinemaStack';
 import NewsStack from '../news/NewsStack';
 import SearchStack from '../search/SearchStack'
 import AccountStack from '../account/AccountStack';
-// import TheaterStack from '../Theater/TheaterStack';
 
 const Tab = createBottomTabNavigator();
 
