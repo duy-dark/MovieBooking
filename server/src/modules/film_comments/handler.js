@@ -24,12 +24,23 @@ const getList = async (params) => {
     };
     // console.log('type:', typeof lambda.conditions._id);
     // console.log('_id:', lambda.conditions);
-    let data = {};
     console.log(is_mobile);
+    let data = await Model.findByLambda_detail(lambda);
+
     if (is_mobile == 1) {
-      data = await Model.findByLambda_detail_mobile(lambda);
-    } else {
-      data = await Model.findByLambda_detail(lambda);
+      let film = await require('../films/model').findByLambda({
+        conditions: {_id: params.film_id}
+      });
+
+      console.log('data', data);
+
+      let result = {
+        rate_count: film[0].rate_count,
+        rate_average: film[0].rate_average,
+        rates: film[0].rates,
+        comments: data
+      };
+      return resSuccess(result);
     }
     return resSuccess(data);
   } catch (error) {
