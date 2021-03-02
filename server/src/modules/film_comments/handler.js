@@ -6,6 +6,9 @@ const moment = require('moment');
 const getList = async (params) => {
   try {
     let conditions = {...params, is_deleted: false};
+    let is_mobile = params.is_mobile;
+
+    delete conditions.is_mobile;
     delete conditions.limit;
     console.log('conditions', conditions);
     let lambda = {
@@ -21,7 +24,13 @@ const getList = async (params) => {
     };
     // console.log('type:', typeof lambda.conditions._id);
     // console.log('_id:', lambda.conditions);
-    let data = await Model.findByLambda_detail(lambda);
+    let data = {};
+    console.log(is_mobile);
+    if (is_mobile == 1) {
+      data = await Model.findByLambda_detail_mobile(lambda);
+    } else {
+      data = await Model.findByLambda_detail(lambda);
+    }
     return resSuccess(data);
   } catch (error) {
     throw {status: 400, detail: error};
