@@ -142,7 +142,7 @@ const putUpdate = async (id, params) => {
 
 const putUpdateSchedule = async (film_id, long_time) => {
   try {
-    console.log(moment.now());
+    console.log(film_id);
     let film_schedules = await require('./model').findByLambda({
       conditions: {film_id: film_id}
     });
