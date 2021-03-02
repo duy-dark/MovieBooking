@@ -9,12 +9,22 @@ const express = require('express'),
   resFail = require('./responses/res-fail'),
   config = require('./config');
 
+const socketio = require('socket.io');
 const {port} = config;
 
 const app = express();
 const swaggerDocument = require('./swagger.json');
 const swaggerUI = require('swagger-ui-express');
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+
+//require socket server
+const connection = require('./util/socket_booking');
+const server = require('http').createServer(app);
+const io = socketio(server, {
+  cors: {
+    origin: '*'
+  }
+});
 
 // app.use(authen) check token
 app.use(bodyParser.json());
@@ -73,6 +83,9 @@ app.use((req, res) => {
 });
 
 // app.use() error
+
+// call connection socket
+io.on('connection', (socket) => connection(socket, io));
 
 const startSever = async () => {
   app.listen(port, async () => {
