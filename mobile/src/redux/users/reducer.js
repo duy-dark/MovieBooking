@@ -1,8 +1,10 @@
 import UsersTypes from "./types";
 // import update from 'immutability-helper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const initialState = {
   status: true,
+  loading: false,
   user: null,
   token: null,
   isRegister: false,
@@ -10,14 +12,32 @@ const initialState = {
   footer: true,
 };
 
+const storeData = async (storage, value) => {
+  try {
+    await AsyncStorage.setItem(storage, value)
+  } catch (e) {
+    // saving error
+  }
+}
+
+const removeData = async (storage) => {
+  try {
+      await AsyncStorage.removeItem(storage);
+      return true;
+  }
+  catch(exception) {
+      return false;
+  }
+}
+
 export default function userReducer(state = initialState, action) {
   let newState;
 
   const { type, payload = {} } = action;
   switch (type) {
     case UsersTypes.LOGIN_SUCCESS:
-      localStorage.setItem("token", payload.token);
-      localStorage.setItem("userID", payload.customer._id);
+      storeData("token",payload.token)
+      storeData("userID",payload.customer._id)
       newState = Object.assign({}, state, {
         user: payload.customer,
         token: payload.token,
@@ -41,8 +61,8 @@ export default function userReducer(state = initialState, action) {
       newState = Object.assign({}, state, { friends: newFriends });
       break;
     case UsersTypes.LOGOUT_SUCCESS:
-      localStorage.removeItem("token");
-      localStorage.removeItem("userID");
+      removeData("token");
+      removeData("userID");
       newState = Object.assign({}, state, {
         token: null,
         user: null,
@@ -57,6 +77,12 @@ export default function userReducer(state = initialState, action) {
         header: payload.header,
         footer: payload.footer,
       });
+      break;
+    case UsersTypes.LOADING_SHOW:
+      newState = Object.assign({}, state, { loading: true });
+      break;
+    case UsersTypes.LOADING_HIDE:
+      newState = Object.assign({}, state, { loading: false });
       break;
     default:
       newState = state;

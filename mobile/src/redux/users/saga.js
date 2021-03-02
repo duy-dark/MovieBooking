@@ -5,8 +5,10 @@ import httpUser from "../../api/customers";
 function* fetchLogin(action) {
   const { navigation } = action
   try {
+    yield put({ type: UsersTypes.LOADING_SHOW });
     const res = yield call(httpUser.login, action.payload);
     if (res.status === "ok") {
+      yield put({ type: UsersTypes.LOADING_HIDE });
       yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: res.data });
       navigation.navigate("MainTabs")
     }
@@ -28,11 +30,15 @@ function* fetchListFriend() {
 }
 
 function* fetchUserInfo(action) {
+  const { navigation } = action
   try {
+    yield put({ type: UsersTypes.LOADING_SHOW });
     const res = yield call(httpUser.getUserInfo, action.payload);
 
     if (res.status === "ok") {
+      yield put({ type: UsersTypes.LOADING_HIDE });
       yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: res.data });
+      navigation.navigate("MainTabs")
     }
   } catch (err) {
     throw err;
@@ -49,9 +55,10 @@ function* fetchUDSFriend(action) {
 
 function* fetchLogout(action) {
   try {
-    // let { history } = action;
+    const { navigation } = action
     yield put({ type: UsersTypes.LOGOUT_SUCCESS });
-    history.push("/login");
+    navigation.navigate("LoginScreen")
+    // alert("LoginScreen")
   } catch (err) {
     throw err;
   }
