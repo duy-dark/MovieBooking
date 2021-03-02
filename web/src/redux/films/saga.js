@@ -140,6 +140,31 @@ function* fetchPaymentGate(action) {
   } catch (error) { console.log(error); }
 }
 
+function* fetchListNew(action) {
+  try {
+    yield put({ type: FilmsType.LOADING_SHOW });
+    const res = yield call(httpFilms.getAllNews, {})
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
+      yield put({ type: FilmsType.LIST_NEW_SUCCESS, payload: data });
+    }
+  } catch (error) { console.log(error); }
+}
+
+function* fetchNewDetail(action) {
+  try {
+    const { payload } = action
+    yield put({ type: FilmsType.LOADING_SHOW });
+    const res = yield call(httpFilms.getNewDetail, payload)
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
+      yield put({ type: FilmsType.NEW_DETAIL_SUCCESS, payload: data });
+    }
+  } catch (error) { console.log(error); }
+}
+
 function* postBookingInfo() {
   yield takeEvery(FilmsType.POST_BOOKING_INFO, fetchPostBookingInfo);
 }
@@ -180,6 +205,14 @@ function* createComment() {
   yield takeEvery(FilmsType.CREATE_COMMENT, fetchCreateComment);
 }
 
+function* getListNew() {
+  yield takeEvery(FilmsType.LIST_NEW, fetchListNew)
+}
+
+function* getNewDetail() {
+  yield takeEvery(FilmsType.NEW_DETAIL, fetchNewDetail)
+}
+
 export default function* filmsSaga() {
   yield all([
     postBookingInfo(),
@@ -191,6 +224,8 @@ export default function* filmsSaga() {
     getSearch(),
     getComments(),
     paymentGateway(),
-    createComment()
+    createComment(),
+    getListNew(),
+    getNewDetail()
   ]);
 }

@@ -28,7 +28,7 @@ const routes = [
     component: () => <Booking />,
   },
   {
-    path: "/new",
+    path: "/new/:id",
     exact: true,
     component: () => <New />
   },

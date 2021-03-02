@@ -44,6 +44,14 @@ const paymentMomo = (params) => {
   return Api.post('/api/payment/momoPayment', params).then(res => res.data)
 }
 
+const getAllNews = () => {
+  return Api.get('http://localhost:1000/api/news').then(res => res.data)
+}
+
+const getNewDetail = (params) => {
+  return Api.get(`http://localhost:1000/api/news/${params}`).then(res => res.data)
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getListFilmShowing,
@@ -56,5 +64,7 @@ export default {
   search,
   getComments,
   paymentMomo,
-  createComment
+  createComment,
+  getAllNews,
+  getNewDetail
 };

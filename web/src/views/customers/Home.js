@@ -4,7 +4,7 @@ import TabListFilm from "../../components/customer/TabsListFilm.js";
 import TabsTheater from "../../components/customer/TabsTheater.js";
 import TabsNew from "../../components/customer/TabsNew.js";
 import SliderMovies from "../../components/customer/SliderMovies.js";
-import { getListFilmFuture, getListFilmNow, getListFilmToday, getSearch } from "../../redux/films/actions";
+import { getListFilmFuture, getListFilmNow, getListFilmToday, getSearch, getListNew } from "../../redux/films/actions";
 import ModalTrailer from "../../components/customer/ModalTrailer";
 import Select, { components } from "react-select";
 import * as moment from "moment";
@@ -23,6 +23,7 @@ export default function Home() {
     dispatch(getListFilmFuture());
     dispatch(getListFilmToday());
     dispatch(getSearch());
+    dispatch(getListNew());
     dispatch(
       updateHeaderFooter({
         header: true,
@@ -51,6 +52,7 @@ export default function Home() {
   const filmsSlider = filmsNow.slice(0, 4);
   const search = useSelector((state) => state.films.search);
   const storeToken = useSelector((state) => state.users.token);
+  const listNews = useSelector((state) => state.films.listNews);
 
   const [selectFilm, setSelectFilm] = useState();
   const [selectThreater, setSelectThreater] = useState();
@@ -370,7 +372,7 @@ export default function Home() {
 
         <TabListFilm id="homeSchedule" filmsNow={filmsNow} filmsFuture={filmsFuture} clickTrailer={showTrailer} />
         { filmsToday.length > 0 && (<TabsTheater id="listTheater" theaters={filmsToday} />) }
-        <TabsNew id="listNews"/>
+        <TabsNew id="listNews" listNews={listNews}/>
       </div>
       <ModalTrailer show={modalShow} onHide={() => setModalShow(false)} trailer={modalId} />
     </div>

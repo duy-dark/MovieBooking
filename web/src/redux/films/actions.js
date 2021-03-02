@@ -66,3 +66,17 @@ export function paymentGateway({ params, history }) {
     history: history
   }
 }
+
+export function getListNew() {
+  return {
+    type: FilmTypes.LIST_NEW
+  }
+}
+
+export function getNewDetail(id) {
+  return {
+    type: FilmTypes.NEW_DETAIL,
+    payload: id
+  }
+}
+

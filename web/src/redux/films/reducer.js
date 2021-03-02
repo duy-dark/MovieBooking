@@ -14,7 +14,9 @@ const initialState = {
   dayOfWeeks:[[], [], [], [], [], [], []],
   comments: [],
   search: null,
-  roomBooking: ''
+  roomBooking: '',
+  listNews: [],
+  newDetail: {}
 }
 
 export default function filmsReducer(state = initialState, action) {
@@ -55,6 +57,12 @@ export default function filmsReducer(state = initialState, action) {
     case FilmTypes.LOADING_HIDE:
       let newLoading2 = state.loading - 1
       newState = Object.assign({}, state, { loading: newLoading2 < 0 ? 0 : newLoading2  });
+      break;
+    case FilmTypes.LIST_NEW_SUCCESS:
+      newState = Object.assign({}, state, {listNews: payload})
+      break;
+    case FilmTypes.NEW_DETAIL_SUCCESS:
+      newState = Object.assign({}, state, {newDetail: payload})
       break;
     default:
       newState = state;

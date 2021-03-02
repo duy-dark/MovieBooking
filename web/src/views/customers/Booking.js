@@ -7,7 +7,6 @@ import { getFilmDetails, getSeats, paymentGateway } from "../../redux/films/acti
 // import { getToken } from "../../redux/users/selector";
 import * as moment from "moment"
 import { getUserInfo } from "../../redux/users/actions";
-import MyCountdownTimer from '../../components/MyCountdownTimer';
 
 const SeatEl = (props) => {
   const [status, setStatus] = useState();
