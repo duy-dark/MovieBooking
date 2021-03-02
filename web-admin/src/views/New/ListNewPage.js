@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Layout, Menu, Breadcrumb } from "antd";
 const { Header, Content, Footer } = Layout;
 
-export default function NewPaper(props) {
+export default function ListNewPage() {
   return (
     <Layout className="layout">
       <Header style={{ background: "#FFFFFF" }}>
@@ -12,8 +12,8 @@ export default function NewPaper(props) {
           <Menu.Item key="2"><Link to="/new/create">Add New</Link></Menu.Item>
         </Menu>
       </Header>
-      <div>
-
+      <div> 
+        list
       </div>
     </Layout>
   )
