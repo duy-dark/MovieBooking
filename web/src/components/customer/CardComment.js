@@ -4,7 +4,6 @@ import * as moment from "moment"
 export default function CardComment(props) {
   let rate1 = Math.floor(props.rate / 2)
   let rate2 = props.rate % 2
-  console.log(props)
   const formatDate = (date) => {
     return moment(date).format('DD-MM-YYYY')
   }

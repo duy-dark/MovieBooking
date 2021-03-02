@@ -12,7 +12,6 @@ export default function TabsNew(props) {
       subtitle: item.content[0].text
     }
   })
-  console.log(data)
   return (
     <Tabs id={props.id ? props.id : ''} className="tab-film">
       <TabList className="tab-film__header">

@@ -45,7 +45,7 @@ const paymentMomo = (params) => {
 }
 
 const getAllNews = () => {
-  return Api.get('http://localhost:1000/api/news').then(res => res.data)
+  return Api.get('/api/news').then(res => res.data)
 }
 
 const getNewDetail = (params) => {
