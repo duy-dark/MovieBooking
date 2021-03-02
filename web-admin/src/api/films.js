@@ -61,6 +61,9 @@ const getListNewpapers = (params) => {
 
 
 // eslint-disable-next-line import/no-anonymous-default-export
+const getTheater = ()=>{
+  return Api.get(`api/theater`).then((res)=>res.data)
+}
 export default {
   
   postBookingInfo,
@@ -73,6 +76,7 @@ export default {
   getCategories,
   addNewFilm,
   getFilmSchedule,
+  getTheater,
   uploadFile,
   createNewPaper,
   getListNewpapers
