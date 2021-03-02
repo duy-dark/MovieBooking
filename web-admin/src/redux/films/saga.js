@@ -119,6 +119,19 @@ function* fetchFilmSchedule(action) {
 
   } catch (error) { console.log(error); }
 }
+
+function* fetchCreateNewPaper(action) {
+  try {
+    const { payload } = action
+    const res = yield call(httpFilms.createNewPaper, payload);
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.CREATE_NEW_SUCCESS, payload: data.data})
+    }
+  } catch (error) { console.log(error); }
+}
+
+
 function* postBookingInfo() {
   yield takeEvery(FilmsType.POST_BOOKING_INFO, fetchPostBookingInfo);
 }
@@ -154,6 +167,11 @@ function* addNewFilm(){
 function* filmSchedule(){
   yield takeEvery(FilmsType.FILM_SCHEDULE,fetchFilmSchedule)
 }
+
+function* createNewPaper() {
+  yield takeEvery(FilmsType.CREATE_NEW, fetchCreateNewPaper);
+}
+
 export default function* filmsSaga() {
   yield all([
     postBookingInfo(),
@@ -165,6 +183,7 @@ export default function* filmsSaga() {
     getFilmUpdate(),
     getCategories(),
     addNewFilm(),
-    filmSchedule()
+    filmSchedule(),
+    createNewPaper()
   ]);
 }

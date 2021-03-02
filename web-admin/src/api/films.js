@@ -39,6 +39,27 @@ const addNewFilm= (params) =>{
 const getFilmSchedule = (params)=>{
   return Api.get(`api/film_schedule?film_id=${params}`).then((res) => res.data)
 }
+
+const uploadFile = (file)=>{
+  let formData = new FormData();
+  formData.append('file', file)
+  
+  return Api.post(
+    '/api/file/upload',
+    formData,
+    { headers: { 'Content-Type': 'multipart/form-data' } }
+  ).then(res => res.data)
+}
+
+const createNewPaper = (params) => {
+  return Api.post('/api/news/', params).then((res) => res.data)
+}
+
+const getListNewpapers = (params) => {
+  return Api.get('').then((res) => res.data)
+}
+
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   
@@ -51,5 +72,8 @@ export default {
   updateFilmDetail,
   getCategories,
   addNewFilm,
-  getFilmSchedule
+  getFilmSchedule,
+  uploadFile,
+  createNewPaper,
+  getListNewpapers
 };

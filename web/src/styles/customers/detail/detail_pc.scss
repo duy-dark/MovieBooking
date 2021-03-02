@@ -385,6 +385,10 @@
           border-color: #fb4226;
           color: #fff!important;
         }
+
+        &:focus {
+          outline: none;
+        }
       }
     }
   }
