@@ -15,7 +15,7 @@ var accessKey = 'X46UaeYeKNwQ1Sg1';
 var serectkey = 'TR1BbUHAIVuhHII1HvuJlzcTgqp1R73E';
 var orderInfo = 'pay with MoMo';
 var returnUrl = 'http://localhost:3000/complete?';
-var notifyurl = 'https://fb96f5c409d0.ngrok.io/api/payment/checkStatusPayment';
+var notifyurl = 'https://lit-lowlands-21932.herokuapp.com/api/payment/checkStatusPayment';
 var requestType = 'captureMoMoWallet';
 var extraData = 'merchantName=;merchantId=';
 var amount;
@@ -46,9 +46,8 @@ const momoApi = async (params) => {
       is_deleted: params.is_deleted,
       booking_time: params.booking_time
     };
-    console.log('lambda:', lambda);
-    returnUrl = 'http://localhost:3000/complete?' + 'email=' + params.email;
-
+    console.log('email:', params.email);
+    returnUrl += 'email=' + params.email;
     var rawSignature =
       'partnerCode=' +
       partnerCode +
@@ -159,7 +158,9 @@ const checkStatusMomoApi = async (params) => {
     console.log(newsignature == params.signature);
     if (newsignature == params.signature) {
       if (params.errorCode == '0') {
+        console.log(lambda)
         let data = await ticket.postCreate(lambda);
+        
         return {result: 'Success'};
       } else {
         console.log('Transaction Fail!');

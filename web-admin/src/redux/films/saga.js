@@ -20,7 +20,15 @@ function* fetchPostBookingInfo(action) {
     throw error;
   }
 }
-
+function* fetchAddNewFilm(action){
+  try {
+    const res = yield call(httpFilms.addNewFilm,action.payload);
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.ADD_NEW_FILM_SUCCESS, payload: data });
+    }
+  } catch (error) { console.log(error); }
+}
 function* fetchFilmDetails(action) {
   try {
     const { payload } = action;
@@ -100,6 +108,17 @@ function* fetchListCategory() {
 
   } catch (error) { console.log(error); }
 }
+function* fetchFilmSchedule(action) {
+  try {
+    const { payload } = action
+    const res = yield call(httpFilms.getFilmSchedule, payload);
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.FILM_SCHEDULE_SUCCESS, payload: data });
+    }
+
+  } catch (error) { console.log(error); }
+}
 function* postBookingInfo() {
   yield takeEvery(FilmsType.POST_BOOKING_INFO, fetchPostBookingInfo);
 }
@@ -129,6 +148,12 @@ function* getFilmUpdate() {
 function* getCategories(){
   yield takeEvery(FilmsType.LIST_CATEGOGY,fetchListCategory)
 }
+function* addNewFilm(){
+  yield takeEvery(FilmsType.ADD_NEW_FILM,fetchAddNewFilm)
+}
+function* filmSchedule(){
+  yield takeEvery(FilmsType.FILM_SCHEDULE,fetchFilmSchedule)
+}
 export default function* filmsSaga() {
   yield all([
     postBookingInfo(),
@@ -138,6 +163,8 @@ export default function* filmsSaga() {
     getFilmsToday(),
     getSeats(),
     getFilmUpdate(),
-    getCategories()
+    getCategories(),
+    addNewFilm(),
+    filmSchedule()
   ]);
 }
