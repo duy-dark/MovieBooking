@@ -15,7 +15,8 @@ var accessKey = 'X46UaeYeKNwQ1Sg1';
 var serectkey = 'TR1BbUHAIVuhHII1HvuJlzcTgqp1R73E';
 var orderInfo = 'pay with MoMo';
 var returnUrl = 'http://localhost:3000/complete?';
-var notifyurl = 'https://fb96f5c409d0.ngrok.io/api/payment/checkStatusPayment';
+var notifyurl =
+  'https://servermoviebooking.herokuapp.com/api/payment/checkStatusPayment';
 var requestType = 'captureMoMoWallet';
 var extraData = 'merchantName=;merchantId=';
 var amount;

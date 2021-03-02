@@ -154,28 +154,30 @@ const postCreate = async (params) => {
       // thiết lập đối tượng, nội dung gửi mail
       from: 'doantotnghiepthang9@gmail.com',
       to: params.email,
+      generateTextFromHTML: true,
       subject: 'Đặt vé thành công',
       html: contentMail(objSender) //Nội dung html mình đã tạo trên kia :))
     };
 
-    let p1 = await transporter.sendMail(mainOptions);
-    await Promise.all([p1]).then((row) => {
-      let {err, info} = row[0];
+    console.log('Bat dau gui email');
+    let rs = await transporter.sendMail(mainOptions, (err, info) => {
       if (err) {
+        console.log('err:', err);
         throw {
-          status: 203,
-          detail: 'send mail error'
+          status: 204,
+          detail: 'not send mail'
         };
       }
+      console.log('info:', info);
+      smtpTransport.close();
     });
-    console.log('p1', p1);
 
-    let result = await sendSMS(objSender);
-    console.log('result sms', result);
+    // let result = await sendSMS(objSender);
+    // console.log('result sms', result);
     return resSuccess(data[0]);
   } catch (error) {
     console.log('error booking', error);
-    throw {status: 400, detail: error};
+    throw error;
   }
 };
 
