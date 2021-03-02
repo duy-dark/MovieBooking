@@ -3,13 +3,18 @@ import FilmTypes from './types';
 
 const initialState = {
   status: true,
+  loading: true,
   filmsNow: [],
   filmsFuture: [],
   filmsToday: [],
   theaters: [],
   filmDetail: {},
   seats: [],
-  dayOfWeeks:[]
+  seated: [],
+  dayOfWeeks:[[], [], [], [], [], [], []],
+  comments: [],
+  search: null,
+  roomBooking: ''
 }
 
 export default function filmsReducer(state = initialState, action) {
@@ -30,7 +35,24 @@ export default function filmsReducer(state = initialState, action) {
       newState = Object.assign({}, state, { filmsToday: payload })
       break;
     case FilmTypes.LIST_SEATS_SUCCESS:
-      newState = Object.assign({}, state, { seats: payload.seats })
+      const { seatsMap = [], seatsExisted = [], room_name = '' } = payload
+      newState = Object.assign({}, state, { seats: seatsMap, seated: seatsExisted, roomBooking: room_name })
+      break;
+    case FilmTypes.SEARCH_SUCCESS:
+      newState = Object.assign({}, state, { search: payload })
+      break;
+    case FilmTypes.COMMENT_SUCCESS:
+      newState = Object.assign({}, state, { comments: payload })
+      break;
+    case FilmTypes.CREATE_COMMENT_SUCCESS:
+      let { comments } = state;
+      newState = Object.assign({}, state, { comments: [payload, ...comments]})
+      break;
+    case FilmTypes.LOADING_SHOW:
+      newState = Object.assign({}, state, { loading: true });
+      break;
+    case FilmTypes.LOADING_HIDE:
+      newState = Object.assign({}, state, { loading: false });
       break;
     default:
       newState = state;

@@ -1,6 +1,6 @@
 import { all, takeEvery, put, call } from "redux-saga/effects";
 import FilmsType from "./types";
-import httpFilms from "../../apis/films";
+import httpFilms from "../../api/films";
 
 function* fetchPostBookingInfo(action) {
   try {
@@ -16,17 +16,18 @@ function* fetchPostBookingInfo(action) {
       });
     }
   } catch (error) {
-    console.log("fetchPostBookingInfo Error", error);
     throw error;
   }
 }
 
 function* fetchFilmDetails(action) {
   try {
+    yield put({ type: FilmsType.LOADING_SHOW });
     const { payload } = action;
     const res = yield call(httpFilms.getDetail, payload);
     const { status, data } = res
     if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.FILM_DETAIL_SUCCESS, payload: data });
     }
 
@@ -35,9 +36,11 @@ function* fetchFilmDetails(action) {
 
 function* fetchListFilmsNow() {
   try {
+    yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.getListFilmNow, {});
     const { status, data } = res
     if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.LIST_FILM_NOW_SUCCESS, payload: data });
     }
 
@@ -46,9 +49,11 @@ function* fetchListFilmsNow() {
 
 function* fetchListFilmsFuture() {
   try {
+    yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.getListFilmFuture, {});
     const { status, data } = res
     if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.LIST_FILM_FUTURE_SUCCESS, payload: data });
     }
 
@@ -68,15 +73,58 @@ function* fetchListFilmsToday() {
 
 function* fetchSeats(action) {
   try {
+    yield put({ type: FilmsType.LOADING_SHOW });
     const { payload } = action
     const res = yield call(httpFilms.getSeats, payload);
     const { status, data } = res
     if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.LIST_SEATS_SUCCESS, payload: data });
     }
 
   } catch (error) { console.log(error); }
 }
+
+function* fetchSearch() {
+  try {
+    const res = yield call(httpFilms.search, {});
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.SEARCH_SUCCESS, payload: data });
+    }
+
+  } catch (error) { console.log(error); }
+}
+
+function* fetchComments(action) {
+  try {
+    yield put({ type: FilmsType.LOADING_SHOW });
+    const { payload } = action
+    const res = yield call(httpFilms.getComments, payload);
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
+      yield put({ type: FilmsType.COMMENT_SUCCESS, payload: data });
+    }
+  } catch (error) { console.log(error); }
+}
+
+function* fetchCreateComment(action) {
+  const { navigation } = action
+  try {
+    // yield put({ type: FilmsType.LOADING_SHOW });
+    const { payload } = action
+    const res = yield call(httpFilms.createComment, payload);
+    const { status, data } = res
+    if (status === "ok") {
+      // yield put({ type: FilmsType.LOADING_HIDE });
+      yield put({ type: FilmsType.CREATE_COMMENT_SUCCESS, payload: data.comment });
+      navigation.goBack()
+    }
+
+  } catch (error) { console.log(error); }
+}
+
 
 function* postBookingInfo() {
   yield takeEvery(FilmsType.POST_BOOKING_INFO, fetchPostBookingInfo);
@@ -102,6 +150,17 @@ function* getSeats() {
   yield takeEvery(FilmsType.LIST_SEATS, fetchSeats);
 }
 
+function* getSearch() {
+  yield takeEvery(FilmsType.SEARCH, fetchSearch)
+}
+
+function* getComments() {
+  yield takeEvery(FilmsType.COMMENT, fetchComments);
+}
+
+function* createComment() {
+  yield takeEvery(FilmsType.CREATE_COMMENT, fetchCreateComment);
+}
 
 
 export default function* filmsSaga() {
@@ -111,6 +170,9 @@ export default function* filmsSaga() {
     getFilmsNow(),
     getFilmsFuture(),
     getFilmsToday(),
-    getSeats()
+    getSeats(),
+    getSearch(),
+    getComments(),
+    createComment()
   ]);
 }

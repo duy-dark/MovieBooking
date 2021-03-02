@@ -2,12 +2,24 @@ import { StyleSheet } from "react-native"
 
 const styles = StyleSheet.create({
     cinema: {
+        flexDirection: "row",
+        alignItems: "center",
         fontSize: 15,
-        paddingVertical: 20, 
+        paddingVertical: 15, 
         paddingLeft: 10,
         backgroundColor: "white",
         borderTopWidth: 0.5,
         borderTopColor: "lightgray"
+    },
+    imageCinema: {
+        width: 50,
+        height: 50,
+        borderRadius: 50,
+        
+    },
+    nameCinema: {
+        fontSize: 15,
+        paddingLeft: 10,
     },
     showtimes: {
         paddingBottom: 20,

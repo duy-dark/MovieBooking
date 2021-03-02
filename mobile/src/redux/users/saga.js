@@ -1,17 +1,16 @@
 import { all, takeEvery, put, call } from "redux-saga/effects";
 import UsersTypes from "./types";
-import httpUser from "../../apis/customers";
+import httpUser from "../../api/customers";
 
 function* fetchLogin(action) {
+  const { navigation } = action
   try {
-    let { history } = action;
     const res = yield call(httpUser.login, action.payload);
     if (res.status === "ok") {
       yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: res.data });
-      history.push("/");
+      navigation.navigate("MainTabs")
     }
   } catch (err) {
-    console.log(err);
     throw err;
   }
 }
@@ -33,7 +32,7 @@ function* fetchUserInfo(action) {
     const res = yield call(httpUser.getUserInfo, action.payload);
 
     if (res.status === "ok") {
-      yield put({ type: UsersTypes.USER_INFO_SUCCESS, payload: res.data });
+      yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: res.data });
     }
   } catch (err) {
     throw err;
@@ -50,7 +49,7 @@ function* fetchUDSFriend(action) {
 
 function* fetchLogout(action) {
   try {
-    let { history } = action;
+    // let { history } = action;
     yield put({ type: UsersTypes.LOGOUT_SUCCESS });
     history.push("/login");
   } catch (err) {

@@ -5,19 +5,23 @@ const moment = require('moment');
 
 const getList = async (params) => {
   try {
+    let conditions = {...params, is_deleted: false};
+    delete conditions.limit;
+    console.log('conditions', conditions);
     let lambda = {
-      conditions: {...params, is_deleted: false},
+      conditions: conditions,
       views: {
         _id: 1,
         film_id: 1,
         customer_id: 1,
         content: 1,
         rate: 1
-      }
+      },
+      limit: params.limit * 5 || 100000
     };
     // console.log('type:', typeof lambda.conditions._id);
     // console.log('_id:', lambda.conditions);
-    let data = await Model.findByLambda_detail(lambda.conditions);
+    let data = await Model.findByLambda_detail(lambda);
     return resSuccess(data);
   } catch (error) {
     throw {status: 400, detail: error};
@@ -54,8 +58,49 @@ const postCreate = async (params) => {
       created_at: moment.now(),
       updated_at: moment.now()
     };
+    // console.log('lambda:', lambda);
     let data = await Model.createByLambda(lambda);
     console.log('data:', data);
+    if (data[0]._id) {
+      let film = await require('../films/model').findByLambda({
+        conditions: {_id: params.film_id, is_deleted: false}
+      });
+
+      let ObjectRates = {...film[0].rates};
+
+      let rate = film[0].rates[`star${params.rate}`] + 1;
+      ObjectRates[`star${params.rate}`] = rate;
+      console.log('ObjectRates', ObjectRates);
+
+      let rate_count = film[0].rate_count + 1;
+
+      let rate_sum =
+        ObjectRates.star1 * 1 +
+        ObjectRates.star2 * 2 +
+        ObjectRates.star3 * 3 +
+        ObjectRates.star4 * 4 +
+        ObjectRates.star5 * 5 +
+        ObjectRates.star6 * 6 +
+        ObjectRates.star7 * 7 +
+        ObjectRates.star8 * 8 +
+        ObjectRates.star9 * 9 +
+        ObjectRates.star10 * 10;
+
+      let rate_average = rate_sum / rate_count;
+
+      let updateFilmRate = await require('../films/model').updateByLambda({
+        conditions: {_id: params.film_id, is_deleted: false},
+        params: {
+          rates: ObjectRates,
+          rate_average: rate_average,
+          rate_count: rate_count
+        }
+      });
+    } else {
+      throw {status: 400, detail: data};
+    }
+
+    // console.log('data:', data);
     let customer = await require('../customers/model').findByLambda({
       conditions: {_id: params.customer_id, is_deleted: false}
     });
@@ -64,8 +109,8 @@ const postCreate = async (params) => {
       customers: customer[0]
     };
 
-    console.log(data[0]);
-    console.log('customer:', customer);
+    // console.log(data[0]);
+    // console.log('customer:', customer);
     return resSuccess({comment: data[0]});
   } catch (error) {
     throw {status: 400, detail: error};

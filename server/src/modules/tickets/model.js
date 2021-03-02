@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 let schema = new mongoose.Schema(
   {
+    code: String,
     count: Number,
     booking_time: Date,
     cost: Number,
@@ -78,7 +79,8 @@ module.exports = {
                 time_start: '$$this.time_start',
                 time_end: '$$this.time_end',
                 theater: '$$this.theater_id',
-                room_id: '$$this.room_id'
+                room_id: '$$this.room_id',
+                film_id: '$$this.film_id'
               }
             }
           }

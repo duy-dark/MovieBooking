@@ -5,9 +5,12 @@ import StarRating from 'react-native-star-rating';
 
 
 const CardFilmFavorite = (props) => {
-    const image = { uri: "https://media.vov.vn/sites/default/files/styles/large/public/2021-01/tch_poster_vn_final.jpg.jpg" } 
+    const image = { uri: props.film.url_background } 
     const onPress = () => {
-        props.navigation.navigate("FilmScreen", {nameFilm: "Lừa Đểu Gặp Lừa Đảo"})
+        props.navigation.navigate("FilmScreen", {
+            nameFilm: props.film.name,
+            idFilm: props.film._id,
+        })
     }
     return (
         <ImageBackground style={styles.container} source={image} imageStyle={styles.image}>
@@ -17,22 +20,22 @@ const CardFilmFavorite = (props) => {
             >
                 <View style={styles.content}>
                     <View style={styles.review}>
-                        <Text style={styles.reviewText}>8.8</Text>
+                        <Text style={styles.reviewText}>{props.film.rate_average}</Text>
                         <StarRating 
                             disabled={true}
                             fullStarColor={"orangered"}
                             maxStars={5}
-                            rating={4}
+                            rating={props.film.rate_average / 2}
                             starSize={10}
                         />
                     </View>
                     <View style={styles.detail}>
                         <View style={styles.row}>
-                            <Text style={styles.ageText}>C16</Text>
+                            {/* <Text style={styles.ageText}>C16</Text> */}
                             <Text style={styles.statusText}>ĐANG CHIẾU</Text>
                         </View>
                         <View style={styles.row}>
-                            <Text style={styles.titleText}>LỪA ĐỂU GẶP LỪA ĐẢO</Text>
+                            <Text style={styles.titleText} numberOfLines={2}>{props.film.name}</Text>
                             <Text style={styles.bookText}>ĐẶT VÉ</Text>
                         </View>
                     </View>

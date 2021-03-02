@@ -17,7 +17,7 @@ export default function Film(){
   const filmsNow = useSelector((state) => state.films.filmsNow);
   const categories = useSelector((state) => state.films.categories);
   const data = filmsNow.map((item,index)=>({...item, key: index}))
-  console.log(categories)
+
 const columns = [
   {
     title: 'Name',
@@ -32,7 +32,7 @@ const columns = [
       <Space size="middle">
        <Detail index={index} detail={record} />
         <a>Delete</a>
-       <Schedule/>
+       <Schedule schedule={record}/>
         <a>Add Schedules</a>
       </Space>
     ),

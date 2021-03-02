@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import { useLocation, useParams } from "react-router-dom"
 import { getFilmDetails, getComments } from "../../redux/films/actions"
 import { useDispatch , useSelector} from "react-redux";
+import { getUserInfo } from "../../redux/users/actions";
 
 export default function FilmDetail() {
   const [modalShow, setModalShow] = useState(false);
@@ -21,13 +22,24 @@ export default function FilmDetail() {
   // eslint-disable-next-line
   const [future, setFuture] = useState(location.state || {});
 
+  const [showMore, setShowMore] = useState(1);
+
+  useEffect(() => {
+    dispatch(getComments({id: id, limit: showMore}));
+  }, [showMore])
+
   const  dispatch = useDispatch();
   useEffect(() =>{
     const info = {
       id: id
     };
     dispatch(getFilmDetails(info));
-    dispatch(getComments(id));
+    // dispatch(getComments({id: id, limit: showMore}));
+    const token = localStorage.getItem("token");
+    const userID = localStorage.getItem("userID");
+    if (token && userID) {
+      dispatch(getUserInfo({ token, userID }));
+    }
   // eslint-disable-next-line
   },[])
 
@@ -48,13 +60,24 @@ export default function FilmDetail() {
           </div>
           <div className="detail-slider__content">
             <div className="detail-slider__date">{moment('2021/01/02').format('DD-MM-YYYY')}</div>
-            <div className="detail-slider__name">Nữ Thần Chiến Binh 1984 - Wonder Woman 1984 (C13)</div>
-            <div className="detail-slider__time">100 min</div>
+            <div className="detail-slider__name">{data.name}</div>
+            <div className="detail-slider__time">{data.long_time} phút</div>
+            <div className="detail-slider__rates">
+              <span>{data.rate_average}</span>
+              <div>
+                { data.rate_average / 2 >= 1 && (<img src={`https://tix.vn/app/assets/img/icons/star1.png`} alt="star"/>)}
+                { data.rate_average / 2 >= 2 && (<img src={`https://tix.vn/app/assets/img/icons/star1.png`} alt="star"/>)}
+                { data.rate_average / 2 >= 3 && (<img src={`https://tix.vn/app/assets/img/icons/star1.png`} alt="star"/>)}
+                { data.rate_average / 2 >= 4 && (<img src={`https://tix.vn/app/assets/img/icons/star1.png`} alt="star"/>)}
+                { data.rate_average / 2 === 5 && (<img src={`https://tix.vn/app/assets/img/icons/star1.png`} alt="star"/>)}
+                { data.rate_average !== 0 && (<img src={`https://tix.vn/app/assets/img/icons/star1.2.png`} alt="star"/>)}
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div className="detail-wrapper">
-       {data && dayOfWeeks && <TabsSchedule future={future.future ? 0 : 1} detail={data} dayOfWeeks={dayOfWeeks} comments={comments}/>}
+       {data && dayOfWeeks && <TabsSchedule showMore={showMore} onShowMoreComment={more => setShowMore(more)} future={future.future ? 0 : 1} detail={data} dayOfWeeks={dayOfWeeks} comments={comments}/>}
       </div>
       <ModalTrailer
         show={modalShow}

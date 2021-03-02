@@ -2,6 +2,10 @@ const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
+//   host: 'smtp.gmail.com',
+// port: 587,
+// ignoreTLS: false,
+// secure: false,
   auth: {
     user: 'doantotnghiepthang9@gmail.com',
     pass: 'doantotnghiep'
@@ -12,27 +16,30 @@ let contentMail = (objSender) => {
     <div style="display:flex;flex-direction: column; border: 2px #CCFFFF solid; border-width: 10px; max-width :700px; font-size: 20px; padding: 10px; color:#000066 ; background-image: url('ticket.jpg');">
     <div style="text-align: center; padding: 10px;">
       <div style="font-weight: bold">
-        <p>Mã vé</p>
+        <p>Mã vé: ${objSender.code}</p>
       </div>
-    <div>
-        <p style="font-weight: bold"> ${objSender.id}
-        </p>
-    </div>
+      </p>
     <div style="display: flex;flex-direction: row; width: 100%;">
     <div style="width: 50%">
-      <div style="display: flex;">
+      <div >
+        <p>Phim: ${objSender.film}</p> 
+      </div>
+      <div >
         <p>Số ghế: ${objSender.seats}</p> 
       </div>
-      <div style="display:flex;">
-        <p>Phòng: ${objSender.room}</p>
+      <div >
+        <p>Thời gian: ${objSender.time_start}</p>
       </div>
     </div>
     <div style="width: 50%">
-      <div style="display:flex;">
+      <div >
         <p>Rạp: ${objSender.theater}</p>
       </div>
-      <div style="display:flex;">
-        <p>Địa chỉ: 123 Le Van Viet, Quan 9</p>
+      <div >
+        <p>Phòng: ${objSender.room}</p>
+      </div>
+      <div >
+        <p>Địa chỉ: ${objSender.address}</p>
       </div>
     </div>
     </div>

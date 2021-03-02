@@ -3,10 +3,11 @@ import { useLocation, useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 // import { updateHeaderFooter } from "../../redux/users/actions";
 import "../../styles/customers/booking/booking.scss";
-import { getFilmDetails, getSeats, postBookingInfo } from "../../redux/films/actions";
+import { getFilmDetails, getSeats, paymentGateway } from "../../redux/films/actions";
 // import { getToken } from "../../redux/users/selector";
 import * as moment from "moment"
 import { getUserInfo } from "../../redux/users/actions";
+import MyCountdownTimer from '../../components/MyCountdownTimer';
 
 const SeatEl = (props) => {
   const [status, setStatus] = useState();
@@ -34,7 +35,9 @@ const SeatEl = (props) => {
   let classSeatChil = () => {
     let str = "seat"
     if (props.seatsSelected.includes(props.seat)) str += " seat--hide"
-    if (props.seats.includes(props.seat)) str += " seat--selected"
+    if (props.seats.includes(props.seat)) {
+      str += " seat--selected"
+    }
     if (props.vip === "1") str += " seat--vip"
     if (props.type === "2-1") str += " seat--together seat--two-1"
     if (props.type === "2-2") str += " seat--together seat--two-2"
@@ -82,7 +85,7 @@ function validateEmail(email) {
 }
 
 const words = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-
+const Completionist = () => <span>You are good to go!</span>;
 export default function Booking(props) {
   const location = useLocation();
   const history = useHistory();
@@ -110,6 +113,7 @@ export default function Booking(props) {
       if (seats.includes(seat)) {
         const arr = [...seats];
         const index = arr.indexOf(seat);
+        arr.splice(index, 1);
 
         let nameRow = seat.slice(0, 1)
         let indexRowItem = words.indexOf(nameRow)
@@ -127,9 +131,7 @@ export default function Booking(props) {
           let numberPrev = --number
           const index1 = arr.indexOf(name + numberPrev);
           arr.splice(index1, 1);
-
         }
-        arr.splice(index, 1);
         setSeats([...arr]);
       } else {
         let nameRow = seat.slice(0, 1)
@@ -162,12 +164,14 @@ export default function Booking(props) {
       cost: seats.length * 80000,
       customer_id: user._id,
       film_schedule_id: movies.schedule_id,
-      seat_ids: seats,
-      email,
+      seats: seats,
+      email: email,
       phone_number: phone,
-      payment,
+      payment: "momo",
+      voucher_id: null,
+      booking_time: movies.schedule.time_start
     };
-    dispatch(postBookingInfo(bookingInfo, history));
+    dispatch(paymentGateway({ params: bookingInfo, history: window}));
     setDisabledBtn(true);
   };
   const [showError, setShowError] = useState(false)
@@ -221,20 +225,38 @@ export default function Booking(props) {
     return moment(date).format('dddd DD/MM/YYYY hh:mm');
   }
 
+  // const renderer = ({ hours, minutes, seconds, completed }) => {
+  //   if (completed) {
+  //     // Render a completed state
+  //     setSeats([])
+  //     alert('quá thời gian quy định')
+  //     return <span>You are good to go!</span>;
+  //     // console.log("Completed")
+  //   } else {
+  //     // Render a countdown
+  //     return <span> {"0" +minutes}:{seconds < 10 ? '0' + seconds : seconds}</span>;
+  //   }
+  // };
+
   return (
     <div className="booking">
       <div className="booking-content">
         <div className="booking-content__header">
-          <img src={movies.theater_url_image} alt="" />
           <div className="booking-content__threater">
-            <div className="booking-content__threater__name">{movies && movies.theater_name}</div>
-            <div className="booking-content__threater__room">{`${formatDate(movies.schedule.time_start)} - ${roomBooking}`}</div>
+            <img src={movies.theater_url_image} alt="" />
+            <div className="booking-content__content">
+              <div className="booking-content__threater__name">{movies && movies.theater_name}</div>
+              <div className="booking-content__threater__room">{`${formatDate(movies.schedule.time_start)} - ${roomBooking}`}</div>
+            </div>
+          </div>
+          <div className="booking-content__countdown">
+
           </div>
         </div>
         <div className="booking-content__screen">
           <img src="/assets/screen.png" alt="" />
         </div>
-        <div className="booking-content__list-seats">
+        <div id="" className="booking-content__list-seats">
           {arrSeats.map((row, index) => (
             <RowSeatEl key={index} seats={seats} seatsSelected={listSeatsSelected} {...row} onSelectSeat={(seat) => selectSeat(seat)} />
           ))}

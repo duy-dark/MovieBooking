@@ -1,22 +1,39 @@
-import React from 'react'
-import { View, Text, ScrollView, TouchableOpacity } from 'react-native'
+import React, { useEffect } from 'react'
+import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native'
 import styles from "../../styles/views/home/tabhome"
 import CardFilmFavorite from "../../components/film/CardFilmFavorite"
 import CardFilm from "../../components/film/CardFilm"
 import CardNews from "../../components/news/CardNews"
 import CardNewsSummary from "../../components/news/CardNewsSummary"
 import CardCommment from "../../components/comment/CardComment"
+import { useSelector, useDispatch } from "react-redux";
+import { getListFilmNow } from "../../redux/films/actions"
 
 const TabHome = (props) => {
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getListFilmNow())
+    }, [])
+
+    const films = useSelector((state) => state.films.filmsNow)
+    const filmsFavorite = films.slice(0, 3)
+    const filmsSuggest = films.slice(3,6)
+    const indicator = useSelector((state) => state.films.loading)
+
     const seeAllFilm = () => {
         props.navigation.navigate("TabFilmsNowShowing")
     }
+    const seeAllNews = () => {
+        props.navigation.navigate("NewsStack")
+    }
+    if(indicator) return <ActivityIndicator style={{alignSelf: 'center', marginTop: 200}} size="large" color="orangered" /> 
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <Text style={styles.section}>Phim được yêu thích nhất</Text>
-            <CardFilmFavorite navigation={props.navigation} />
-            <CardFilmFavorite navigation={props.navigation} />
-            <CardFilmFavorite navigation={props.navigation} />
+            {filmsFavorite.map((film, index) => 
+                <CardFilmFavorite key={index} film={film} navigation={props.navigation} />
+            )}
             <View style={styles.area}>
                 <View style={styles.row}>
                     <Text style={styles.textRow}>Rạp đang có phim gì?</Text>
@@ -24,9 +41,9 @@ const TabHome = (props) => {
                         <Text style={styles.seeAll}>Xem Tất Cả</Text>
                     </TouchableOpacity>
                 </View>
-                <CardFilm navigation={props.navigation} />
-                <CardFilm navigation={props.navigation} />
-                <CardFilm navigation={props.navigation} />
+                {filmsSuggest.map((film, index) => 
+                <CardFilm key={index} film={film} navigation={props.navigation} />
+                )}
             </View>
             <Text style={styles.section}>Tin nóng nhất hôm nay</Text>
             <CardNews />
@@ -35,7 +52,7 @@ const TabHome = (props) => {
             <View style={styles.area}>
                 <View style={styles.row}>
                     <Text style={styles.textRow}>Lướt thêm tin mới nhé!</Text>
-                    <TouchableOpacity><Text style={styles.seeAll}>Xem Tất Cả</Text></TouchableOpacity>
+                    <TouchableOpacity onPress={seeAllNews}><Text style={styles.seeAll}>Xem Tất Cả</Text></TouchableOpacity>
                 </View>
                 <CardNewsSummary />
                 <CardNewsSummary />

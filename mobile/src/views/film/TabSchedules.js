@@ -1,58 +1,38 @@
-import React, { useState, useEffect } from 'react'
-import { SafeAreaView, View, Text, TouchableOpacity, FlatList } from 'react-native'
+import React, { useState } from 'react'
+import { SafeAreaView, View, Text, TouchableOpacity, FlatList, ActivityIndicator } from 'react-native'
 import styles from '../../styles/views/schedule/tab-schedules'
 import CardCinemaSchedule from '../../components/cinema/CardCinemaSchedule'
+import moment from 'moment'
+import { useSelector } from "react-redux"
 
-var DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'Cinema 1',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Cinema 2',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Cinema 3',
-    },
-];
+const days = ['CN', 'Th 2', 'Th 3', 'Th 4', 'Th 5', 'Th 6', 'Th 7']
 
 const TabSchedules = (props) => {
-    const arrayDefault = [
-        {
-            day: "Hôm nay",
-            dayNumber: 4,
-            selected: true
-        },
-        {
-            day: "Th 6",
-            dayNumber: 5,
-            selected: false
-        },
-        {
-            day: "Th 7",
-            dayNumber: 6,
-            selected: false
-        },
-        {
-            day: "CN",
-            dayNumber: 7,
-            selected: false
-        },
-        {
-            day: "Th 2",
-            dayNumber: 8,
-            selected: false
-        },
-        {
-            day: "Th 3",
-            dayNumber: 9,
-            selected: false
-        },
+    const arr = []
+    for(let i = 0; i < 7; i++) {
+        let date = moment().add(i, 'day')
+        if (i == 0) {
+            arr.push({
+                name: days[date.day()],
+                date: date.format('DD-MM-YYYY'),
+                day: date.format('DD'),
+                dayofweek: date.day(),
+                selected: true,
+            })
+        }
+        else {
+            arr.push({
+                name: days[date.day()],
+                date: date.format('DD-MM-YYYY'),
+                day: date.format('DD'),
+                dayofweek: date.day(),
+                selected: false,
+            })
+        }
+    }
 
-    ]
-    const [schedules, setSchedules] = useState(arrayDefault)
+    const [schedules, setSchedules] = useState(arr)
+    const [DATA, setDATA] = useState(props.dayOfWeeks[0])
     const selectDate = (index) => {
         let updateSchedules = schedules.map((schedule, i) => {
             if(schedule.selected) schedule.selected = false
@@ -60,12 +40,10 @@ const TabSchedules = (props) => {
             return schedule
         })
         setSchedules(updateSchedules)
-    }  
-    useEffect(() => {
-        // DATA = []
-        // update DATA
-    }, [schedules])
-    const renderListCinemas = ({ item }) => <CardCinemaSchedule navigation={props.navigation} title={item.title} />
+        setDATA(props.dayOfWeeks[index])
+    }
+
+    const renderListCinemas = ({ item }) => <CardCinemaSchedule navigation={props.navigation} film={props.film} cinema={item} />
     const schedulesHeader = (
         <View style={styles.schedules}>
             <View style={{flexDirection: "row"}}>
@@ -73,31 +51,35 @@ const TabSchedules = (props) => {
                     if(schedule.selected) {
                         return (
                             <View style={styles.date} key={index}>
-                                <Text style={styles.today}>{schedule.day}</Text>
-                                <Text style={styles.todayNumber}>{schedule.dayNumber}</Text>
+                                <Text style={styles.today}>{schedule.name}</Text>
+                                <Text style={styles.todayNumber}>{schedule.day}</Text>
                             </View>
                         )
                     }
                     else {
                         return (
                             <TouchableOpacity style={styles.date} key={index} onPress={() => selectDate(index)}>
-                                <Text style={styles.day}>{schedule.day}</Text>
-                                <Text style={styles.number}>{schedule.dayNumber}</Text>
+                                <Text style={styles.day}>{schedule.name}</Text>
+                                <Text style={styles.number}>{schedule.day}</Text>
                             </TouchableOpacity>
                         )
                     }
                 })}
             </View>
-            <Text style={styles.fullToday}>Hôm nay, 4 tháng 2, 2021</Text>
+            <Text style={styles.fullToday}>{schedules[0].name}, {schedules[0].date}</Text>
         </View>
     )
-    return (
+
+    const indicator = useSelector((state) => state.films.loading)
+
+    if(indicator) return <ActivityIndicator style={{alignSelf: 'center', marginTop: 200}} size="large" color="orangered" /> 
+    else return (
         <SafeAreaView>
            <FlatList
                 ListHeaderComponent={schedulesHeader}
                 data={DATA}
                 renderItem={renderListCinemas}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item._id}
             />
         </SafeAreaView>
     )
