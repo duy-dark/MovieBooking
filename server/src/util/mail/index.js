@@ -1,4 +1,25 @@
 const nodemailer = require('nodemailer');
+const {google} = require('googleapis');
+const OAuth2 = google.auth.OAuth2;
+
+const ClientID =
+  '420984700024-mtmtndn31tamjca6g6tuqriveu3afrng.apps.googleusercontent.com';
+const ClientSecret = 'SQ9dAMrrfc062sxe8RXQ1CaR';
+const RedirectURL = 'https://developers.google.com/oauthplayground';
+const refresh_token =
+  '1//04bnW2gQ7sl2ICgYIARAAGAQSNwF-L9IrKK_BO7laWkwojU_RA3Lhjneavw44Dwn61WehMOUo4_HLrHhWIuor_IknEU3PPHthrKo';
+
+const oauth2Client = new OAuth2(
+  ClientID, // ClientID
+  ClientSecret, // Client Secret
+  RedirectURL // Redirect URL
+);
+
+oauth2Client.setCredentials({
+  refresh_token: refresh_token
+});
+
+const accessToken = oauth2Client.getAccessToken();
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -7,10 +28,16 @@ const transporter = nodemailer.createTransport({
 // ignoreTLS: false,
 // secure: false,
   auth: {
+    type: 'OAuth2',
     user: 'doantotnghiepthang9@gmail.com',
-    pass: 'doantotnghiep'
+    pass: 'doantotnghiep',
+    clientId: ClientID,
+    clientSecret: ClientSecret,
+    refreshToken: refresh_token,
+    accessToken: accessToken
   }
 });
+
 let contentMail = (objSender) => {
   return `
     <div style="display:flex;flex-direction: column; border: 2px #CCFFFF solid; border-width: 10px; max-width :700px; font-size: 20px; padding: 10px; color:#000066 ; background-image: url('ticket.jpg');">
@@ -47,22 +74,6 @@ let contentMail = (objSender) => {
     </div>
   </div>
   `;
-  // <div style="padding: 10px; background-color: #003375">
-  //   <div style="padding: 10px; background-color: white;">
-  //       <h4 style="color: #0085ff">Đặt vé thành công</h4>
-  //       <span style="color: black, width: 150px">Mã: ${ticket.id}</span><br/>
-  //       <span style="color: black, width: 150px">Số ghế:${ticket.count} </span><br/>
-  //       <span style="color: black, width: 150px">Ghế:${ticket.seats} </span><br/>
-  //       <span style="color: black, width: 150px">Giá:${ticket.cost} </span><br/>
-  //       <span style="color: black, width: 150px">Tên khách hàng:${ticket.customers} </span><br/>
-  //       <span style="color: black, width: 150px">Số điện thoại:${ticket.phone_number} </span><br/>
-  //       <span style="color: black, width: 150px">Loại thanh toán:${ticket.payment} </span><br/>
-  //       <span style="color: black, width: 150px">Thời gian bắt đầu:${ticket.time_start} </span><br/>
-  //       <span style="color: black, width: 150px">Thời gian hết phim:${ticket.time_end} </span><br/>
-  //       <span style="color: black, width: 150px">Tên rạp:${ticket.theater} </span><br/>
-  //       <span style="color: black, width: 150px">Tên phòng:${ticket.room} </span><br/>
-  //   </div>
-  // </div>
 };
 
 let contentCode = (code) => {

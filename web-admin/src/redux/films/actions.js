@@ -68,3 +68,14 @@ export function getFilmSchedules(info) {
     payload: info,
   };
 }
+export function getTheaters(){
+  return {
+    type: FilmTypes.LIST_THEATER,
+  };
+}
+export function createNewPaper(params) {
+  return {
+    type: FilmTypes.CREATE_NEW,
+    payload: params
+  }
+}
