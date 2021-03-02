@@ -68,3 +68,8 @@ export function getFilmSchedules(info) {
     payload: info,
   };
 }
+export function getTheaters(){
+  return {
+    type: FilmTypes.LIST_THEATER,
+  };
+}

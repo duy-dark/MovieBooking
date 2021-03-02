@@ -40,6 +40,9 @@ const getFilmSchedule = (params)=>{
   return Api.get(`api/film_schedule?film_id=${params}`).then((res) => res.data)
 }
 // eslint-disable-next-line import/no-anonymous-default-export
+const getTheater = ()=>{
+  return Api.get(`api/theater`).then((res)=>res.data)
+}
 export default {
   
   postBookingInfo,
@@ -51,5 +54,6 @@ export default {
   updateFilmDetail,
   getCategories,
   addNewFilm,
-  getFilmSchedule
+  getFilmSchedule,
+  getTheater
 };

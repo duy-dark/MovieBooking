@@ -47,6 +47,9 @@ export default function filmsReducer(state = initialState, action) {
     case FilmTypes.FILM_SCHEDULE_SUCCESS:
       newState = Object.assign({},state,{filmSchedule : payload})
       break;
+    case FilmTypes.LIST_THEATER_SUCCESS:
+        newState = Object.assign({},state,{theaters : payload})
+        break;
     default:
       newState = state;
   }
