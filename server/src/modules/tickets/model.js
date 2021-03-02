@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 let schema = new mongoose.Schema(
   {
+    code: String,
     count: Number,
     booking_time: Date,
     cost: Number,
@@ -11,7 +12,7 @@ let schema = new mongoose.Schema(
     email: String,
     phone_number: String,
     payment: String,
-    seat_ids: [String],
+    seats: [String],
     categories: [String],
     is_deleted: Boolean,
     created_at: Date,
@@ -42,15 +43,15 @@ module.exports = {
       },
       {
         $unwind: {
-          path: '$seat_ids',
+          path: '$seats',
           preserveNullAndEmptyArrays: true
         }
       },
       {
         $group: {
-          _id: '$seat_ids',
+          _id: '$seats',
           seats: {
-            $first: '$seat_ids'
+            $first: '$seats'
           }
         }
       },
@@ -78,7 +79,8 @@ module.exports = {
                 time_start: '$$this.time_start',
                 time_end: '$$this.time_end',
                 theater: '$$this.theater_id',
-                room_id: '$$this.room_id'
+                room_id: '$$this.room_id',
+                film_id: '$$this.film_id'
               }
             }
           }
@@ -102,6 +104,8 @@ module.exports = {
           }
         }
       },
+      {$unwind: '$film_schedules'},
+      {$unwind: '$customers'},
       {
         $project: lambda.views
       }

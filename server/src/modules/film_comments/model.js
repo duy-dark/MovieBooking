@@ -31,7 +31,7 @@ module.exports = {
     return await Collection.aggregate([
       {
         $match: {
-          $and: [lambda]
+          $and: [lambda.conditions]
         }
       },
       {
@@ -47,7 +47,9 @@ module.exports = {
           path: '$customers',
           preserveNullAndEmptyArrays: true
         }
-      }
+      },
+      {$sort: {created_at: -1}},
+      {$limit: lambda.limit}
     ]);
   }
 };

@@ -6,13 +6,16 @@ import CardTime from './CardTime';
 import CardComment from './CardComment';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import { createComment } from "../../redux/films/actions";
+import { useSelector, useDispatch } from "react-redux"
+
 
 const days = ['CN', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7']
 export default function TabsSchedule(props) {
-
+  const dispatch = useDispatch();
   const [activeIndex, setActiveIndex] = useState([1, 2, 3]);
   const [listDate, setListDate] = useState([{}, {}, {}, {}, {}, {}, {}])
-
+  const user = useSelector(state => state.users.user)
 
 
   const changeCollapse = (index) => {
@@ -44,10 +47,33 @@ export default function TabsSchedule(props) {
   }, [])
   const [tabSelect, setTabSelect] = useState(0);
 
+  const [rated, setRated] = useState(5);
+  const [commentText, setCommentText] = useState('')
+  const [ratedHover, setRatedHover] = useState(5);
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const showMoreComment = () => {
+    props.onShowMoreComment(props.showMore + 1)
+  }
+  const showblockComment = () => {
+    if (user) {
+      handleShow()
+    } else {
+      alert("bạn chưa đăng nhập")
+    }
+  }
+  const sumitComment = () => {
+    dispatch(createComment({
+      film_id: props.detail._id,
+      customer_id: user._id,
+      content: commentText,
+      rate: rated,
+    }))
+    setRated(5)
+    handleClose()
+  }
 
   const showTheater = (item) => {
     if (item.length > 0) {
@@ -76,8 +102,6 @@ export default function TabsSchedule(props) {
       return (<p>Không có lịch chiếu</p>)
     }
   }
-  const [rated, setRated] = useState(5);
-  const [ratedHover, setRatedHover] = useState(5);
 
 
   return (
@@ -150,13 +174,15 @@ export default function TabsSchedule(props) {
           </div>
         </TabPanel>
         <TabPanel className="tab-detail__comment">
-            <div className="comment-block" onClick={handleShow}>
-              <span className="comment-block__image"><img src="https://tix.vn/app/assets/img/avatar.png" alt="avatar"/></span>
+            <div className="comment-block" onClick={showblockComment}>
+              <span className="comment-block__image"><img src={`${user && user.avatar ? user.avatar : '/assets/avatar.png'}`} alt="avatar"/></span>
               <input type="text" placeholder="Bạn nghĩ gì về phim này?"/>
               <span className="comment-block__rate"><img src="https://tix.vn/app/assets/img/icons/listStar.png" alt="star"/></span>
             </div>
             { props.comments.map(comment => (<CardComment key={comment._id} username={comment.customers.name} {...comment}/>))}
-
+            <div className="tab-detail__comment__more">
+              <button onClick={showMoreComment}>Xem thêm</button>
+            </div>
         </TabPanel>
       </Tabs>
       <Modal show={show} onHide={handleClose}>
@@ -183,12 +209,12 @@ export default function TabsSchedule(props) {
               <img onClick={() => setRated(10)} onMouseOver={() => setRatedHover(10)} onMouseOut={() => setRatedHover(0)} className={`star ${rated === 10 || ratedHover === 10 ? 'star--selected' : ''}`} src={`https://tix.vn/app/assets/img/icons/star1.png`} alt=""/>
             </div>
             <div className="modal-comment__content">
-              <textarea name="" id="" cols="10" rows="6"></textarea>
+              <textarea name="commentText" id="" cols="10" onChange={e => setCommentText(e.target.value)}rows="6"></textarea>
             </div>
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary modal-comment__button" onClick={handleClose}>
+          <Button variant="primary modal-comment__button" onClick={sumitComment}>
             Đăng
           </Button>
         </Modal.Footer>

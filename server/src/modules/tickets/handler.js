@@ -5,6 +5,7 @@ const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
 const {transporter, contentMail, contentCode} = require('../../util/mail');
 const {nexmo, sendSMS} = require('../../util/sms');
+const shortid = require('shortid');
 
 const getList = async (params) => {
   try {
@@ -12,13 +13,14 @@ const getList = async (params) => {
       conditions: {...params, is_deleted: false},
       views: {
         _id: 1,
+        code: 1,
         count: 1,
         booking_time: 1,
         cost: 1,
         customer_id: 1,
         film_schedule_id: 1,
         voucher_id: 1,
-        seat_ids: 1,
+        seats: 1,
         email: 1,
         phone_number: 1,
         payment: 1
@@ -37,11 +39,12 @@ const findById = async (id) => {
       conditions: {_id: id, is_deleted: false},
       views: {
         _id: 1,
+        code: 1,
         count: 1,
         booking_time: 1,
         cost: 1,
         customer_id: 1,
-        seat_ids: 1,
+        seats: 1,
         email: 1,
         voucher_id: 1,
         phone_number: 1,
@@ -65,15 +68,17 @@ const findById = async (id) => {
 
 const postCreate = async (params) => {
   try {
+    let code = shortid.generate().toUpperCase();
     let lambda = {
+      code: code,
       count: params.count || undefined,
-      booking_time: params.booking_time || undefined,
+      booking_time: moment(params.booking_time) || undefined,
       cost: params.cost || undefined,
       customer_id: require('mongodb').ObjectId(params.customer_id) || undefined,
       film_schedule_id:
         require('mongodb').ObjectId(params.film_schedule_id) || undefined,
       voucher_id: require('mongodb').ObjectId(params.voucher_id) || undefined,
-      seat_ids: params.seat_ids || undefined,
+      seats: params.seats || undefined,
       email: params.email || undefined,
       phone_number: params.phone_number || undefined,
       payment: params.payment || undefined,
@@ -81,65 +86,77 @@ const postCreate = async (params) => {
       created_at: moment.now(),
       updated_at: moment.now()
     };
-
     let data = await Model.createByLambda(lambda);
 
     let view = {
       conditions: {_id: data[0]._id, is_deleted: false},
       views: {
         _id: 1,
+        code: 1,
         count: 1,
         booking_time: 1,
         cost: 1,
         customer_id: 1,
-        seat_ids: 1,
+        seats: 1,
         email: 1,
         voucher_id: 1,
         phone_number: 1,
         payment: 1,
         film_schedules: 1,
-        customers: 1
+        customers: 1,
+        room: 1
       }
     };
+
     let ticketView = await Model.getDetail(view);
-    let theater = await require('../theaters/model').findByLambda({
-      conditions: {_id: ticketView[0].film_schedules[0].theater}
+
+    let film = await require('../films/model').findByLambda({
+      conditions: {_id: ticketView[0].film_schedules.film_id}
     });
-    ticketView[0].film_schedules[0].theater = theater[0].name;
+    console.log('film:', film[0]);
 
-    let seats = ticketView[0].seat_ids.toString();
-
-    let timeStart = moment(ticketView[0].film_schedules[0].time_start).format(
+    let theater = await require('../theaters/model').findByLambda({
+      conditions: {_id: ticketView[0].film_schedules.theater}
+    });
+    ticketView[0].film_schedules.theater = theater[0].name;
+    let seats = ticketView[0].seats.toString();
+    let timeStart = moment(ticketView[0].film_schedules.time_start).format(
+      'DD/MM/YYYY, HH:mm'
+    );
+    let time_end = moment(ticketView[0].film_schedules.time_end).format(
       'DD/MM/YYYY, HH:mm'
     );
 
-    let time_end = moment(ticketView[0].film_schedules[0].time_end).format(
-      'DD/MM/YYYY, HH:mm'
+    let room = await require('../rooms/handler').findById(
+      ticketView[0].film_schedules.room_id
     );
 
     const objSender = {
       id: ticketView[0]._id,
+      code: code,
+      film: film[0].name,
+      address: theater[0].address,
       seats: seats,
       count: ticketView[0].count,
       cost: ticketView[0].cost,
-      customers: ticketView[0].customers[0].name,
-      phone_number: ticketView[0].phone_number,
+      customers: ticketView[0].customers.name,
+      phone_number: ticketView[0].phone_number.toString(),
       payment: ticketView[0].payment,
       time_start: timeStart,
       time_end: time_end,
-      theater: ticketView[0].film_schedules[0].theater,
-      room_id: ticketView[0].film_schedules[0].room_id
+      theater: ticketView[0].film_schedules.theater,
+      room: room.data.name
     };
+
+    console.log('objSender:', objSender);
 
     let mainOptions = {
       // thiết lập đối tượng, nội dung gửi mail
-      from: 'example@example.com',
+      from: 'doantotnghiepthang9@gmail.com',
       to: params.email,
       subject: 'Đặt vé thành công',
       html: contentMail(objSender) //Nội dung html mình đã tạo trên kia :))
     };
-    let result = await sendSMS(objSender);
-    console.log('result sms', result);
     let p1 = await transporter.sendMail(mainOptions);
     await Promise.all([p1]).then((row) => {
       let {err, info} = row[0];
@@ -150,7 +167,10 @@ const postCreate = async (params) => {
         };
       }
     });
+    console.log('p1', p1);
 
+    let result = await sendSMS(objSender);
+    console.log('result sms', result);
     return resSuccess(data[0]);
   } catch (error) {
     console.log('error booking', error);
@@ -163,6 +183,7 @@ const putUpdate = async (id, params) => {
     let lambda = {
       conditions: {_id: id, is_deleted: false},
       params: {
+        code: params.code || undefined,
         count: params.count || undefined,
         booking_time: params.booking_time || undefined,
         cost: params.cost || undefined,
@@ -171,7 +192,7 @@ const putUpdate = async (id, params) => {
         film_schedule_id:
           require('mongodb').ObjectId(params.film_schedule_id) || undefined,
         voucher_id: require('mongodb').ObjectId(params.voucher_id) || undefined,
-        seat_ids: params.seat_ids || undefined,
+        seats: params.seats || undefined,
         email: params.email || undefined,
         phone_number: params.phone_number || undefined,
         payment: params.payment || undefined,

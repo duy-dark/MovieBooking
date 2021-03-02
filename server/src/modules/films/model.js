@@ -9,8 +9,9 @@ let schema = new mongoose.Schema(
     start_date: Date,
     directors: String,
     actors: String,
-    rates: Number,
+    rate_average: Number,
     rate_count: Number,
+    rates: Object,
     imdb: Number,
     digitals: String,
     url_avatar: String,
@@ -198,6 +199,9 @@ module.exports = {
           rates: {
             $first: '$rates'
           },
+          rate_average: {
+            $first: '$rate_average'
+          },
           rate_count: {
             $first: '$rate_count'
           },
@@ -320,6 +324,9 @@ module.exports = {
           rates: {
             $first: '$rates'
           },
+          rate_average: {
+            $first: '$rate_average'
+          },
           rate_count: {
             $first: '$rate_count'
           },
@@ -390,6 +397,9 @@ module.exports = {
                 },
                 rates: {
                   $first: '$rates'
+                },
+                rate_average: {
+                  $first: '$rate_average'
                 },
                 rate_count: {
                   $first: '$rate_count'
@@ -892,8 +902,6 @@ module.exports = {
           'countries',
           'start_date',
           'actors',
-          'rates',
-          'rate_count',
           'is_blockbuster',
           'directors',
           'category_ids'
@@ -963,6 +971,15 @@ module.exports = {
           },
           digitals: {
             $first: '$digitals'
+          },
+          rates: {
+            $first: '$rates'
+          },
+          rate_count: {
+            $first: '$rate_count'
+          },
+          rate_average: {
+            $first: '$rate_average'
           },
           url_avatar: {
             $first: '$url_avatar'
@@ -1037,6 +1054,15 @@ module.exports = {
           },
           digitals: {
             $first: '$digitals'
+          },
+          rates: {
+            $first: '$rates'
+          },
+          rate_count: {
+            $first: '$rate_count'
+          },
+          rate_average: {
+            $first: '$rate_average'
           },
           url_avatar: {
             $first: '$url_avatar'
