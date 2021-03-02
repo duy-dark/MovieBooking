@@ -3,6 +3,7 @@ import Login from "./views/login/Login";
 import Home from "./views/home/Home";
 import Film from "./views/Film/showAllFilm/Film"
 import Detail from "./views/Film/editFilm/DetailPopup"
+import NewPaper from "./views/New/NewPaper"
 const routes = [
   {
     path: "/login",
@@ -24,6 +25,11 @@ const routes = [
     exact: true,
     component: () => <Detail/>,
   },
+  {
+    path: "/new",
+    exact: true,
+    component: () => <NewPaper/>
+  }
 ];
 
 export default routes;

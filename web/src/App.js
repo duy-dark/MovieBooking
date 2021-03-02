@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { connect } from 'react-redux';
 import routes from "./router";
@@ -6,7 +6,8 @@ import "./styles/styles.scss";
 import Header from "./components/customer/Header";
 import Footer from "./components/customer/Footer";
 import MyLoading from './components/MyLoading'
-import { useSelector } from "react-redux"
+import { useSelector } from "react-redux";
+import NotFound from "./views/NotFound";
 class App extends Component {
   render() {
 
@@ -21,11 +22,12 @@ class App extends Component {
     };
     return (
       <>
-      {/* <MyLoading active={this.props.isLoading}/> */}
+      <MyLoading active={this.props.isLoading}/>
       <Router>
         {this.props.header && <Header/>}
         <Switch>
           { showRouteComponent(routes) }
+          <Route component={NotFound} />
         </Switch>
         {this.props.footer && <Footer/>}
       </Router>

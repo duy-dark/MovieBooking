@@ -11,6 +11,10 @@
     height: 60px;
     padding: 0 20px;
     box-shadow: 0 0 10px rgba(0,0,0,.3);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 50;
 
     .header__icon {
       display: flex;
