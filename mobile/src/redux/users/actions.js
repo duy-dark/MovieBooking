@@ -21,17 +21,18 @@ export function updateStatusFriend(user) {
   };
 }
 
-export function getUserInfo(payload) {
+export function getUserInfo(payload, navigation) {
   return {
     payload: payload,
     type: UsersTypes.USER_INFO,
+    navigation: navigation
   };
 }
 
-export function signOut(history) {
+export function signOut(navigation) {
   return {
     type: UsersTypes.LOGOUT,
-    history,
+    navigation: navigation
   };
 }
 

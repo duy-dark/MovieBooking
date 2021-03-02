@@ -6,6 +6,7 @@ import BookTicketScreen from '../book-ticket/BookTicketScreen'
 import TabInfomation from '../film/TabInfomation';
 import CommentScreen from '../comment/CommentScreen';
 import ReviewFilmScreen from '../comment/ReviewFilmScreen';
+import NewsDetails from '../../components/news/NewsDetails';
 
 const Stack = createStackNavigator();
 const HomeStack = () => {
@@ -41,7 +42,13 @@ const HomeStack = () => {
                 options={{
                     title: "Viết bình luận"
                 }}
-            
+            />
+            <Stack.Screen 
+                name="NewsDetails" 
+                component={NewsDetails} 
+                options={{ 
+                    title: "Nội dung tin tức"
+                }} 
             />
         </Stack.Navigator>
     )

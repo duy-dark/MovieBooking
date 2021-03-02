@@ -22,8 +22,6 @@ const FilmScreen = (props) => {
 
     const film = useSelector((state) => state.films.filmDetail)
     const dayOfWeeks = useSelector((state) => state.films.dayOfWeeks)
-    const comments = useSelector((state) => state.films.comments)
- 
     return (
       <Tab.Navigator 
         tabBarOptions={{
@@ -37,7 +35,7 @@ const FilmScreen = (props) => {
           {() => <TabSchedules film={film} dayOfWeeks={dayOfWeeks} navigation={props.navigation} />}
         </Tab.Screen>
         <Tab.Screen name="TabComments" options={{title: "Bình luận"}}>
-          {() => <TabComments comments={comments} rate_average={film.rate_average} rate_count={film.rate_count} filmId={film._id} navigation={props.navigation} />}
+          {() => <TabComments filmId={film._id} navigation={props.navigation} />}
         </Tab.Screen>
         <Tab.Screen name="TabInfomation" options={{title: "Thông tin"}}>
           {() => <TabInfomation film={film} />}

@@ -58,58 +58,57 @@ module.exports = {
 
     return await Collection.aggregate([
       {
-        $match: {
-          $and: [lambda.conditions]
-        }
-      },
-
-      {
         $facet: {
           films: [
-            {
-              $lookup: {
-                from: 'films',
-                localField: 'film_id',
-                foreignField: '_id',
-                as: 'films'
-              }
-            },
-            {
-              $addFields: {
-                films: {
-                  $map: {
-                    input: '$films',
-                    in: {
-                      rate_count: '$$this.rate_count',
-                      rate_average: '$$this.rate_average',
-                      rates: '$$this.rates'
-                    }
-                  }
-                }
-              }
-            },
-            {
-              $unwind: {
-                path: '$films',
-                preserveNullAndEmptyArrays: true
-              }
-            },
-            {
-              $group: {
-                _id: '$_id',
-                rate_count: {
-                  $first: '$films.rate_count'
-                },
-                rate_average: {
-                  $first: '$films.rate_average'
-                },
-                rates: {
-                  $first: '$films.rates'
-                }
-              }
-            }
+            // {
+            //   $lookup: {
+            //     from: 'films',
+            //     localField: 'film_id',
+            //     foreignField: '_id',
+            //     as: 'films'
+            //   }
+            // }
+            // {
+            //   $addFields: {
+            //     films: {
+            //       $map: {
+            //         input: '$films',
+            //         in: {
+            //           rate_count: '$$this.rate_count',
+            //           rate_average: '$$this.rate_average',
+            //           rates: '$$this.rates'
+            //         }
+            //       }
+            //     }
+            //   }
+            // },
+            // {
+            //   $unwind: {
+            //     path: '$films',
+            //     preserveNullAndEmptyArrays: true
+            //   }
+            // },
+            // {
+            //   $group: {
+            //     _id: '$_id',
+            //     rate_count: {
+            //       $first: '$films.rate_count'
+            //     },
+            //     rate_average: {
+            //       $first: '$films.rate_average'
+            //     },
+            //     rates: {
+            //       $first: '$films.rates'
+            //     }
+            //   }
+            // }
           ],
           comments: [
+            {
+              $match: {
+                $and: [lambda.conditions]
+              }
+            },
             {
               $lookup: {
                 from: 'customers',
@@ -129,13 +128,13 @@ module.exports = {
             {$limit: lambda.limit}
           ]
         }
-      },
-      {
-        $unwind: {
-          path: '$films',
-          preserveNullAndEmptyArrays: true
-        }
       }
+      // {
+      //   $unwind: {
+      //     path: '$films',
+      //     preserveNullAndEmptyArrays: true
+      //   }
+      // }
     ]);
   }
 };
