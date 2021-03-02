@@ -157,7 +157,6 @@ const postCreate = async (params) => {
       subject: 'Đặt vé thành công',
       html: contentMail(objSender) //Nội dung html mình đã tạo trên kia :))
     };
-
     let p1 = await transporter.sendMail(mainOptions);
     await Promise.all([p1]).then((row) => {
       let {err, info} = row[0];
