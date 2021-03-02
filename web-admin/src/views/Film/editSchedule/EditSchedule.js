@@ -48,14 +48,15 @@ export default function EditableTable  (props) {
   const [form] = Form.useForm();
   const [data, setData] = useState();
   const [editingKey, setEditingKey] = useState('');
-  console.log(props)
-  const data1 = [{ key: 1,
-    Theater:"Dong Da",
-    Time_Start:"9:45",    
-    Time_End:"11:00",
-    Room : "Room 5",
-    Date: "30-5-2021"
-}];
+//   let data =[]
+//  props.filmschedule.map(item=>{
+//    const time_start = new Date(item.time_start).getDate;
+//    const time_end =item.time_end
+//    const room = item.room.name;
+//    const theater=item.theater.name;
+
+//  })
+ 
   useEffect(()=>{
     
    
