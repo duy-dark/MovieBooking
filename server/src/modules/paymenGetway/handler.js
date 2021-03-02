@@ -47,7 +47,6 @@ const momoApi = async (params) => {
       is_deleted: params.is_deleted,
       booking_time: params.booking_time
     };
-    console.log('lambda:', lambda);
     returnUrl = 'http://localhost:3000/complete?' + 'email=' + params.email;
 
     var rawSignature =
@@ -160,7 +159,9 @@ const checkStatusMomoApi = async (params) => {
     console.log(newsignature == params.signature);
     if (newsignature == params.signature) {
       if (params.errorCode == '0') {
+        console.log(lambda);
         let data = await ticket.postCreate(lambda);
+
         return {result: 'Success'};
       } else {
         console.log('Transaction Fail!');

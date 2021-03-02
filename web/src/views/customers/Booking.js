@@ -37,7 +37,6 @@ const SeatEl = (props) => {
     if (props.seatsSelected.includes(props.seat)) str += " seat--hide"
     if (props.seats.includes(props.seat)) {
       str += " seat--selected"
-      console.log('run here')
     }
     if (props.vip === "1") str += " seat--vip"
     if (props.type === "2-1") str += " seat--together seat--two-1"
@@ -169,7 +168,8 @@ export default function Booking(props) {
       email: email,
       phone_number: phone,
       payment: "momo",
-      voucher_id: ""
+      voucher_id: null,
+      booking_time: movies.schedule.time_start
     };
     dispatch(paymentGateway({ params: bookingInfo, history: window}));
     setDisabledBtn(true);

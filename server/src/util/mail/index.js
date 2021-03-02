@@ -23,6 +23,10 @@ const accessToken = oauth2Client.getAccessToken();
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
+//   host: 'smtp.gmail.com',
+// port: 587,
+// ignoreTLS: false,
+// secure: false,
   auth: {
     type: 'OAuth2',
     user: 'doantotnghiepthang9@gmail.com',

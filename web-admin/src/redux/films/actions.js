@@ -38,15 +38,40 @@ export function getSeats(id) {
     payload: id,
   };
 }
-export function updateFilmDetail(id){
+
+export function getSearch() {
   return {
-    type: FilmTypes.UPDATE_FILM_DETAIL,
+    type: FilmTypes.SEARCH,
+  };
+}
+
+export function getComments(id) {
+  return {
+    type: FilmTypes.COMMENT,
     payload: id
-  }};
+  };
+}
 export function getCategories(){
   return {
     type: FilmTypes.LIST_CATEGOGY,
-   
-    };
-  } 
+  };
+}
+export function addNewFilm(data) {
+  return {
+    type: FilmTypes.ADD_NEW_FILM,
+    payload: data
+  };
+}
+export function getFilmSchedules(info) {
+  return {
+    type: FilmTypes.FILM_SCHEDULE,
+    payload: info,
+  };
+}
 
+export function createNewPaper(params) {
+  return {
+    type: FilmTypes.CREATE_NEW,
+    payload: params
+  }
+}

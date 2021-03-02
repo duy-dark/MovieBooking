@@ -1,0 +1,19 @@
+html, body, #root, .ant-layout {
+  height: 100%;
+}
+
+.left-sidebar {
+  height: auto;
+  background-color:#fff;
+  .anticon-video-camera {
+
+  }
+}
+
+.menu {
+  .menu__logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
