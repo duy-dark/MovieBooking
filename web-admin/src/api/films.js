@@ -35,6 +35,10 @@ const getCategories = ()=>{
 const addNewFilm= (params) =>{
   return Api.post(`api/film`,params).then((res) => res.data)
 }
+
+const getFilmSchedule = (params)=>{
+  return Api.get(`api/film_schedule?film_id=${params}`).then((res) => res.data)
+}
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   
@@ -46,5 +50,6 @@ export default {
   getSeats,
   updateFilmDetail,
   getCategories,
-  addNewFilm
+  addNewFilm,
+  getFilmSchedule
 };

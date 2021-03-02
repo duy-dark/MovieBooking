@@ -62,3 +62,9 @@ export function addNewFilm(data) {
     payload: data
   };
 }
+export function getFilmSchedules(info) {
+  return {
+    type: FilmTypes.FILM_SCHEDULE,
+    payload: info,
+  };
+}
