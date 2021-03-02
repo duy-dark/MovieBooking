@@ -1,16 +1,16 @@
 import axios from "axios";
-// import interceptors from "./interceptors";
+import interceptors from "./interceptors";
 
 const Api = axios.create({
-  baseURL: "https://365ba6d26e83.ngrok.io",
+  baseURL: 'https://lit-lowlands-21932.herokuapp.com',
   withCredentials: false,
   headers: {
     Accept: "application/json",
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
-// interceptors.setup(Api);
+interceptors.setup(Api);
 // interceptors.checkToken(Api);
 // interceptors.checkError(Api);
 // interceptors.showSpinnerRequest(Api);

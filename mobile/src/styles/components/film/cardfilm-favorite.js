@@ -49,14 +49,15 @@ const styles = StyleSheet.create({
         padding: 2
     },
     statusText: {
-        marginLeft: 10,
+        // marginLeft: 10,
         fontSize: 14,
         color: "white",
         opacity: 0.7,
     },
     titleText: {
         flex: 3,
-        fontSize: 25,
+        fontSize: 22,
+        overflow: "hidden",
         color: "white",
     },
     bookText: {

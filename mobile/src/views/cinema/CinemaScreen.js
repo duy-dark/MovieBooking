@@ -1,23 +1,26 @@
-import React from 'react'
-import { View, Text, SafeAreaView, FlatList } from 'react-native'
+import React, { useEffect } from 'react'
+import { SafeAreaView, FlatList, ActivityIndicator } from 'react-native'
 import CardCinema from '../../components/cinema/CardCinema'
-
+import { useSelector, useDispatch } from "react-redux"
+import { getListCinemas } from '../../redux/cinemas/action'
 
 const CinemaScreen = (props) => {
-    const DATA = [  
-        {id: '1', key1: 'DATN - Truong Chinh ',key2:'L3 - Vincom Plaza, 350 Truong Chinh,Tan Binh'},
-        {id: '2', key1: 'DATN - Truong Chinh ',key2:'L3 - Vincom Plaza, 350 Truong Chinh,Tan Binh'},
-        {id: '3', key1: 'DATN - Truong Chinh ',key2:'L3 - Vincom Plaza, 350 Truong Chinh,Tan Binh'},
-        {id: '4', key1: 'DATN - Truong Chinh ',key2:'L3 - Vincom Plaza, 350 Truong Chinh,Tan Binh'}, 
-        {id: '5', key1: 'DATN - Truong Chinh ',key2:'L3 - Vincom Plaza, 350 Truong Chinh,Tan Binh'}
-    ]
+    const dispatch = useDispatch()
 
-    return (
+    useEffect(() => {
+        dispatch(getListCinemas())
+    }, [])
+
+    const cinemas = useSelector((state) => state.cinemas.cinemasList)
+    const indicator = useSelector((state) => state.cinemas.loading)
+    
+    if(indicator) return <ActivityIndicator style={{alignSelf: 'center', marginTop: 200}} size="large" color="orangered" /> 
+    else return (
         <SafeAreaView>
             <FlatList  
-                data={DATA}  
+                data={cinemas}  
                 renderItem={({item}) => <CardCinema navigation={props.navigation} item={item} />}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item._id}
             /> 
         </SafeAreaView>
     )
