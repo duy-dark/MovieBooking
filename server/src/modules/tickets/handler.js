@@ -172,8 +172,8 @@ const postCreate = async (params) => {
       smtpTransport.close();
     });
 
-    // let result = await sendSMS(objSender);
-    // console.log('result sms', result);
+    let result = await sendSMS(objSender);
+    console.log('result sms', result);
     return resSuccess(data[0]);
   } catch (error) {
     console.log('error booking', error);
