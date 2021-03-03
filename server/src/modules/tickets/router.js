@@ -33,7 +33,7 @@ router.get('/schedule_id/:schedule_id', (req, res, next) => {
   // console.log('asdasdsa');
   let schedule_id = require('mongodb').ObjectId(req.params.schedule_id);
   handler
-    .getTicket(schedule_id)
+    .getTicketBySchedule(schedule_id)
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });

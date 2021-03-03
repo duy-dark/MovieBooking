@@ -23,7 +23,10 @@ const getList = async (params) => {
         seats: 1,
         email: 1,
         phone_number: 1,
-        payment: 1
+        payment: 1,
+        momo_payment: 1,
+        direct_payment: 1,
+        is_paid: 1
       }
     };
     let data = await Model.findByLambda(lambda);
@@ -50,7 +53,10 @@ const findById = async (id) => {
         phone_number: 1,
         payment: 1,
         film_schedules: 1,
-        customers: 1
+        customers: 1,
+        momo_payment: 1,
+        direct_payment: 1,
+        is_paid: 1
       }
     };
     let data = await Model.getDetail(lambda);
@@ -82,6 +88,9 @@ const postCreate = async (params) => {
       email: params.email || undefined,
       phone_number: params.phone_number || undefined,
       payment: params.payment || undefined,
+      momo_payment: params.momo_payment || false,
+      direct_payment: params.direct_payment || false,
+      is_paid: false,
       is_deleted: false,
       created_at: moment.now(),
       updated_at: moment.now()
@@ -104,7 +113,10 @@ const postCreate = async (params) => {
         payment: 1,
         film_schedules: 1,
         customers: 1,
-        room: 1
+        room: 1,
+        momo_payment: 1,
+        direct_payment: 1,
+        is_paid: 1
       }
     };
 
@@ -199,6 +211,9 @@ const putUpdate = async (id, params) => {
         email: params.email || undefined,
         phone_number: params.phone_number || undefined,
         payment: params.payment || undefined,
+        momo_payment: params.momo_payment || undefined,
+        direct_payment: params.direct_payment || undefined,
+        is_paid: params.direct_payment || undefined,
         updated_at: moment.now()
       }
     };
@@ -231,9 +246,9 @@ const deleteData = async (id) => {
   }
 };
 
-const getTicket = async (film_schedule_id) => {
+const getTicketBySchedule = async (film_schedule_id) => {
   try {
-    let data = await Model.getTicket(film_schedule_id);
+    let data = await Model.getTicketBySchedule(film_schedule_id);
     let arr = data.map((item) => item.seats);
 
     let lambda = {
@@ -266,5 +281,5 @@ module.exports = {
   postCreate,
   putUpdate,
   deleteData,
-  getTicket
+  getTicketBySchedule
 };

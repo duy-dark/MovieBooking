@@ -14,6 +14,9 @@ let schema = new mongoose.Schema(
     payment: String,
     seats: [String],
     categories: [String],
+    momo_payment: Boolean,
+    direct_payment: Boolean,
+    is_paid: Boolean,
     is_deleted: Boolean,
     created_at: Date,
     updated_at: Date
@@ -33,12 +36,12 @@ module.exports = {
   updateByLambda: async function (lambda) {
     return await Collection.updateOne(lambda.conditions, lambda.params);
   },
-  getTicket: async function (lambda) {
+  getTicketBySchedule: async function (film_schedule_id) {
     //return await Collection.find();
     return await Collection.aggregate([
       {
         $match: {
-          film_schedule_id: lambda
+          film_schedule_id: film_schedule_id
         }
       },
       {
