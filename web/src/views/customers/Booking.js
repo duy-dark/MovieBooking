@@ -167,8 +167,7 @@ export default function Booking(props) {
       email: email,
       phone_number: phone,
       payment: "momo",
-      voucher_id: null,
-      booking_time: movies.schedule.time_start
+      voucher_id: null
     };
     dispatch(paymentGateway({ params: bookingInfo, history: window}));
     setDisabledBtn(true);
@@ -223,19 +222,6 @@ export default function Booking(props) {
   const formatDate = (date) => {
     return moment(date).format('dddd DD/MM/YYYY hh:mm');
   }
-
-  // const renderer = ({ hours, minutes, seconds, completed }) => {
-  //   if (completed) {
-  //     // Render a completed state
-  //     setSeats([])
-  //     alert('quá thời gian quy định')
-  //     return <span>You are good to go!</span>;
-  //     // console.log("Completed")
-  //   } else {
-  //     // Render a countdown
-  //     return <span> {"0" +minutes}:{seconds < 10 ? '0' + seconds : seconds}</span>;
-  //   }
-  // };
 
   return (
     <div className="booking">

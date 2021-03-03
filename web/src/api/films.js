@@ -49,7 +49,7 @@ const getAllNews = () => {
 }
 
 const getNewDetail = (params) => {
-  return Api.get(`http://localhost:1000/api/news/${params}`).then(res => res.data)
+  return Api.get(`/api/news/${params}`).then(res => res.data)
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export

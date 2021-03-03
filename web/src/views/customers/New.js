@@ -46,10 +46,10 @@ export default function New(props) {
         <div className="row">
           <div className="col-sm-12 content">
             { newDetail.content && newDetail.content.length > 0 && newDetail.content.map((item, index) => (
-              <>
+              <div key={index}>
               {item.text && (<p >{item.text}</p>)}
               {item.image && (<p><img style={{textAlign: "center"}} src={`${item.image}`} alt=""/></p>)}
-              </>
+              </div>
             ))}
           </div>
         </div>

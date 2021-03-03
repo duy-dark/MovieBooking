@@ -48,7 +48,7 @@ export default function filmsReducer(state = initialState, action) {
       break;
     case FilmTypes.CREATE_COMMENT_SUCCESS:
       let { comments } = state;
-      newState = Object.assign({}, state, { comments: [payload, ...comments]})
+      newState = Object.assign({}, state, { comments: [payload, ...comments], filmDetail: { ...state.filmDetail, rate_average: payload.rate_average, rate_count: payload.rate_count }})
       break;
     case FilmTypes.LOADING_SHOW:
       let newLoading1 = state.loading + 1

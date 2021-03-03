@@ -71,6 +71,10 @@ export default function Home() {
     return moment(time).format('hh-mm')
   }
 
+  const formatDate = (time) => {
+    return moment(time).format('DD-MM-YYYY')
+  }
+
   useEffect(() => {
     // eslint-disable-next-line
     if (search) {
@@ -228,18 +232,18 @@ export default function Home() {
     }
   }
 
-  const OptionComponent = (props) => {
-    return (
-      <components.Option {...props}>
-        <div styles={{ display: "flex", flexDirection: "column" }}>
-          <div>{props.data.label}</div>
-          <div style={{ marginTop: "5px", color: "#ccc" }}>
-            {props.data.date}
-          </div>
-        </div>
-      </components.Option>
-    );
-  };
+  // const OptionComponent = (props) => {
+  //   return (
+  //     <components.Option {...props}>
+  //       <div styles={{ display: "flex", flexDirection: "column" }}>
+  //         <div>{props.data.label}</div>
+  //         <div style={{ marginTop: "5px", color: "#ccc" }}>
+  //           {props.data.date}
+  //         </div>
+  //       </div>
+  //     </components.Option>
+  //   );
+  // };
 
   return (
     <div className="home">
@@ -258,6 +262,7 @@ export default function Home() {
                 value={selectFilm}
                 options={optionFilm}
                 onChange={setSelectFilm}
+
                 placeholder="Phim"
               />
               <Select
@@ -272,7 +277,12 @@ export default function Home() {
                 value={selectDate}
                 options={optionDate}
                 onChange={setSelectDate}
-                components={{ OptionComponent }}
+                getOptionLabel={ option => (
+                  <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
+                    <span>{option.label}</span>
+                    <span style={{fontSize: 12, color: "#aaa", marginLeft: 10}}>{formatDate(option.date)}</span>
+                  </div>
+                )}
                 placeholder="Ngày xem"
               />
               <Select
@@ -311,7 +321,12 @@ export default function Home() {
                 value={selectDate}
                 options={optionDate}
                 onChange={setSelectDate}
-                components={{ OptionComponent }}
+                getOptionLabel={ option => (
+                  <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
+                    <span>{option.label}</span>
+                    <span style={{fontSize: 12, color: "#aaa", marginLeft: 10}}>{formatDate(option.date)}</span>
+                  </div>
+                )}
                 placeholder="Ngày xem"
               />
               <Select
@@ -336,7 +351,12 @@ export default function Home() {
                 value={selectDate}
                 options={optionDate}
                 onChange={setSelectDate}
-                components={{ OptionComponent }}
+                getOptionLabel={ option => (
+                  <div style={{display: "flex", flexDirection: "row", alignItems: "center"}}>
+                    <span>{option.label}</span>
+                    <span style={{fontSize: 12, color: "#aaa", marginLeft: 10}}>{formatDate(option.date)}</span>
+                  </div>
+                )}
                 placeholder="Ngày xem"
               />
               <Select
