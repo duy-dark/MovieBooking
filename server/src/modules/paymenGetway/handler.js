@@ -12,10 +12,10 @@ var endpoint = 'https://test-payment.momo.vn/gw_payment/transactionProcessor';
 var hostname = 'https://test-payment.momo.vn';
 var partnerCode = 'MOMOESSA20200911';
 var accessKey = 'X46UaeYeKNwQ1Sg1';
-var serectkey = 'TR1BbUHAIVuhHII1HvuJlzcTgqp1R73E';
+var serectKey = 'TR1BbUHAIVuhHII1HvuJlzcTgqp1R73E';
 var orderInfo = 'pay with MoMo';
 var returnUrl = 'http://localhost:3000/complete?';
-var notifyurl =
+var notifyUrl =
   'https://servermoviebooking.herokuapp.com/api/payment/checkStatusPayment';
 var requestType = 'captureMoMoWallet';
 var extraData = 'merchantName=;merchantId=';
@@ -65,12 +65,12 @@ const momoApi = async (params) => {
       '&returnUrl=' +
       returnUrl +
       '&notifyUrl=' +
-      notifyurl +
+      notifyUrl +
       '&extraData=' +
       extraData;
 
     signature = crypto
-      .createHmac('sha256', serectkey)
+      .createHmac('sha256', serectKey)
       .update(rawSignature)
       .digest('hex');
 
@@ -84,7 +84,7 @@ const momoApi = async (params) => {
       orderId: orderId,
       orderInfo: orderInfo,
       returnUrl: returnUrl,
-      notifyUrl: notifyurl,
+      notifyUrl: notifyUrl,
       extraData: extraData,
       requestType: requestType,
       signature: signature
@@ -111,7 +111,7 @@ const momoApi = async (params) => {
         });
     };
     var url1 = await getPayurl();
-    return resSuccess(url1);
+    return resSuccess({url1: url1, url2: 'ticket_id'});
   } catch (error) {
     throw {status: 400, detail: error};
   }
@@ -152,7 +152,7 @@ const checkStatusMomoApi = async (params) => {
 
     console.log(_signature);
     let newsignature = crypto
-      .createHmac('sha256', serectkey)
+      .createHmac('sha256', serectKey)
       .update(_signature)
       .digest('hex');
     console.log('s2:', newsignature);
