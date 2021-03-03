@@ -11,6 +11,10 @@ const CardFilm = (props) => {
             idFilm: props.film._id,
         })
     }
+    var rate_average = 0
+    if(props.film.rate_average) {
+        rate_average = props.film.rate_average.toFixed(1)
+    }
     return (
         <TouchableOpacity style={styles.touch} onPress={onPress}>
             <View style={styles.content}>
@@ -22,12 +26,12 @@ const CardFilm = (props) => {
                         <Text style={styles.durationText}>{props.film.long_time}p IMDb {props.film.imdb}</Text>
                     </View>
                     <View style={styles.review}>
-                        <Text style={styles.reviewText}>{props.film.rate_average}</Text>
+                        <Text style={styles.reviewText}>{rate_average}</Text>
                         <StarRating 
                             disabled={true}
                             fullStarColor={'orangered'}
                             maxStars={5}
-                            rating={props.film.rate_average / 2}
+                            rating={rate_average / 2}
                             starSize={8}
                         />
                     </View>

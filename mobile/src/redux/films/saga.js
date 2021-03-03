@@ -110,16 +110,17 @@ function* fetchComments(action) {
 }
 
 function* fetchCreateComment(action) {
-  const { navigation } = action
   try {
-    // yield put({ type: FilmsType.LOADING_SHOW });
+    const { navigation } = action
+    yield put({ type: FilmsType.LOADING_SHOW });
     const { payload } = action
     const res = yield call(httpFilms.createComment, payload);
+    console.log(res, "adfaf")
     const { status, data } = res
     if (status === "ok") {
-      // yield put({ type: FilmsType.LOADING_HIDE });
-      yield put({ type: FilmsType.CREATE_COMMENT_SUCCESS, payload: data.comment });
       navigation.goBack()
+      yield put({ type: FilmsType.LOADING_HIDE });
+      yield put({ type: FilmsType.CREATE_COMMENT_SUCCESS, payload: data.comment });
     }
 
   } catch (error) { console.log(error); }

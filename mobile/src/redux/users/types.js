@@ -15,5 +15,7 @@ export default {
   LOGIN_TEST: _prefix + 'LOGIN_TEST',
   LOGIN_TEST_SUCCESS: _prefix + 'LOGIN_TEST_SUCCESS',
   UPDATE_HF: _prefix + 'UPDATE_HF',
-  UPDATE_HF_SUCCESS: _prefix + 'UPDATE_HF_SUCCESS'
+  UPDATE_HF_SUCCESS: _prefix + 'UPDATE_HF_SUCCESS',
+  LOADING_SHOW: _prefix + 'LOADING_SHOW',
+  LOADING_HIDE: _prefix + 'LOADING_HIDE'
 };

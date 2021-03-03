@@ -1,9 +1,10 @@
 import camelcaseKeys from "camelcase-keys";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const setup = (instance) => {
   instance.interceptors.request.use(
-    function (config) {
-      const token = localStorage.getItem("token");
+    async function (config) {
+      const token = await AsyncStorage.getItem("token");
       if (token) {
         config.headers.authorization = `Bearer ${token}`;
       }

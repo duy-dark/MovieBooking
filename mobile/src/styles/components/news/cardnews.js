@@ -15,7 +15,8 @@ const styles = StyleSheet.create({
         resizeMode: "cover"
     },
     content: {
-        margin: 10
+        marginHorizontal: 20,
+        marginVertical: 10
     },
     form: {
         fontSize: 14,

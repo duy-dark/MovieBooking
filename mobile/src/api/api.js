@@ -2,7 +2,7 @@ import axios from "axios";
 import interceptors from "./interceptors";
 
 const Api = axios.create({
-  baseURL: 'https://lit-lowlands-21932.herokuapp.com',
+  baseURL: 'https://servermoviebooking.herokuapp.com',
   withCredentials: false,
   headers: {
     Accept: "application/json",
