@@ -9,11 +9,12 @@ const getList = async (params) => {
       conditions: {...params, is_deleted: false},
       views: {
         _id: 1,
-        title: 1,
-        content: 1,
-        film_id: 1,
-        created_at: 1,
-        updated_at: 1
+        content_web: 1,
+        content_mobile: 1,
+        content_mail: 1,
+        content_sms: 1,
+        customers: 1,
+        type: 1
       }
     };
     let data = await Model.findByLambda(lambda);
@@ -29,11 +30,12 @@ const findById = async (id) => {
       conditions: {_id: id, is_deleted: false},
       views: {
         _id: 1,
-        title: 1,
-        content: 1,
-        film_id: 1,
-        created_at: 1,
-        updated_at: 1
+        content_web: 1,
+        content_mobile: 1,
+        content_mail: 1,
+        content_sms: 1,
+        customers: 1,
+        type: 1
       }
     };
     let data = await Model.findByLambda(lambda);
@@ -46,16 +48,18 @@ const findById = async (id) => {
 const postCreate = async (params) => {
   try {
     let lambda = {
-      title: params.title || undefined,
-      content: params.content || undefined,
-      film_id: params.film_id || undefined,
+      type: params.type || undefined,
+      customers: params.customers || undefined,
+      content_web: params.content_web || undefined,
+      content_mobile: params.content_mobile || undefined,
+      content_mail: params.content_mail || undefined,
+      content_sms: params.content_sms || undefined,
       is_deleted: false,
       created_at: moment.now(),
       updated_at: moment.now()
     };
-    console.log(lambda);
     let data = await Model.createByLambda(lambda);
-    return resSuccess(data[0]);
+    return resSuccess(data);
   } catch (error) {
     throw {status: 400, detail: error};
   }
@@ -66,9 +70,12 @@ const putUpdate = async (id, params) => {
     let lambda = {
       conditions: {_id: id, is_deleted: false},
       params: {
-        title: params.title || undefined,
-        content: params.content || undefined,
-        film_id: params.film_id || undefined,
+        type: params.type || undefined,
+        customers: params.customers || undefined,
+        content_web: params.content_web || undefined,
+        content_mobile: params.content_mobile || undefined,
+        content_mail: params.content_mail || undefined,
+        content_sms: params.content_sms || undefined,
         updated_at: moment.now()
       }
     };

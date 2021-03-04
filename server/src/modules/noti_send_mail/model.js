@@ -2,12 +2,12 @@ const mongoose = require('mongoose');
 
 let schema = new mongoose.Schema(
   {
-    customer_id: require('mongodb').ObjectID,
-    film_id: require('mongodb').ObjectID,
-    film_name: require('mongodb').ObjectID,
-    date_send: String,
-    content: String,
-    is_sent: Boolean,
+    customers: [Object],
+    content_web: String,
+    content_mobile: String,
+    content_mail: String,
+    content_sms: String,
+    type: String,
     is_deleted: Boolean,
     created_at: Date,
     updated_at: Date
@@ -15,7 +15,7 @@ let schema = new mongoose.Schema(
   {versionKey: false}
 );
 
-let Collection = mongoose.model('Notification', schema, 'notifications');
+let Collection = mongoose.model('Noti_sendmails', schema, 'noti_sendmails');
 
 module.exports = {
   findByLambda: async function (lambda) {
