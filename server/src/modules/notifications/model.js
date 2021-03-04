@@ -4,8 +4,10 @@ let schema = new mongoose.Schema(
   {
     customer_id: require('mongodb').ObjectID,
     film_id: require('mongodb').ObjectID,
+    film_name: require('mongodb').ObjectID,
     date_send: String,
     content: String,
+    is_sent: Boolean,
     is_deleted: Boolean,
     created_at: Date,
     updated_at: Date

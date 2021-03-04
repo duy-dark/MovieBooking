@@ -89,7 +89,8 @@ const findById = async (id) => {
         theater: 1
       }
     };
-    let data = await Model.findByLambda_detail(lambda);
+    let time_now = new Date(moment());
+    let data = await Model.findByLambda_detail(lambda, time_now);
     return resSuccess(data[0]);
   } catch (error) {
     throw {status: 400, detail: error};
