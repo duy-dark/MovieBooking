@@ -59,7 +59,7 @@ export default function AddFilm  (props) {
   const onFinish = async(values) => {
     
     values.film.start_date=new Date(start_day)
-   
+
     // categories
     selectCategories=props.categories.filter((item,index)=> values.film.category_ids.includes(index.toString())==true?item:null);
     let idCategories=[]
