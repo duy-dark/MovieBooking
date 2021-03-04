@@ -66,25 +66,16 @@ router.put('/:id', (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.put('/updatetimeend/film_id/:film_id', (req, res, next) => {
-  let long_time = req.body.long_time;
-  let film_id = require('mongodb').ObjectId(req.params.film_id);
-  console.log(film_id);
-  //let film = Model.findById(film_id, id);
+// router.put('/updatetimeend/film_id/:film_id', (req, res, next) => {
+//   let long_time = req.body.long_time;
+//   let film_id = require('mongodb').ObjectId(req.params.film_id);
+//   console.log(film_id);
+//   //let film = Model.findById(film_id, id);
 
-  handler
-    .putUpdateSchedule(film_id, long_time)
-    .then((val) => res.json(val))
-    .catch((err) => next(err));
-});
-// updatetimeend/film_id/:film_id
-// body: {long_time:100}
-
-// films :[];
-
-// film.array.forEach(element => {
-//   let time_end = time_start.add(req.body.long_time, "minutes")
-//   await Model.update({conditions:{film_id:element._id},{params:{time_end:time_end}}})
+//   handler
+//     .putUpdateSchedule(film_id, long_time)
+//     .then((val) => res.json(val))
+//     .catch((err) => next(err));
 // });
 
 router.delete('/:id', (req, res, next) => {

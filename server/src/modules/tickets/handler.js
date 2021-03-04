@@ -55,7 +55,7 @@ const getListDetail = async (params) => {
         is_paid: 1
       }
     };
-    let data = await Model.findByLambda(lambda);
+    let data = await Model.getListDetail(lambda);
     return resSuccess(data);
   } catch (error) {
     throw {status: 400, detail: error};
@@ -122,6 +122,8 @@ const postCreate = async (params) => {
       cost: params.cost || undefined,
       customer_id: params.customer_id || undefined,
       film_schedule_id: params.film_schedule_id || undefined,
+      film_id: params.film_id || undefined,
+      theater_id: params.theater_id || undefined,
       voucher_id: params.voucher_id || undefined,
       seats: params.seats || undefined,
       email: params.email || undefined,
@@ -152,6 +154,8 @@ const putUpdate = async (id, params) => {
         cost: params.cost || undefined,
         customer_id: params.customer_id || undefined,
         film_schedule_id: params.film_schedule_id || undefined,
+        film_id: params.film_id || undefined,
+        theater_id: params.theater_id || undefined,
         voucher_id: params.voucher_id || undefined,
         seats: params.seats || undefined,
         email: params.email || undefined,

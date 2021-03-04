@@ -33,6 +33,8 @@ const momoApi = async (params) => {
       cost: params.cost,
       customer_id: params.customer_id,
       film_schedule_id: params.film_schedule_id,
+      film_id: params.film_id,
+      theater_id: params.theater_id,
       voucher_id: params.voucher_id,
       email: params.email,
       phone_number: params.phone_number,

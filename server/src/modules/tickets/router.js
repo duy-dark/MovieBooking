@@ -22,14 +22,35 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/detail', (req, res, next) => {
+  const {
+    _id = undefined,
+    customer_id = undefined,
+    film_schedule_id = undefined,
+    film_id = undefined,
+    theater_id = undefined,
+    voucher_id = undefined
+  } = req.query;
+
   let conditions = {
-    _id: req.query._id,
+    _id: !_id ? undefined : require('mongodb').ObjectId(req.query._id),
     count: req.query.count,
     booking_time: req.query.booking_time,
     cost: req.query.cost,
-    customer_id: req.query.customer_id,
-    film_schedule_id: req.query.film_schedule_id,
-    voucher_id: req.query.voucher_id,
+    customer_id: !customer_id
+      ? undefined
+      : require('mongodb').ObjectId(req.query.customer_id),
+    film_schedule_id: !film_schedule_id
+      ? undefined
+      : require('mongodb').ObjectId(req.query.film_schedule_id),
+    film_id: !film_id
+      ? undefined
+      : require('mongodb').ObjectId(req.query.film_id),
+    theater_id: !theater_id
+      ? undefined
+      : require('mongodb').ObjectId(req.query.theater_id),
+    voucher_id: !voucher_id
+      ? undefined
+      : require('mongodb').ObjectId(req.query.voucher_id),
     seats: req.query.seats
   };
   conditions = omitBy(conditions, isNil);
