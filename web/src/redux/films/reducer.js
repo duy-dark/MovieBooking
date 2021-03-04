@@ -7,6 +7,7 @@ const initialState = {
   filmsNow: [],
   filmsFuture: [],
   filmsToday: [],
+  filmsLike: [],
   theaters: [],
   filmDetail: {},
   seats: [],
@@ -63,6 +64,9 @@ export default function filmsReducer(state = initialState, action) {
       break;
     case FilmTypes.NEW_DETAIL_SUCCESS:
       newState = Object.assign({}, state, {newDetail: payload})
+      break;
+    case FilmTypes.LIST_FILM_LIKE_SUCCESS:
+      newState = Object.assign({}, state, {filmsLike: payload})
       break;
     default:
       newState = state;

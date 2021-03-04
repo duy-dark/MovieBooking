@@ -8,6 +8,10 @@ const getListFilmNow = () => {
   return Api.get("/api/film/nowshowing").then((res) => res.data);
 };
 
+const getListFilmLike = (params) => {
+  return Api.get(`/api/film/nowshowing?customer_id=${params}`).then((res) => res.data);
+};
+
 const getListFilmFuture = () => {
   return Api.get("/api/film/commingsoon").then((res) => res.data);
 };
@@ -66,5 +70,6 @@ export default {
   paymentMomo,
   createComment,
   getAllNews,
-  getNewDetail
+  getNewDetail,
+  getListFilmLike
 };

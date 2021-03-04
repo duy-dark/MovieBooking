@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import TabListFilm from "../../components/customer/TabsListFilm.js";
+import TabsListFilm from "../../components/customer/TabsListFilm.js";
 import TabsTheater from "../../components/customer/TabsTheater.js";
 import TabsNew from "../../components/customer/TabsNew.js";
 import SliderMovies from "../../components/customer/SliderMovies.js";
-import { getListFilmFuture, getListFilmNow, getListFilmToday, getSearch, getListNew } from "../../redux/films/actions";
+import {
+  getListFilmFuture,
+  getListFilmNow,
+  getListFilmToday,
+  getSearch,
+  getListNew,
+  getListFilmLike
+  } from "../../redux/films/actions";
 import ModalTrailer from "../../components/customer/ModalTrailer";
 import Select, { components } from "react-select";
 import * as moment from "moment";
@@ -24,6 +31,7 @@ export default function Home() {
     dispatch(getListFilmToday());
     dispatch(getSearch());
     dispatch(getListNew());
+
     dispatch(
       updateHeaderFooter({
         header: true,
@@ -35,6 +43,9 @@ export default function Home() {
     const userID = localStorage.getItem("userID");
     if (token && userID) {
       dispatch(getUserInfo({ token, userID }));
+      dispatch(getListFilmLike(userID))
+    } else {
+      dispatch(getListFilmLike('123'))
     }
   // eslint-disable-next-line
   }, []);
@@ -49,6 +60,7 @@ export default function Home() {
   const filmsNow = useSelector((state) => state.films.filmsNow);
   const filmsFuture = useSelector((state) => state.films.filmsFuture);
   const filmsToday = useSelector((state) => state.films.filmsToday);
+  const filmsLike = useSelector((state) => state.films.filmsLike);
   const filmsSlider = filmsNow.slice(0, 4);
   const search = useSelector((state) => state.films.search);
   const storeToken = useSelector((state) => state.users.token);
@@ -232,19 +244,6 @@ export default function Home() {
     }
   }
 
-  // const OptionComponent = (props) => {
-  //   return (
-  //     <components.Option {...props}>
-  //       <div styles={{ display: "flex", flexDirection: "column" }}>
-  //         <div>{props.data.label}</div>
-  //         <div style={{ marginTop: "5px", color: "#ccc" }}>
-  //           {props.data.date}
-  //         </div>
-  //       </div>
-  //     </components.Option>
-  //   );
-  // };
-
   return (
     <div className="home">
       <div className="home__slider">
@@ -390,7 +389,7 @@ export default function Home() {
           </TabPanel>
         </Tabs>
 
-        <TabListFilm id="homeSchedule" filmsNow={filmsNow} filmsFuture={filmsFuture} clickTrailer={showTrailer} />
+        <TabsListFilm id="homeSchedule" filmsLike={filmsLike} filmsNow={filmsNow} filmsFuture={filmsFuture} clickTrailer={showTrailer} />
         { filmsToday.length > 0 && (<TabsTheater id="listTheater" theaters={filmsToday} />) }
         <TabsNew id="listNews" listNews={listNews}/>
       </div>
