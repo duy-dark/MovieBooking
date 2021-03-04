@@ -4,7 +4,6 @@ let schema = new mongoose.Schema(
   {
     code: String,
     count: Number,
-    booking_time: Date,
     cost: Number,
     customer_id: require('mongodb').ObjectID,
     film_schedule_id: require('mongodb').ObjectID,
@@ -62,6 +61,7 @@ module.exports = {
     ]);
   },
   getDetail: async function (lambda) {
+    console.log(lambda.conditions);
     return await Collection.aggregate([
       {$match: lambda.conditions},
       {
@@ -81,7 +81,7 @@ module.exports = {
                 _id: '$$this._id',
                 time_start: '$$this.time_start',
                 time_end: '$$this.time_end',
-                theater: '$$this.theater_id',
+                theater_id: '$$this.theater_id',
                 room_id: '$$this.room_id',
                 film_id: '$$this.film_id'
               }
