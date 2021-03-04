@@ -79,3 +79,23 @@ export function createNewPaper(params) {
     payload: params
   }
 }
+
+export function getListNew(){
+  return {
+    type: FilmTypes.LIST_NEW
+  }
+}
+
+export function getNewDetail(id) {
+  return {
+    type: FilmTypes.NEW_DETAIL,
+    payload: id
+  }
+}
+
+export function updateNewDetail(params) {
+  return {
+    type: FilmTypes.UPDATE_NEW,
+    payload: params
+  }
+}

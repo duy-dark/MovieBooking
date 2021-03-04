@@ -10,29 +10,9 @@ const { Header, Content, Footer } = Layout;
 
 export default function AddNewPage() {
   const dispatch = useDispatch();
-  // const [file, setFile] = useState()
-  // const [listFile, setListFile] = useState([])
-
-  // useEffect(() => {
-  //   console.log('file', file)
-  // }, [file])
-
-  // const uploadFileImage = async (index) => {
-  //   let data = await httpFilm.uploadFile(file)
-  //   if (data.status === 'ok') {
-  //     setFile('')
-  //     document.getElementById("file").value = "";
-  //     setListFile([...listFile, data.data])
-  //   }
-  // }
 
   const [title, setTitle] = useState();
   const [arrContent, setArrContent] = useState([{ text: '', image: ''}]);
-
-  useEffect(() => {
-    console.log(arrContent)
-
-  }, [arrContent])
 
   const changeTextContent = (value, index) => {
     let obj = {...arrContent[index]}
@@ -90,8 +70,10 @@ export default function AddNewPage() {
                 </div>
                 <div className="form-control card-addnew__form-image">
                   <label>Image</label>
-                  <input className="card-addnew__text" type="file" onChange={e => changeFileContent(e.target.files[0], index)}/>
-                  <button>Upload Image</button>
+                  <div className="group-img">
+                    <img src={`${item.image}`} alt=""/>
+                    <input className="card-addnew__text" type="file" onChange={e => changeFileContent(e.target.files[0], index)}/>
+                  </div>
                 </div>
               </div>
             )

@@ -3,7 +3,7 @@ import Login from "./views/login/Login";
 import Home from "./views/home/Home";
 import Film from "./views/Film/showAllFilm/Film"
 import Detail from "./views/Film/editFilm/DetailPopup"
-import NewPaper from "./views/New/NewPaper"
+import NewDetail from "./views/New/NewDetail"
 import ListNewPage from "./views/New/ListNewPage"
 import AddNewPage from "./views/New/AddNewPage"
 
@@ -29,11 +29,6 @@ const routes = [
     component: () => <Detail/>,
   },
   {
-    path: "/new",
-    exact: true,
-    component: () => <NewPaper/>
-  },
-  {
     path: "/new/list",
     exact: true,
     component: () => <ListNewPage/>
@@ -42,6 +37,11 @@ const routes = [
     path: "/new/create",
     exact: true,
     component: () => <AddNewPage/>
+  },
+  {
+    path: "/new/:id",
+    exact: true,
+    component: () => <NewDetail/>
   }
 ];
 

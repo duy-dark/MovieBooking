@@ -31,7 +31,7 @@ export default function MenuHome(props) {
       <Menu.Item key="sub1-1">Danh sách phim   <Link to="/ManageFilm" /></Menu.Item>
           <Menu.Item key="sub1-2">Thể loại</Menu.Item>
           <Menu.Item key="sub1-3">Rạp</Menu.Item>
-          <Menu.Item key="sub1-4"><Link to="/new">New</Link></Menu.Item>
+          <Menu.Item key="sub1-4"><Link to="/new/list">New</Link></Menu.Item>
         </SubMenu>
       
          

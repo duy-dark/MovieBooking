@@ -1,5 +1,6 @@
 import FilmTypes from './types';
 // import update from 'immutability-helper';
+import findIndex from 'lodash/findIndex'
 
 const initialState = {
   status: true,
@@ -13,7 +14,8 @@ const initialState = {
   categories:[],
   newfilm:[],
   filmSchedule:[],
-  listNews: []
+  listNews: [],
+  newDetail: {},
 }
 
 export default function filmsReducer(state = initialState, action) {
@@ -53,6 +55,19 @@ export default function filmsReducer(state = initialState, action) {
         break;
     case FilmTypes.CREATE_NEW_SUCCESS:
       newState = Object.assign({},state,{ listNews: [payload, ...state.listNews]})
+      break;
+    case FilmTypes.LIST_NEW_SUCCESS:
+      newState = Object.assign({},state,{ listNews: [...payload] })
+      break;
+    case FilmTypes.NEW_DETAIL_SUCCESS:
+      newState = Object.assign({},state,{ newDetail: {...payload} })
+      break;
+    case FilmTypes.UPDATE_NEW_SUCCESS:
+      let index = findIndex(state.listNews, item => item._id === payload._id)
+      let arr = [...state.listNews]
+      arr[index] = payload
+      newState = Object.assign({},state,{ listNews: [...arr], newDetail: {...payload} })
+
       break;
     default:
       newState = state;
