@@ -136,7 +136,46 @@ function* fetchPaymentGate(action) {
     const res = yield call(httpFilms.paymentMomo, payload);
     yield put({ type: FilmsType.LOADING_HIDE });
     const { data } = res
-    history.location.href = data
+    history.location.href = data.url1
+  } catch (error) { console.log(error); }
+}
+
+function* fetchListNew(action) {
+  try {
+    yield put({ type: FilmsType.LOADING_SHOW });
+    const res = yield call(httpFilms.getAllNews, {})
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
+      yield put({ type: FilmsType.LIST_NEW_SUCCESS, payload: data });
+    }
+  } catch (error) { console.log(error); }
+}
+
+function* fetchNewDetail(action) {
+  try {
+    const { payload } = action
+    yield put({ type: FilmsType.LOADING_SHOW });
+    const res = yield call(httpFilms.getNewDetail, payload)
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
+      yield put({ type: FilmsType.NEW_DETAIL_SUCCESS, payload: data });
+    }
+  } catch (error) { console.log(error); }
+}
+
+function* fetchListFilmLike(action) {
+  try {
+    const { payload } = action
+    yield put({ type: FilmsType.LOADING_SHOW });
+    const res = yield call(httpFilms.getListFilmLike, payload)
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
+      yield put({ type: FilmsType.LIST_FILM_LIKE_SUCCESS, payload: data });
+    }
+
   } catch (error) { console.log(error); }
 }
 
@@ -180,6 +219,18 @@ function* createComment() {
   yield takeEvery(FilmsType.CREATE_COMMENT, fetchCreateComment);
 }
 
+function* getListNew() {
+  yield takeEvery(FilmsType.LIST_NEW, fetchListNew)
+}
+
+function* getNewDetail() {
+  yield takeEvery(FilmsType.NEW_DETAIL, fetchNewDetail)
+}
+
+function* getListFilmLike() {
+  yield takeEvery(FilmsType.LIST_FILM_LIKE, fetchListFilmLike)
+}
+
 export default function* filmsSaga() {
   yield all([
     postBookingInfo(),
@@ -191,6 +242,9 @@ export default function* filmsSaga() {
     getSearch(),
     getComments(),
     paymentGateway(),
-    createComment()
+    createComment(),
+    getListNew(),
+    getNewDetail(),
+    getListFilmLike()
   ]);
 }

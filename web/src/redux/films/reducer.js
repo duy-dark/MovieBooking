@@ -7,6 +7,7 @@ const initialState = {
   filmsNow: [],
   filmsFuture: [],
   filmsToday: [],
+  filmsLike: [],
   theaters: [],
   filmDetail: {},
   seats: [],
@@ -14,7 +15,9 @@ const initialState = {
   dayOfWeeks:[[], [], [], [], [], [], []],
   comments: [],
   search: null,
-  roomBooking: ''
+  roomBooking: '',
+  listNews: [],
+  newDetail: {}
 }
 
 export default function filmsReducer(state = initialState, action) {
@@ -46,7 +49,7 @@ export default function filmsReducer(state = initialState, action) {
       break;
     case FilmTypes.CREATE_COMMENT_SUCCESS:
       let { comments } = state;
-      newState = Object.assign({}, state, { comments: [payload, ...comments]})
+      newState = Object.assign({}, state, { comments: [payload, ...comments], filmDetail: { ...state.filmDetail, rate_average: payload.rate_average, rate_count: payload.rate_count }})
       break;
     case FilmTypes.LOADING_SHOW:
       let newLoading1 = state.loading + 1
@@ -55,6 +58,15 @@ export default function filmsReducer(state = initialState, action) {
     case FilmTypes.LOADING_HIDE:
       let newLoading2 = state.loading - 1
       newState = Object.assign({}, state, { loading: newLoading2 < 0 ? 0 : newLoading2  });
+      break;
+    case FilmTypes.LIST_NEW_SUCCESS:
+      newState = Object.assign({}, state, {listNews: payload})
+      break;
+    case FilmTypes.NEW_DETAIL_SUCCESS:
+      newState = Object.assign({}, state, {newDetail: payload})
+      break;
+    case FilmTypes.LIST_FILM_LIKE_SUCCESS:
+      newState = Object.assign({}, state, {filmsLike: payload})
       break;
     default:
       newState = state;
