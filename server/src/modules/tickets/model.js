@@ -36,12 +36,12 @@ module.exports = {
   updateByLambda: async function (lambda) {
     return await Collection.updateOne(lambda.conditions, lambda.params);
   },
-  getTicketBySchedule: async function (film_schedule_id) {
+  getTicketBySchedule: async function (conditions) {
     //return await Collection.find();
     return await Collection.aggregate([
       {
         $match: {
-          film_schedule_id: film_schedule_id
+          $and: [conditions]
         }
       },
       {

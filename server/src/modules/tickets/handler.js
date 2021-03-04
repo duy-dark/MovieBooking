@@ -198,7 +198,13 @@ const deleteData = async (id) => {
 
 const getTicketBySchedule = async (film_schedule_id) => {
   try {
-    let data = await Model.getTicketBySchedule(film_schedule_id);
+    console.log('film_schedule_id', film_schedule_id);
+    let conditions = {
+      film_schedule_id: film_schedule_id,
+      is_paid: true,
+      is_deleted: false
+    };
+    let data = await Model.getTicketBySchedule(conditions);
     let arr = data.map((item) => item.seats);
 
     let lambda = {

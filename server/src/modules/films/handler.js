@@ -337,11 +337,15 @@ const getNowShowing = async (customer_id) => {
 
     let data;
     if (customer_id) {
-      let customer = await require('../customers/model').findByLambda({
-        conditions: {_id: require('mongodb').ObjectId(customer_id)}
-      });
-      lambda.categories = customer[0].favorite_ids;
-      data = await Model.getNowShowing_Favourite(lambda);
+      if (customer_id == 123) {
+        data = [];
+      } else {
+        let customer = await require('../customers/model').findByLambda({
+          conditions: {_id: require('mongodb').ObjectId(customer_id)}
+        });
+        lambda.categories = customer[0].favorite_ids;
+        data = await Model.getNowShowing_Favourite(lambda);
+      }
     } else {
       data = await Model.getNowShowing(lambda);
     }
@@ -393,11 +397,15 @@ const getCommingSoon = async (customer_id) => {
 
     let data;
     if (customer_id) {
-      let customer = await require('../customers/model').findByLambda({
-        conditions: {_id: require('mongodb').ObjectId(customer_id)}
-      });
-      lambda.categories = customer[0].favorite_ids;
-      data = await Model.getNowShowing_Favourite(lambda);
+      if (customer_id == 123) {
+        data = [];
+      } else {
+        let customer = await require('../customers/model').findByLambda({
+          conditions: {_id: require('mongodb').ObjectId(customer_id)}
+        });
+        lambda.categories = customer[0].favorite_ids;
+        data = await Model.getNowShowing_Favourite(lambda);
+      }
     } else {
       data = await Model.getNowShowing(lambda);
     }
