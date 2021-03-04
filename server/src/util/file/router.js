@@ -8,11 +8,11 @@ let diskStorage = multer.diskStorage({
     callback(null, 'uploads');
   },
   filename: (req, file, callback) => {
-    let math = ['image/png', 'image/jpeg'];
-    if (math.indexOf(file.mimetype) === -1) {
-      let errorMess = `The file <strong>${file.originalname}</strong> is invalid. Only allowed to upload image jpeg or png.`;
-      return callback(errorMess, null);
-    }
+    // let math = ['image/png', 'image/jpeg'];
+    // if (math.indexOf(file.mimetype) === -1) {
+    //   let errorMess = `The file <strong>${file.originalname}</strong> is invalid. Only allowed to upload image jpeg or png.`;
+    //   return callback(errorMess, null);
+    // }
     let filename = `${file.originalname}`;
     callback(null, filename);
   }
@@ -36,10 +36,10 @@ router.post('/upload', (req, res, next) => {
         status: 'error',
         data: {
           error_message: {
-            message: "không có file"
+            message: 'không có file'
           }
         }
-      })
+      });
     }
   });
 });

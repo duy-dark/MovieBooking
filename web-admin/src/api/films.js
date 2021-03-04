@@ -39,7 +39,9 @@ const addNewFilm= (params) =>{
 const getFilmSchedule = (params)=>{
   return Api.get(`api/film_schedule?film_id=${params}`).then((res) => res.data)
 }
-
+const updateFilmSchedule = (params,data)=>{
+  return Api.put(`api/film_schedule/${params}`,data).then((res) => res.data)
+}
 const uploadFile = (file)=>{
   let formData = new FormData();
   formData.append('file', file)
@@ -96,5 +98,6 @@ export default {
   getListNewpapers,
   getListNews,
   getNewDetail,
-  updateNewDetail
+  updateNewDetail,
+  updateFilmSchedule
 };

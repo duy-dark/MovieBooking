@@ -5,15 +5,17 @@ const moment = require('moment');
 const {omitBy, isNil} = require('lodash');
 
 router.get('/nowshowing', (req, res, next) => {
+  let customer_id = req.query.customer_id;
   handler
-    .getNowShowing()
+    .getNowShowing(customer_id)
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });
 
 router.get('/commingsoon', (req, res, next) => {
+  let customer_id = req.query.customer_id;
   handler
-    .getCommingSoon()
+    .getCommingSoon(customer_id)
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });

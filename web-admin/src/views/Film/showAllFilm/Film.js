@@ -5,15 +5,20 @@ import Detail from "../editFilm/DetailPopup"
 import AddNewFilm from "../addFilm/AddFilmPopUp"
 import Schedule from "../editSchedule/SchedulePopup"
 import { useSelector, useDispatch } from "react-redux";
-import {  getListFilmNow,getCategories } from "../../../redux/films/actions";
-
+import {  getListFilmNow,getCategories ,getTheaters} from "../../../redux/films/actions";
+import AddSchedulePopup from "../addSchedule/addSchedulePopup"
 export default function Film(){
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getListFilmNow());
     dispatch((getCategories()))
+    dispatch((getTheaters()))
   }, []);
+
+ 
+  
+  const theaters = useSelector((state) => state.films.theaters);
   const filmsNow = useSelector((state) => state.films.filmsNow);
   const categories = useSelector((state) => state.films.categories);
   const data = filmsNow.map((item,index)=>({...item, key: index}))
@@ -32,7 +37,7 @@ const columns = [
       <Space size="middle">
        <Detail index={index} detail={record} />
         <a>Delete</a>
-       <Schedule schedule={record}/>
+       <Schedule schedule={record} theaters={theaters}/>
         <a>Add Schedules</a>
       </Space>
     ),

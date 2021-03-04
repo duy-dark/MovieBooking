@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
-import { Table, Input, InputNumber, Popconfirm, Form, Typography, Button ,Select} from 'antd';
+import { Table, Input, InputNumber, Form, TimePicker ,DatePicker, Button ,Select} from 'antd';
 import Api from "../../../api/api"
-import { useDispatch , useSelector} from "react-redux";
 
+import moment from 'moment';
 import EditSchedulePopup from './EditSchedulePopup'
-
+import { useSelector, useDispatch } from "react-redux";
+import { getFilmSchedules } from "../../../redux/films/actions";
 const { Option } = Select;
 
 
@@ -50,22 +51,37 @@ export default function ShowSchedule  (props) {
   const [form] = Form.useForm();
   const [data, setData] = useState();
   const [editingKey, setEditingKey] = useState('');
+  const dispatch = useDispatch();
+ 
+  useEffect(() => {
+   
+    dispatch((getFilmSchedules(props.idFilm)))
+  }, []);
+  const filmschedules = useSelector((state) => state.films.filmSchedule);
+ 
   let data1 =[]
- props.filmschedule.map((item,index)=>{
+
+  filmschedules.map((item,index)=>{
     if (item.theater) {
+     
       const key=index;
-      const timestart=new Date(item.time_start);
-      const timeend=new Date(item.time_end);
-      const time_start = timestart.getHours()+":"+timestart.getMinutes();
-      const time_end =timeend.getHours()+":"+timeend.getMinutes();
+      const timestart=moment(item.time_start);
+      const timeend=moment(item.time_end);
+      const time_start = timestart.hour()+":"+timestart.minute();
+      const time_end =timeend.hour()+":"+timeend.minute();
       const room = item.room.name;
       let theater =item.theater.name;
-      const id=item._id;
-   const date = timestart.getDate()+'-'+timestart.getMonth()+'-'+timestart.getFullYear();
-   data1.push({"key":key,"Time_Start":time_start,"Time_End":time_end,"Room":room,"Theater":theater,"Date":date,"id":id})
+      const filmid=item.film_id;
+      const roomid=item.room_id;
+      const theaterid=item.theater_id;
+      const filmscheduleid=item._id;
+   const date = timestart.format('YYYY-MM-DD')
+    
+   data1.push({"key":key,"Time_Start":time_start,"Time_End":time_end,"Room":room,"Theater":theater,"Date":date,"Filmid":filmid,
+               "Roomid":roomid,"Theaterid":theaterid,"FilmScheduleid":filmscheduleid })
     }
-
  })
+
  useEffect(()=>{
     
   setData(data1);
@@ -76,7 +92,7 @@ const updateScheulde =()=>{
   data.map((item,index)=>{
     if(item.Time_Start!=data1[index].Time_Start||item.Time_End!=data1[index].Time_End||
       item.Room!=data1[index].Room||item.Date!=data1[index].Date){
-        props.filmschedule.map(itemchange=>itemchange._id==item.id?console.log(item):false)
+        filmschedules.map(itemchange=>itemchange._id==item.id?console.log(item):false)
       
       }
   })
@@ -92,19 +108,21 @@ const updateScheulde =()=>{
       title: 'Theater',
       dataIndex: 'Theater',
       width: '25%',
-      
+     
     },
     {
-      title: 'Time_Start (24h)',
+      title: 'Time_Start ',
       dataIndex: 'Time_Start',
       width: '20%',
-      editable: true,
+      editable:false,
+    render: (text, record, index) =>  {return <TimePicker value={moment(text,"HH:mm:ss")}  disabled />},
     },
     {
-      title: 'Time_End (24h)',
+      title: 'Time_End ',
       dataIndex: 'Time_End',
       width: '20%',
-      editable: true,
+      editable:false,
+      render: (text, record, index) =>  {return <TimePicker value={moment(text,"HH:mm:ss")} disabled  />}
     },
     {
       title: 'Room',
@@ -113,10 +131,10 @@ const updateScheulde =()=>{
       editable: true,
     },
     {
-      title: 'Date (ddmmyyyy)',
+      title: 'Date ',
       dataIndex: 'Date',
       width: '30%',
-      editable: true,
+      render: (text, record, index) =>  {return <DatePicker value={moment(text,"YYYY-MM-DD")}  disabled />},
     },
   
     {
@@ -126,7 +144,7 @@ const updateScheulde =()=>{
      
       
         return (
-         <EditSchedulePopup schedule={record}/>
+         <EditSchedulePopup schedule={record} theaters={props.theaters} longtime={props.longtime}/>
         )
       },
     },
@@ -156,7 +174,7 @@ const updateScheulde =()=>{
           },
         }}
         bordered
-        dataSource={data}
+        dataSource={data1}
         columns={mergedColumns}
         rowClassName="editable-row"
         pagination={false}

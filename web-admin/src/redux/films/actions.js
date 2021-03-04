@@ -68,6 +68,13 @@ export function getFilmSchedules(info) {
     payload: info,
   };
 }
+export function updateFilmSchedules(id,data) {
+  return {
+    type: FilmTypes.UPDATE_FILM_SCHEDULE,
+    payload: data,
+    id:id
+  };
+}
 export function getTheaters(){
   return {
     type: FilmTypes.LIST_THEATER,

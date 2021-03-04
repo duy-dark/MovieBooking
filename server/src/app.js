@@ -86,10 +86,10 @@ app.use((req, res) => {
 // app.use() error
 
 // call connection socket
-// io.on('connection', (socket) => connection(socket, io));
+io.on('connection', (socket) => connection(socket, io));
 
 const startSever = async () => {
-  app.listen(port, async () => {
+  server.listen(port, async () => {
     console.log(
       `QLBH API is running on port ${port} - http://localhost:${port}`
     );
