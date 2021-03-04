@@ -1,3 +1,5 @@
+const Notification = require('../../modules/notifications/handler');
+
 let seatsOfRooms = {};
 let roomOfClient = {};
 
@@ -14,8 +16,14 @@ const arraySeats = (Room) => {
 const connection = (socket, io) => {
   console.log('connection by ' + socket.id);
 
+  socket.on('get_notifications', async (user_id) => {
+    console.log('socket_id info :', socket.id, user_id);
+  });
+
   socket.on('john_room', async (room) => {
-    console.log(room);
+    console.log('room socketid', socket.id);
+    console.log('room socketid', socket.id);
+
     if (!(room.name in seatsOfRooms)) {
       seatsOfRooms[room.name] = {};
     }
@@ -48,8 +56,6 @@ const connection = (socket, io) => {
     console.log('seatsOfRooms[room_name]', arraySeats(seatsOfRooms[room_name]));
     io.in(room_name).emit('seats_existed', arraySeats(seatsOfRooms[room_name]));
   });
-
-  socket.on('get_notifications', async (user_id) => {});
 };
 
 module.exports = connection;
