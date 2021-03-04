@@ -2,6 +2,10 @@ html, body, #root, .ant-layout {
   height: 100%;
 }
 
+.layout {
+  overflow-y: scroll;
+}
+
 .left-sidebar {
   height: auto;
   background-color:#fff;

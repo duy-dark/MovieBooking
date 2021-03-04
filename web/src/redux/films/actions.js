@@ -25,6 +25,13 @@ export function postBookingInfo(bookingInfo, history) {
   };
 }
 
+export function getListFilmLike(id) {
+  return {
+    type: FilmTypes.LIST_FILM_LIKE,
+    payload: id,
+  }
+}
+
 export function getFilmDetails(info) {
   return {
     type: FilmTypes.FILM_DETAIL,
@@ -66,3 +73,17 @@ export function paymentGateway({ params, history }) {
     history: history
   }
 }
+
+export function getListNew() {
+  return {
+    type: FilmTypes.LIST_NEW
+  }
+}
+
+export function getNewDetail(id) {
+  return {
+    type: FilmTypes.NEW_DETAIL,
+    payload: id
+  }
+}
+
