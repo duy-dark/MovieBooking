@@ -30,7 +30,7 @@ export default function MenuHome(props) {
         <SubMenu key="sub1" icon={<AppstoreOutlined />} title="Phim">
       <Menu.Item key="sub1-1">Danh sách phim   <Link to="/ManageFilm" /></Menu.Item>
           <Menu.Item key="sub1-2">Thể loại</Menu.Item>
-          <Menu.Item key="sub1-3">Rạp</Menu.Item>
+          <Menu.Item key="sub1-3"><Link to="/theater/list">Rạp</Link></Menu.Item>
           <Menu.Item key="sub1-4"><Link to="/new/list">New</Link></Menu.Item>
         </SubMenu>
       
