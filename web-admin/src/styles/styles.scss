@@ -21,3 +21,65 @@ html, body, #root, .ant-layout {
     align-items: center;
   }
 }
+
+::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #D62929;
+}
+
+.btn {
+  font-size: 14px;
+  color: #CADEF9;
+  border: 1px solid #949494;
+  border-radius: 4px;
+  text-align: center;
+  background: 0 0;
+  padding: 7px 25px;
+  transition: all .2s;
+  display: block;
+  transition: all .3s ease-in-out;
+  color: #000;
+  box-shadow: 0 0 10px rgba(0,0,0,.3);
+  cursor: pointer;
+
+
+  &:not(:last-child) {
+    margin-right: 20px;
+  }
+
+  &.btn-submit {
+    &:hover {
+      background-color: #fb4226;
+      border-color: #fb4226;
+      color: #fff!important;
+    }
+  }
+
+  &.btn-cancel {
+    &:hover {
+      background-color: #7AB4ED;
+      border-color: #7AB4ED;
+      color: #fff!important;
+    }
+  }
+
+  &.btn-edit {
+    &:hover {
+      background-color: #D1D4D8;
+      border-color: #D1D4D8;
+      color: #000!important;
+    }
+  }
+
+  &:focus {
+    outline: none;
+  }
+}

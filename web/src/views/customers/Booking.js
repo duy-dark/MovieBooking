@@ -7,6 +7,10 @@ import { getFilmDetails, getSeats, paymentGateway } from "../../redux/films/acti
 // import { getToken } from "../../redux/users/selector";
 import * as moment from "moment"
 import { getUserInfo } from "../../redux/users/actions";
+import io from 'socket.io-client';
+import Countdown from 'react-countdown';
+
+// const POINT = 'https://servermoviebooking.herokuapp.com/';
 
 const SeatEl = (props) => {
   const [status, setStatus] = useState();
@@ -84,8 +88,10 @@ function validateEmail(email) {
 }
 
 const words = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-const Completionist = () => <span>You are good to go!</span>;
+const Completionist = () => <span>Bạn đã hết thời gian!</span>;
 export default function Booking(props) {
+  // const socket = io(POINT);
+
   const location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -204,6 +210,23 @@ export default function Booking(props) {
     })
   }, [seats])
 
+  const renderer = ({ hours, minutes, seconds, completed }) => {
+    if (completed) {
+      // Render a completed state
+      return <Completionist />;
+    } else {
+      // Render a countdown
+      return (
+        <div style={{display: "flex", flexDirection: "column"}}>
+          <span style={{fontSize: 10, color: '#9b9b9b'}}>thời gian giữ ghế</span>
+          <div style={{fontSize: 29, color: '#fb4226', fontWeight: 'bold'}}>
+            <span>{'0' + minutes}</span>:<span>{seconds < 10 ? '0' + seconds : seconds}</span>
+          </div>
+        </div>
+      );
+    }
+  };
+
   useEffect(() => {
     const info = {
       id: id
@@ -217,6 +240,8 @@ export default function Booking(props) {
     } else {
       history.push("/login")
     }
+
+    // socket.emit('join', { room: params, user: user })
   }, [])
 
   const formatDate = (date) => {
@@ -235,7 +260,10 @@ export default function Booking(props) {
             </div>
           </div>
           <div className="booking-content__countdown">
-
+            <Countdown
+              date={Date.now() + 300000}
+              renderer={renderer}
+            />
           </div>
         </div>
         <div className="booking-content__screen">

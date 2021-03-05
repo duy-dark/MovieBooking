@@ -61,13 +61,27 @@ const getListNewpapers = (params) => {
   return Api.get('').then((res) => res.data)
 }
 
+const getTheater = ()=>{
+  return Api.get(`/api/theater`).then((res)=>res.data)
+}
+
+const getListNews = () => {
+  return Api.get(`/api/news`).then(res => res.data)
+}
+
+const getNewDetail = (params) => {
+  return Api.get(`/api/news/${params}`).then(res => res.data)
+}
+
+const updateNewDetail = (params) => {
+  return Api.put(`/api/news/${params.id}`, params).then(res => res.data)
+}
+
+
 
 // eslint-disable-next-line import/no-anonymous-default-export
-const getTheater = ()=>{
-  return Api.get(`api/theater`).then((res)=>res.data)
-}
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
-  
   postBookingInfo,
   getDetail,
   getListFilmNow,
@@ -82,5 +96,8 @@ export default {
   uploadFile,
   createNewPaper,
   getListNewpapers,
+  getListNews,
+  getNewDetail,
+  updateNewDetail,
   updateFilmSchedule
 };
