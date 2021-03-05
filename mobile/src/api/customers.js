@@ -10,7 +10,19 @@ const getUserInfo = (params) => {
   );
 };
 
+const getCategories = () => {
+  return Api.get(`api/customer/get_categories`).then((res) => res.data);
+}
+
+const postCategories = (params) => {
+  return Api.post(`/api/customer/post_categories_favorite`, params).then(
+    (res) => res.data
+  );
+}
+
 export default {
   login,
-  getUserInfo
+  getUserInfo,
+  getCategories,
+  postCategories
 };

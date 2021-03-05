@@ -5,9 +5,11 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import moment from 'moment'
 import SeatRow from '../../components/seat/SeatRow'
 import { useSelector, useDispatch } from "react-redux";
-import { getSeats } from '../../redux/films/actions'
+import { getSeats, getTicketDetail, paymentGateway } from '../../redux/films/actions'
 import styles2 from '../../styles/components/seat/seat'
 import CountDown from 'react-native-countdown-component';
+import * as Linking from 'expo-linking';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const words = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 const validateEmail = (email) => {
@@ -40,6 +42,7 @@ const BookTicketScreen = (props) => {
 
     const dispatch = useDispatch()
     useEffect(() => {
+        // alert("Hello")
         dispatch(getSeats(film_schedule._id))
     }, [])
     const arrSeatsModel = useSelector((state) => state.films.seats)
@@ -126,9 +129,25 @@ const BookTicketScreen = (props) => {
     useEffect(() => {
         setDisabledBtn(!(seats.length > 0 && !isSelectBug && validateEmail(email) && phone && payment));
     }, [seats, email, phone, payment, isSelectBug])
+    
+    const user = useSelector(state => state.users.user)
+    const bookingTicket = (navigation) => {
+        const bookingInfo = {
+          count: seats.length,
+          cost: seats.length * 80000,
+          customer_id: user._id,
+          film_schedule_id: film_schedule._id,
+          seats: seats,
+          email: email,
+          phone_number: phone,
+          payment: "momo",
+          voucher_id: null
+        };
+        dispatch(paymentGateway({ params: bookingInfo, Linking, navigation }));
+        setDisabledBtn(true);
+      };
 
     const indicator = useSelector((state) => state.films.loading)
-    
     if(indicator) return <ActivityIndicator style={{alignSelf: 'center', marginTop: 200}} size="large" color="orangered" /> 
     else return (
         <ScrollView style={styles.container}> 
@@ -241,7 +260,7 @@ const BookTicketScreen = (props) => {
                 <Text style={styles.noteText}>Khi được yêu cầu, vui lòng xuất trình giấy tờ tùy thân để chứng thực độ tuổi khi xem phim</Text> 
             </View>
             <View style={{padding: 10}}>
-                <Button disabled={disabledBtn} title="Mua vé" color="limegreen" onPress={() => alert("Mua vé")}/>
+                <Button disabled={disabledBtn} title="Mua vé" color="limegreen" onPress={() => bookingTicket(props.navigation)}/>
             </View>
         </ScrollView>
     )

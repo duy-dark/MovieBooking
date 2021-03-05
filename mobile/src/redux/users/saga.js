@@ -83,6 +83,37 @@ function* fetchLoginTest(action) {
   }
 }
 
+function* fetchCategories() {
+  try {
+    yield put({ type: UsersTypes.LOADING_SHOW });
+    const res = yield call(httpUser.getCategories, {});
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: UsersTypes.LOADING_HIDE });
+      yield put({ type: UsersTypes.GET_CATEGORIES_SUCCESS, payload: data });
+    }
+
+  } catch (error) { console.log(error); }
+}
+
+function* fetchPostCategories(action) {
+  try {
+    yield put({ type: UsersTypes.LOADING_SHOW });
+    const { payload, navigation } = action
+    const res = yield call(httpUser.postCategories, payload);
+    const { status, data } = res
+    if (status === "ok") {
+    navigation.navigate("MainTabs")
+    yield put({ type: UsersTypes.LOADING_HIDE });
+    yield put({ type: UsersTypes.POST_CATEGORIES_SUCCESS});
+    // alert("LoginScreen")
+    }
+  } catch (err) {
+    throw err;
+  }
+}
+
+
 function* signIn() {
   yield takeEvery(UsersTypes.LOGIN, fetchLogin);
 }
@@ -111,6 +142,14 @@ function* updateHF() {
   yield takeEvery(UsersTypes.UPDATE_HF, fetchUpdateHF);
 }
 
+function* getCategories() {
+  yield takeEvery(UsersTypes.GET_CATEGORIES, fetchCategories);
+}
+
+function* postCategories() {
+  yield takeEvery(UsersTypes.POST_CATEGORIES, fetchPostCategories);
+}
+
 export default function* usersSaga() {
   yield all([
     signIn(),
@@ -120,5 +159,7 @@ export default function* usersSaga() {
     signOut(),
     signTest(),
     updateHF(),
+    getCategories(),
+    postCategories()
   ]);
 }

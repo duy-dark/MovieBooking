@@ -40,6 +40,23 @@ const search = () => {
   return Api.get('/api/film_schedule/nowshowing').then(res => res.data)
 }
 
+const getTickets = (id_user) => {
+  return Api.get(`/api/user/${id_user}/tickets/`)
+}
+
+const getListFilmFutureFavorite = (id_user) => {
+  return Api.get(`/api/film/commingsoon/${id_user}`).then((res) => res.data);
+}
+
+const paymentMomo = (params) => {
+  return Api.post('/api/payment/momoPayment', params).then(res => res.data)
+}
+
+const getTicketDetail = (id_ticket) => {
+  // alert(id_ticket)
+  return Api.get(`api/ticket/${id_ticket}/detail`).then(res => res.data)
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getListFilmShowing,
@@ -51,5 +68,9 @@ export default {
   getSeats,
   search,
   getComments,
-  createComment
+  createComment,
+  getTickets,
+  getListFilmFutureFavorite,
+  paymentMomo,
+  getTicketDetail
 };

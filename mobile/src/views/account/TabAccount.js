@@ -10,7 +10,7 @@ const TabAccount = (props) => {
     const user = useSelector((state) => state.users.user)
     const logoUni = { uri: "https://truyenthongdaiphuc.files.wordpress.com/2015/09/dai_hoc_khoa_hoc_tu_nhien_dhqg-hcm.png" }
     const logo = { uri: "https://s3img.vcdn.vn/123phim/2020/03/d1e6bd560daa9e20131ea8a0f62e87f8.png" }
-    const avatar = user.avatar ? user.avatar : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
+    // const avatar = user.avatar ? user.avatar : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
     const dispatch = useDispatch()
     const logOut = () => {
         dispatch(signOut(props.navigation))
@@ -19,7 +19,7 @@ const TabAccount = (props) => {
     if (user) return (
         <ScrollView style={styles.container}>
             <TouchableOpacity style={styles.user}>
-                <Image style={styles.avatar} source={{uri: avatar}} />
+                <Image style={styles.avatar} source={{uri: user.avatar}} />
                 <View style={{flex: 1}}>
                     <Text style={styles.name}>{user.name}</Text>
                     {/* <Text style={styles.note}>Chạm để thêm số điện thoại</Text> */}

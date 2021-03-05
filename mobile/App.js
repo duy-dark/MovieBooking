@@ -7,6 +7,8 @@ import MainTabs from './src/views/main/MainTabs'
 import { Provider } from 'react-redux'
 import store from './src/redux/stores'
 import 'localstorage-polyfill';
+import SelectCategories from './src/views/categories/SelectCategories'
+// import Momo from './Momo'
 
 
 const Stack = createStackNavigator();
@@ -20,9 +22,13 @@ export default function App() {
             <Stack.Screen name="LoginScreen" component={LoginScreen}/>
             <Stack.Screen name="MainTabs" component={MainTabs} 
             options={{headerLeft: false}}/>
+            <Stack.Screen name="SelectCategories" component={SelectCategories}
+            options={{headerLeft: false}}/>
           </Stack.Navigator>
       </NavigationContainer>
+      {/* <SelectCategories /> */}
     </Provider>
+    // <Momo />
   );
 }
 

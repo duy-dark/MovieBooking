@@ -7,6 +7,8 @@ import TabInfomation from '../film/TabInfomation';
 import CommentScreen from '../comment/CommentScreen';
 import ReviewFilmScreen from '../comment/ReviewFilmScreen';
 import NewsDetails from '../../components/news/NewsDetails';
+import Screen from '../screen/Screen';
+import { View, Button } from 'react-native'
 
 const Stack = createStackNavigator();
 const HomeStack = () => {
@@ -49,6 +51,13 @@ const HomeStack = () => {
                 options={{ 
                     title: "Nội dung tin tức"
                 }} 
+            />
+            <Stack.Screen name="Screen" component={Screen}
+                options={{
+                    title: "Tình trạng đặt vé",
+                    headerLeft: null,
+                    headerRight: () => <View style={{marginRight: 10}}><Button title="Về Home"/></View>
+                }}
             />
         </Stack.Navigator>
     )

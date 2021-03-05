@@ -17,14 +17,6 @@ export function getListFilmToday() {
   }
 }
 
-export function postBookingInfo(bookingInfo, history) {
-  return {
-    type: FilmTypes.POST_BOOKING_INFO,
-    payload: bookingInfo,
-    history,
-  };
-}
-
 export function getFilmDetails(info) {
   return {
     type: FilmTypes.FILM_DETAIL,
@@ -57,5 +49,49 @@ export function createComment({params, navigation}) {
     type: FilmTypes.CREATE_COMMENT,
     payload: params,
     navigation: navigation
+  }
+}
+
+export function getTickets(id_user) {
+  return {
+    type: FilmTypes.GET_TICKETS,
+    payload: id_user
+  }
+}
+
+export function getListFilmFutureFavorite(id_user) {
+  return {
+    type: FilmTypes.LIST_FILM_FUTURE_FAVORITE,
+    payload: id_user
+  }
+}
+
+export function goBack() {
+  return {
+    type: FilmTypes.GO_BACK
+  }
+}
+
+export function postBookingInfo(bookingInfo) {
+  return {
+    type: FilmTypes.POST_BOOKING_INFO,
+    payload: bookingInfo
+  };
+}
+
+export function paymentGateway({ params, Linking, navigation }) {
+  return {
+    type: FilmTypes.PAYMENT_MOMO,
+    payload: params,
+    Linking: Linking,
+    navigation: navigation
+  }
+}
+
+export function getTicketDetail(id_ticket) {
+  // alert(id_ticket)
+  return {
+    type: FilmTypes.GET_TICKETDETAIL,
+    payload: id_ticket
   }
 }

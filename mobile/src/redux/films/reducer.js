@@ -3,7 +3,7 @@ import FilmTypes from './types';
 
 const initialState = {
   status: true,
-  loading: true,
+  loading: false, 
   filmsNow: [],
   filmsFuture: [],
   filmsToday: [],
@@ -14,7 +14,10 @@ const initialState = {
   dayOfWeeks:[[], [], [], [], [], [], []],
   comments: [],
   search: null,
-  roomBooking: ''
+  roomBooking: '',
+  tickets: [],
+  filmsFutureFavorie: [],
+  ticketDetail: {}
 }
 
 export default function filmsReducer(state = initialState, action) {
@@ -53,6 +56,14 @@ export default function filmsReducer(state = initialState, action) {
       break;
     case FilmTypes.LOADING_HIDE:
       newState = Object.assign({}, state, { loading: false });
+      break;
+    case FilmTypes.GET_TICKETS:
+      newState = Object,assign({}, state, { tickets: payload});
+    case FilmTypes.LIST_FILM_FUTURE_FAVORITE_SUCCESS:
+      newState = Object.assign({}, state, { filmsFutureFavorite: payload })
+      break;
+    case FilmTypes.GET_TICKETDETAIL_SUCCESS:
+      newState = Object.assign({}, state, { ticketDetail: payload })
       break;
     default:
       newState = state;

@@ -1,6 +1,40 @@
 import { all, takeEvery, put, call } from "redux-saga/effects";
 import FilmsType from "./types";
 import httpFilms from "../../api/films";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch } from 'react-redux'
+
+
+const storeData = async (storage, value) => {
+  try {
+    await AsyncStorage.setItem(storage, value)
+  } catch (e) {
+    // saving error
+  }
+}
+
+const removeData = async (storage) => {
+  try {
+      await AsyncStorage.removeItem(storage);
+      return true;
+  }
+  catch(exception) {
+      return false;
+  }
+}
+
+async function getDataUrl(navigation) {
+  // alert(url)
+  try {
+    const dispatch = useDispatch()
+    const url = await AsyncStorage.getItem("url")
+    if(url) {
+      dispatch(getTicketDetail(url, navigation))
+    }
+  } catch(e) {
+    // error reading value
+  }
+}
 
 function* fetchPostBookingInfo(action) {
   try {
@@ -111,14 +145,12 @@ function* fetchComments(action) {
 
 function* fetchCreateComment(action) {
   try {
-    const { navigation } = action
     yield put({ type: FilmsType.LOADING_SHOW });
-    const { payload } = action
+    const { payload, navigation } = action
     const res = yield call(httpFilms.createComment, payload);
-    console.log(res, "adfaf")
     const { status, data } = res
     if (status === "ok") {
-      navigation.goBack()
+      navigation.push("TabComments") //fix navigation comment
       yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.CREATE_COMMENT_SUCCESS, payload: data.comment });
     }
@@ -126,6 +158,63 @@ function* fetchCreateComment(action) {
   } catch (error) { console.log(error); }
 }
 
+function* fetchGetTickets(action) {
+  try {
+    yield put({ type: FilmsType.LOADING_SHOW });
+    const { payload } = action
+    const res = yield call(httpFilms.getTickets, payload)
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({type: FilmsType.LOADING_HIDE})
+      yield put({type: FilmsType.GET_TICKETS_SUCCESS, payload: data})
+    }
+  }
+  catch (error) { console.log(error);}
+}
+
+function* fetchListFilmsFutureFavorite() {
+  try {
+    yield put({ type: FilmsType.LOADING_SHOW });
+    const res = yield call(httpFilms.getListFilmFutureFavorite, {});
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
+      yield put({ type: FilmsType.LIST_FILM_FUTURE_FAVORITE_SUCCESS, payload: data });
+    }
+
+  } catch (error) { console.log(error); }
+}
+
+function* fetchPaymentGate(action) {
+  try {
+    yield put({ type: FilmsType.LOADING_SHOW });
+    const { payload, Linking, navigation } = action
+    const res = yield call(httpFilms.paymentMomo, payload);
+    yield put({ type: FilmsType.LOADING_HIDE });
+    const { data } = res
+    // storeData("url",data.url2)
+    // getDataUrl(navigation)
+    Linking.openURL(data.url1)
+    navigation.navigate("Screen", {
+      url: data.url2
+    })
+  } catch (error) { console.log(error); }
+}
+
+function* fetchGetTicketDetail(action) {
+  try {
+    yield put({ type: FilmsType.LOADING_SHOW });
+    const { payload } = action
+    // alert(payload)
+    const res = yield call(httpFilms.getTicketDetail, payload);
+    const { status, data } = res
+    if (status === "ok") {
+      // removeData("url")
+      yield put({ type: FilmsType.LOADING_HIDE });
+      yield put({ type: FilmsType.GET_TICKETDETAIL_SUCCESS, payload: data });
+    }
+  } catch (error) { console.log(error); }
+}
 
 function* postBookingInfo() {
   yield takeEvery(FilmsType.POST_BOOKING_INFO, fetchPostBookingInfo);
@@ -163,6 +252,21 @@ function* createComment() {
   yield takeEvery(FilmsType.CREATE_COMMENT, fetchCreateComment);
 }
 
+function* getTickets() {
+  yield takeEvery(FilmsType.GET_TICKETS, fetchGetTickets);
+}
+
+function* getFilmsFutureFavorite() {
+  yield takeEvery(FilmsType.LIST_FILM_FUTURE_FAVORITE, fetchListFilmsFutureFavorite);
+}
+
+function* paymentGateway() {
+  yield takeEvery(FilmsType.PAYMENT_MOMO, fetchPaymentGate);
+}
+
+function* getTicketDetail() {
+  yield takeEvery(FilmsType.GET_TICKETDETAIL, fetchGetTicketDetail)
+}
 
 export default function* filmsSaga() {
   yield all([
@@ -174,6 +278,10 @@ export default function* filmsSaga() {
     getSeats(),
     getSearch(),
     getComments(),
-    createComment()
+    createComment(),
+    getTickets(),
+    getFilmsFutureFavorite(),
+    paymentGateway(),
+    getTicketDetail()
   ]);
 }
