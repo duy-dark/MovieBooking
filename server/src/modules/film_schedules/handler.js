@@ -109,6 +109,24 @@ const postCreate = async (params) => {
       created_at: moment.now(),
       updated_at: moment.now()
     };
+
+    let schedule_old = await Model.findByLambda({
+      conditions: {
+        film_id: lambda.film_id,
+        theater_id: lambda.theater_id,
+        room_id: lambda.room_id
+      }
+    });
+
+    let time_start = moment(lambda.time_start);
+    let time_end = moment(lambda.time_end);
+    let long_time = time_end - time_start;
+    schedule_old.forEach((element) => {
+      if (Math.abs(moment(element.time_start) - time_start) <= long_time) {
+        throw {status: 204, detail: {message: 'This time frame is existed'}};
+      }
+    });
+
     let data = await Model.createByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
@@ -130,6 +148,26 @@ const putUpdate = async (id, params) => {
       }
     };
     lambda.params = omitBy(lambda.params, isNil);
+    console.log(lambda.params.time_start, lambda.params.time_end);
+
+    if (lambda.params.time_start && lambda.params.time_end) {
+      console.log(lambda.params.time_start, lambda.params.time_end);
+      let schedule_old = await Model.findByLambda({
+        conditions: {
+          _id: id
+        }
+      });
+
+      let time_start = moment(lambda.params.time_start);
+      let time_end = moment(lambda.params.time_end);
+      let long_time = time_end - time_start;
+      schedule_old.forEach((element) => {
+        if (Math.abs(moment(element.time_start) - time_start) <= long_time) {
+          throw {status: 204, detail: {message: 'This time frame is existed'}};
+        }
+      });
+    }
+
     let data = await Model.updateByLambda(lambda);
     if (data.ok) {
       let result = await findById(id);

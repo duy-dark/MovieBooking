@@ -20,13 +20,14 @@ const getList = async (params) => {
         rate_average: 1,
         imdb: 1,
         digitals: 1,
+        trailer: 1,
         url_avatar: 1,
         url_background: 1,
         is_blockbuster: 1,
         category_ids: 1
       }
     };
-    let data = await Model.findByLambda(lambda);
+    let data = await Model.findByLambda_detail(lambda);
     return resSuccess(data);
   } catch (error) {
     throw {status: 400, detail: error};
@@ -217,6 +218,7 @@ const postCreate = async (params) => {
       start_date: params.start_date || undefined,
       directors: params.directors || undefined,
       actors: params.actors || undefined,
+      trailer: params.trailer || undefined,
       rates: {
         star5: 0,
         star4: 0,
@@ -254,6 +256,7 @@ const putUpdate = async (id, params) => {
         countries: params.countries || undefined,
         long_time: params.long_time || undefined,
         start_date: params.start_date || undefined,
+        trailer: params.trailer || undefined,
         directors: params.directors || undefined,
         actors: params.actors || undefined,
         rates: params.rates || undefined,

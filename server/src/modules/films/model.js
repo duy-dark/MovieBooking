@@ -8,6 +8,7 @@ let schema = new mongoose.Schema(
     long_time: Number,
     start_date: Date,
     directors: String,
+    trailer: String,
     actors: String,
     rate_average: Number,
     rate_count: Number,
@@ -27,16 +28,37 @@ let schema = new mongoose.Schema(
 
 let Collection = mongoose.model('Film', schema, 'films');
 
-let getDayOfWeek = async (date) => {
-  console.log(date, date.getDay());
-  let day = await date.getDay();
-  return day;
-};
-
 module.exports = {
   findByLambda: async function (lambda) {
     return await Collection.find(lambda.conditions, lambda.views);
   },
+
+  findByLambda_detail: async function (lambda) {
+    return await Collection.aggregate([
+      {
+        $match: {
+          $and: [lambda.conditions]
+        }
+      },
+      // {$unwind: '$category_ids'},
+      {
+        $lookup: {
+          from: 'categories',
+          localField: 'category_ids',
+          foreignField: '_id',
+          as: 'categories'
+        }
+      },
+      {
+        $unset: [
+          'categories.is_deleted',
+          'categories.created_at',
+          'categories.updated_at'
+        ]
+      }
+    ]);
+  },
+
   createByLambda: async function (lambda) {
     return await Collection.insertMany(lambda);
   },

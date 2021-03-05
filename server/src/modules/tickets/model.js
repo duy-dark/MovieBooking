@@ -197,13 +197,33 @@ module.exports = {
           'film_schedules.theaters': {
             $map: {
               input: '$film_schedules.theaters',
+              in: {name: '$$this.name', address: '$$this.address'}
+            }
+          }
+        }
+      },
+      {
+        $lookup: {
+          from: 'rooms',
+          localField: 'film_schedules.room_id',
+          foreignField: '_id',
+          as: 'film_schedules.rooms'
+        }
+      },
+      {
+        $addFields: {
+          'film_schedules.rooms': {
+            $map: {
+              input: '$film_schedules.rooms',
               in: {name: '$$this.name'}
             }
           }
         }
       },
       {$unwind: '$film_schedules.films'},
-      {$unwind: '$film_schedules.theaters'}
+      {$unwind: '$film_schedules.theaters'},
+      {$unwind: '$film_schedules.rooms'},
+      {$sort: {created_at: -1}}
     ]);
   }
 };

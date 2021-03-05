@@ -15,6 +15,7 @@ var notifyUrl =
   'https://servermoviebooking.herokuapp.com/api/payment/checkStatusPayment';
 var requestType = 'captureMoMoWallet';
 var extraData = 'merchantName=;merchantId=';
+var qr = require('qr-image');
 var amount;
 
 const {transporter, contentMail, contentCode} = require('../../util/mail');
@@ -24,6 +25,8 @@ let ticket_id;
 var signature;
 const momoApi = async (params) => {
   try {
+    let is_mobile = params.is_mobile;
+    delete params.is_mobile;
     var orderId = uuidv1();
     var requestId = uuidv1();
     amount = params.cost.toString();
@@ -51,7 +54,11 @@ const momoApi = async (params) => {
     }
     ticket_id = data.data._id;
 
-    returnUrl = `http://localhost:3000/complete?email=${params.email}`;
+    if (is_mobile === 1) {
+      returnUrl = `https://expo.io/@sonhua/projects/mobile`;
+    } else {
+      returnUrl = `http://localhost:3000/complete?email=${params.email}`;
+    }
 
     var rawSignature = `partnerCode=${partnerCode}&accessKey=${accessKey}&requestId=${requestId}&amount=${amount}&orderId=${orderId}&orderInfo=${orderInfo}&returnUrl=${returnUrl}&notifyUrl=${notifyUrl}&extraData=${extraData}`;
 
@@ -162,6 +169,10 @@ const checkStatusMomoApi = async (params) => {
             time_end: time_end
           };
 
+          var qr_code_png = qr.imageSync(ticket.data._id, {
+            type: 'png'
+          });
+
           console.log('objSender:', objSender);
 
           let mainOptions = {
@@ -170,6 +181,7 @@ const checkStatusMomoApi = async (params) => {
             to: ticket.data.email,
             generateTextFromHTML: true,
             subject: 'Đặt vé thành công',
+            attachments: [{filename: 'image.png', content: qr_code_png}],
             html: contentMail(objSender) //Nội dung html mình đã tạo trên kia :))
           };
 
