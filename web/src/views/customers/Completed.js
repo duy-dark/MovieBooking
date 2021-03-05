@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from "react-redux";
 import '../../styles/customers/complete/complete.scss';
-import { useLocation } from 'react-router-dom';
 import { updateHeaderFooter, getUserInfo } from "../../redux/users/actions";
 
 export default function Completed(props) {
   const dispatch = useDispatch();
-  const location = useLocation();
-  const [formBooking, setFormBooking] = useState();
   useEffect(() => {
     dispatch(updateHeaderFooter({
       header: true,

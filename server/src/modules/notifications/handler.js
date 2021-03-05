@@ -9,12 +9,12 @@ const getList = async (params) => {
       conditions: {...params, is_deleted: false},
       views: {
         _id: 1,
-        content_web: 1,
-        content_mobile: 1,
-        content_mail: 1,
-        content_sms: 1,
-        customers: 1,
-        type: 1
+        customer_id: 1,
+        film_id: 1,
+        film_name: 1,
+        date_send: 1,
+        content: 1,
+        is_sent: 1
       }
     };
     let data = await Model.findByLambda(lambda);
@@ -30,12 +30,12 @@ const findById = async (id) => {
       conditions: {_id: id, is_deleted: false},
       views: {
         _id: 1,
-        content_web: 1,
-        content_mobile: 1,
-        content_mail: 1,
-        content_sms: 1,
-        customers: 1,
-        type: 1
+        customer_id: 1,
+        film_id: 1,
+        film_name: 1,
+        date_send: 1,
+        content: 1,
+        is_sent: 1
       }
     };
     let data = await Model.findByLambda(lambda);
@@ -48,12 +48,12 @@ const findById = async (id) => {
 const postCreate = async (params) => {
   try {
     let lambda = {
-      type: params.type || undefined,
-      customers: params.customers || undefined,
-      content_web: params.content_web || undefined,
-      content_mobile: params.content_mobile || undefined,
-      content_mail: params.content_mail || undefined,
-      content_sms: params.content_sms || undefined,
+      customer_id: params.customer_id || undefined,
+      film_id: params.film_id || undefined,
+      film_name: params.film_name || undefined,
+      date_send: params.date_send || undefined,
+      content: params.content || undefined,
+      is_sent: params.is_sent || undefined,
       is_deleted: false,
       created_at: moment.now(),
       updated_at: moment.now()
@@ -70,12 +70,12 @@ const putUpdate = async (id, params) => {
     let lambda = {
       conditions: {_id: id, is_deleted: false},
       params: {
-        type: params.type || undefined,
-        customers: params.customers || undefined,
-        content_web: params.content_web || undefined,
-        content_mobile: params.content_mobile || undefined,
-        content_mail: params.content_mail || undefined,
-        content_sms: params.content_sms || undefined,
+        customer_id: params.customer_id || undefined,
+        film_id: params.film_id || undefined,
+        film_name: params.film_name || undefined,
+        date_send: params.date_send || undefined,
+        content: params.content || undefined,
+        is_sent: params.is_sent || undefined,
         updated_at: moment.now()
       }
     };

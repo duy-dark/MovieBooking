@@ -11,7 +11,9 @@ const getList = async (params) => {
         _id: 1,
         title: 1,
         content: 1,
-        film_id: 1
+        film_id: 1,
+        created_at: 1,
+        updated_at: 1
       }
     };
     let data = await Model.findByLambda(lambda);
@@ -29,7 +31,9 @@ const findById = async (id) => {
         _id: 1,
         title: 1,
         content: 1,
-        film_id: 1
+        film_id: 1,
+        created_at: 1,
+        updated_at: 1
       }
     };
     let data = await Model.findByLambda(lambda);

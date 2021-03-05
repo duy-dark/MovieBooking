@@ -54,7 +54,7 @@ export default function AddNewPage() {
   }
 
   const addNewBlock = () => {
-    setArrContent([...arrContent, { content: '', image: ''}])
+    setArrContent([...arrContent, { text: '', image: ''}])
   }
 
   const submitForm = () => {

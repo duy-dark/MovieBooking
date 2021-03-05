@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const moment = require('moment');
 
 let schema = new mongoose.Schema(
   {
@@ -26,11 +27,18 @@ module.exports = {
   updateByLambda: async function (lambda) {
     return await Collection.updateOne(lambda.conditions, lambda.params);
   },
-  findByLambda_detail: async function (lambda) {
+  findByLambda_detail: async function (lambda, time_now) {
     return await Collection.aggregate([
       {
         $match: {
-          $and: [lambda.conditions]
+          $and: [
+            lambda.conditions,
+            {
+              time_start: {
+                $gte: time_now
+              }
+            }
+          ]
         }
       },
       {
