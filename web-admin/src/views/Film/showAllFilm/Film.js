@@ -38,7 +38,7 @@ const columns = [
        <Detail index={index} detail={record} />
         <a>Delete</a>
        <Schedule schedule={record} theaters={theaters}/>
-        <a>Add Schedules</a>
+        <AddSchedulePopup theaters={theaters} schedule={record}/>
       </Space>
     ),
   },

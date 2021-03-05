@@ -11,7 +11,7 @@ const EditSchedulePopup = (props) => {
   const [modalText, setModalText] = React.useState();
 
   
-  
+
   const showModal = () => {
     setVisible(true);
   };

@@ -18,7 +18,7 @@ if(h>=24) h-=24;
 return h+':'+m+':'+s
 } 
 export default function EditSchedule(props){
-
+ console.log(props)
   let room=[];
        props.theaters.filter(item=> item._id==props.schedule.Theaterid?item.rooms.map(roomname=>room.push({value:roomname.name,id:roomname._id})):false)
   const [optionRoom, setOptionRoom] = useState(room)

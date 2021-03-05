@@ -2,7 +2,7 @@ import { Modal, Button } from 'antd';
 import React,{useEffect, useState } from "react";
 
 import "./../../../styles/Film/detailPopup.scss";
-
+import AddSchedule from "./addSchedule"
 const AddSchedulePopup = (props) => {
   const [visible, setVisible] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
@@ -12,7 +12,7 @@ const AddSchedulePopup = (props) => {
     setVisible(true);
   };
 
-  
+ 
   const handleCancel = () => {
     console.log('Clicked cancel button');
     setVisible(false);
@@ -26,7 +26,7 @@ const AddSchedulePopup = (props) => {
       <Modal 
         width={400}
         style={{marginTop:100}}
-        title="Film Schedule"
+        title="Add Schedule"
         visible={visible}
        
         confirmLoading={confirmLoading}
@@ -35,7 +35,7 @@ const AddSchedulePopup = (props) => {
         okButtonProps={{ style: { display: 'none' } }}
         cancelButtonProps={{ style: { display: 'none' } }}
       >
-       
+       <AddSchedule schedule={props.schedule} theaters={props.theaters} longtime={props.longtime} />
       </Modal>
     </>
   );
