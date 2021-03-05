@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Layout } from 'antd';
 import { connect } from 'react-redux';
 import MenuHome from "./views/home/menu/MenuHome";
+import "./styles/styles.scss"
 
 const { Header, Footer, Sider, Content } = Layout; 
 class App extends Component {
@@ -27,14 +28,8 @@ class App extends Component {
 
   return (
     <Router>
-      {/* <div className="app">
-        <CustomScrollbar>
-        <Switch>{showRouteComponent(routes)}</Switch>
-        </CustomScrollbar>
-      </div> */}
-      
       <Layout>
-        <Sider><MenuHome/></Sider>
+        <Sider className="left-sidebar"><MenuHome/></Sider>
         <Layout>
           <Switch>{showRouteComponent(routes)}</Switch>
         </Layout>

@@ -6,6 +6,9 @@ const moment = require('moment');
 const getList = async (params) => {
   try {
     let conditions = {...params, is_deleted: false};
+    let is_mobile = params.is_mobile;
+
+    delete conditions.is_mobile;
     delete conditions.limit;
     console.log('conditions', conditions);
     let lambda = {
@@ -21,7 +24,24 @@ const getList = async (params) => {
     };
     // console.log('type:', typeof lambda.conditions._id);
     // console.log('_id:', lambda.conditions);
+    console.log(is_mobile);
     let data = await Model.findByLambda_detail(lambda);
+
+    if (is_mobile == 1) {
+      let film = await require('../films/model').findByLambda({
+        conditions: {_id: params.film_id}
+      });
+
+      console.log('data', data);
+
+      let result = {
+        rate_count: film[0].rate_count,
+        rate_average: film[0].rate_average,
+        rates: film[0].rates,
+        comments: data
+      };
+      return resSuccess(result);
+    }
     return resSuccess(data);
   } catch (error) {
     throw {status: 400, detail: error};
@@ -60,19 +80,23 @@ const postCreate = async (params) => {
     };
     // console.log('lambda:', lambda);
     let data = await Model.createByLambda(lambda);
+
+    let ObjectRates = {};
+    let rate_count;
+    let rate_average;
     console.log('data:', data);
     if (data[0]._id) {
       let film = await require('../films/model').findByLambda({
         conditions: {_id: params.film_id, is_deleted: false}
       });
 
-      let ObjectRates = {...film[0].rates};
+      ObjectRates = {...film[0].rates};
 
       let rate = film[0].rates[`star${params.rate}`] + 1;
       ObjectRates[`star${params.rate}`] = rate;
       console.log('ObjectRates', ObjectRates);
 
-      let rate_count = film[0].rate_count + 1;
+      rate_count = film[0].rate_count + 1;
 
       let rate_sum =
         ObjectRates.star1 * 1 +
@@ -86,7 +110,7 @@ const postCreate = async (params) => {
         ObjectRates.star9 * 9 +
         ObjectRates.star10 * 10;
 
-      let rate_average = rate_sum / rate_count;
+      rate_average = rate_sum / rate_count;
 
       let updateFilmRate = await require('../films/model').updateByLambda({
         conditions: {_id: params.film_id, is_deleted: false},
@@ -106,7 +130,10 @@ const postCreate = async (params) => {
     });
     data[0] = {
       ...data[0]._doc,
-      customers: customer[0]
+      customers: customer[0],
+      rates: ObjectRates,
+      rate_average: rate_average,
+      rate_count: rate_count
     };
 
     // console.log(data[0]);

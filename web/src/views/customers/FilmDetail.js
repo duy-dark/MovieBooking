@@ -63,7 +63,7 @@ export default function FilmDetail() {
             <div className="detail-slider__name">{data.name}</div>
             <div className="detail-slider__time">{data.long_time} phút</div>
             <div className="detail-slider__rates">
-              <span>{data.rate_average}</span>
+              <span>{data.rate_average && data.rate_average.toFixed(2)}</span>
               <div>
                 { data.rate_average / 2 >= 1 && (<img src={`https://tix.vn/app/assets/img/icons/star1.png`} alt="star"/>)}
                 { data.rate_average / 2 >= 2 && (<img src={`https://tix.vn/app/assets/img/icons/star1.png`} alt="star"/>)}

@@ -56,7 +56,7 @@ router.get('/auth/logout', function (req, res) {
   res.redirect('https://www.google.com/');
 });
 
-router.get('/list', (req, res, next) => {
+router.get('/list', verifyUser.requireByUser, (req, res, next) => {
   console.log('req.session.passport111:', req.session.passport.user.data);
   // console.log(
   //   'passport.Authenticator.prototype.deserializeUser.arguments[0]:',
@@ -78,7 +78,7 @@ router.get('/list', (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.get('/:id/detail', (req, res, next) => {
+router.get('/:id/detail', verifyUser.requireGetPerson, (req, res, next) => {
   let id = require('mongodb').ObjectId(req.params.id);
   handler
     .findById(id, req.token)

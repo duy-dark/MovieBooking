@@ -903,8 +903,7 @@ module.exports = {
           'start_date',
           'actors',
           'is_blockbuster',
-          'directors',
-          'category_ids'
+          'directors'
         ]
       },
       {
@@ -932,84 +931,55 @@ module.exports = {
               }
             }
           ],
-          as: 'theaters'
+          as: 'film_schedules'
         }
       },
-      {$unwind: '$theaters'},
+      {$unset: ['film_schedules']},
       {
         $lookup: {
-          from: 'theaters',
-          localField: 'theaters.theater_id',
+          from: 'categories',
+          localField: 'category_ids',
           foreignField: '_id',
-          as: 'theaters'
+          as: 'categories'
         }
       },
       {
         $unset: [
-          'theaters.is_deleted',
-          'theaters.created_at',
-          'theaters.updated_at',
-          'theaters.rooms',
-          'theaters.url_image'
+          'category_ids',
+          'categories.is_deleted',
+          'categories.created_at',
+          'categories.updated_at'
         ]
-      },
-      {$unwind: '$theaters'},
+      }
+    ]);
+  },
+
+  getNowShowing_Favourite: async function (lambda) {
+    return await Collection.aggregate([
       {
-        $group: {
-          _id: '$_id',
-          name: {
-            $first: '$name'
-          },
-          long_time: {
-            $first: '$long_time'
-          },
-          content: {
-            $first: '$content'
-          },
-          imdb: {
-            $first: '$imdb'
-          },
-          digitals: {
-            $first: '$digitals'
-          },
-          rates: {
-            $first: '$rates'
-          },
-          rate_count: {
-            $first: '$rate_count'
-          },
-          rate_average: {
-            $first: '$rate_average'
-          },
-          url_avatar: {
-            $first: '$url_avatar'
-          },
-          url_background: {
-            $first: '$url_background'
-          },
-          trailer: {
-            $first: '$trailer'
-          },
-          theaters: {
-            $addToSet: '$theaters'
+        $match: {
+          category_ids: {
+            $in: lambda.categories
           }
         }
       },
-      // {
-      //   $lookup: {
-      //     from: 'film_schedules',
-      //     localField: 'theaters._id',
-      //     foreignField: 'theater_id',
-      //     as: 'theaters.film_schedules'
-      //   }
-      // }
-      {$unwind: '$theaters'},
+      {
+        $unset: [
+          'is_deleted',
+          'created_at',
+          'updated_at',
+          'countries',
+          'start_date',
+          'actors',
+          'is_blockbuster',
+          'directors'
+        ]
+      },
       {
         $lookup: {
           from: 'film_schedules',
           let: {
-            film_id: '$_id',
-            theaters_id: '$theaters._id'
+            film_id: '$_id'
           },
           pipeline: [
             {
@@ -1018,9 +988,6 @@ module.exports = {
                   $and: [
                     {
                       $eq: ['$film_id', '$$film_id']
-                    },
-                    {
-                      $eq: ['$theater_id', '$$theaters_id']
                     },
                     {
                       $gte: ['$time_start', lambda.conditions.time_start]
@@ -1033,50 +1000,25 @@ module.exports = {
               }
             }
           ],
-          as: 'theaters.film_schedules'
+          as: 'film_schedules'
         }
       },
-
+      {$unset: ['film_schedules']},
       {
-        $group: {
-          _id: '$_id',
-          name: {
-            $first: '$name'
-          },
-          long_time: {
-            $first: '$long_time'
-          },
-          content: {
-            $first: '$content'
-          },
-          imdb: {
-            $first: '$imdb'
-          },
-          digitals: {
-            $first: '$digitals'
-          },
-          rates: {
-            $first: '$rates'
-          },
-          rate_count: {
-            $first: '$rate_count'
-          },
-          rate_average: {
-            $first: '$rate_average'
-          },
-          url_avatar: {
-            $first: '$url_avatar'
-          },
-          url_background: {
-            $first: '$url_background'
-          },
-          trailer: {
-            $first: '$trailer'
-          },
-          theaters: {
-            $addToSet: '$theaters'
-          }
+        $lookup: {
+          from: 'categories',
+          localField: 'category_ids',
+          foreignField: '_id',
+          as: 'categories'
         }
+      },
+      {
+        $unset: [
+          'category_ids',
+          'categories.is_deleted',
+          'categories.created_at',
+          'categories.updated_at'
+        ]
       }
     ]);
   }

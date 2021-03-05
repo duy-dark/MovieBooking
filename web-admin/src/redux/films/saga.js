@@ -20,7 +20,15 @@ function* fetchPostBookingInfo(action) {
     throw error;
   }
 }
-
+function* fetchAddNewFilm(action){
+  try {
+    const res = yield call(httpFilms.addNewFilm,action.payload);
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.ADD_NEW_FILM_SUCCESS, payload: data });
+    }
+  } catch (error) { console.log(error); }
+}
 function* fetchFilmDetails(action) {
   try {
     const { payload } = action;
@@ -80,8 +88,8 @@ function* fetchSeats(action) {
 
 function* fetchFilmUpdate(action){
   try{
-    const { payload } = action
-    const res = yield call(httpFilms.updateFilmDetail, payload);
+    
+    const res = yield call(httpFilms.updateFilmDetail, action.payload);
     const { status, data } = res
     if (status === "ok") {
       yield put({ type: FilmsType.UPDATE_FILM_DETAIL_SUCCESS, payload: data });
@@ -100,6 +108,83 @@ function* fetchListCategory() {
 
   } catch (error) { console.log(error); }
 }
+function* fetchFilmSchedule(action) {
+  try {
+    const { payload } = action
+    const res = yield call(httpFilms.getFilmSchedule, payload);
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.FILM_SCHEDULE_SUCCESS, payload: data });
+    }
+
+  } catch (error) { console.log(error); }
+}
+function* fetchUpdateFilmSchedule(action) {
+  try {
+    
+    const res = yield call(httpFilms.updateFilmSchedule,action.id,action.payload);
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.UPDATE_FILM_SCHEDULE_SUCCESS, payload: data });
+    }
+
+  } catch (error) { console.log(error); }
+}
+function* fetchGetTheater() {
+  try {
+    const res = yield call(httpFilms.getTheater, {});
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.LIST_THEATER_SUCCESS, payload: data });
+     
+    }
+
+  } catch (error) { console.log(error); }
+}
+
+function* fetchCreateNewPaper(action) {
+  try {
+    const { payload } = action
+    const res = yield call(httpFilms.createNewPaper, payload);
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.CREATE_NEW_SUCCESS, payload: data.data})
+    }
+  } catch (error) { console.log(error); }
+}
+
+function* fetchListNew(action) {
+  try {
+    const res = yield call(httpFilms.getListNews, {})
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.LIST_NEW_SUCCESS, payload: data})
+    }
+  } catch (error) { console.log(error); }
+}
+
+function* fetchNewDetail(action) {
+  try {
+    const { payload } = action
+    const res = yield call(httpFilms.getNewDetail, payload)
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.NEW_DETAIL_SUCCESS, payload: data})
+    }
+  } catch (error) { console.log(error); }
+}
+
+function* fetchUpdateNewDetail(action) {
+  try {
+    const { payload } = action
+    const res = yield call(httpFilms.updateNewDetail, payload)
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.UPDATE_NEW_SUCCESS, payload: data})
+    }
+  } catch (error) { console.log(error); }
+}
+
 function* postBookingInfo() {
   yield takeEvery(FilmsType.POST_BOOKING_INFO, fetchPostBookingInfo);
 }
@@ -129,6 +214,35 @@ function* getFilmUpdate() {
 function* getCategories(){
   yield takeEvery(FilmsType.LIST_CATEGOGY,fetchListCategory)
 }
+function* addNewFilm(){
+  yield takeEvery(FilmsType.ADD_NEW_FILM,fetchAddNewFilm)
+}
+function* filmSchedule(){
+  yield takeEvery(FilmsType.FILM_SCHEDULE,fetchFilmSchedule)
+}
+function* updateFilmSchedule(){
+  yield takeEvery(FilmsType.UPDATE_FILM_SCHEDULE,fetchUpdateFilmSchedule)
+}
+function* getTheaters(){
+  yield takeEvery(FilmsType.LIST_THEATER,fetchGetTheater)
+}
+
+function* createNewPaper() {
+  yield takeEvery(FilmsType.CREATE_NEW, fetchCreateNewPaper);
+}
+
+function* getListNew() {
+  yield takeEvery(FilmsType.LIST_NEW, fetchListNew);
+}
+
+function* getNewDetail() {
+  yield takeEvery(FilmsType.NEW_DETAIL, fetchNewDetail);
+}
+
+function* updateNewDetail() {
+  yield takeEvery(FilmsType.UPDATE_NEW, fetchUpdateNewDetail);
+}
+
 export default function* filmsSaga() {
   yield all([
     postBookingInfo(),
@@ -138,6 +252,14 @@ export default function* filmsSaga() {
     getFilmsToday(),
     getSeats(),
     getFilmUpdate(),
-    getCategories()
+    getCategories(),
+    addNewFilm(),
+    filmSchedule(),
+    getTheaters(),
+    createNewPaper(),
+    getListNew(),
+    getNewDetail(),
+    updateNewDetail(),
+    updateFilmSchedule()
   ]);
 }

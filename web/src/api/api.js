@@ -3,8 +3,9 @@ import interceptors from "./interceptors";
 
 const Api = axios.create({
   // baseURL: process.env.REACT_APP_BASE_URL,
-  baseURL: 'https://lit-lowlands-21932.herokuapp.com',
-  // baseURL: 'https://b6f779ec3a34.ngrok.io',
+  // baseURL: process.env.SERVER_HEROKU,
+  baseURL: 'https://servermoviebooking.herokuapp.com/',
+  // baseURL: 'https://fb96f5c409d0.ngrok.io',
   withCredentials: false,
   headers: {
     Accept: "application/json",

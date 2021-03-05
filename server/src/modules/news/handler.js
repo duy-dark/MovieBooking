@@ -11,15 +11,15 @@ const getList = async (params) => {
         _id: 1,
         title: 1,
         content: 1,
-        hastag: 1,
-        public_date: 1,
-        film_id: 1
+        film_id: 1,
+        created_at: 1,
+        updated_at: 1
       }
     };
     let data = await Model.findByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
-    throw {status: 400, detail: error};
+    throw {status: 204, detail: error};
   }
 };
 
@@ -31,15 +31,15 @@ const findById = async (id) => {
         _id: 1,
         title: 1,
         content: 1,
-        hastag: 1,
-        public_date: 1,
-        film_id: 1
+        film_id: 1,
+        created_at: 1,
+        updated_at: 1
       }
     };
     let data = await Model.findByLambda(lambda);
     return resSuccess(data[0]);
   } catch (error) {
-    throw {status: 400, detail: error};
+    throw {status: 204, detail: error};
   }
 };
 
@@ -48,22 +48,16 @@ const postCreate = async (params) => {
     let lambda = {
       title: params.title || undefined,
       content: params.content || undefined,
-      hastag: params.hastag || undefined,
-      public_date: params.public_date || undefined,
       film_id: params.film_id || undefined,
       is_deleted: false,
       created_at: moment.now(),
       updated_at: moment.now()
     };
+    console.log(lambda);
     let data = await Model.createByLambda(lambda);
-    if (data.ok) {
-      let result = await findById(id);
-      return result;
-    } else {
-      throw {status: 400, detail: data};
-    }
+    return resSuccess(data[0]);
   } catch (error) {
-    throw {status: 400, detail: error};
+    throw {status: 204, detail: error};
   }
 };
 
@@ -74,17 +68,20 @@ const putUpdate = async (id, params) => {
       params: {
         title: params.title || undefined,
         content: params.content || undefined,
-        hastag: params.hastag || undefined,
-        public_date: params.public_date || undefined,
         film_id: params.film_id || undefined,
         updated_at: moment.now()
       }
     };
     lambda.params = omitBy(lambda.params, isNil);
     let data = await Model.updateByLambda(lambda);
-    return resSuccess(data);
+    if (data.ok) {
+      let result = await findById(id);
+      return result;
+    } else {
+      throw {status: 204, detail: data};
+    }
   } catch (error) {
-    throw {status: 400, detail: error};
+    throw {status: 204, detail: error};
   }
 };
 
@@ -100,7 +97,7 @@ const deleteData = async (id) => {
     let data = await Model.updateByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
-    throw {status: 400, detail: error};
+    throw {status: 204, detail: error};
   }
 };
 

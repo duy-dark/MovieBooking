@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Table, Input, InputNumber, Popconfirm, Form, Typography } from 'antd';
-import { updateFilmDetail } from "./../../../redux/films/actions"
+
 import { useDispatch , useSelector} from "react-redux";
 
 const EditableCell = ({
@@ -86,8 +86,7 @@ export default function EditableTable (props) {
        
       }
      
-        dispatch(updateFilmDetail(newData[0],"a"));
-
+        
     } catch (errInfo) {
       console.log('Validate Failed:', errInfo);
     }

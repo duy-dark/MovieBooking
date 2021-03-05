@@ -130,31 +130,6 @@ const findById = async (id) => {
     };
     let data = await Model.getDetail(lambda);
 
-    // let days = [
-    //   'chủ nhật',
-    //   'thứ 2',
-    //   'thứ 3',
-    //   'thứ 4',
-    //   'thứ 5',
-    //   'thứ 6',
-    //   'thứ 7'
-    // ];
-    // let arr = [];
-    // let now = moment();
-    // for (let i = 0; i < 7; i++) {
-    //   arr.push({
-    //     name: days[moment(now).add(i, 'days').day()],
-    //     date: moment(now).add(i, 'days').format('DD/MM/YYYY'),
-    //     day: moment(now).add(i, 'days').format('DD'),
-    //     dateISO_8601: moment(now, moment.ISO_8601).add(i, 'days')
-    //   });
-    // }
-
-    // console.log('arr:', arr);
-    // // let data = await Model.getDetail(lambda);
-    // // data[0] = {...data[0], listday: arr};
-    // data[0] = {...data};
-
     return resSuccess(data[0]);
   } catch (error) {
     throw {status: 400, detail: error};
@@ -168,9 +143,6 @@ const getFilm7Day = async (id) => {
 
     let hour = new Date(moment()).getHours();
     let date = new Date(moment().add(1, 'days')).getDate();
-    // if (hour > 17) {
-    //   date -= 1;
-    // }
     let month = new Date(moment().add(1, 'days')).getMonth();
     let year = new Date(moment().add(1, 'days')).getFullYear();
 
@@ -325,7 +297,7 @@ const deleteData = async (id) => {
   }
 };
 
-const getNowShowing = async () => {
+const getNowShowing = async (customer_id) => {
   try {
     let time_start = new Date(moment());
 
@@ -363,7 +335,20 @@ const getNowShowing = async () => {
       }
     };
 
-    let data = await Model.getNowShowing(lambda);
+    let data;
+    if (customer_id) {
+      if (customer_id == 123) {
+        data = [];
+      } else {
+        let customer = await require('../customers/model').findByLambda({
+          conditions: {_id: require('mongodb').ObjectId(customer_id)}
+        });
+        lambda.categories = customer[0].favorite_ids;
+        data = await Model.getNowShowing_Favourite(lambda);
+      }
+    } else {
+      data = await Model.getNowShowing(lambda);
+    }
 
     return resSuccess(data);
   } catch (error) {
@@ -372,7 +357,7 @@ const getNowShowing = async () => {
   }
 };
 
-const getCommingSoon = async () => {
+const getCommingSoon = async (customer_id) => {
   try {
     let time_start = new Date(moment());
 
@@ -410,7 +395,20 @@ const getCommingSoon = async () => {
       }
     };
 
-    let data = await Model.getNowShowing(lambda);
+    let data;
+    if (customer_id) {
+      if (customer_id == 123) {
+        data = [];
+      } else {
+        let customer = await require('../customers/model').findByLambda({
+          conditions: {_id: require('mongodb').ObjectId(customer_id)}
+        });
+        lambda.categories = customer[0].favorite_ids;
+        data = await Model.getNowShowing_Favourite(lambda);
+      }
+    } else {
+      data = await Model.getNowShowing(lambda);
+    }
 
     return resSuccess(data);
   } catch (error) {

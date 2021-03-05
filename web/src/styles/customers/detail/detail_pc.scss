@@ -385,6 +385,10 @@
           border-color: #fb4226;
           color: #fff!important;
         }
+
+        &:focus {
+          outline: none;
+        }
       }
     }
   }
@@ -441,7 +445,7 @@
           width: 20px;
           height: 20px;
 
-          &:last-child {
+          &.image-half{
             width: 16px;
             height: 16px;
           }

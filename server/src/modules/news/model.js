@@ -3,9 +3,7 @@ const mongoose = require('mongoose');
 let schema = new mongoose.Schema(
   {
     title: String,
-    content: String,
-    hastag: Array,
-    public_date: Date,
+    content: Array,
     film_id: require('mongodb').ObjectID,
     is_deleted: Boolean,
     created_at: Date,

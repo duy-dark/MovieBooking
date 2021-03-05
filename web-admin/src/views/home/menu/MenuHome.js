@@ -15,43 +15,23 @@ import {
 const { SubMenu } = Menu;
 
 export default function MenuHome(props) {
-  const [mode, setMode] = React.useState("inline");
-  const [theme, setTheme] = React.useState("light");
-
-  
-  const changeMode = (value) => {
-    setMode(value ? "vertical" : "inline");
-  };
-
-  const changeTheme = (value) => {
-    setTheme(value ? "dark" : "light");
-  };
 
   return (
     <>
       <Menu
-        className="home-left"
-        style={{ width: 256,height:603 }}
+        className="menu"
         defaultSelectedKeys={["1"]}
         defaultOpenKeys={["sub1"]}
-        mode={mode}
-        theme={theme}
+        mode="inline"
       >
-        <VideoCameraFilled style={{ fontSize: "100px", color: "#db3434",marginLeft:"75px" }} />
-        <div>
-          {" "}
-          <Switch onChange={changeMode} /> Change Mode
-          <Divider type="vertical" />
-          <Switch onChange={changeTheme} /> Dark
+        <div className="menu__logo">
+          <img src={`/assets/web-logo.png`} alt=""/>
         </div>
-
-        <br />
-        <br />
-        
         <SubMenu key="sub1" icon={<AppstoreOutlined />} title="Phim">
       <Menu.Item key="sub1-1">Danh sách phim   <Link to="/ManageFilm" /></Menu.Item>
           <Menu.Item key="sub1-2">Thể loại</Menu.Item>
-          <Menu.Item key="sub1-3">Rạp</Menu.Item>
+          <Menu.Item key="sub1-3"><Link to="/theater/list">Rạp</Link></Menu.Item>
+          <Menu.Item key="sub1-4"><Link to="/new/list">New</Link></Menu.Item>
         </SubMenu>
       
          

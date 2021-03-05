@@ -3,6 +3,7 @@ const router = express.Router();
 const handler = require('./handler');
 const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
+const {Model} = require('mongoose');
 
 router.get('/', (req, res, next) => {
   const {
@@ -64,6 +65,18 @@ router.put('/:id', (req, res, next) => {
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });
+
+// router.put('/updatetimeend/film_id/:film_id', (req, res, next) => {
+//   let long_time = req.body.long_time;
+//   let film_id = require('mongodb').ObjectId(req.params.film_id);
+//   console.log(film_id);
+//   //let film = Model.findById(film_id, id);
+
+//   handler
+//     .putUpdateSchedule(film_id, long_time)
+//     .then((val) => res.json(val))
+//     .catch((err) => next(err));
+// });
 
 router.delete('/:id', (req, res, next) => {
   let id = require('mongodb').ObjectId(req.params.id);
