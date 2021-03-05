@@ -5,6 +5,7 @@ const getListFilmShowing = (params) => {
 };
 
 const getListFilmNow = () => {
+  console.log('https://servermoviebooking.herokuapp.com/')
   return Api.get("/api/film/nowshowing").then((res) => res.data);
 };
 
