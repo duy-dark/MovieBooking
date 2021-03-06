@@ -1,7 +1,7 @@
 import films from '../../api/films';
 import FilmTypes from './types';
 // import update from 'immutability-helper';
-
+import findindex from 'lodash'
 const initialState = {
   status: true,
   filmsNow: [],

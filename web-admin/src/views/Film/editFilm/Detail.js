@@ -41,16 +41,9 @@ import EditPopUp from './EditPopup'
  
   export default function Detail (props) {
     const [form] = Form.useForm();
-    const [data, setData] = useState();
-    useEffect(()=>{
-      let arr=[];
-      arr.push(props.detail);
-      setData(arr);
-    },[])
 
-   
 
-    
+
 
 
   
@@ -136,7 +129,7 @@ import EditPopUp from './EditPopup'
         dataIndex: 'operation',
         render: (text,record) => 
         
-        <EditPopUp categories={props.categories} detail={data} onCancel={props.onCancel}/>
+        <EditPopUp categories={props.categories} detail={[...props.detail]} onCancel={props.onCancel}/>
         
       },
     ];
@@ -150,7 +143,7 @@ import EditPopUp from './EditPopup'
             },
           }}
           bordered
-          dataSource={data}
+          dataSource={[...props.detail]}
           columns={columns}
           rowClassName="editable-row"
           pagination={{defaultPageSize: 1, hideOnSinglePage: true}}
