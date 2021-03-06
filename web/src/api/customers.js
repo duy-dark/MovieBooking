@@ -10,7 +10,14 @@ const getUserInfo = (params) => {
   );
 };
 
+const getTicketsInfo = (params) => {
+  return Api.get(`api/ticket/detail?customer_id=${params.userID||params._id}&limit=${params.limit}`).then(
+    (res) => res.data
+  );
+};
+
 export default {
   login,
-  getUserInfo
+  getUserInfo,
+  getTicketsInfo
 };
