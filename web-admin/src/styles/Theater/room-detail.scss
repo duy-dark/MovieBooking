@@ -1,0 +1,47 @@
+.layout-detail__room {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.room-detail {
+  display: flex;
+  flex-direction: column;
+  width: 800px;
+
+  .room-detail__edit {
+    display: flex;
+    justify-content: center;
+  }
+
+  .room-detail__item {
+    display: flex;
+    flex-direction: row;
+    label {
+      width: 200px;
+      font-size: 20px;
+      align-items: center;
+      display: flex;
+    }
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+
+    &.room-detail__theater {
+      .room-detail__theater__content {
+        display: flex;
+        flex-direction: row;
+        img {
+          width: 80px;
+          height: auto;
+          margin-right: 10px;
+        }
+
+        &>div {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+    }
+  }
+}

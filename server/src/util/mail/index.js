@@ -4,10 +4,10 @@ const OAuth2 = google.auth.OAuth2;
 
 const ClientID =
   '420984700024-mtmtndn31tamjca6g6tuqriveu3afrng.apps.googleusercontent.com';
-const ClientSecret = 'SQ9dAMrrfc062sxe8RXQ1CaR';
+const ClientSecret = 'eGrOYDc1H15f_UQflVq1RRhP';
 const RedirectURL = 'https://developers.google.com/oauthplayground';
 const refresh_token =
-  '1//04bnW2gQ7sl2ICgYIARAAGAQSNwF-L9IrKK_BO7laWkwojU_RA3Lhjneavw44Dwn61WehMOUo4_HLrHhWIuor_IknEU3PPHthrKo';
+  '1//04IEUXpfe5SYPCgYIARAAGAQSNwF-L9IrQrEix6Rejs7AWnoft7Fg0q_QqAlut-MpuNXBbUX2cMKtVFSBBpr_pkN9lEdkn00RId8';
 
 const oauth2Client = new OAuth2(
   ClientID, // ClientID
@@ -23,10 +23,10 @@ const accessToken = oauth2Client.getAccessToken();
 
 const transporter = nodemailer.createTransport({
   service: 'gmail',
-//   host: 'smtp.gmail.com',
-// port: 587,
-// ignoreTLS: false,
-// secure: false,
+  //   host: 'smtp.gmail.com',
+  // port: 587,
+  // ignoreTLS: false,
+  // secure: false,
   auth: {
     type: 'OAuth2',
     user: 'doantotnghiepthang9@gmail.com',

@@ -6,7 +6,6 @@ import "./styles/styles.scss";
 import Header from "./components/customer/Header";
 import Footer from "./components/customer/Footer";
 import MyLoading from './components/MyLoading'
-import { useSelector } from "react-redux";
 import NotFound from "./views/NotFound";
 class App extends Component {
   render() {

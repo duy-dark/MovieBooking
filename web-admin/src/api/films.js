@@ -66,10 +66,40 @@ const createSchedule = (params)=>{
 }
 // eslint-disable-next-line import/no-anonymous-default-export
 const getTheater = ()=>{
-  return Api.get(`api/theater`).then((res)=>res.data)
+  return Api.get(`/api/theater`).then((res)=>res.data)
 }
+
+const getListNews = () => {
+  return Api.get(`/api/news`).then(res => res.data)
+}
+
+const getNewDetail = (params) => {
+  return Api.get(`/api/news/${params}`).then(res => res.data)
+}
+
+const updateNewDetail = (params) => {
+  return Api.put(`/api/news/${params.id}`, params).then(res => res.data)
+}
+
+const getTheaterDetail = (params) => {
+  return Api.get(`/api/theater/detail/${params}`).then(res => res.data)
+}
+
+const updateTheaterDetail = (params) => {
+  return Api.put(`/api/theater/${params._id}`, params).then(res => res.data)
+}
+
+const getRoomDetail = (params) => {
+  return Api.get(`/api/room/${params}`).then(res => res.data)
+}
+
+const updateRoomDetail = (params) => {
+  return Api.put(`/api/news/${params.id}`, params).then(res => res.data)
+}
+
+
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
-  
   postBookingInfo,
   getDetail,
   getListFilmNow,
@@ -84,6 +114,13 @@ export default {
   uploadFile,
   createNewPaper,
   getListNewpapers,
+  getListNews,
+  getNewDetail,
+  createSchedule,
+  updateNewDetail,
   updateFilmSchedule,
-  createSchedule
+  getTheaterDetail,
+  updateTheaterDetail,
+  getRoomDetail,
+  updateRoomDetail
 };

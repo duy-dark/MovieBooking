@@ -1,0 +1,14 @@
+1.Setting server:
+	- Cài đặt Nodejs: Tải và chạy Nodejs từ bản Node >10 : https://nodejs.org/en/
+	- Khởi tạo chạy lệnh từ folder ./server chạy: yarn install
+2.Khởi chạy web:
+	- Khởi tạo chạy lệnh từ folder ./server chạy:  yarn install
+	- Chạy web từ đường dẫn ./web: yarn start
+3.Khởi chạy web-admin:
+	- Khởi tạo chạy lệnh từ folder ./server chạy:  yarn install
+	- Chạy web từ đường dẫn ./web-admin: yarn start
+4.Khởi chạy app(android):
+	- Khởi tạo chạy lệnh từ folder ./server chạy: yarn install
+	- Phải vào CHPlay tải app Expo Go
+	- Chạy lệnh từ đường dẫn ./mobile: yarn start (expo start)
+	- Quét mã QR vừa nhận được từ trang web bằng ứng dụng Expo Go

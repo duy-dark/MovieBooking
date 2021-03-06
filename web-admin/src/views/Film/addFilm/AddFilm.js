@@ -1,11 +1,11 @@
-import { Form, Input, Button ,Upload,message,DatePicker, Space} from 'antd';
+import { Form, Input, Button ,Upload,message,DatePicker} from 'antd';
 import Api from './../../../api/api'
 import { UploadOutlined } from '@ant-design/icons';
 import React from 'react';
 import { addNewFilm } from "../../../redux/films/actions";
 import { Select } from 'antd';
-import { useDispatch , useSelector} from "react-redux";
-import moment from 'moment'
+import { useDispatch } from "react-redux";
+// import moment from 'moment'
 const { Option } = Select;
 
 const layout = {

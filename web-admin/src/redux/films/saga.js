@@ -164,6 +164,70 @@ function* fetchCreateNewPaper(action) {
   } catch (error) { console.log(error); }
 }
 
+function* fetchListNew(action) {
+  try {
+    const res = yield call(httpFilms.getListNews, {})
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.LIST_NEW_SUCCESS, payload: data})
+    }
+  } catch (error) { console.log(error); }
+}
+
+function* fetchNewDetail(action) {
+  try {
+    const { payload } = action
+    const res = yield call(httpFilms.getNewDetail, payload)
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.NEW_DETAIL_SUCCESS, payload: data})
+    }
+  } catch (error) { console.log(error); }
+}
+
+function* fetchUpdateNewDetail(action) {
+  try {
+    const { payload } = action
+    const res = yield call(httpFilms.updateNewDetail, payload)
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.UPDATE_NEW_SUCCESS, payload: data})
+    }
+  } catch (error) { console.log(error); }
+}
+
+function* fetchTheaterDetail(action) {
+  try {
+    const { payload } = action
+    const res = yield call(httpFilms.getTheaterDetail, payload)
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.THEATER_DETAIL_SUCCESS, payload: data})
+    }
+  } catch (error) { console.log(error); }
+}
+
+function* fetchTheaterUpdate(action) {
+  try {
+    const { payload } = action
+    const res = yield call(httpFilms.updateTheaterDetail, payload)
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.THEATER_UPDATE_SUCCESS, payload: data})
+    }
+  } catch (error) { console.log(error); }
+}
+
+function* fetchRoomDetail(action) {
+  try {
+    const { payload } = action
+    const res = yield call(httpFilms.getRoomDetail, payload)
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.ROOM_DETAIL_SUCCESS, payload: data})
+    }
+  } catch (error) { console.log(error); }
+}
 
 function* postBookingInfo() {
   yield takeEvery(FilmsType.POST_BOOKING_INFO, fetchPostBookingInfo);
@@ -214,6 +278,30 @@ function* createNewPaper() {
   yield takeEvery(FilmsType.CREATE_NEW, fetchCreateNewPaper);
 }
 
+function* getListNew() {
+  yield takeEvery(FilmsType.LIST_NEW, fetchListNew);
+}
+
+function* getNewDetail() {
+  yield takeEvery(FilmsType.NEW_DETAIL, fetchNewDetail);
+}
+
+function* updateNewDetail() {
+  yield takeEvery(FilmsType.UPDATE_NEW, fetchUpdateNewDetail);
+}
+
+function* getTheaterDetail() {
+  yield takeEvery(FilmsType.THEATER_DETAIL, fetchTheaterDetail);
+}
+
+function* updateTheater() {
+  yield takeEvery(FilmsType.THEATER_UPDATE, fetchTheaterUpdate);
+}
+
+function* getRoomDetail() {
+  yield takeEvery(FilmsType.ROOM_DETAIL, fetchRoomDetail);
+}
+
 export default function* filmsSaga() {
   yield all([
     postBookingInfo(),
@@ -229,6 +317,13 @@ export default function* filmsSaga() {
     getTheaters(),
     createNewPaper(),
     updateFilmSchedule(),
-    createFilmSchedule()
+    createFilmSchedule(),
+    getListNew(),
+    getNewDetail(),
+    updateNewDetail(),
+ 
+    getTheaterDetail(),
+    updateTheater(),
+    getRoomDetail()
   ]);
 }

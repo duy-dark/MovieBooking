@@ -1,7 +1,8 @@
 import films from '../../api/films';
 import FilmTypes from './types';
 // import update from 'immutability-helper';
-import findindex from 'lodash'
+import findIndex from 'lodash/findIndex'
+
 const initialState = {
   status: true,
   filmsNow: [],
@@ -16,7 +17,10 @@ const initialState = {
   filmSchedule:[],
   listNews: [],
   updatefilmSchedule:[],
-  newfilmSchedule:[]
+  newfilmSchedule:[],
+  newDetail: {},
+  theaterDetail: {},
+  roomDetail: {}
 }
 
 export default function filmsReducer(state = initialState, action) {
@@ -54,8 +58,7 @@ export default function filmsReducer(state = initialState, action) {
       break;
     case FilmTypes.UPDATE_FILM_SCHEDULE_SUCCESS:
        console.log(payload)
-      newState = Object.assign({},state,{filmSchedule : state.filmSchedule.map(item=>{
-        return item._id==payload._id?item=payload:item})})
+      newState = Object.assign({},state,{filmSchedule : state.filmSchedule.map(item=>{ return item._id === payload._id ? item = payload : item})})
       break;
       case FilmTypes.CREATE_FILM_SCHEDULE_SUCCESS:
         console.log(payload)
@@ -66,6 +69,30 @@ export default function filmsReducer(state = initialState, action) {
         break;
     case FilmTypes.CREATE_NEW_SUCCESS:
       newState = Object.assign({},state,{ listNews: [payload, ...state.listNews]})
+      break;
+    case FilmTypes.LIST_NEW_SUCCESS:
+      newState = Object.assign({},state,{ listNews: [...payload] })
+      break;
+    case FilmTypes.NEW_DETAIL_SUCCESS:
+      newState = Object.assign({},state,{ newDetail: {...payload} })
+      break;
+    case FilmTypes.UPDATE_NEW_SUCCESS:
+      let index = findIndex(state.listNews, item => item._id === payload._id)
+      let arr = [...state.listNews]
+      arr[index] = payload
+      newState = Object.assign({},state,{ listNews: [...arr], newDetail: {...payload} })
+      break;
+    case FilmTypes.THEATER_DETAIL_SUCCESS:
+      newState = Object.assign({}, state, { theaterDetail: {...payload} })
+      break;
+    case FilmTypes.THEATER_UPDATE_SUCCESS:
+      let indenT = findIndex(state.theaters, item => item._id === payload._id)
+      let arrT = [...state.theaters]
+      arrT[indenT] = payload
+      newState = Object.assign({}, state, { theaters: [...arrT], theaterDetail: {...payload}})
+      break;
+    case FilmTypes.ROOM_DETAIL_SUCCESS:
+      newState = Object.assign({}, state, { roomDetail: {...payload} })
       break;
     default:
       newState = state;

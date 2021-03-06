@@ -6,8 +6,8 @@ const nexmo = new Nexmo({
 });
 const sendSMS = (objectSms) => {
   const from = 'Vonage APIs';
-  // const to = '+84838263357';
-  const to = '84961600292';
+  // const to = '84961600292';
+  const to = objectSms.phone_number;
   const text = `Dat ve thanh cong
   Ma: ${objectSms.code}
   Phim: ${objectSms.film}

@@ -11,13 +11,15 @@ const getList = async (params) => {
         _id: 1,
         title: 1,
         content: 1,
-        film_id: 1
+        film_id: 1,
+        created_at: 1,
+        updated_at: 1
       }
     };
     let data = await Model.findByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
-    throw {status: 400, detail: error};
+    throw {status: 204, detail: error};
   }
 };
 
@@ -29,13 +31,15 @@ const findById = async (id) => {
         _id: 1,
         title: 1,
         content: 1,
-        film_id: 1
+        film_id: 1,
+        created_at: 1,
+        updated_at: 1
       }
     };
     let data = await Model.findByLambda(lambda);
     return resSuccess(data[0]);
   } catch (error) {
-    throw {status: 400, detail: error};
+    throw {status: 204, detail: error};
   }
 };
 
@@ -53,7 +57,7 @@ const postCreate = async (params) => {
     let data = await Model.createByLambda(lambda);
     return resSuccess(data[0]);
   } catch (error) {
-    throw {status: 400, detail: error};
+    throw {status: 204, detail: error};
   }
 };
 
@@ -74,10 +78,10 @@ const putUpdate = async (id, params) => {
       let result = await findById(id);
       return result;
     } else {
-      throw {status: 400, detail: data};
+      throw {status: 204, detail: data};
     }
   } catch (error) {
-    throw {status: 400, detail: error};
+    throw {status: 204, detail: error};
   }
 };
 
@@ -93,7 +97,7 @@ const deleteData = async (id) => {
     let data = await Model.updateByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
-    throw {status: 400, detail: error};
+    throw {status: 204, detail: error};
   }
 };
 

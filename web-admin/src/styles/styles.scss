@@ -1,5 +1,11 @@
+@import "./color";
+
 html, body, #root, .ant-layout {
   height: 100%;
+}
+
+.layout {
+  overflow-y: scroll;
 }
 
 .left-sidebar {
@@ -16,4 +22,154 @@ html, body, #root, .ant-layout {
     justify-content: center;
     align-items: center;
   }
+}
+
+::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #D62929;
+}
+
+.btn {
+  font-size: 14px;
+  color: #CADEF9;
+  border: 1px solid #949494;
+  border-radius: 4px;
+  text-align: center;
+  background: 0 0;
+  padding: 7px 25px;
+  transition: all .2s;
+  display: block;
+  transition: all .3s ease-in-out;
+  color: #000;
+  box-shadow: 0 0 10px rgba(0,0,0,.3);
+  cursor: pointer;
+
+
+  &:not(:last-child) {
+    margin-right: 20px;
+  }
+
+  &.btn-submit {
+    &:hover {
+      background-color: #fb4226;
+      border-color: #fb4226;
+      color: #fff!important;
+    }
+  }
+
+  &.btn-cancel {
+    &:hover {
+      background-color: #7AB4ED;
+      border-color: #7AB4ED;
+      color: #fff!important;
+    }
+  }
+
+  &.btn--editing {
+    @extend %color_button_edit;
+    font-size: 13px;
+    line-height: 16px;
+    background-color: white;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 74px;
+    height: 40px;
+
+    svg {
+      margin-right: 7px;
+      fill: currentColor;
+    }
+
+    span {
+      flex: 1 1 auto;
+      text-align: left;
+    }
+
+    &:hover {
+      @extend %color_button_edit_hover;
+    }
+  }
+
+  
+
+  &.btn-default {
+    background-color: $grey_05;
+    border-color: $grey_10;
+    color: $font_grey_03;
+    min-height: 32px;
+
+    &:not(:disabled):not(.disabled) {
+      &:active,
+      &:hover {
+        background-color: $grey_09;
+        border-color: $grey_10;
+        color: $font_grey_03;
+      }
+    }
+  }
+
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.layout-detail {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: scroll;
+
+  .layout-detail__group-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 20px;
+  }
+}
+
+.form-control {
+  label {
+    min-width: 200px;
+    max-width: 200px;
+    font-size: 20px;
+    font-weight: 500;
+  }
+
+  span {
+    font-size: 20px;
+  }
+
+  input:not([type='file']) {
+    display: block;
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
+    &:focus {
+      color: #495057;
+      background-color: #fff;
+      border-color: #80bdff;
+      outline: 0;
+    }
+  }
+
 }
