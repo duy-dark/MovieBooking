@@ -58,7 +58,7 @@
         .hl-dropdown {
           display: none;
           position: absolute;
-          bottom: -45px;
+          bottom: -65px;
           z-index: 5;
           width: 100%;
           background-color: #fff;
@@ -67,7 +67,7 @@
           border-bottom-right-radius: 4px;
 
           .hl-dropdown__item {
-            height: 30px;
+            height: 60px;
             cursor: pointer;
             background-color: transparent;
             transition: all 0.3 ease-in-out;
@@ -79,6 +79,10 @@
 
             &:hover {
               background-color: #D6DEE6;
+            }
+
+            button{
+              color: black !important;
             }
           }
         }
@@ -186,8 +190,12 @@
           .hl-dropdown__item {
             background-color: transparent;
             transition: all 0.3 ease-in-out;
-            height: 30px;
+            height: 60px;
             border: 4px;
+
+            button{
+              color: black !important;
+            }
           }
         }
       }
