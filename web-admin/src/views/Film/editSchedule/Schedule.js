@@ -68,8 +68,8 @@ export default function ShowSchedule  (props) {
       const key=index;
       const timestart=moment(item.time_start);
       const timeend=moment(item.time_end);
-      const time_start = timestart.hour()+":"+timestart.minute();
-      const time_end =timeend.hour()+":"+timeend.minute();
+      const time_start = timestart.hours()+":"+timestart.minutes();
+      const time_end =timeend.hours()+":"+timeend.minutes();
       const room = item.room.name;
       let theater =item.theater.name;
       const filmid=item.film_id;
@@ -82,7 +82,7 @@ export default function ShowSchedule  (props) {
                "Roomid":roomid,"Theaterid":theaterid,"FilmScheduleid":filmscheduleid })
     }
  })
-
+console.log(data1)
  useEffect(()=>{
     
   setData(data1);

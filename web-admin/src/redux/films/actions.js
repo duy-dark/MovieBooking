@@ -75,6 +75,21 @@ export function updateFilmSchedules(id,data) {
     id:id
   };
 }
+
+export function updateFilmDetail(id,data) {
+  return {
+    type: FilmTypes.UPDATE_FILM_DETAIL,
+    payload: data,
+    id:id
+  };
+}
+export function createFilmSchedules(data) {
+  return {
+    type: FilmTypes.CREATE_FILM_SCHEDULE,
+    payload: data,
+    
+  };
+}
 export function getTheaters(){
   return {
     type: FilmTypes.LIST_THEATER,

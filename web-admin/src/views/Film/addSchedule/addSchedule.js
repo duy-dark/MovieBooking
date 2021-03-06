@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import {  updateFilmSchedules } from "../../../redux/films/actions";
+import {  createFilmSchedules } from "../../../redux/films/actions";
 import { Input, Select,Button,TimePicker ,DatePicker} from 'antd';
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
@@ -30,9 +30,10 @@ export default function AddSchedule(props){
   const [filmid, setFilm] = useState(props.schedule._id)
  
  
-    const hours = Math.floor(props.longtime / 60);  
-  const minutes = props.longtime % 60;
+    const hours = Math.floor(props.schedule.long_time / 60);  
+  const minutes = props.schedule.long_time % 60;
   const long_time = hours + ":" + minutes+":00";   
+
   const dispatch = useDispatch();
   useEffect(()=>{
 
@@ -75,9 +76,9 @@ export default function AddSchedule(props){
                 "theater_id":theaterid,
                 "room_id":roomid
     }
-  
- //dispatch(updateFilmSchedules(props.schedule.FilmScheduleid,data))
-    
+ // console.log(long_time,starttime,x)
+dispatch(createFilmSchedules(data))
+   
       
     }
   return (
@@ -107,6 +108,6 @@ export default function AddSchedule(props){
     {/* <Input    style={{ width: 120,marginLeft:20 }} disabled={true} value={props.schedule.Time_End} /> */}
     <DatePicker  style={{ width: 140,marginLeft:20 }} onChange={(date,dateString) => setDate(dateString)} />
     </div>
-  <Button style={{marginLeft:20,marginTop:21 }} onClick={update}>UPDATE</Button>
+  <Button style={{marginLeft:20,marginTop:21 }} onClick={update}>ADD</Button>
   </div>)
 }

@@ -2,7 +2,7 @@ import Api from "./api";
 
 
 const updateFilmDetail = (params,data)=>{
-  return Api.put(`api/film/${params.id}`,data).then((res) => res.data);
+  return Api.put(`api/film/${params}`,data).then((res) => res.data);
 }
 const getListFilmNow = () => {
   return Api.get("/api/film").then((res) => res.data);
@@ -61,7 +61,9 @@ const getListNewpapers = (params) => {
   return Api.get('').then((res) => res.data)
 }
 
-
+const createSchedule = (params)=>{
+  return Api.post('/api/film_schedule',params).then((res) => res.data)
+}
 // eslint-disable-next-line import/no-anonymous-default-export
 const getTheater = ()=>{
   return Api.get(`api/theater`).then((res)=>res.data)
@@ -82,5 +84,6 @@ export default {
   uploadFile,
   createNewPaper,
   getListNewpapers,
-  updateFilmSchedule
+  updateFilmSchedule,
+  createSchedule
 };

@@ -1,3 +1,4 @@
+import films from '../../api/films';
 import FilmTypes from './types';
 // import update from 'immutability-helper';
 
@@ -14,7 +15,8 @@ const initialState = {
   newfilm:[],
   filmSchedule:[],
   listNews: [],
-  updatefilmSchedule:[]
+  updatefilmSchedule:[],
+  newfilmSchedule:[]
 }
 
 export default function filmsReducer(state = initialState, action) {
@@ -38,7 +40,8 @@ export default function filmsReducer(state = initialState, action) {
       newState = Object.assign({}, state, { seats: payload.seats })
       break;
     case FilmTypes.UPDATE_FILM_DETAIL_SUCCESS:
-      newState = Object.assign({},state,{filmUpdate : payload})
+      newState = Object.assign({},state,{filmsNow : state.filmsNow.map(item=>
+        item._id==payload._id?payload:item)})
       break;
     case FilmTypes.LIST_CATEGOGY_SUCCESS:
       newState = Object.assign({},state,{categories : payload})
@@ -47,13 +50,17 @@ export default function filmsReducer(state = initialState, action) {
       newState = Object.assign({},state,{filmsNow : [payload, ...state.filmsNow]})
       break;
     case FilmTypes.FILM_SCHEDULE_SUCCESS:
-      newState = Object.assign({},state,{filmSchedule : payload})
+      newState = Object.assign({},state,{filmSchedule :[...payload,state.filmSchedule]})
       break;
     case FilmTypes.UPDATE_FILM_SCHEDULE_SUCCESS:
        console.log(payload)
       newState = Object.assign({},state,{filmSchedule : state.filmSchedule.map(item=>{
         return item._id==payload._id?item=payload:item})})
       break;
+      case FilmTypes.CREATE_FILM_SCHEDULE_SUCCESS:
+        console.log(payload)
+       newState = Object.assign({},state,{filmSchedule :[...payload,state.filmSchedule]})
+       break;
     case FilmTypes.LIST_THEATER_SUCCESS:
         newState = Object.assign({},state,{theaters : payload})
         break;

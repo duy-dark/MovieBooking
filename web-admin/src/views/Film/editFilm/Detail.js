@@ -1,8 +1,9 @@
   import React, { useEffect, useState } from 'react';
-  import { Table, Input, InputNumber, Image, Form, Typography } from 'antd';
-
+  import { Table, Input, InputNumber, Image, Form, Typography ,Button,Modal} from 'antd';
+  import moment from 'moment'
   import { useDispatch , useSelector} from "react-redux";
-
+import Trailer from './trailer'
+import EditPopUp from './EditPopup'
   const EditableCell = ({
     editing,
     dataIndex,
@@ -37,78 +38,49 @@
       </td>
     );
   };
-
-  export default function EditableTable (props) {
+ 
+  export default function Detail (props) {
     const [form] = Form.useForm();
     const [data, setData] = useState();
-    const [editingKey, setEditingKey] = useState('');
-    const  dispatch = useDispatch();
     useEffect(()=>{
       let arr=[];
       arr.push(props.detail);
       setData(arr);
     },[])
 
-    const isEditing = (record) => record.key === editingKey;
+   
 
-    const edit = (record) => {
-      form.setFieldsValue({
-        name: '',
-        trailer: '',
-        long_time: '',
-        url_avatar:'',
-        url_background:'',
-        ...record,
-      });
-      setEditingKey(record.key);
-    };
+    
 
-    const cancel = () => {
-      setEditingKey('');
-    };
 
-    const Save = async (key) => {
-      try {
-        const row = await form.validateFields();
-        const newData = [...data];
-        const index = newData.findIndex((item) => key === item.key);
-
-        if (index > -1) {
-          const item = newData[index];
-          newData.splice(index, 1, { ...item, ...row });
-          setData(newData);
-          setEditingKey('');
-      
-        } else {
-          newData.push(row);
-          setData(newData);
-          setEditingKey('');
-        
-        }
-      
-          
-      } catch (errInfo) {
-        console.log('Validate Failed:', errInfo);
-      }
-    };
-
+  
     const columns = [
       {
         title: 'name',
         dataIndex: 'name',
-        width: 300,
+        width: 280,
         
+      },
+      {
+        title: 'categories',
+        dataIndex: 'categories',
+        width: 280,
+        render: (record)=> {let category="";record.map(item=>category+=item.name+", ")
+         
+      return <a>{category.slice(0,category.length-2)}</a>
+        }
       },
       {
         title: 'trailer',
         dataIndex: 'trailer',
-        width: '15%',
-    
+        width: 100,
+        height:100,
+        render: (text)=> <Trailer ifr={text}/>
       },
       {
         title: 'long_time',
         dataIndex: 'long_time',
-        width: 50,
+        width: 30,
       
       },
       {
@@ -123,17 +95,49 @@
         width: 100,
         render: (text)=> <Image width={100}  height={50} src={text}/>
       },
-    
       {
-        title: 'operation',
+        title: 'content',
+        dataIndex: 'content',
+        width: 500,
+        render: (text)=> text.slice(0,100)+"..."
+      },
+      {
+        title: 'countries',
+        dataIndex: 'countries',
+        width: 50,
+      
+      },
+      {
+        title: 'digitals',
+        dataIndex: 'digitals',
+        width: 50,
+      
+      },
+      {
+        title: 'directors',
+        dataIndex: 'directors',
+        width: 50,
+      
+      },
+      {
+        title: 'imdb',
+        dataIndex: 'imdb',
+        width: 40,
+      
+      },
+      {
+        title: 'start_date',
+        dataIndex: 'start_date',
+        width: 100,
+        render : (text)=>moment(text).format('YYYY-MM-DD')
+      },
+      {
+        title: 'Edit',
         dataIndex: 'operation',
-        render: (_, record) => {
+        render: (text,record) => 
         
-            <Typography.Link >
-              Edit
-            </Typography.Link>
-          
-        },
+        <EditPopUp categories={props.categories} detail={data} onCancel={props.onCancel}/>
+        
       },
     ];
     

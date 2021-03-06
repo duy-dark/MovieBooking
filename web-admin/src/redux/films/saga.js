@@ -89,7 +89,7 @@ function* fetchSeats(action) {
 function* fetchFilmUpdate(action){
   try{
     
-    const res = yield call(httpFilms.updateFilmDetail, action.payload);
+    const res = yield call(httpFilms.updateFilmDetail, action.id,action.payload);
     const { status, data } = res
     if (status === "ok") {
       yield put({ type: FilmsType.UPDATE_FILM_DETAIL_SUCCESS, payload: data });
@@ -128,7 +128,18 @@ function* fetchUpdateFilmSchedule(action) {
       yield put({ type: FilmsType.UPDATE_FILM_SCHEDULE_SUCCESS, payload: data });
     }
 
-  } catch (error) { console.log(error); }
+  } catch (error) { alert("LỊCH CHIẾU ĐÃ TỒN TẠI!"); }
+}
+function* fetchCreateFilmSchedule(action) {
+  try {
+    
+    const res = yield call(httpFilms.createSchedule,action.payload);
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.CREATE_FILM_SCHEDULE_SUCCESS, payload: data });
+    }
+
+  } catch (error) { alert("LỊCH CHIẾU ĐÃ TỒN TẠI!"); }
 }
 function* fetchGetTheater() {
   try {
@@ -192,6 +203,9 @@ function* filmSchedule(){
 function* updateFilmSchedule(){
   yield takeEvery(FilmsType.UPDATE_FILM_SCHEDULE,fetchUpdateFilmSchedule)
 }
+function* createFilmSchedule(){
+  yield takeEvery(FilmsType.CREATE_FILM_SCHEDULE,fetchCreateFilmSchedule)
+}
 function* getTheaters(){
   yield takeEvery(FilmsType.LIST_THEATER,fetchGetTheater)
 }
@@ -214,6 +228,7 @@ export default function* filmsSaga() {
     filmSchedule(),
     getTheaters(),
     createNewPaper(),
-    updateFilmSchedule()
+    updateFilmSchedule(),
+    createFilmSchedule()
   ]);
 }

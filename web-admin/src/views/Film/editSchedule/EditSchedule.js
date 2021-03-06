@@ -18,7 +18,7 @@ if(h>=24) h-=24;
 return h+':'+m+':'+s
 } 
 export default function EditSchedule(props){
- console.log(props)
+
   let room=[];
        props.theaters.filter(item=> item._id==props.schedule.Theaterid?item.rooms.map(roomname=>room.push({value:roomname.name,id:roomname._id})):false)
   const [optionRoom, setOptionRoom] = useState(room)
@@ -52,12 +52,13 @@ export default function EditSchedule(props){
   function getRoom(value,record){
   
   setRoom(record.id)
-
+  console.log(record)
   }
   function handleChange(value,record){
+    console.log(record)
     // setFilm(record.key)
     setTheater(record.key)
-    console.log(record)
+
     options=[]
    
     props.theaters.filter(theater=>theater.name==value?roomOfTheater=[...theater.rooms]:false)
@@ -67,7 +68,7 @@ export default function EditSchedule(props){
 
     }
     const update = ()=>{
-   
+    console.log(props.schedule.Time_Start,long_time)
      const x=Time_End_Change(starttime,long_time);
      const data={"time_start":new Date(starttime+" "+date),
                 "time_end":new Date(x+" "+date),
@@ -75,8 +76,8 @@ export default function EditSchedule(props){
                 "theater_id":theaterid,
                 "room_id":roomid
     }
-    
- dispatch(updateFilmSchedules(props.schedule.FilmScheduleid,data))
+    console.log(data)
+dispatch(updateFilmSchedules(props.schedule.FilmScheduleid,data))
     
       
     }
