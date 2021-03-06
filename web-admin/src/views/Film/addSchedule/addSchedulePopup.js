@@ -15,7 +15,11 @@ const AddSchedulePopup = (props) => {
  
   const handleCancel = () => {
     console.log('Clicked cancel button');
-    setVisible(false);
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setVisible(false);
+      setConfirmLoading(false);
+    }, 1000);
   };
 
   return (
@@ -35,7 +39,7 @@ const AddSchedulePopup = (props) => {
         okButtonProps={{ style: { display: 'none' } }}
         cancelButtonProps={{ style: { display: 'none' } }}
       >
-       <AddSchedule schedule={props.schedule} theaters={props.theaters} longtime={props.longtime} />
+       <AddSchedule onCancel={handleCancel} schedule={props.schedule} theaters={props.theaters} longtime={props.longtime} />
       </Modal>
     </>
   );

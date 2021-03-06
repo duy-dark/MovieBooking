@@ -19,12 +19,16 @@ const DetailPopUp = (props) => {
     setTimeout(() => {
       setVisible(false);
       setConfirmLoading(false);
-    }, 2000);
+    }, 1000);
   };
 
   const handleCancel = () => {
     console.log('Clicked cancel button');
-    setVisible(false);
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setVisible(false);
+      setConfirmLoading(false);
+    }, 500);
   };
 
   return (

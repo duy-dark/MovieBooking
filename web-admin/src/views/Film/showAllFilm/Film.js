@@ -21,7 +21,7 @@ export default function Film(){
   const filmsNow = useSelector((state) => state.films.filmsNow);
   const categories = useSelector((state) => state.films.categories);
   const data = filmsNow.map((item,index)=>({...item, key: index}))
-  console.log(filmsNow)
+  
   
 const columns = [
   {

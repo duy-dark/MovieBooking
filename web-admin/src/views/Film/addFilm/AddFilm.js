@@ -88,7 +88,7 @@ export default function AddFilm  (props) {
  
   
  //add new film
-    setTimeout( dispatch(addNewFilm(values.film)),2000)
+    dispatch(addNewFilm(values.film))
       
     props.onCancel();
    
@@ -164,6 +164,17 @@ export default function AddFilm  (props) {
         ]}
       >
         <DatePicker onChange={getTime} />
+      </Form.Item>
+      <Form.Item
+        name={['film', 'trailer']}
+        label="Trailer"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >
+        <Input />
       </Form.Item>
       <Form.Item
         name={['film', 'digitals']}

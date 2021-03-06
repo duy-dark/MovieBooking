@@ -76,9 +76,9 @@ export default function EditSchedule(props){
                 "theater_id":theaterid,
                 "room_id":roomid
     }
-    console.log(data)
+  
 dispatch(updateFilmSchedules(props.schedule.FilmScheduleid,data))
-    
+    props.onCancel()
       
     }
   return (

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import { Table, Input, InputNumber, Form, TimePicker ,DatePicker, Button ,Select} from 'antd';
 import Api from "../../../api/api"
-
+import Delete from "./Delete"
 import moment from 'moment';
 import EditSchedulePopup from './EditSchedulePopup'
 import { useSelector, useDispatch } from "react-redux";
@@ -47,7 +47,9 @@ const EditableCell = ({
     </td>
   );
 };
-
+const deleteSchedule = (schedule)=>{
+  console.log(schedule)
+}
 export default function ShowSchedule  (props) {
   const [form] = Form.useForm();
   const [data, setData] = useState();
@@ -148,6 +150,15 @@ const updateScheulde =()=>{
          <EditSchedulePopup schedule={record} theaters={props.theaters} longtime={props.longtime}/>
         )
       },
+    },
+    {
+      title: 'Delete',
+      dataIndex: 'Detele',
+      render: (_, record) => <Delete schedule={record}/>
+     
+      
+        
+    
     },
   ];
   const mergedColumns = columns.map((col) => {

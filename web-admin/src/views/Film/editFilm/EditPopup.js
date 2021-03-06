@@ -13,18 +13,15 @@ const EditPopUp = (props) => {
     setVisible(true);
   };
 
-  const handleOk = () => {
-    setModalText('The modal will be closed after two seconds');
+
+
+  const handleCancel = () => {
+    console.log('Clicked cancel button');
     setConfirmLoading(true);
     setTimeout(() => {
       setVisible(false);
       setConfirmLoading(false);
-    }, 2000);
-  };
-
-  const handleCancel = () => {
-    console.log('Clicked cancel button');
-    setVisible(false);
+    }, 500);
   };
 
   return (
@@ -37,7 +34,7 @@ const EditPopUp = (props) => {
        
         title="Edit Film Detail"
         visible={visible}
-        onOk={handleOk}
+  
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
         pagination={false}

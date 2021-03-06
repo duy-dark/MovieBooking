@@ -78,7 +78,7 @@ export default function AddSchedule(props){
     }
  // console.log(long_time,starttime,x)
 dispatch(createFilmSchedules(data))
-   
+    props.onCancel();
       
     }
   return (

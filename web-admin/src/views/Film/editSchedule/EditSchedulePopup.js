@@ -20,7 +20,11 @@ const EditSchedulePopup = (props) => {
 
   const handleCancel = () => {
     console.log('Clicked cancel button');
-    setVisible(false);
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setVisible(false);
+      setConfirmLoading(false);
+    }, 500);
   };
 
   return (
