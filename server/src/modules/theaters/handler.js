@@ -34,7 +34,7 @@ const findById = async (id) => {
         comment: 1
       }
     };
-    let data = await Model.findByLambda(lambda);
+    let data = await Model.getDetail(lambda);
     return resSuccess(data[0]);
   } catch (error) {
     throw {status: 400, detail: error};
@@ -167,38 +167,26 @@ const deleteData = async (id) => {
 };
 const getTheater7Day = async (id) => {
   try {
-    let time_start = new Date(moment().add(7, 'hour'));
+    let time_start = new Date(moment().subtract(0, 'hour'));
 
     let hour = new Date(moment()).getHours();
-    let date = new Date(moment().add(7, 'hour').add(1, 'days')).getDate();
-    if (hour > 17) {
-      date -= 1;
-    }
-    let month = new Date(moment().add(7, 'hour').add(1, 'days')).getMonth();
-    let year = new Date(moment().add(7, 'hour').add(1, 'days')).getFullYear();
-
+    let minute = new Date(moment()).getMinutes();
+    console.log('hour', hour);
     let time_end = new Date(
-      moment(
-        `${year}-${month > 8 ? month + 1 : '0' + (month + 1)}-${
-          date > 9 ? date : '0' + date
-        }`,
-        moment.ISO_8601
-      ).add(7, 'hour')
+      moment()
+        .subtract(hour + 7, 'hour')
+        .subtract(minute + 1, 'minutes')
+        .add(1, 'days')
     );
 
     console.log('time_start: ', time_start);
     console.log('time_end:   ', time_end);
-    console.log('date:       ', date);
-    console.log('month:      ', month + 1);
-    console.log('year:       ', year);
 
     let lambda = {
       conditions: {
         _id: id,
         time_start: time_start,
         time_end: time_end,
-
-        // time_end1: new Date(moment(time_end).add(0, 'days')),
         time_end2: new Date(moment(time_end).add(1, 'days')),
         time_end3: new Date(moment(time_end).add(2, 'days')),
         time_end4: new Date(moment(time_end).add(3, 'days')),
@@ -209,6 +197,7 @@ const getTheater7Day = async (id) => {
       }
     };
 
+    console.log('lambda', lambda);
     let data = await Model.getTheater7Day(lambda);
 
     let detail = {...data[0]};

@@ -16,7 +16,7 @@ const getList = async (params) => {
       }
     };
     console.log('lambda', lambda);
-    let data = await Model.findByLambda(lambda);
+    let data = await Model.getDetailByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
     throw {status: 400, detail: error};
@@ -36,7 +36,7 @@ const findById = async (id) => {
         seats: 1
       }
     };
-    let data = await Model.findByLambda(lambda);
+    let data = await Model.getDetailByLambda(lambda);
     return resSuccess(data[0]);
   } catch (error) {
     throw {status: 400, detail: error};

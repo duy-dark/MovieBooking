@@ -223,6 +223,7 @@ module.exports = {
       {$unwind: '$film_schedules.films'},
       {$unwind: '$film_schedules.theaters'},
       {$unwind: '$film_schedules.rooms'},
+      {$unwind: '$customers'},
       {$sort: {created_at: -1}}
     ]);
   }

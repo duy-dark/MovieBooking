@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const handler = require('./handler');
 const {omitBy, isNil} = require('lodash');
-
+const resSuccess = require('../../responses/res-success');
 router.get('/', (req, res, next) => {
   let conditions = {
     _id: req.query._id,
@@ -61,6 +61,11 @@ router.get('/detail', (req, res, next) => {
 });
 
 router.get('/:id/detail', (req, res, next) => {
+  let checkId = require('mongodb').ObjectId.isValid(req.params.id);
+  if (!checkId) {
+    return res.json(resSuccess([]));
+  }
+  console.log('checkID', checkId);
   let id = require('mongodb').ObjectId(req.params.id);
   handler
     .findById(id)

@@ -112,7 +112,6 @@ const postCreate = async (params) => {
 
     let schedule_old = await Model.findByLambda({
       conditions: {
-        film_id: lambda.film_id,
         theater_id: lambda.theater_id,
         room_id: lambda.room_id
       }
@@ -154,7 +153,8 @@ const putUpdate = async (id, params) => {
       console.log(lambda.params.time_start, lambda.params.time_end);
       let schedule_old = await Model.findByLambda({
         conditions: {
-          _id: id
+          theater_id: lambda.params.theater_id,
+          room_id: lambda.params.room_id
         }
       });
 
@@ -162,7 +162,10 @@ const putUpdate = async (id, params) => {
       let time_end = moment(lambda.params.time_end);
       let long_time = time_end - time_start;
       schedule_old.forEach((element) => {
-        if (Math.abs(moment(element.time_start) - time_start) <= long_time) {
+        if (
+          Math.abs(moment(element.time_start) - time_start) <= long_time &&
+          element._id != id
+        ) {
           throw {status: 204, detail: {message: 'This time frame is existed'}};
         }
       });

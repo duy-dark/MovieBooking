@@ -28,5 +28,24 @@ module.exports = {
   },
   updateManyByLambda: async function (lambda) {
     return await Collection.updateMany(lambda.conditions, lambda.params);
+  },
+  getDetailByLambda: async function (lambda) {
+    return await Collection.aggregate([
+      {
+        $match: {
+          $and: [lambda.conditions]
+        }
+      },
+      {
+        $lookup: {
+          from: 'theaters',
+          localField: 'theater_id',
+          foreignField: '_id',
+          as: 'theaters'
+        }
+      },
+      {$unwind: '$theaters'},
+      {$unset: ['theaters.rooms']}
+    ]);
   }
 };

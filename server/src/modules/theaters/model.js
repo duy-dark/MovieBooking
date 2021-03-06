@@ -871,20 +871,56 @@ module.exports = {
       {
         $lookup: {
           from: 'rooms',
-          localField: '_id',
-          foreignField: 'theater_id',
+          let: {
+            theater_id: '$_id',
+            is_deleted: false
+          },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    {
+                      $eq: ['$theater_id', '$$theater_id']
+                    },
+                    {
+                      $eq: ['$is_deleted', '$$is_deleted']
+                    }
+                  ]
+                }
+              }
+            }
+          ],
           as: 'rooms'
         }
       },
+      {$unwind: '$rooms'},
+      {$sort: {'rooms.name': 1}},
       {
-        $unset: [
-          'rooms.seats',
-          'rooms.theater_id',
-          'rooms.is_deleted',
-          'rooms.created_at',
-          'rooms.updated_at'
-        ]
+        $group: {
+          _id: '$_id',
+          name: {
+            $first: '$name'
+          },
+          address: {
+            $first: '$address'
+          },
+          url_image: {
+            $first: '$url_image'
+          },
+          rooms: {
+            $push: '$rooms'
+          }
+        }
       }
+      // {
+      //   $unset: [
+      //     'rooms.theater_id',
+      //     'rooms.is_deleted',
+      //     'rooms.created_at',
+      //     'rooms.updated_at'
+      //   ]
+      // }
     ]);
   }
 };

@@ -177,7 +177,6 @@ module.exports = {
                   lambda.conditions.time_end6,
                   lambda.conditions.time_end7
                 ], // Boundaries for the buckets
-                default: 'Other', // Bucket id for documents which do not fall into a bucket
                 output: {
                   // Output for each bucket
                   count: {$sum: 1},

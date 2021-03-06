@@ -143,17 +143,13 @@ const getFilm7Day = async (id) => {
     let time_start = new Date(moment());
 
     let hour = new Date(moment()).getHours();
-    let date = new Date(moment().add(1, 'days')).getDate();
-    let month = new Date(moment().add(1, 'days')).getMonth();
-    let year = new Date(moment().add(1, 'days')).getFullYear();
+    let minute = new Date(moment()).getMinutes();
 
     let time_end = new Date(
-      moment(
-        `${year}-${month > 8 ? month + 1 : '0' + (month + 1)}-${
-          date > 9 ? date : '0' + date
-        }`,
-        moment.ISO_8601
-      )
+      moment()
+        .subtract(hour + 7, 'hour')
+        .subtract(minute + 1, 'minutes')
+        .add(1, 'days')
     );
 
     let lambda = {
@@ -161,8 +157,6 @@ const getFilm7Day = async (id) => {
         _id: id,
         time_start: time_start,
         time_end: time_end,
-
-        // time_end1: new Date(moment(time_end).add(0, 'days')),
         time_end2: new Date(moment(time_end).add(1, 'days')),
         time_end3: new Date(moment(time_end).add(2, 'days')),
         time_end4: new Date(moment(time_end).add(3, 'days')),
@@ -172,7 +166,7 @@ const getFilm7Day = async (id) => {
         is_deleted: false
       }
     };
-
+    console.log('lambda', lambda);
     let data = await Model.getFilm7Day(lambda);
 
     let detail = {...data[0]};
@@ -343,6 +337,10 @@ const getNowShowing = async (customer_id) => {
       if (customer_id == 123) {
         data = [];
       } else {
+        let checkId = require('mongodb').ObjectId.isValid(customer_id);
+        if (!checkId) {
+          return resSuccess([]);
+        }
         let customer = await require('../customers/model').findByLambda({
           conditions: {_id: require('mongodb').ObjectId(customer_id)}
         });
@@ -403,6 +401,10 @@ const getCommingSoon = async (customer_id) => {
       if (customer_id == 123) {
         data = [];
       } else {
+        let checkId = require('mongodb').ObjectId.isValid(customer_id);
+        if (!checkId) {
+          return resSuccess([]);
+        }
         let customer = await require('../customers/model').findByLambda({
           conditions: {_id: require('mongodb').ObjectId(customer_id)}
         });
