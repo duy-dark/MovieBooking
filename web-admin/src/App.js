@@ -1,12 +1,12 @@
 import routes from "./router";
 import React,{ Component } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Layout } from 'antd';
 import { connect } from 'react-redux';
 import MenuHome from "./views/home/menu/MenuHome";
 import "./styles/styles.scss"
 
-const { Header, Footer, Sider, Content } = Layout; 
+const { Sider } = Layout; 
 class App extends Component {
   render(){
   function showRouteComponent(routes) {

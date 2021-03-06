@@ -1,11 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import { Layout, Menu, Breadcrumb } from "antd";
+import "../../styles/Theater/create.scss";
+import { useForm } from "react-hook-form";
 
 const { Header } = Layout;
 
 
 export default function AddTheater() {
+
+  const { handleSubmit, register, errors } = useForm({
+    name: '',
+    address: ''
+  });
+
   return (
     <Layout className="layout">
       <Header style={{ background: "#FFFFFF" }}>
@@ -15,8 +23,9 @@ export default function AddTheater() {
           <Menu.Item key="3"><Link to="/room/create">Add Room</Link></Menu.Item>
         </Menu>
       </Header>
-      <div className="create-new">
-        add theater
+      <div className="theater-create">
+        
+
       </div>
     </Layout>
   )
