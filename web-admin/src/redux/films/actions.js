@@ -106,3 +106,31 @@ export function updateNewDetail(params) {
     payload: params
   }
 }
+
+export function getTheaterDetail(id) {
+  return {
+    type: FilmTypes.THEATER_DETAIL,
+    payload: id
+  }
+}
+
+export function updateTheater(params) {
+  return {
+    type: FilmTypes.THEATER_UPDATE,
+    payload: params
+  }
+}
+
+export function getRoomDetail(id) {
+  return {
+    type: FilmTypes.ROOM_DETAIL,
+    payload: id
+  }
+}
+
+export function updateRoom(params) {
+  return {
+    type: FilmTypes.ROOM_UPDATE,
+    payload: params
+  }
+}
