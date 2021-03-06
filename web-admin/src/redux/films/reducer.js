@@ -15,7 +15,9 @@ const initialState = {
   newfilm:[],
   filmSchedule:[],
   listNews: [],
-  newDetail: {}
+  newDetail: {},
+  theaterDetail: {},
+  roomDetail: {}
 }
 
 export default function filmsReducer(state = initialState, action) {
@@ -52,8 +54,7 @@ export default function filmsReducer(state = initialState, action) {
       break;
     case FilmTypes.UPDATE_FILM_SCHEDULE_SUCCESS:
        console.log(payload)
-      newState = Object.assign({},state,{filmSchedule : state.filmSchedule.map(item=>{
-        return item._id==payload._id?item=payload:item})})
+      newState = Object.assign({},state,{filmSchedule : state.filmSchedule.map(item=>{ return item._id === payload._id ? item = payload : item})})
       break;
     case FilmTypes.LIST_THEATER_SUCCESS:
         newState = Object.assign({},state,{theaters : payload})
@@ -72,7 +73,18 @@ export default function filmsReducer(state = initialState, action) {
       let arr = [...state.listNews]
       arr[index] = payload
       newState = Object.assign({},state,{ listNews: [...arr], newDetail: {...payload} })
-
+      break;
+    case FilmTypes.THEATER_DETAIL_SUCCESS:
+      newState = Object.assign({}, state, { theaterDetail: {...payload} })
+      break;
+    case FilmTypes.THEATER_UPDATE_SUCCESS:
+      let indenT = findIndex(state.theaters, item => item._id === payload._id)
+      let arrT = [...state.theaters]
+      arrT[indenT] = payload
+      newState = Object.assign({}, state, { theaters: [...arrT], theaterDetail: {...payload}})
+      break;
+    case FilmTypes.ROOM_DETAIL_SUCCESS:
+      newState = Object.assign({}, state, { roomDetail: {...payload} })
       break;
     default:
       newState = state;

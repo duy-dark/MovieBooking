@@ -77,9 +77,23 @@ const updateNewDetail = (params) => {
   return Api.put(`/api/news/${params.id}`, params).then(res => res.data)
 }
 
+const getTheaterDetail = (params) => {
+  return Api.get(`/api/theater/detail/${params}`).then(res => res.data)
+}
+
+const updateTheaterDetail = (params) => {
+  return Api.put(`/api/theater/${params._id}`, params).then(res => res.data)
+}
+
+const getRoomDetail = (params) => {
+  return Api.get(`/api/room/${params}`).then(res => res.data)
+}
+
+const updateRoomDetail = (params) => {
+  return Api.put(`/api/news/${params.id}`, params).then(res => res.data)
+}
 
 
-// eslint-disable-next-line import/no-anonymous-default-export
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   postBookingInfo,
@@ -99,5 +113,9 @@ export default {
   getListNews,
   getNewDetail,
   updateNewDetail,
-  updateFilmSchedule
+  updateFilmSchedule,
+  getTheaterDetail,
+  updateTheaterDetail,
+  getRoomDetail,
+  updateRoomDetail
 };

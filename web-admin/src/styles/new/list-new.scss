@@ -11,7 +11,7 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    min-height: 40px;
+    min-height: 50px;
     cursor: pointer;
 
     &:not(.list-film__header):hover {
@@ -31,11 +31,18 @@
       &:nth-child(2) {
         width: 30%;
       }
+
+      &.list-film__header__btns,
+      &.list-film__item__btns {
+        min-width: 100px;
+        display: flex;
+        justify-content: center;  
+      }
     }
   }
 
   .list-film__header {
-    min-height: 52px;
+    min-height: 62px;
 
     .td {
       font-weight: bold;
