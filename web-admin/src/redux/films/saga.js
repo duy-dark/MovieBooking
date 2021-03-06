@@ -218,6 +218,17 @@ function* fetchRoomDetail(action) {
   } catch (error) { console.log(error); }
 }
 
+function* fetchUpdateRoom(action) {
+  try {
+    const { payload } = action
+    const res = yield call(httpFilms.updateRoomDetail, payload)
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.ROOM_UPDATE_SUCCESS, payload: data})
+    }
+  } catch (error) { console.log(error); }
+}
+
 function* postBookingInfo() {
   yield takeEvery(FilmsType.POST_BOOKING_INFO, fetchPostBookingInfo);
 }
@@ -288,6 +299,10 @@ function* getRoomDetail() {
   yield takeEvery(FilmsType.ROOM_DETAIL, fetchRoomDetail);
 }
 
+function* updateRoom() {
+  yield takeEvery(FilmsType.ROOM_UPDATE, fetchUpdateRoom);
+}
+
 export default function* filmsSaga() {
   yield all([
     postBookingInfo(),
@@ -308,6 +323,7 @@ export default function* filmsSaga() {
     updateFilmSchedule(),
     getTheaterDetail(),
     updateTheater(),
-    getRoomDetail()
+    getRoomDetail(),
+    updateRoom()
   ]);
 }

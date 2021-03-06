@@ -57,7 +57,7 @@ const SeatEl = (props) => {
   return (
     <span className={classSeatPar()} onClick={() => clickSeat(props)}>
       <span className={classSeatChil()}>
-        <span className="s-img">{ props.seats.includes(props.seat) ? formatSeat(props.seat) : formatSeat(status)}</span>
+        <span className="s-img">{ props.seats.includes(props.seat) ? formatSeat(props.seat) : ''}</span>
       </span>
     </span>
   );
@@ -187,27 +187,21 @@ export default function Booking(props) {
     }
   }, [showError])
   useEffect(() => {
-    seats.map(item => {
-      let nameRow = item.slice(0, 1)
-      let indexRowItem = words.indexOf(nameRow)
-      let indexValueItem = arrSeats[indexRowItem].rows.indexOf(item)
-      if (arrSeats[indexRowItem].types[indexValueItem] !== "2-1" && arrSeats[indexRowItem].types[indexValueItem] !== "2-2") {
-        let valueNearL1 = arrSeats[indexRowItem].rows[indexValueItem - 1]
-        let valueNearL2 = arrSeats[indexRowItem].rows[indexValueItem - 2]
-        let valueNearR1 = arrSeats[indexRowItem].rows[indexValueItem + 1]
-        let valueNearR2 = arrSeats[indexRowItem].rows[indexValueItem + 2]
-        if (valueNearL1 && !listSeatsSelected.includes(valueNearL1) && !seats.includes(valueNearL1) && (valueNearL2 === "0" || valueNearL2 === undefined)) {
-          setIsSelectBug(true)
-          setShowError(true)
-        } else if (valueNearR1 && !listSeatsSelected.includes(valueNearR1) && !seats.includes(valueNearR1) && (valueNearR2 === "0" || valueNearR2 === undefined)) {
-          setIsSelectBug(true)
-          setShowError(true)
-        } else {
-          setIsSelectBug(false)
-          setShowError(false)
+    let invalid=0
+    for(let i=0;i<seats.length-1;i++){
+      for(let j=i+1;j<seats.length;j++){
+        if(seats[i][0]!=seats[j][0])continue;
+        function getRowId(chair){
+          console.log(+chair.slice(1,chair.length))
+          return +chair.slice(1,chair.length)
+        }
+        if(Math.abs(getRowId(seats[i])-getRowId(seats[j]))==2){
+          invalid=seats[j]
+          break
         }
       }
-    })
+    }
+    if(invalid)alert("ghe"+invalid+ "ko hop le")
   }, [seats])
 
   const renderer = ({ hours, minutes, seconds, completed }) => {
@@ -247,6 +241,7 @@ export default function Booking(props) {
   const formatDate = (date) => {
     return moment(date).format('dddd DD/MM/YYYY hh:mm');
   }
+  const [timeLimit, setTimeLimit] = useState(Date.now() + 300000)
 
   return (
     <div className="booking">
@@ -261,7 +256,7 @@ export default function Booking(props) {
           </div>
           <div className="booking-content__countdown">
             <Countdown
-              date={Date.now() + 300000}
+              date={timeLimit}
               renderer={renderer}
             />
           </div>
