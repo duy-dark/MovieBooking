@@ -90,7 +90,7 @@ const getRoomDetail = (params) => {
 }
 
 const updateRoomDetail = (params) => {
-  return Api.put(`/api/news/${params.id}`, params).then(res => res.data)
+  return Api.put(`/api/room/${params._id}`, params).then(res => res.data)
 }
 
 
