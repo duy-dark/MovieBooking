@@ -229,6 +229,30 @@ function* fetchUpdateRoom(action) {
   } catch (error) { console.log(error); }
 }
 
+function* fetchCreateTheater(action) {
+  try {
+    const { payload, history } = action
+    const res = yield call(httpFilms.createTheater, payload)
+    const { status, data } = res
+    if (status === "ok") {
+      history.push(`/theater/${data._id}`)
+      yield put({ type: FilmsType.CREATE_THEATER_SUCCESS, payload: data})
+    }
+  } catch (error) { console.log(error); }
+}
+
+function* fetchCreateRoom(action) {
+  try {
+    const { payload, history } = action
+    const res = yield call(httpFilms.createRoom, payload)
+    const { status, data } = res
+    if (status === "ok") {
+      history.push(`/room/${data._id}`)
+      yield put({ type: FilmsType.ROOM_CREATE_SUCCESS, payload: data})
+    }
+  } catch (error) { console.log(error); }
+}
+
 function* postBookingInfo() {
   yield takeEvery(FilmsType.POST_BOOKING_INFO, fetchPostBookingInfo);
 }
@@ -303,6 +327,14 @@ function* updateRoom() {
   yield takeEvery(FilmsType.ROOM_UPDATE, fetchUpdateRoom);
 }
 
+function* createTheater() {
+  yield takeEvery(FilmsType.CREATE_THEATER, fetchCreateTheater);
+}
+
+function* createRoom() {
+  yield takeEvery(FilmsType.ROOM_CREATE, fetchCreateRoom);
+}
+
 export default function* filmsSaga() {
   yield all([
     postBookingInfo(),
@@ -324,6 +356,8 @@ export default function* filmsSaga() {
     getTheaterDetail(),
     updateTheater(),
     getRoomDetail(),
-    updateRoom()
+    updateRoom(),
+    createTheater(),
+    createRoom()
   ]);
 }
