@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Layout } from 'antd';
 import { connect } from 'react-redux';
 import MenuHome from "./views/home/menu/MenuHome";
+import Login from "./views/login/Login"
 import "./styles/styles.scss"
 
 const { Sider } = Layout; 
@@ -30,6 +31,7 @@ class App extends Component {
     <Router>
       <Layout>
         <Sider className="left-sidebar"><MenuHome/></Sider>
+     
         <Layout>
           <Switch>{showRouteComponent(routes)}</Switch>
         </Layout>

@@ -1,6 +1,6 @@
 import React from "react";
 import Login from "./views/login/Login";
-import Home from "./views/home/Home";
+import Home from "./views/home/menu/MenuHome";
 import Film from "./views/Film/showAllFilm/Film"
 import Detail from "./views/Film/editFilm/DetailPopup"
 import NewDetail from "./views/New/NewDetail"
@@ -11,7 +11,7 @@ import AddTheater from "./views/Theater/AddTheater"
 import AddRoom from "./views/Theater/AddRoom"
 import TheaterDetail from "./views/Theater/TheaterDetail"
 import DetailRoom from "./views/Theater/DetailRoom"
-
+import ChartExample from "./views/Statistical/statistical"
 const routes = [
   {
     path: "/login",
@@ -72,8 +72,12 @@ const routes = [
     path: "/room/:id",
     exact: true,
     component: () => <DetailRoom/>
+  },
+  {
+    path: "/thongke",
+    exact: true,
+    component: () => <ChartExample/>
   }
-  
 ];
 
 export default routes;

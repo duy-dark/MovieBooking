@@ -50,7 +50,7 @@ import EditPopUp from './EditPopup'
 
   //  console.log(data)
 
-  // console.log(props.detail)
+  console.log(props.detail)
 
 
   

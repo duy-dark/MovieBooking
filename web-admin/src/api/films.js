@@ -72,11 +72,15 @@ const getTheater = ()=>{
 const getListNews = () => {
   return Api.get(`/api/news`).then(res => res.data)
 }
-
+const getListTicket = () => {
+  return Api.get(`api/ticket/detail?is_mobile=1`).then(res => res.data)
+}
 const getNewDetail = (params) => {
   return Api.get(`/api/news/${params}`).then(res => res.data)
 }
-
+const deleteFilmSchedule = (params) => {
+  return Api.delete(`api/film_schedule/${params}`).then(res => res.data)
+}
 const updateNewDetail = (params) => {
   return Api.put(`/api/news/${params.id}`, params).then(res => res.data)
 }
@@ -122,5 +126,7 @@ export default {
   getTheaterDetail,
   updateTheaterDetail,
   getRoomDetail,
-  updateRoomDetail
+  updateRoomDetail,
+  getListTicket,
+  deleteFilmSchedule
 };

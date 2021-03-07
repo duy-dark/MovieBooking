@@ -63,6 +63,17 @@ function* fetchListFilmsFuture() {
   } catch (error) { console.log(error); }
 }
 
+function* fetchListTicket() {
+  try {
+    const res = yield call(httpFilms.getListTicket, {});
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.LIST_TICKET_SUCCESS, payload: data });
+    }
+
+  } catch (error) { console.log(error); }
+}
+
 function* fetchListFilmsToday() {
   try {
     const res = yield call(httpFilms.getListFilmToday, {});
@@ -126,6 +137,17 @@ function* fetchUpdateFilmSchedule(action) {
     const { status, data } = res
     if (status === "ok") {
       yield put({ type: FilmsType.UPDATE_FILM_SCHEDULE_SUCCESS, payload: data });
+    }
+
+  } catch (error) { alert("LỊCH CHIẾU ĐÃ TỒN TẠI!"); }
+}
+function* fetchDeleteFilmSchedule(action) {
+  try {
+    
+    const res = yield call(httpFilms.updateFilmSchedule,action.payload);
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.DELETE_FILM_SCHEDULE_SUCCESS, payload: data });
     }
 
   } catch (error) { alert("LỊCH CHIẾU ĐÃ TỒN TẠI!"); }
@@ -267,6 +289,9 @@ function* filmSchedule(){
 function* updateFilmSchedule(){
   yield takeEvery(FilmsType.UPDATE_FILM_SCHEDULE,fetchUpdateFilmSchedule)
 }
+function* deleteFilmSchedule(){
+  yield takeEvery(FilmsType.DELETE_FILM_SCHEDULE,fetchDeleteFilmSchedule)
+}
 function* createFilmSchedule(){
   yield takeEvery(FilmsType.CREATE_FILM_SCHEDULE,fetchCreateFilmSchedule)
 }
@@ -293,7 +318,9 @@ function* updateNewDetail() {
 function* getTheaterDetail() {
   yield takeEvery(FilmsType.THEATER_DETAIL, fetchTheaterDetail);
 }
-
+function* getListTicket() {
+  yield takeEvery(FilmsType.LIST_TICKET, fetchListTicket);
+}
 function* updateTheater() {
   yield takeEvery(FilmsType.THEATER_UPDATE, fetchTheaterUpdate);
 }
@@ -321,9 +348,10 @@ export default function* filmsSaga() {
     getListNew(),
     getNewDetail(),
     updateNewDetail(),
- 
+    getListTicket(),
     getTheaterDetail(),
     updateTheater(),
-    getRoomDetail()
+    getRoomDetail(),
+    deleteFilmSchedule()
   ]);
 }

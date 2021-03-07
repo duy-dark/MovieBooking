@@ -83,7 +83,7 @@ export default function ShowSchedule  (props) {
                "Roomid":roomid,"Theaterid":theaterid,"FilmScheduleid":filmscheduleid })
     }
  })
-console.log(data1)
+
  useEffect(()=>{
     
   setData(data1);
@@ -190,7 +190,7 @@ const updateScheulde =()=>{
         rowClassName="editable-row"
         pagination={false}
       />
-      <Button style={{marginLeft:872,marginTop:10}} onClick={updateScheulde} >SUBMIT</Button>
+    
     </Form>
   );
 };

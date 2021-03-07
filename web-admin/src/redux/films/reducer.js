@@ -20,7 +20,8 @@ const initialState = {
   newfilmSchedule:[],
   newDetail: {},
   theaterDetail: {},
-  roomDetail: {}
+  roomDetail: {},
+  tickets:[]
 }
 
 export default function filmsReducer(state = initialState, action) {
@@ -40,6 +41,9 @@ export default function filmsReducer(state = initialState, action) {
     case FilmTypes.LIST_FILM_TODAY_SUCCESS:
       newState = Object.assign({}, state, { filmsToday: payload })
       break;
+      case FilmTypes.LIST_TICKET_SUCCESS:
+        newState = Object.assign({}, state, { tickets: payload })
+        break;
     case FilmTypes.LIST_SEATS_SUCCESS:
       newState = Object.assign({}, state, { seats: payload.seats })
       break;
@@ -60,6 +64,10 @@ export default function filmsReducer(state = initialState, action) {
        console.log(payload)
       newState = Object.assign({},state,{filmSchedule : state.filmSchedule.map(item=>{ return item._id === payload._id ? item = payload : item})})
       break;
+      case FilmTypes.DELETE_FILM_SCHEDULE_SUCCESS:
+        console.log(payload)
+       newState = Object.assign({},state,{filmSchedule : state.filmSchedule.filter((item,key)=>{ return  item._id == payload._id ? null : item})})
+       break;
       case FilmTypes.CREATE_FILM_SCHEDULE_SUCCESS:
         console.log(payload)
        newState = Object.assign({},state,{filmSchedule :[...payload,state.filmSchedule]})
