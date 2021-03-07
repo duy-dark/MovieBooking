@@ -102,6 +102,15 @@ export default function filmsReducer(state = initialState, action) {
     case FilmTypes.ROOM_DETAIL_SUCCESS:
       newState = Object.assign({}, state, { roomDetail: {...payload} })
       break;
+    case FilmTypes.ROOM_UPDATE_SUCCESS:
+      newState = Object.assign({}, state, { roomDetail: {...payload} })
+      break;
+    case FilmTypes.CREATE_THEATER_SUCCESS:
+      newState = Object.assign({}, state, { theaters: [...state.theaters, payload] })
+      break;
+    case FilmTypes.ROOM_CREATE_SUCCESS:
+      newState = Object.assign({}, state, { roomDetail: {...payload} })
+      break;
     default:
       newState = state;
   }

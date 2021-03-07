@@ -97,8 +97,16 @@ const getRoomDetail = (params) => {
   return Api.get(`/api/room/${params}`).then(res => res.data)
 }
 
+const createRoom = (params) => {
+  return Api.post(`/api/room`, params).then(res => res.data)
+}
+
 const updateRoomDetail = (params) => {
-  return Api.put(`/api/news/${params.id}`, params).then(res => res.data)
+  return Api.put(`/api/room/${params._id}`, params).then(res => res.data)
+}
+
+const createTheater = (params) => {
+  return Api.post(`/api/theater`, params).then(res => res.data)
 }
 
 
@@ -128,5 +136,7 @@ export default {
   getRoomDetail,
   updateRoomDetail,
   getListTicket,
-  deleteFilmSchedule
+  deleteFilmSchedule,
+  createTheater,
+  createRoom
 };

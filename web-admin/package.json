@@ -23,6 +23,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "recharts": "^2.0.8",
+    "react-select": "^4.2.1",
     "redux": "^4.0.5",
     "redux-ignore": "^1.2.5",
     "redux-logger": "^3.0.6",

@@ -159,3 +159,19 @@ export function updateRoom(params) {
     payload: params
   }
 }
+
+export function createTheater(params, history) {
+  return {
+    type: FilmTypes.CREATE_THEATER,
+    payload: params,
+    history: history
+  }
+}
+
+export function createRoom(params, history) {
+  return {
+    type: FilmTypes.ROOM_CREATE,
+    payload: params,
+    history: history
+  }
+}
