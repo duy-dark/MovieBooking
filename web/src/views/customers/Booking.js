@@ -26,8 +26,8 @@ const SeatEl = (props) => {
       alert("không được mua quá 10 vé");
     }
   };
-  let arr = xor(props.seatsSelected, props.seats)
-  console.log(arr);
+  // let arr = xor(props.seatsSelected, props.seats)
+  // console.log(arr);
   const formatSeat = (seat) => seat && seat.slice(-2);
   let classSeatPar = () => {
     let str = "seat-wrapper"
@@ -249,10 +249,11 @@ export default function Booking(props) {
     } else {
       history.push("/login")
     }
-    
+
     socket.emit('john_room', { name: movies.schedule_id })
 
     socket.on('seats_existed', res => {
+      console.log(res)
       // setSelectSS([...listSeatsSelected, ...res])
     })
   }, [])
