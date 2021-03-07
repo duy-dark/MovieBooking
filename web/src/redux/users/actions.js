@@ -49,3 +49,10 @@ export function updateHeaderFooter(status) {
     status,
   };
 }
+
+export function fetchTicketsInfo(payload) {
+  return {
+    type: UsersTypes.TICKET_INFO,
+    payload,
+  };
+}
