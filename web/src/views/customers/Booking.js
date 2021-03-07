@@ -9,8 +9,9 @@ import * as moment from "moment"
 import { getUserInfo } from "../../redux/users/actions";
 import io from 'socket.io-client';
 import Countdown from 'react-countdown';
+import xor from 'lodash/xor';
 
-// const POINT = 'https://servermoviebooking.herokuapp.com/';
+const POINT = 'https://servermoviebooking.herokuapp.com/';
 
 const SeatEl = (props) => {
   const [status, setStatus] = useState();
@@ -25,10 +26,12 @@ const SeatEl = (props) => {
       alert("không được mua quá 10 vé");
     }
   };
+  let arr = xor(props.seatsSelected, props.seats)
+  console.log(arr);
   const formatSeat = (seat) => seat && seat.slice(-2);
   let classSeatPar = () => {
     let str = "seat-wrapper"
-    if (props.seatsSelected.includes(props.seat)) str += " seat-wrapper--hide"
+    if (props.seatsSelected .includes(props.seat)) str += " seat-wrapper--hide"
     if (props.type === "2-1") str += " seat-wrapper--two1"
     if (props.type === "2-2") str += " seat-wrapper--two2"
     if (props.isBuy === "1") str += " seat-wrapper--isBuy"
@@ -90,7 +93,7 @@ function validateEmail(email) {
 const words = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 const Completionist = () => <span>Bạn đã hết thời gian!</span>;
 export default function Booking(props) {
-  // const socket = io(POINT);
+  const socket = io(POINT);
 
   const location = useLocation();
   const history = useHistory();
@@ -101,25 +104,26 @@ export default function Booking(props) {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [payment, setPayment] = useState("");
-  const [isSelectBug, setIsSelectBug] = useState(false);
   const listSeatsSelected = useSelector((state) => state.films.seated)
+  const [selectedSS, setSelectSS] = useState();
   const arrSeats = useSelector((state) => state.films.seats)
   const roomBooking = useSelector((state) => state.films.roomBooking)
   // const data = useSelector((state) => state.films.filmDetail)
   const [disabledBtn, setDisabledBtn] = useState(false);
   let { id } = useParams();
-
+  const [isSelectBug, setIsSelectBug] = useState(false);
   useEffect(() => {
     setDisabledBtn(!(seats.length > 0 && !isSelectBug && validateEmail(email) && phone && payment));
   }, [seats, email, phone, payment, isSelectBug]);
 
   const selectSeat = (seat) => {
+    let arrSeatAll = [...seats]
     if (seats.length <= 10) {
       if (seats.includes(seat)) {
         const arr = [...seats];
         const index = arr.indexOf(seat);
         arr.splice(index, 1);
-
+        arrSeatAll = [...arr]
         let nameRow = seat.slice(0, 1)
         let indexRowItem = words.indexOf(nameRow)
         let indexValueItem = arrSeats[indexRowItem].rows.indexOf(seat)
@@ -129,6 +133,7 @@ export default function Booking(props) {
           let numberNext = ++number
           const index1 = arr.indexOf(name + numberNext);
           arr.splice(index1, 1);
+          arrSeatAll = [...arr]
 
         } else if (arrSeats[indexRowItem].types[indexValueItem] === "2-2") {
           let number = +seat.substr(seat.length - 1)
@@ -136,6 +141,7 @@ export default function Booking(props) {
           let numberPrev = --number
           const index1 = arr.indexOf(name + numberPrev);
           arr.splice(index1, 1);
+          arrSeatAll = [...arr]
         }
         setSeats([...arr]);
       } else {
@@ -147,17 +153,26 @@ export default function Booking(props) {
           let name = seat.slice(0, seat.length - 1)
           let numberNext = ++number
           setSeats([...seats, seat, name + numberNext])
+          arrSeatAll = [...seats, seat, name + numberNext]
         } else if (arrSeats[indexRowItem].types[indexValueItem] === "2-2") {
           let number = +seat.substr(seat.length - 1)
           let name = seat.slice(0, seat.length - 1)
           let numberPrev = --number
           setSeats([...seats, seat, name + numberPrev])
+          arrSeatAll = [...seats, seat, name + numberPrev]
         } else {
           setSeats([...seats, seat]);
+          arrSeatAll = [...seats, seat]
         }
       }
     }
+
+    socket.emit("sellect_seat", { name: movies.schedule_id }, arrSeatAll);
   };
+
+  useEffect(() => {
+    setSelectSS([...listSeatsSelected])
+  }, [listSeatsSelected])
 
   const formatMoney = (number) => {
     return new Intl.NumberFormat().format(number);
@@ -178,14 +193,7 @@ export default function Booking(props) {
     dispatch(paymentGateway({ params: bookingInfo, history: window}));
     setDisabledBtn(true);
   };
-  const [showError, setShowError] = useState(false)
 
-  useEffect(() => {
-    if (showError) {
-      alert('không thể chừa trống 1 ghế')
-      setShowError(false)
-    }
-  }, [showError])
   useEffect(() => {
     let invalid=0
     for(let i=0;i<seats.length-1;i++){
@@ -201,12 +209,19 @@ export default function Booking(props) {
         }
       }
     }
-    if(invalid)alert("ghe"+invalid+ "ko hop le")
+    if(invalid) {
+      alert("ghe "+invalid+ " ko hop le")
+      setIsSelectBug(true)
+    } else {
+      setIsSelectBug(false)
+    }
   }, [seats])
 
   const renderer = ({ hours, minutes, seconds, completed }) => {
     if (completed) {
       // Render a completed state
+      socket.emit("sellect_seat", { name: movies.schedule_id }, []);
+      history.push(`/${id}/detail/`)
       return <Completionist />;
     } else {
       // Render a countdown
@@ -234,8 +249,12 @@ export default function Booking(props) {
     } else {
       history.push("/login")
     }
+    
+    socket.emit('john_room', { name: movies.schedule_id })
 
-    // socket.emit('join', { room: params, user: user })
+    socket.on('seats_existed', res => {
+      // setSelectSS([...listSeatsSelected, ...res])
+    })
   }, [])
 
   const formatDate = (date) => {
@@ -245,113 +264,118 @@ export default function Booking(props) {
 
   return (
     <div className="booking">
-      <div className="booking-content">
-        <div className="booking-content__header">
-          <div className="booking-content__threater">
-            <img src={movies.theater_url_image} alt="" />
-            <div className="booking-content__content">
-              <div className="booking-content__threater__name">{movies && movies.theater_name}</div>
-              <div className="booking-content__threater__room">{`${formatDate(movies.schedule.time_start)} - ${roomBooking}`}</div>
+      {movies && (
+        <>
+        <div className="booking-content">
+          <div className="booking-content__header">
+            <div className="booking-content__threater">
+              <img src={movies.theater_url_image} alt="" />
+              <div className="booking-content__content">
+                <div className="booking-content__threater__name">{movies && movies.theater_name}</div>
+                <div className="booking-content__threater__room">{`${formatDate(movies.schedule.time_start)} - ${roomBooking}`}</div>
+              </div>
+            </div>
+            <div className="booking-content__countdown">
+              <Countdown
+                date={timeLimit}
+                renderer={renderer}
+              />
             </div>
           </div>
-          <div className="booking-content__countdown">
-            <Countdown
-              date={timeLimit}
-              renderer={renderer}
-            />
+          <div className="booking-content__screen">
+            <img src="/assets/screen.png" alt="" />
+          </div>
+          <div id="" className="booking-content__list-seats">
+            {arrSeats.map((row, index) => (
+              <RowSeatEl key={index} seats={seats} seatsSelected={selectedSS} {...row} onSelectSeat={(seat) => selectSeat(seat)} />
+            ))}
+          </div>
+          <div className="booking-content__des">
+            <div className="type-seat">
+              <span className="seat-wrapper">
+                <span className="seat seat--hide">
+                  <span className="s-img" />
+                </span>
+              </span>
+              <span>Ghế đã đặt</span>
+            </div>
+            <div className="type-seat">
+              <span className="seat-wrapper">
+                <span className="seat">
+                  <span className="s-img" />
+                </span>
+              </span>
+              <span>Ghế thường</span>
+            </div>
+            <div className="type-seat">
+              <span className="seat-wrapper">
+                <span className="seat seat--vip">
+                  <span className="s-img" />
+                </span>
+              </span>
+              <span>Ghế vip</span>
+            </div>
+            <div className="type-seat">
+              <span className="seat-wrapper">
+                <span className="seat seat--together">
+                  <span className="s-img" />
+                </span>
+              </span>
+              <span>Ghế đôi</span>
+            </div>
           </div>
         </div>
-        <div className="booking-content__screen">
-          <img src="/assets/screen.png" alt="" />
-        </div>
-        <div id="" className="booking-content__list-seats">
-          {arrSeats.map((row, index) => (
-            <RowSeatEl key={index} seats={seats} seatsSelected={listSeatsSelected} {...row} onSelectSeat={(seat) => selectSeat(seat)} />
-          ))}
-        </div>
-        <div className="booking-content__des">
-          <div className="type-seat">
-            <span className="seat-wrapper">
-              <span className="seat seat--hide">
-                <span className="s-img" />
-              </span>
-            </span>
-            <span>Ghế đã đặt</span>
+        <div className="booking-form">
+          <div className="booking-form__input booking-form__total">
+            <p> {formatMoney(seats.length * 80000)}đ</p>
           </div>
-          <div className="type-seat">
-            <span className="seat-wrapper">
-              <span className="seat">
-                <span className="s-img" />
-              </span>
-            </span>
-            <span>Ghế thường</span>
+          <div className="booking-form__input booking-form__film-name">
+            <div className="booking-form__name">{movies.name}</div>
+            <div className="booking-form__threater">{movies.theater_name}</div>
+            <div className="booking-form__address">{`${formatDate(movies.schedule.time_start)} - ${roomBooking}`}</div>
           </div>
-          <div className="type-seat">
-            <span className="seat-wrapper">
-              <span className="seat seat--vip">
-                <span className="s-img" />
-              </span>
-            </span>
-            <span>Ghế vip</span>
+          <div className="booking-form__input booking-form__seats">
+            Ghế{" "}
+            {seats.map((seat, index) => {
+              return (
+                <span key={index}>
+                  {index > 0 ? ", " : ""}
+                  {seat}
+                </span>
+              );
+            })}
           </div>
-          <div className="type-seat">
-            <span className="seat-wrapper">
-              <span className="seat seat--together">
-                <span className="s-img" />
-              </span>
-            </span>
-            <span>Ghế đôi</span>
+          <div className="booking-form__input booking-form__email">
+            <p>Email</p>
+            <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <div />
           </div>
-        </div>
-      </div>
-      <div className="booking-form">
-        <div className="booking-form__input booking-form__total">
-          <p> {formatMoney(seats.length * 80000)}đ</p>
-        </div>
-        <div className="booking-form__input booking-form__film-name">
-          <div className="booking-form__name">{movies.name}</div>
-          <div className="booking-form__threater">{movies.theater_name}</div>
-          <div className="booking-form__address">{`${formatDate(movies.schedule.time_start)} - ${roomBooking}`}</div>
-        </div>
-        <div className="booking-form__input booking-form__seats">
-          Ghế{" "}
-          {seats.map((seat, index) => {
-            return (
-              <span key={index}>
-                {index > 0 ? ", " : ""}
-                {seat}
-              </span>
-            );
-          })}
-        </div>
-        <div className="booking-form__input booking-form__email">
-          <p>Email</p>
-          <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-          <div />
+
+          <div className="booking-form__input booking-form__phone">
+            <p>Phone</p>
+            <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} />
+          </div>
+          <div className="booking-form__input booking-form__payment">
+            <p>Hình thức thanh toán</p>
+            <div className="group-radio">
+              <div className="radio-form">
+                <input id="momo" name="payment" value="momo" onChange={(e) => setPayment(e.target.value)} type="radio" />
+                <label htmlFor="momo">
+                  <img src="/assets/logo-momo.jpg" alt="" /> <span>Thanh toán Momo</span>
+                </label>
+              </div>
+            </div>
+          </div>
+          <button
+            className={`booking-form-btn ${disabledBtn ? "booking-form-btn--disabled" : ""}`}
+            onClick={bookingTicket}
+          >
+            Đặt Vé
+          </button>
         </div>
 
-        <div className="booking-form__input booking-form__phone">
-          <p>Phone</p>
-          <input type="text" value={phone} onChange={(e) => setPhone(e.target.value)} />
-        </div>
-        <div className="booking-form__input booking-form__payment">
-          <p>Hình thức thanh toán</p>
-          <div className="group-radio">
-            <div className="radio-form">
-              <input id="momo" name="payment" value="momo" onChange={(e) => setPayment(e.target.value)} type="radio" />
-              <label htmlFor="momo">
-                <img src="/assets/logo-momo.jpg" alt="" /> <span>Thanh toán Momo</span>
-              </label>
-            </div>
-          </div>
-        </div>
-        <button
-          className={`booking-form-btn ${disabledBtn ? "booking-form-btn--disabled" : ""}`}
-          onClick={bookingTicket}
-        >
-          Đặt Vé
-        </button>
-      </div>
+        </>
+      )}
     </div>
   );
 }
