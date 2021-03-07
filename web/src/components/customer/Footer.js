@@ -52,19 +52,19 @@ function Footer() {
           <div className="col-sm-4 footer__right">
             <div className="hideOnMobile1">
               <p className="footer__title">MOBILE APP</p>
-              <a href="https://google.com.vn">
+              <a href="#">
                 <img className="footer__icon__up" src={`/assets/imgFooter/apple-logo.png`} alt="logo"></img>
               </a>
-              <a href="https://google.com.vn">
+              <a href="#">
                 <img className="footer__icon__up" src={`/assets/imgFooter/android-logo.png`} alt="logo2"></img>
               </a>
             </div>
             <div className="nowrap">
               <p className="footer__title hideOnMobile1">SOCIAL</p>
-              <a href="https://google.com.vn">
+              <a href="#">
                 <img className="footer__icon__up" src={`/assets/imgFooter/facebook-logo.png`} alt="image6"></img>
               </a>
-              <a href="https://google.com.vn">
+              <a href="#">
                 <img className="footer__icon__up" src={`/assets/imgFooter/zalo-logo.png`} alt="image7"></img>
               </a>
             </div>
@@ -77,7 +77,7 @@ function Footer() {
       <div>
         <div className="row">
           <div className="col-sm-3 footer__center">
-            <a href="https://google.com.vn">
+            <a href="#">
               <img className="footer__icon__left" src={`/assets/imgFooter/zion-logo.jpg`} alt="image8"></img>
             </a>
           </div>
@@ -94,13 +94,13 @@ function Footer() {
               Số Điện Thoại (Hotline): 1900 9999
               <br />
               Email:{" "}
-              <a className="footer__icon" href="mailto:support@tix.vn">
-                support@moviebooking.vn
+              <a className="footer__icon" href="support@movieticketbooking.vn">
+                support@movieticketbooking.vn
               </a>
             </div>
           </div>
           <div className="col-sm-3 footer__center">
-            <a href="https://google.com.vn">
+            <a href="http://online.gov.vn">
               <img
                 className="footer__icon__right"
                 src={`/assets/imgFooter/d1e6bd560daa9e20131ea8a0f62e87f8.png`}

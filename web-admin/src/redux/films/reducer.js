@@ -1,3 +1,4 @@
+import films from '../../api/films';
 import FilmTypes from './types';
 // import update from 'immutability-helper';
 import findIndex from 'lodash/findIndex'
@@ -15,9 +16,12 @@ const initialState = {
   newfilm:[],
   filmSchedule:[],
   listNews: [],
+  updatefilmSchedule:[],
+  newfilmSchedule:[],
   newDetail: {},
   theaterDetail: {},
-  roomDetail: {}
+  roomDetail: {},
+  tickets:[]
 }
 
 export default function filmsReducer(state = initialState, action) {
@@ -37,11 +41,15 @@ export default function filmsReducer(state = initialState, action) {
     case FilmTypes.LIST_FILM_TODAY_SUCCESS:
       newState = Object.assign({}, state, { filmsToday: payload })
       break;
+      case FilmTypes.LIST_TICKET_SUCCESS:
+        newState = Object.assign({}, state, { tickets: payload })
+        break;
     case FilmTypes.LIST_SEATS_SUCCESS:
       newState = Object.assign({}, state, { seats: payload.seats })
       break;
     case FilmTypes.UPDATE_FILM_DETAIL_SUCCESS:
-      newState = Object.assign({},state,{filmUpdate : payload})
+      newState = Object.assign({},state,{filmsNow : state.filmsNow.map(item=>
+        item._id==payload._id?payload:item)})
       break;
     case FilmTypes.LIST_CATEGOGY_SUCCESS:
       newState = Object.assign({},state,{categories : payload})
@@ -50,12 +58,20 @@ export default function filmsReducer(state = initialState, action) {
       newState = Object.assign({},state,{filmsNow : [payload, ...state.filmsNow]})
       break;
     case FilmTypes.FILM_SCHEDULE_SUCCESS:
-      newState = Object.assign({},state,{filmSchedule : payload})
+      newState = Object.assign({},state,{filmSchedule :[...payload,state.filmSchedule]})
       break;
     case FilmTypes.UPDATE_FILM_SCHEDULE_SUCCESS:
        console.log(payload)
       newState = Object.assign({},state,{filmSchedule : state.filmSchedule.map(item=>{ return item._id === payload._id ? item = payload : item})})
       break;
+      case FilmTypes.DELETE_FILM_SCHEDULE_SUCCESS:
+        console.log(payload)
+       newState = Object.assign({},state,{filmSchedule : state.filmSchedule.filter((item,key)=>{ return  item._id == payload._id ? null : item})})
+       break;
+      case FilmTypes.CREATE_FILM_SCHEDULE_SUCCESS:
+        console.log(payload)
+       newState = Object.assign({},state,{filmSchedule :[...payload,state.filmSchedule]})
+       break;
     case FilmTypes.LIST_THEATER_SUCCESS:
         newState = Object.assign({},state,{theaters : payload})
         break;

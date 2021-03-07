@@ -5,7 +5,7 @@ import httpUser from "../../api/customers";
 function* fetchLogin(action) {
   try {
     let { history } = action;
-    const res = yield call(httpUser.login, action.payload);
+    const res = yield call(httpUser.Login, action.payload);
     if (res.status === "ok") {
       yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: res.data });
       history.push("/");
@@ -16,17 +16,7 @@ function* fetchLogin(action) {
   }
 }
 
-function* fetchListFriend() {
-  try {
-    const data = yield call(httpUser.getFriends, {});
-    const { status, data: newData } = data;
-    if (status === "ok") {
-      yield put({ type: UsersTypes.LIST_FRIEND_SUCCESS, payload: newData });
-    }
-  } catch (err) {
-    throw err;
-  }
-}
+
 
 function* fetchUserInfo(action) {
   try {
@@ -40,13 +30,7 @@ function* fetchUserInfo(action) {
   }
 }
 
-function* fetchUDSFriend(action) {
-  try {
-    yield put({ type: UsersTypes.UDS_FRIEND_SUCCESS, payload: action.payload });
-  } catch (err) {
-    throw err;
-  }
-}
+
 
 function* fetchLogout(action) {
   try {
@@ -58,14 +42,7 @@ function* fetchLogout(action) {
   }
 }
 
-function* fetchUpdateHF(action) {
-  try {
-    let { status } = action;
-    yield put({ type: UsersTypes.UPDATE_HF_SUCCESS, payload: status });
-  } catch (err) {
-    throw err;
-  }
-}
+
 
 function* fetchLoginTest(action) {
   try {
@@ -81,17 +58,12 @@ function* signIn() {
   yield takeEvery(UsersTypes.LOGIN, fetchLogin);
 }
 
-function* getListFriend() {
-  yield takeEvery(UsersTypes.LIST_FRIEND, fetchListFriend);
-}
+
 
 function* getUserInfo() {
   yield takeEvery(UsersTypes.USER_INFO, fetchUserInfo);
 }
 
-function* updateStatusFriend() {
-  yield takeEvery(UsersTypes.UDS_FRIEND, fetchUDSFriend);
-}
 
 function* signOut() {
   yield takeEvery(UsersTypes.LOGOUT, fetchLogout);
@@ -101,18 +73,16 @@ function* signTest() {
   yield takeEvery(UsersTypes.LOGIN_TEST, fetchLoginTest);
 }
 
-function* updateHF() {
-  yield takeEvery(UsersTypes.UPDATE_HF, fetchUpdateHF);
-}
+
 
 export default function* usersSaga() {
   yield all([
     signIn(),
-    getListFriend(),
+
     getUserInfo(),
-    updateStatusFriend(),
+    
     signOut(),
     signTest(),
-    updateHF(),
+   
   ]);
 }

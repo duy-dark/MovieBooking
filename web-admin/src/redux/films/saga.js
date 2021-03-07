@@ -63,6 +63,17 @@ function* fetchListFilmsFuture() {
   } catch (error) { console.log(error); }
 }
 
+function* fetchListTicket() {
+  try {
+    const res = yield call(httpFilms.getListTicket, {});
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.LIST_TICKET_SUCCESS, payload: data });
+    }
+
+  } catch (error) { console.log(error); }
+}
+
 function* fetchListFilmsToday() {
   try {
     const res = yield call(httpFilms.getListFilmToday, {});
@@ -89,7 +100,7 @@ function* fetchSeats(action) {
 function* fetchFilmUpdate(action){
   try{
     
-    const res = yield call(httpFilms.updateFilmDetail, action.payload);
+    const res = yield call(httpFilms.updateFilmDetail, action.id,action.payload);
     const { status, data } = res
     if (status === "ok") {
       yield put({ type: FilmsType.UPDATE_FILM_DETAIL_SUCCESS, payload: data });
@@ -128,7 +139,29 @@ function* fetchUpdateFilmSchedule(action) {
       yield put({ type: FilmsType.UPDATE_FILM_SCHEDULE_SUCCESS, payload: data });
     }
 
-  } catch (error) { console.log(error); }
+  } catch (error) { alert("LỊCH CHIẾU ĐÃ TỒN TẠI!"); }
+}
+function* fetchDeleteFilmSchedule(action) {
+  try {
+    
+    const res = yield call(httpFilms.updateFilmSchedule,action.payload);
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.DELETE_FILM_SCHEDULE_SUCCESS, payload: data });
+    }
+
+  } catch (error) { alert("LỊCH CHIẾU ĐÃ TỒN TẠI!"); }
+}
+function* fetchCreateFilmSchedule(action) {
+  try {
+    
+    const res = yield call(httpFilms.createSchedule,action.payload);
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.CREATE_FILM_SCHEDULE_SUCCESS, payload: data });
+    }
+
+  } catch (error) { alert("LỊCH CHIẾU ĐÃ TỒN TẠI!"); }
 }
 function* fetchGetTheater() {
   try {
@@ -291,6 +324,12 @@ function* filmSchedule(){
 function* updateFilmSchedule(){
   yield takeEvery(FilmsType.UPDATE_FILM_SCHEDULE,fetchUpdateFilmSchedule)
 }
+function* deleteFilmSchedule(){
+  yield takeEvery(FilmsType.DELETE_FILM_SCHEDULE,fetchDeleteFilmSchedule)
+}
+function* createFilmSchedule(){
+  yield takeEvery(FilmsType.CREATE_FILM_SCHEDULE,fetchCreateFilmSchedule)
+}
 function* getTheaters(){
   yield takeEvery(FilmsType.LIST_THEATER,fetchGetTheater)
 }
@@ -314,7 +353,9 @@ function* updateNewDetail() {
 function* getTheaterDetail() {
   yield takeEvery(FilmsType.THEATER_DETAIL, fetchTheaterDetail);
 }
-
+function* getListTicket() {
+  yield takeEvery(FilmsType.LIST_TICKET, fetchListTicket);
+}
 function* updateTheater() {
   yield takeEvery(FilmsType.THEATER_UPDATE, fetchTheaterUpdate);
 }
@@ -349,13 +390,16 @@ export default function* filmsSaga() {
     filmSchedule(),
     getTheaters(),
     createNewPaper(),
+    updateFilmSchedule(),
+    createFilmSchedule(),
     getListNew(),
     getNewDetail(),
     updateNewDetail(),
-    updateFilmSchedule(),
+    getListTicket(),
     getTheaterDetail(),
     updateTheater(),
     getRoomDetail(),
+    deleteFilmSchedule(),
     updateRoom(),
     createTheater(),
     createRoom()
