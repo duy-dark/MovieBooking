@@ -75,9 +75,34 @@ export function updateFilmSchedules(id,data) {
     id:id
   };
 }
+export function deleteFilmSchedules(data) {
+  return {
+    type: FilmTypes.DELETE_FILM_SCHEDULE,
+    payload: data,
+  };
+}
+export function updateFilmDetail(id,data) {
+  return {
+    type: FilmTypes.UPDATE_FILM_DETAIL,
+    payload: data,
+    id:id
+  };
+}
+export function createFilmSchedules(data) {
+  return {
+    type: FilmTypes.CREATE_FILM_SCHEDULE,
+    payload: data,
+    
+  };
+}
 export function getTheaters(){
   return {
     type: FilmTypes.LIST_THEATER,
+  };
+}
+export function getTickets(){
+  return {
+    type: FilmTypes.LIST_TICKET,
   };
 }
 export function createNewPaper(params) {

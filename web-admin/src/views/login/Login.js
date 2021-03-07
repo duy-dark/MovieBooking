@@ -2,12 +2,18 @@ import { Form, Input, Button, Checkbox } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import "./../../styles/login/login.scss";
+import {signIn} from "../../redux/users/actions"
+import { useSelector, useDispatch } from "react-redux";
+  
 export default function Login(props) {
-  const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
+  const dispatch = useDispatch();
+  const onFinish = (values) => {
+ 
+    dispatch(signIn({"email":values.username,"password":values.password}))
   };
 
   return (
+     <div>
     <Form
       name="normal_login"
       className="login-form"
@@ -50,5 +56,7 @@ export default function Login(props) {
         Or <a href="">register now!</a>
       </Form.Item>
     </Form>
+    </div>
+    
   );
 }

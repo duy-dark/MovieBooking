@@ -2,8 +2,8 @@ import { Modal, Button } from 'antd';
 import React,{useEffect, useState } from "react";
 
 import "./../../../styles/Film/detailPopup.scss";
-import AddSchedule from "./addSchedule"
-const AddSchedulePopup = (props) => {
+
+const Trailer = (props) => {
   const [visible, setVisible] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
   const [modalText, setModalText] = React.useState();
@@ -15,22 +15,18 @@ const AddSchedulePopup = (props) => {
  
   const handleCancel = () => {
     console.log('Clicked cancel button');
-    setConfirmLoading(true);
-    setTimeout(() => {
-      setVisible(false);
-      setConfirmLoading(false);
-    }, 1000);
+    setVisible(false);
   };
 
   return (
     <>
       <a type="primary" onClick={showModal}>
-        Add Schedule
+       Watch
       </a>
       <Modal 
-        width={400}
-        style={{marginTop:100}}
-        title="Add Schedule"
+        width={330}
+        style={{marginTop:40,marginLeft:600,padding:20}}
+       
         visible={visible}
        
         confirmLoading={confirmLoading}
@@ -39,9 +35,9 @@ const AddSchedulePopup = (props) => {
         okButtonProps={{ style: { display: 'none' } }}
         cancelButtonProps={{ style: { display: 'none' } }}
       >
-       <AddSchedule onCancel={handleCancel} schedule={props.schedule} theaters={props.theaters} longtime={props.longtime} />
+       <div  dangerouslySetInnerHTML={{ __html: props.ifr }}/>
       </Modal>
     </>
   );
 };
-export default AddSchedulePopup
+export default Trailer
