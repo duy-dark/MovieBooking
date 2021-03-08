@@ -1,6 +1,7 @@
 import React from "react";
 import Login from "./views/login/Login";
-import Home from "./views/home/menu/MenuHome";
+
+import Home from './views/home/Home'
 import Film from "./views/Film/showAllFilm/Film"
 import Detail from "./views/Film/editFilm/DetailPopup"
 import NewDetail from "./views/New/NewDetail"
@@ -73,11 +74,7 @@ const routes = [
     exact: true,
     component: () => <DetailRoom/>
   },
-  {
-    path: "/thongke",
-    exact: true,
-    component: () => <ChartExample/>
-  }
+
 ];
 
 export default routes;
