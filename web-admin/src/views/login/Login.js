@@ -1,62 +1,80 @@
-import { Form, Input, Button, Checkbox } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import React, { useState, useEffect } from 'react'
 import "antd/dist/antd.css";
-import "./../../styles/login/login.scss";
+import "../../styles/login/login.scss";
 import {signIn} from "../../redux/users/actions"
-import { useSelector, useDispatch } from "react-redux";
-  
+import { useStore, useDispatch } from "react-redux";
+import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useForm } from "react-hook-form";
+
 export default function Login(props) {
+
   const dispatch = useDispatch();
-  const onFinish = (values) => {
- 
-    dispatch(signIn({"email":values.username,"password":values.password}))
-  };
+  let history = useHistory();
+  let location = useLocation();
+  const { message = '' } = (location && location.state) || {};
+  const [err] = useState('');
+
+  const { handleSubmit, register, errors } = useForm({
+    email: '',
+    password: ''
+  });
+
+  const onSubmitLogin = (values) => {
+    dispatch(signIn(values, history))
+  }
+
+  useEffect(() => {
+    // let token = getToken(users);
+    // if (token) {
+    //   history.push('/');
+    // } 
+  }, [])
+
+  // const onFinish = (values) => {
+  //   dispatch(signIn({"email":values.username,"password":values.password}, history))
+  // };
 
   return (
-     <div>
-    <Form
-      name="normal_login"
-      className="login-form"
-      initialValues={{ remember: true }}
-      onFinish={onFinish}
-    >
-      <Form.Item
-        name="username"
-        rules={[{ required: true, message: "Please input your Username!" }]}
-      >
-        <Input
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="Username"
-        />
-      </Form.Item>
-      <Form.Item
-        name="password"
-        rules={[{ required: true, message: "Please input your Password!" }]}
-      >
-        <Input
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          type="password"
-          placeholder="Password"
-        />
-      </Form.Item>
-      <Form.Item>
-        <Form.Item name="remember" valuePropName="checked" noStyle>
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
-
-        <a className="login-form-forgot" href="">
-          Forgot password
-        </a>
-      </Form.Item>
-
-      <Form.Item>
-        <Button type="primary" htmlType="submit" className="login-form-button">
-          Log in
-        </Button>
-        Or <a href="">register now!</a>
-      </Form.Item>
-    </Form>
+    <div className="login">
+      <div className="login__content">
+        <div className="login-title">
+          Caro
+        </div>
+        <div className="login__success">{message}</div>
+        <div className="login__err">{err}</div>
+        <form className="login-form" onSubmit={handleSubmit(onSubmitLogin)}>
+          <div className="form-group form-group--email">
+            <input placeholder="Your email"
+              name="email"
+              type="email"
+              ref={register({
+                required: "Required",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "invalid email address"
+                }
+              })}
+            />
+            {errors.email && errors.email.message}
+          </div>
+          <div className="form-group form-group--pass">
+            <input placeholder="Your password"
+              name="password"
+              type="password"
+              ref={register({
+                required: "Required",
+                minLength: 6
+              })}
+            />
+            {errors.password && errors.password.message}
+          </div>
+          <div className="form-group--forget-pass"><Link to="/forget_password" className="">Quên mật khẩu</Link></div>
+          <div className="form-group group-btns">
+            {/* <Link to="/register" className="btn btn-login">Register</Link> */}
+            <button className="btn btn-login" type="submit">Login</button>
+          </div>
+        </form>
+      </div>
     </div>
-    
   );
 }

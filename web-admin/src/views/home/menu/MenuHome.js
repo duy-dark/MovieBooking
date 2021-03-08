@@ -11,11 +11,17 @@ import {
   LinkOutlined,
   LoginOutlined,
 } from "@ant-design/icons";
+import { useHistory } from "react-router-dom";
 
 const { SubMenu } = Menu;
 
 export default function MenuHome(props) {
-
+  const history = useHistory();
+  const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userID');
+    history.push('/login');
+  }
   return (
     <>
       <Menu
@@ -48,8 +54,8 @@ export default function MenuHome(props) {
         <SubMenu key="sub3" icon={<SettingOutlined />} title="Thống Kê">
         <Menu.Item key="9">Thống Kê<Link to='/thongke'></Link></Menu.Item>
         </SubMenu>
-        <Menu.Item key="10" icon={<LoginOutlined />} title="Đăng Nhập">
-        <a>Đăng Nhập<Link to='/login'/></a>  
+        <Menu.Item key="10" icon={<LoginOutlined />} title="Đăng Xuất">
+          <button onClick={logout} style={{border: 'none', background: 'transparent'}}>Đăng Xuất</button>
         </Menu.Item>
       </Menu>
     </>

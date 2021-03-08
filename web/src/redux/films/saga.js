@@ -135,8 +135,16 @@ function* fetchPaymentGate(action) {
 
     const res = yield call(httpFilms.paymentMomo, payload);
     yield put({ type: FilmsType.LOADING_HIDE });
-    const { data } = res
-    history.location.href = data.url1
+    const { status, data } = res
+    if (status === "ok") {
+      history.location.href = data.url1
+    } else {
+      const { error_message: {  error_code, detail } = {}} = data
+      if (error_code === 204 ) {
+        alert(detail)
+      }
+    }
+
   } catch (error) { console.log(error); }
 }
 

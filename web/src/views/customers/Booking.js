@@ -31,7 +31,7 @@ const SeatEl = (props) => {
   const formatSeat = (seat) => seat && seat.slice(-2);
   let classSeatPar = () => {
     let str = "seat-wrapper"
-    if (props.seatsSelected .includes(props.seat)) str += " seat-wrapper--hide"
+    if (props.seatsSelected.includes(props.seat)) str += " seat-wrapper--hide"
     if (props.type === "2-1") str += " seat-wrapper--two1"
     if (props.type === "2-2") str += " seat-wrapper--two2"
     if (props.isBuy === "1") str += " seat-wrapper--isBuy"
@@ -93,7 +93,7 @@ function validateEmail(email) {
 const words = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 const Completionist = () => <span>Bạn đã hết thời gian!</span>;
 export default function Booking(props) {
-  const socket = io(POINT);
+  // const socket = io(POINT);
 
   const location = useLocation();
   const history = useHistory();
@@ -167,7 +167,7 @@ export default function Booking(props) {
       }
     }
 
-    socket.emit("sellect_seat", { name: movies.schedule_id }, arrSeatAll);
+    // socket.emit("sellect_seat", { name: movies.schedule_id }, arrSeatAll);
   };
 
   useEffect(() => {
@@ -220,7 +220,7 @@ export default function Booking(props) {
   const renderer = ({ hours, minutes, seconds, completed }) => {
     if (completed) {
       // Render a completed state
-      socket.emit("sellect_seat", { name: movies.schedule_id }, []);
+      // socket.emit("sellect_seat", { name: movies.schedule_id }, []);
       history.push(`/${id}/detail/`)
       return <Completionist />;
     } else {
@@ -250,12 +250,12 @@ export default function Booking(props) {
       history.push("/login")
     }
 
-    socket.emit('john_room', { name: movies.schedule_id })
+    // socket.emit('john_room', { name: movies.schedule_id })
 
-    socket.on('seats_existed', res => {
-      console.log(res)
+    // socket.on('seats_existed', res => {
+      // console.log(res)
       // setSelectSS([...listSeatsSelected, ...res])
-    })
+    // })
   }, [])
 
   const formatDate = (date) => {
