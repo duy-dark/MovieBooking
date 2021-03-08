@@ -12,7 +12,7 @@ function* fetchListNews() {
         yield put({ type: NewTypes.LIST_NEWS_SUCCESS, payload: data });
       }
   
-    } catch (error) { console.log(error); }
+    } catch (error) { throw error; }
 }
 
 function* fetchNewsDetails(action) {
@@ -26,7 +26,7 @@ function* fetchNewsDetails(action) {
         yield put({ type: NewTypes.NEWS_DETAIL_SUCCESS, payload: data });
       }
   
-    } catch (error) { console.log(error); }
+    } catch (error) { throw error; }
 }
 
 function* getListNews() {

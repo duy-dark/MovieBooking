@@ -27,6 +27,10 @@ const TabFindByDate = (props) => {
     const [isDisabled, setIsDisabled] = useState(true)
 
     useEffect(() => {
+        console.log('qwfiquwgfqwgfqw', isDisabled)
+    }, [isDisabled])
+
+    useEffect(() => {
         setIsDisabled(!(selectFilm && selectThreater && selectDate && selectTime));
     }, [selectFilm, selectThreater, selectDate, selectTime])
 
@@ -51,9 +55,8 @@ const TabFindByDate = (props) => {
         }
     }, [selectFilm])
     useEffect(() => {
-
-        if (selectThreater) {
-            let arrTime = selectDate.schedules.filter(schedule => schedule.film_id === selectFilm._id && schedule.theater_id === selectThreater._id)
+        if (selectDate && selectThreater) {
+            let arrTime = selectDate?.schedules.filter(schedule => schedule.film_id === selectFilm._id && schedule.theater_id === selectThreater._id)
             setOptionTime(arrTime.map(val => ({ ...val, label: formatTime(val.time_start) + '~' + formatTime(val.time_end), value: val._id })))
             setSelectTime()
         }
@@ -67,7 +70,7 @@ const TabFindByDate = (props) => {
             setOptionFilm(option.map(val => ({ ...val, label: val.name, value: val._id })))
             setSelectFilm()
             setSelectThreater()
-            // // eslint-disable-next-line
+            // eslint-disable-next-line
             setSelectTime()
         }
     }, [selectDate])

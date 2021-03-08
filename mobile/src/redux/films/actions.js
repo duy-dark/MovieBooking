@@ -60,6 +60,7 @@ export function getTickets(id_user) {
 }
 
 export function getListFilmFutureFavorite(id_user) {
+  // alert(id_user)
   return {
     type: FilmTypes.LIST_FILM_FUTURE_FAVORITE,
     payload: id_user
@@ -93,5 +94,13 @@ export function getTicketDetail(id_ticket) {
   return {
     type: FilmTypes.GET_TICKETDETAIL,
     payload: id_ticket
+  }
+}
+
+export function getListFilmNowFavorite(id_user) {
+  // alert(id_user)
+  return {
+    type: FilmTypes.LIST_FILM_NOW_FAVORITE,
+    payload: id_user
   }
 }

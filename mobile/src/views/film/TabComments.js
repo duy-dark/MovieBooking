@@ -1,18 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { ScrollView, View, Text, ActivityIndicator, TouchableOpacity } from 'react-native'
 import styles from '../../styles/views/comment/tab-comments'
 import StarRating from 'react-native-star-rating'
 import CardCommentFilm from '../../components/comment/CardCommentFilm'
-
 import { useDispatch, useSelector } from "react-redux"
-import { goBack } from '../../redux/films/actions'
+import { useFocusEffect } from '@react-navigation/native';
+import { getComments } from '../../redux/films/actions'
 
 const TabComments = (props) => {
-    // const { listComment } = props
+    // const filmId = props.filmId
     // const dispatch = useDispatch()
-    // useEffect(() => {
-    //     dispatch(goBack())
-    // }, [])
+    //  useFocusEffect(
+    //     useCallback(() => {
+    //       // Do something when the screen is focused
+    //       dispatch(getComments(filmId))
+    //       return () => {
+    //         // Do something when the screen is unfocused
+    //         // Useful for cleanup functions
+    //       };
+    //     }, [])
+    //   );
     const onPressReviewFilm = () => {
         props.navigation.navigate("ReviewFilmScreen", {
             filmId: props.filmId

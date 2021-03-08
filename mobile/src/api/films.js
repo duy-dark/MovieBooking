@@ -41,11 +41,16 @@ const search = () => {
 }
 
 const getTickets = (id_user) => {
-  return Api.get(`/api/user/${id_user}/tickets/`)
+  return Api.get(`/api/ticket/detail?customer_id=${id_user}`).then((res) => res.data);
 }
 
+const getListFilmNowFavorite = (id_user) => {
+  return Api.get(`/api/film/nowshowing?customer_id=${id_user}`).then((res) => res.data);
+}
+
+
 const getListFilmFutureFavorite = (id_user) => {
-  return Api.get(`/api/film/commingsoon/${id_user}`).then((res) => res.data);
+  return Api.get(`/api/film/commingsoon?customer_id=${id_user}`).then((res) => res.data);
 }
 
 const paymentMomo = (params) => {
@@ -72,5 +77,6 @@ export default {
   getTickets,
   getListFilmFutureFavorite,
   paymentMomo,
-  getTicketDetail
+  getTicketDetail,
+  getListFilmNowFavorite
 };

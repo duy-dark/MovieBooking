@@ -16,6 +16,7 @@ const initialState = {
   search: null,
   roomBooking: '',
   tickets: [],
+  filmsNowFavorite: [],
   filmsFutureFavorie: [],
   ticketDetail: {}
 }
@@ -57,8 +58,12 @@ export default function filmsReducer(state = initialState, action) {
     case FilmTypes.LOADING_HIDE:
       newState = Object.assign({}, state, { loading: false });
       break;
-    case FilmTypes.GET_TICKETS:
-      newState = Object,assign({}, state, { tickets: payload});
+    case FilmTypes.GET_TICKETS_SUCCESS:
+      newState = Object.assign({}, state, { tickets: payload});
+      break;
+    case FilmTypes.LIST_FILM_NOW_FAVORITE_SUCCESS:
+      newState = Object.assign({}, state, { filmsNowFavorite: payload })
+      break;
     case FilmTypes.LIST_FILM_FUTURE_FAVORITE_SUCCESS:
       newState = Object.assign({}, state, { filmsFutureFavorite: payload })
       break;

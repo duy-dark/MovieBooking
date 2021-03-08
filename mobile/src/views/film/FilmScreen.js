@@ -1,24 +1,35 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import TabSchedules from './TabSchedules';
 import TabComments from './TabComments';
 import TabInfomation from './TabInfomation';
 import { useSelector, useDispatch } from "react-redux";
 import { getComments, getFilmDetails } from '../../redux/films/actions';
+import { useFocusEffect } from '@react-navigation/native'
 
 const Tab = createMaterialTopTabNavigator();
 const FilmScreen = (props) => {
     const idFilm = props.route.params.idFilm
 
     const dispatch = useDispatch()
-
-    useEffect(() => {
-      const info = { 
-        id: idFilm
-      }
-      dispatch(getFilmDetails(info))
-      dispatch(getComments(idFilm))
-    }, [])
+    useFocusEffect(
+      useCallback(() => {
+        // Do something when the screen is focused
+        const info = { 
+          id: idFilm
+        }
+        dispatch(getFilmDetails(info))
+        dispatch(getComments(idFilm))
+        
+      }, [])
+    );
+    // useEffect(() => {
+    //   const info = { 
+    //     id: idFilm
+    //   }
+    //   dispatch(getFilmDetails(info))
+    //   dispatch(getComments(filmId))
+    // }, [])
 
     const film = useSelector((state) => state.films.filmDetail)
     const dayOfWeeks = useSelector((state) => state.films.dayOfWeeks)

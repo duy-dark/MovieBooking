@@ -2,6 +2,16 @@ import { all, takeEvery, put, call } from "redux-saga/effects";
 import UsersTypes from "./types";
 import httpUser from "../../api/customers";
 
+const removeData = async (storage) => {
+  try {
+      await AsyncStorage.removeItem(storage);
+      return true;
+  }
+  catch(exception) {
+      return false;
+  }
+}
+
 function* fetchLogin(action) {
   const { navigation } = action
   try {
@@ -10,7 +20,10 @@ function* fetchLogin(action) {
     if (res.status === "ok") {
       yield put({ type: UsersTypes.LOADING_HIDE });
       yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: res.data });
-      navigation.navigate("MainTabs")
+      if(res.data.is_newbie) {
+        navigation.navigate("SelectCategories")
+      }
+      else navigation.navigate("MainTabs")
     }
   } catch (err) {
     throw err;
@@ -35,11 +48,19 @@ function* fetchUserInfo(action) {
     yield put({ type: UsersTypes.LOADING_SHOW });
     const res = yield call(httpUser.getUserInfo, action.payload);
 
+    yield put({ type: UsersTypes.LOADING_HIDE });
     if (res.status === "ok") {
-      yield put({ type: UsersTypes.LOADING_HIDE });
+    
       yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: res.data });
       navigation.navigate("MainTabs")
     }
+    else {
+      removeData(action.payload.token)
+    }
+    // else {
+    //   yield put({ type: UsersTypes.LOADING_HIDE });
+    //   navigation.navigate("LoginScreen")
+    // }
   } catch (err) {
     throw err;
   }
@@ -93,20 +114,23 @@ function* fetchCategories() {
       yield put({ type: UsersTypes.GET_CATEGORIES_SUCCESS, payload: data });
     }
 
-  } catch (error) { console.log(error); }
+  } catch (error) { throw error; }
 }
 
 function* fetchPostCategories(action) {
   try {
     yield put({ type: UsersTypes.LOADING_SHOW });
-    const { payload, navigation } = action
+    const { payload, navigation, sc } = action
     const res = yield call(httpUser.postCategories, payload);
     const { status, data } = res
+
     if (status === "ok") {
-    navigation.navigate("MainTabs")
-    yield put({ type: UsersTypes.LOADING_HIDE });
-    yield put({ type: UsersTypes.POST_CATEGORIES_SUCCESS});
-    // alert("LoginScreen")
+      if(sc===1) {
+        navigation.navigate("MainTabs")
+      } else navigation.goBack()
+      yield put({ type: UsersTypes.LOADING_HIDE });
+      yield put({ type: UsersTypes.POST_CATEGORIES_SUCCESS, payload: data.customer});
+
     }
   } catch (err) {
     throw err;

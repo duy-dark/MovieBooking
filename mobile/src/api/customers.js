@@ -11,12 +11,12 @@ const getUserInfo = (params) => {
 };
 
 const getCategories = () => {
-  return Api.get(`api/customer/get_categories`).then((res) => res.data);
+  return Api.get('/api/category').then((res) => res.data);
 }
 
 const postCategories = (params) => {
-  return Api.post(`/api/customer/post_categories_favorite`, params).then(
-    (res) => res.data
+  return Api.put(`/api/customer/${params.id}`, params).then(
+    (res) =>  res.data
   );
 }
 

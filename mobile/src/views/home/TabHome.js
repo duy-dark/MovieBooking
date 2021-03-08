@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback } from 'react'
 import { View, Text, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native'
 import styles from "../../styles/views/home/tabhome"
 import CardFilmFavorite from "../../components/film/CardFilmFavorite"
@@ -7,19 +7,25 @@ import CardNews from "../../components/news/CardNews"
 import CardNewsSummary from "../../components/news/CardNewsSummary"
 // import CardCommment from "../../components/comment/CardComment"
 import { useSelector, useDispatch } from "react-redux";
-import { getListFilmNow } from "../../redux/films/actions"
+import { getListFilmFuture, getListFilmNow, getListFilmNowFavorite } from "../../redux/films/actions"
 import { getListNews } from '../../redux/news/action'
+import { useFocusEffect } from '@react-navigation/native'
 
 const TabHome = (props) => {
+    const user = useSelector(state => state.users.user)
     const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(getListFilmNow())
-        dispatch(getListNews())
-    }, [])
+    useFocusEffect(
+        useCallback(() => {
+            dispatch(getListFilmNowFavorite(user._id))
+            dispatch(getListNews())
+            dispatch(getListFilmNow())
+            dispatch(getListFilmFuture())
+        }, [])
+    )
 
     const films = useSelector((state) => state.films.filmsNow)
-    const filmsFavorite = films.slice(0, 3)
+    const filmsNowFavorite = useSelector((state) => state.films.filmsNowFavorite)
+    const filmsFavorite = filmsNowFavorite.slice(0, 3)
     const filmsSuggest = films.slice(3,6)
     const tempNews = useSelector((state) => state.news.newsList)
     const news = tempNews.map(item => {
@@ -45,7 +51,7 @@ const TabHome = (props) => {
     if(indicator) return <ActivityIndicator style={{alignSelf: 'center', marginTop: 200}} size="large" color="orangered" /> 
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-            <Text style={styles.section}>Phim được yêu thích nhất</Text>
+            <Text style={styles.section}>Phim đang chiếu có thể bạn sẽ thích</Text>
             {filmsFavorite.map((film, index) => 
                 <CardFilmFavorite key={index} film={film} navigation={props.navigation} />
             )}

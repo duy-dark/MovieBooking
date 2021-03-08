@@ -49,13 +49,15 @@ const TabFindByFilm = (props) => {
         }
     }, [selectFilm])
     useEffect(() => {
-        if (selectThreater) {
-            let arrDate = search.dayOfWeek.filter(val => {
-                if (val.schedules.filter(schedule => schedule.film_id === selectFilm._id && schedule.theater_id === selectThreater._id).length > 0) return val
-            })
-            setOptionDate(arrDate.map((val, index) => ({ ...val, label: days[moment(val.date).day()], value: index })))
-            setSelectDate('')
-            setSelectTime('')
+        if(search) {
+            if (selectThreater) {
+                let arrDate = search.dayOfWeek.filter(val => {
+                    if (val.schedules.filter(schedule => schedule.film_id === selectFilm._id && schedule.theater_id === selectThreater._id).length > 0) return val
+                })
+                setOptionDate(arrDate.map((val, index) => ({ ...val, label: days[moment(val.date).day()], value: index })))
+                setSelectDate('')
+                setSelectTime('')
+            }
         }
     }, [selectThreater])
     useEffect(() => {
@@ -68,6 +70,7 @@ const TabFindByFilm = (props) => {
 
     useEffect(() => {
         if (search) {
+            console.log('object search', search)
             setOptionFilm(search.films.map(val => ({ ...val, label: val.name, value: val._id })))
         }
     }, [search])

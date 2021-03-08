@@ -65,7 +65,7 @@ function* fetchFilmDetails(action) {
       yield put({ type: FilmsType.FILM_DETAIL_SUCCESS, payload: data });
     }
 
-  } catch (error) { console.log(error); }
+  } catch (error) { throw error; }
 }
 
 function* fetchListFilmsNow() {
@@ -78,7 +78,7 @@ function* fetchListFilmsNow() {
       yield put({ type: FilmsType.LIST_FILM_NOW_SUCCESS, payload: data });
     }
 
-  } catch (error) { console.log(error); }
+  } catch (error) { throw error; }
 }
 
 function* fetchListFilmsFuture() {
@@ -91,7 +91,7 @@ function* fetchListFilmsFuture() {
       yield put({ type: FilmsType.LIST_FILM_FUTURE_SUCCESS, payload: data });
     }
 
-  } catch (error) { console.log(error); }
+  } catch (error) { throw error; }
 }
 
 function* fetchListFilmsToday() {
@@ -102,7 +102,7 @@ function* fetchListFilmsToday() {
       yield put({ type: FilmsType.LIST_FILM_TODAY_SUCCESS, payload: data });
     }
 
-  } catch (error) { console.log(error); }
+  } catch (error) { throw error; }
 }
 
 function* fetchSeats(action) {
@@ -116,7 +116,7 @@ function* fetchSeats(action) {
       yield put({ type: FilmsType.LIST_SEATS_SUCCESS, payload: data });
     }
 
-  } catch (error) { console.log(error); }
+  } catch (error) { throw error; }
 }
 
 function* fetchSearch() {
@@ -127,7 +127,7 @@ function* fetchSearch() {
       yield put({ type: FilmsType.SEARCH_SUCCESS, payload: data });
     }
 
-  } catch (error) { console.log(error); }
+  } catch (error) { throw error; }
 }
 
 function* fetchComments(action) {
@@ -140,7 +140,7 @@ function* fetchComments(action) {
       yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.COMMENT_SUCCESS, payload: data });
     }
-  } catch (error) { console.log(error); }
+  } catch (error) { throw error; }
 }
 
 function* fetchCreateComment(action) {
@@ -150,12 +150,12 @@ function* fetchCreateComment(action) {
     const res = yield call(httpFilms.createComment, payload);
     const { status, data } = res
     if (status === "ok") {
-      navigation.push("TabComments") //fix navigation comment
+      navigation.goBack()
       yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.CREATE_COMMENT_SUCCESS, payload: data.comment });
     }
 
-  } catch (error) { console.log(error); }
+  } catch (error) { throw error; }
 }
 
 function* fetchGetTickets(action) {
@@ -169,20 +169,35 @@ function* fetchGetTickets(action) {
       yield put({type: FilmsType.GET_TICKETS_SUCCESS, payload: data})
     }
   }
-  catch (error) { console.log(error);}
+  catch (error) { throw error;}
 }
 
-function* fetchListFilmsFutureFavorite() {
+function* fetchListFilmsNowFavorite(action) {
   try {
+    const { payload } = action
     yield put({ type: FilmsType.LOADING_SHOW });
-    const res = yield call(httpFilms.getListFilmFutureFavorite, {});
+    const res = yield call(httpFilms.getListFilmNowFavorite, payload);
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
+      yield put({ type: FilmsType.LIST_FILM_NOW_FAVORITE_SUCCESS, payload: data });
+    }
+
+  } catch (error) { throw error; }
+}
+
+function* fetchListFilmsFutureFavorite(action) {
+  try {
+    const { payload } = action
+    yield put({ type: FilmsType.LOADING_SHOW });
+    const res = yield call(httpFilms.getListFilmFutureFavorite, payload);
     const { status, data } = res
     if (status === "ok") {
       yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.LIST_FILM_FUTURE_FAVORITE_SUCCESS, payload: data });
     }
 
-  } catch (error) { console.log(error); }
+  } catch (error) { throw error; }
 }
 
 function* fetchPaymentGate(action) {
@@ -191,14 +206,21 @@ function* fetchPaymentGate(action) {
     const { payload, Linking, navigation } = action
     const res = yield call(httpFilms.paymentMomo, payload);
     yield put({ type: FilmsType.LOADING_HIDE });
-    const { data } = res
+    const { data, status } = res
     // storeData("url",data.url2)
     // getDataUrl(navigation)
-    Linking.openURL(data.url1)
-    navigation.navigate("Screen", {
-      url: data.url2
-    })
-  } catch (error) { console.log(error); }
+    if (status === "ok") {
+      Linking.openURL(data.url1)
+      navigation.navigate("Screen", {
+        url: data.url2
+      })
+    } else {
+      const { error_message: {  error_code, detail } = {}} = data
+      if (error_code === 204 ) {
+        alert(detail)
+      }
+    }
+  } catch (error) { throw error; }
 }
 
 function* fetchGetTicketDetail(action) {
@@ -213,7 +235,7 @@ function* fetchGetTicketDetail(action) {
       yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.GET_TICKETDETAIL_SUCCESS, payload: data });
     }
-  } catch (error) { console.log(error); }
+  } catch (error) { throw error; }
 }
 
 function* postBookingInfo() {
@@ -256,6 +278,10 @@ function* getTickets() {
   yield takeEvery(FilmsType.GET_TICKETS, fetchGetTickets);
 }
 
+function* getFilmsNowFavorite() {
+  yield takeEvery(FilmsType.LIST_FILM_NOW_FAVORITE, fetchListFilmsNowFavorite);
+}
+
 function* getFilmsFutureFavorite() {
   yield takeEvery(FilmsType.LIST_FILM_FUTURE_FAVORITE, fetchListFilmsFutureFavorite);
 }
@@ -282,6 +308,7 @@ export default function* filmsSaga() {
     getTickets(),
     getFilmsFutureFavorite(),
     paymentGateway(),
-    getTicketDetail()
+    getTicketDetail(),
+    getFilmsNowFavorite()
   ]);
 }

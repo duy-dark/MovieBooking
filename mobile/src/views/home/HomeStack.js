@@ -8,7 +8,7 @@ import CommentScreen from '../comment/CommentScreen';
 import ReviewFilmScreen from '../comment/ReviewFilmScreen';
 import NewsDetails from '../../components/news/NewsDetails';
 import Screen from '../screen/Screen';
-import { View, Button } from 'react-native'
+import { TouchableOpacity, Text } from 'react-native'
 
 const Stack = createStackNavigator();
 const HomeStack = () => {
@@ -17,7 +17,8 @@ const HomeStack = () => {
             <Stack.Screen name="HomeScreen" component={HomeScreen} 
                 options={{ 
                     title: "Khám Phá", 
-                    headerLeft: null
+                    headerLeft: null,
+                    
                 }} 
             />
             <Stack.Screen name="FilmScreen" component={FilmScreen}
@@ -53,11 +54,16 @@ const HomeStack = () => {
                 }} 
             />
             <Stack.Screen name="Screen" component={Screen}
-                options={{
-                    title: "Tình trạng đặt vé",
-                    headerLeft: null,
-                    headerRight: () => <View style={{marginRight: 10}}><Button title="Về Home"/></View>
-                }}
+                options={({navigation}) =>
+                    ({
+                        title: "Tình trạng đặt vé",
+                        headerLeft: null,
+                        headerRight: () => <TouchableOpacity style={{marginRight: 20}}
+                            onPress={() => navigation.navigate("AccountStack")}>
+                            <Text style={{fontSize: 17, color: "#3b5998"}}>Xem vé</Text>
+                        </TouchableOpacity>
+                    })
+                }
             />
         </Stack.Navigator>
     )

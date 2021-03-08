@@ -4,44 +4,16 @@ import MultiSelect from 'react-native-multiple-select';
 import { useDispatch, useSelector } from 'react-redux'
 import { getCategories, postCategories } from '../../redux/users/actions';
 
-const items = [{
-    id: '92iijs7yta',
-    name: 'Ondo'
-  }, {
-    id: 'a0s0a8ssbsd',
-    name: 'Ogun'
-  }, {
-    id: '16hbajsabsd',
-    name: 'Calabar'
-  }, {
-    id: 'nahs75a5sg',
-    name: 'Lagos'
-  }, {
-    id: '667atsas',
-    name: 'Maiduguri'
-  }, {
-    id: 'hsyasajs',
-    name: 'Anambra'
-  }, {
-    id: 'djsjudksjd',
-    name: 'Benue'
-  }, {
-    id: 'sdhyaysdj',
-    name: 'Kaduna'
-  }, {
-    id: 'suudydjsjd',
-    name: 'Abuja'
-    }
-];
-
-const SelectCategories = () => {
+const SelectCategories = (props) => {
     const imageBackground = { uri: "https://tix.vn/app/assets/img/icons/backapp.jpg" }
     const [selectedItems , setSelectedItems ] = useState([])
     const [isDisaled, setIsDisaled] = useState(true)
-
-    // const dispatch = useDispatch()
+    const user = useSelector((state) => state.users.user)
+    const dispatch = useDispatch()
     useEffect(() => {
-        // dispatch(getCategories())
+      dispatch(getCategories())
+    }, [])
+    useEffect(() => {
         setIsDisaled(!(selectedItems.length > 0))
     }, [selectedItems])
     let multiSelectRef = useRef(null);
@@ -49,8 +21,11 @@ const SelectCategories = () => {
         setSelectedItems( selectedItems );
     };
     const onPress = () => {
-        alert("Xác nhận")
-        // dispatch(postCategories(selectedItems))
+        const userInfo = {
+          id: user._id,
+          favorite_ids: selectedItems
+        }
+        dispatch(postCategories(userInfo, props.navigation, 1))
     }
     const categories = useSelector(state => state.users.categories)
     const indicator = useSelector(state => state.users.loading)
@@ -61,8 +36,8 @@ const SelectCategories = () => {
                 styleInputGroup={{padding: 10, borderTopRightRadius: 10, borderTopLeftRadius: 10}}
                 styleSelectorContainer={{borderRadius: 20}}
                 hideTags
-                items={items}
-                uniqueKey="id"
+                items={categories}
+                uniqueKey="_id"
                 ref={multiSelectRef}
                 onSelectedItemsChange={onSelectedItemsChange}
                 selectedItems={selectedItems}

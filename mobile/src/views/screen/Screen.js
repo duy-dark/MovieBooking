@@ -1,48 +1,40 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { View, Text, ActivityIndicator } from 'react-native'
+import { View, Text, ActivityIndicator, Touchable } from 'react-native'
 import { getTicketDetail } from '../../redux/films/actions'
 import { useDispatch, useSelector } from 'react-redux'
-
-// async function getDataUrl() {
-// // alert(url)
-//     try {
-//         const dispatch = useDispatch()
-//         const url = await AsyncStorage.getItem("url")
-//         if(url) {
-//         dispatch(getTicketDetail(url))
-//         }
-//     } catch(e) {
-//         // error reading value
-//     }
-// }
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const Screen = (props) => {
     const url = props.route.params.url
-    const [, setReload] = useState()
-    const forceUpdate = useCallback(
-        () => setReload({}) 
-        ,[]
-    )
+
     const dispatch = useDispatch()
     useEffect(() => {
-        // alert("Hello")
         dispatch(getTicketDetail(url))
-        forceUpdate
     }, [])
-    // const message = props.route.params.message
-    // alert(message)
     const ticketDetail = useSelector(state => state.films.ticketDetail)
     const indicator = useSelector(state => state.films.loading)
-    // alert(ticketDetail.is_paid)
-    console.log("ticketDetail",ticketDetail)
-    if(indicator) return <ActivityIndicator style={{alignSelf: 'center', marginTop: 200}} size="large" color="orangered" /> 
+    const onReload = () => {
+        props.navigation.replace("Screen", {
+            url: url
+        })
+    }
+    if(indicator) return <ActivityIndicator style={{alignSelf: 'center', marginTop: 150}} size="large" color="orangered" /> 
     else return (
-        <View style={{flex: 1, marginTop: 100, marginLeft: 100}}>
-            {ticketDetail.is_paid ?
-                <Text>Đã thanh toán thành công</Text>
-                :
-                <Text>Chưa thanh toán</Text>
-            }
+        <View style={{flex: 1, marginTop: 200, alignItems: "center"}}>
+            {ticketDetail.ticket_status ?
+                <Text style={{fontSize: 20, color: "green"}}>Đã thanh toán thành công</Text>
+                 : 
+                <Text style={{fontSize: 20, color: "red"}}>Chưa thanh toán</Text>
+            } 
+            <TouchableOpacity style={{padding: 10, backgroundColor: "white", marginTop: 5, borderColor: "gray", borderWidth: 0.5, borderRadius: 5}} onPress={onReload}>
+                <Text style={{fontSize: 15, color: "gray"}}>Reload</Text>
+            </TouchableOpacity>
+            {/* <TouchableOpacity style={{padding: 15}}
+                onPress={() => navigation.navigate("AccountStack", {
+                    screen: "TabTicketBought"
+                })}>
+                <Text style={{fontSize: 17, color: "#3b5998"}}>Xem vé</Text>
+            </TouchableOpacity> */}
         </View>
     )
 }

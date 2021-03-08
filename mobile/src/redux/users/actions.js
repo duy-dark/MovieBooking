@@ -57,11 +57,19 @@ export function getCategories() {
   }
 }
 
-export function postCategories(payload, navigation) {
+export function postCategories(user, navigation, sc) {
   return {
     type: UsersTypes.POST_CATEGORIES,
-    payload: payload,
-    navigation: navigation
+    payload: user,
+    navigation: navigation,
+    sc: sc
   };
+}
+
+export function setSocket(socket){
+  return {
+    type: UsersTypes.SET_SOCKET,
+    payload: socket
+  }
 }
 
