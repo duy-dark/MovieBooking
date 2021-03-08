@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { View, Button } from 'react-native'
+import { View, Button, ActivityIndicator } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useSelector } from "react-redux"
 import moment from "moment"
 
 
-const days = ['chủ nhật', 'thứ 2', 'thứ 3', 'thứ 4', 'thứ 5', 'thứ 6', 'thứ 7']
+const days = ['Chủ Nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7']
 
 
 const TabFindByDate = (props) => {
 
     const search = useSelector((state) => state.films.search);
+    const indicator = useSelector((state) => state.films.loading);
+
     const formatTime = (time) => {
         return moment(time).format('hh-mm')
     }
@@ -27,7 +29,6 @@ const TabFindByDate = (props) => {
     const [isDisabled, setIsDisabled] = useState(true)
 
     useEffect(() => {
-        console.log('qwfiquwgfqwgfqw', isDisabled)
     }, [isDisabled])
 
     useEffect(() => {
@@ -77,10 +78,18 @@ const TabFindByDate = (props) => {
 
     useEffect(() => {
         if (search) {
-            setOptionDate(search.dayOfWeek.map((val, index) => ({ ...val, label: days[moment(val.date).day()], value: index })))
+            setOptionDate(search.dayOfWeek.map((val, index) => ({ ...val, label: days[moment(val.date).day()] + " - " + moment(val.date).format("DD/MM"), value: index })))
         }
     }, [search])
-
+    if (indicator)
+    return (
+      <ActivityIndicator
+        style={{ alignSelf: "center", marginTop: 200 }}
+        size="large"
+        color="orangered"
+      />
+    );
+    else
     return (
         <View style={{ paddingHorizontal: 30 }}>
             <DropDownPicker

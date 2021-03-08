@@ -12,16 +12,20 @@ import { getListNews } from '../../redux/news/action'
 import { useFocusEffect } from '@react-navigation/native'
 
 const TabHome = (props) => {
-    const user = useSelector(state => state.users.user)
-    const dispatch = useDispatch()
-    useFocusEffect(
-        useCallback(() => {
-            dispatch(getListFilmNowFavorite(user._id))
-            dispatch(getListNews())
-            dispatch(getListFilmNow())
-            dispatch(getListFilmFuture())
-        }, [])
-    )
+    // const user = useSelector(state => state.users.user)
+    // const dispatch = useDispatch()
+    // useFocusEffect(
+    //     useCallback(() => {
+    //         dispatch(getListFilmNowFavorite(user._id))
+    //         dispatch(getListNews())
+    //         dispatch(getListFilmNow())
+    //         dispatch(getListFilmFuture())
+    //         return () => {
+    //             // Do something when the screen is unfocused
+    //             // Useful for cleanup functions
+    //           }
+    //     }, [])
+    // )
 
     const films = useSelector((state) => state.films.filmsNow)
     const filmsNowFavorite = useSelector((state) => state.films.filmsNowFavorite)

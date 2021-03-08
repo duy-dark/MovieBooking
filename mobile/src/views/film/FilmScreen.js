@@ -20,15 +20,18 @@ const FilmScreen = (props) => {
         }
         dispatch(getFilmDetails(info))
         dispatch(getComments(idFilm))
-        
+        return () => {
+          // Do something when the screen is unfocused
+          // Useful for cleanup functions
+        }
       }, [])
-    );
+    )
     // useEffect(() => {
     //   const info = { 
     //     id: idFilm
     //   }
     //   dispatch(getFilmDetails(info))
-    //   dispatch(getComments(filmId))
+    //   dispatch(getComments(idFilm))
     // }, [])
 
     const film = useSelector((state) => state.films.filmDetail)

@@ -5,7 +5,6 @@ const setup = (instance) => {
   instance.interceptors.request.use(
     async function (config) {
       const token = await AsyncStorage.getItem("token");
-      console.log('tokennnnnnnn', token)
       if (token) {
         config.headers.authorization = `Bearer ${token}`;
       }

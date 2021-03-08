@@ -21,7 +21,7 @@ const CardCommentFilm = (props) => {
                     </View>
                     <View style={styles.reviewerInfo}>
                         <Text style={styles.nameReviewer}>{name}</Text>
-                        <Text style={styles.timeReviewer}>{moment(created_at).startOf('day').fromNow()}</Text>
+                        <Text style={styles.timeReviewer}>{moment(created_at).format("DD-MM-YYYY")}</Text>
                     </View>
                 </View>           
                 <View style={styles.review}>

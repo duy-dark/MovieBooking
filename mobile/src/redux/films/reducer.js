@@ -18,12 +18,12 @@ const initialState = {
   tickets: [],
   filmsNowFavorite: [],
   filmsFutureFavorie: [],
-  ticketDetail: {}
+  ticketDetail: {},
 }
 
 export default function filmsReducer(state = initialState, action) {
   let newState;
-
+  let { comments = [] } = state
   const { type, payload = {} } = action;
   switch (type) {
     case FilmTypes.FILM_DETAIL_SUCCESS:
@@ -49,8 +49,7 @@ export default function filmsReducer(state = initialState, action) {
       newState = Object.assign({}, state, { comments: payload })
       break;
     case FilmTypes.CREATE_COMMENT_SUCCESS:
-      let { comments } = state;
-      newState = Object.assign({}, state, { comments: [payload, ...state.comments]})
+      newState = Object.assign({}, state, {})
       break;
     case FilmTypes.LOADING_SHOW:
       newState = Object.assign({}, state, { loading: true });

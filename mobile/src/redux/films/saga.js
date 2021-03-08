@@ -121,9 +121,11 @@ function* fetchSeats(action) {
 
 function* fetchSearch() {
   try {
+    yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.search, {});
     const { status, data } = res
     if (status === "ok") {
+      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.SEARCH_SUCCESS, payload: data });
     }
 
@@ -135,7 +137,7 @@ function* fetchComments(action) {
     yield put({ type: FilmsType.LOADING_SHOW });
     const { payload } = action
     const res = yield call(httpFilms.getComments, payload);
-    const { status, data } = res
+    const { status, data = {} } = res
     if (status === "ok") {
       yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.COMMENT_SUCCESS, payload: data });
@@ -154,7 +156,6 @@ function* fetchCreateComment(action) {
       yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.CREATE_COMMENT_SUCCESS, payload: data.comment });
     }
-
   } catch (error) { throw error; }
 }
 

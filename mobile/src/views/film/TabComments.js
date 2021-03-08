@@ -27,17 +27,24 @@ const TabComments = (props) => {
     }
     const indicator = useSelector((state) => state.films.loading)
     const listComment = useSelector((state) => state.films.comments)
-    const { rate_average = 0, comments = []} = listComment
-    const rateAverage = rate_average.toFixed(1)
+
+    const [stateComments, setStateComments] = useState([])
+    const [stateRates, setStateRates] = useState(0)
+    useEffect(() => {
+        const { rate_average = 0, comments = []} = listComment
+        setStateComments(comments)
+        setStateRates(rate_average)
+    }, [listComment])
+    // const rateAverage = rate_average.toFixed(1)
     if(indicator) return <ActivityIndicator style={{alignSelf: 'center', marginTop: 200}} size="large" color="orangered" /> 
     else return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.review}>
-                <Text style={styles.reviewText}>{rateAverage}</Text>
+                <Text style={styles.reviewText}>{stateRates.toFixed(1)}</Text>
                 <StarRating
                     disabled={true}
                     maxStars={5}
-                    rating={rateAverage / 2}
+                    rating={stateRates / 2}
                     fullStarColor={"orangered"}
                     starSize={15}
                 />
@@ -46,7 +53,7 @@ const TabComments = (props) => {
             <TouchableOpacity style={styles.inputArea} onPress={onPressReviewFilm}>
                 <Text style={styles.inputText}>Bạn nghĩ gì về phim này...</Text>
             </TouchableOpacity>
-            {comments.length > 0 && comments.map((comment, index) => (
+            {stateComments.length > 0 && stateComments.map((comment, index) => (
                 <CardCommentFilm key={index} comment={comment} navigation={props.navigation} />
             ))}
         </ScrollView>

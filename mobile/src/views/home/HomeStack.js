@@ -57,7 +57,6 @@ const HomeStack = () => {
                 options={({navigation}) =>
                     ({
                         title: "Tình trạng đặt vé",
-                        headerLeft: null,
                         headerRight: () => <TouchableOpacity style={{marginRight: 20}}
                             onPress={() => navigation.navigate("AccountStack")}>
                             <Text style={{fontSize: 17, color: "#3b5998"}}>Xem vé</Text>
