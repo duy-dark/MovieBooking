@@ -7,9 +7,11 @@ const Ticket = (props) => {
 
     const ticket = props.ticket
     const clickTicket = () => {
-        props.navigation.navigate("QRCodeScreen", {
-            id_ticket: ticket._id
-        })
+        if(ticket.ticket_status === 1 || ticket.ticket_status === 2) {
+            props.navigation.navigate("QRCodeScreen", {
+                id_ticket: ticket._id
+            })
+        }
     }
 
     return (
