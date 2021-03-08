@@ -188,7 +188,7 @@ const updateScheulde =()=>{
         dataSource={data1}
         columns={mergedColumns}
         rowClassName="editable-row"
-        pagination={false}
+        pagination={true}
       />
     
     </Form>
