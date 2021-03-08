@@ -144,13 +144,13 @@ function* fetchUpdateFilmSchedule(action) {
 function* fetchDeleteFilmSchedule(action) {
   try {
     
-    const res = yield call(httpFilms.updateFilmSchedule,action.payload);
+    const res = yield call(httpFilms.deleteFilmSchedule,action.payload);
     const { status, data } = res
     if (status === "ok") {
       yield put({ type: FilmsType.DELETE_FILM_SCHEDULE_SUCCESS, payload: data });
     }
 
-  } catch (error) { alert("LỊCH CHIẾU ĐÃ TỒN TẠI!"); }
+  } catch (error) {console.log(error); }
 }
 function* fetchCreateFilmSchedule(action) {
   try {
