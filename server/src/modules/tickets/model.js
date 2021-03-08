@@ -16,7 +16,7 @@ let schema = new mongoose.Schema(
     seats: [String],
     momo_payment: Boolean,
     direct_payment: Boolean,
-    is_paid: Boolean,
+    ticket_status: Number,
     is_deleted: Boolean,
     created_at: Date,
     updated_at: Date
@@ -41,7 +41,14 @@ module.exports = {
     return await Collection.aggregate([
       {
         $match: {
-          $and: [conditions]
+          $and: [
+            conditions,
+            {
+              ticket_status: {
+                $in: [0, 1, 2]
+              }
+            }
+          ]
         }
       },
       {
@@ -224,7 +231,8 @@ module.exports = {
       {$unwind: '$film_schedules.theaters'},
       {$unwind: '$film_schedules.rooms'},
       {$unwind: '$customers'},
-      {$sort: {created_at: -1}}
+      {$sort: {created_at: -1}},
+      {$limit: lambda.limit}
     ]);
   }
 };

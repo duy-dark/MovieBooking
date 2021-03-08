@@ -29,12 +29,13 @@ const getList = async (params) => {
     let data = await Model.findByLambda(lambda);
     if (data.length === 0)
       throw {
-        status: 204,
+        status: 203,
+        errCode: 204,
         detail: "Doesn't exist any customer"
       };
     return resSuccess(data);
   } catch (error) {
-    throw {status: 400, detail: error};
+    throw error;
   }
 };
 
@@ -55,10 +56,12 @@ const findById = async (id, token) => {
         address: 1
       }
     };
-    let data = await Model.findByLambda(lambda);
+    let data = await Model.getDetail(lambda);
+    console.log('data:', data);
     if (data.length === 0)
       throw {
-        status: 204,
+        status: 203,
+        errCode: 204,
         detail: 'Customer not found'
       };
     return resSuccess({
@@ -66,7 +69,7 @@ const findById = async (id, token) => {
       token: token
     });
   } catch (error) {
-    throw {status: 400, detail: error};
+    throw error;
   }
 };
 
@@ -128,7 +131,7 @@ const postCreate = async (params) => {
       is_newbie: true
     });
   } catch (error) {
-    throw {status: 400, detail: error};
+    throw error;
   }
 };
 
@@ -154,10 +157,10 @@ const putUpdate = async (id, params) => {
       let result = await findById(id);
       return result;
     } else {
-      throw {status: 400, detail: data};
+      throw {status: 203, errCode: 204, detail: data};
     }
   } catch (error) {
-    throw {status: 400, detail: error};
+    throw error;
   }
 };
 // const postLoginGoogle = async (req, res, next) => {
@@ -303,7 +306,7 @@ const deleteData = async (id) => {
     let data = await Model.updateByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
-    throw {status: 400, detail: error};
+    throw error;
   }
 };
 

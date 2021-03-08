@@ -24,7 +24,7 @@ const getList = async (params) => {
         payment: 1,
         momo_payment: 1,
         direct_payment: 1,
-        is_paid: 1
+        ticket_status: 1
       }
     };
     let data = await Model.findByLambda(lambda);
@@ -36,8 +36,15 @@ const getList = async (params) => {
 
 const getListDetail = async (params) => {
   try {
+    let conditions = {...params, is_deleted: false};
+    let is_mobile = params.is_mobile;
+
+    delete conditions.is_mobile;
+    delete conditions.limit;
+    console.log('conditions', conditions);
+
     let lambda = {
-      conditions: {...params, is_deleted: false},
+      conditions: conditions,
       views: {
         _id: 1,
         code: 1,
@@ -52,9 +59,15 @@ const getListDetail = async (params) => {
         payment: 1,
         momo_payment: 1,
         direct_payment: 1,
-        is_paid: 1
-      }
+        ticket_status: 1
+      },
+      limit: params.limit * 5 || 5
     };
+    if (is_mobile == 1) {
+      lambda.limit = 100000;
+    }
+    console.log('lambda', lambda);
+
     let data = await Model.getListDetail(lambda);
     return resSuccess(data);
   } catch (error) {
@@ -81,7 +94,7 @@ const findById = async (id) => {
         customers: 1,
         momo_payment: 1,
         direct_payment: 1,
-        is_paid: 1
+        ticket_status: 1
       }
     };
     let data = await Model.getDetail(lambda);
@@ -115,6 +128,25 @@ const findById = async (id) => {
 
 const postCreate = async (params) => {
   try {
+    console.log('params.film_schedule_id', params.film_schedule_id);
+    let conditions = {
+      film_schedule_id: require('mongodb').ObjectId(params.film_schedule_id),
+      is_deleted: false
+    };
+    let data = await Model.getTicketBySchedule(conditions);
+    let arr = data.map((item) => item.seats);
+
+    if (arr.length != 0) {
+      console.log('arrin post create:', arr);
+
+      let checkExisted = params.seats.filter((item) => arr.includes(item));
+
+      console.log('checkExisted:', checkExisted);
+      if (checkExisted.length != 0) {
+        return {code: 204, seats: checkExisted};
+      }
+    }
+
     let code = shortid.generate().toUpperCase();
     let lambda = {
       code: code,
@@ -131,13 +163,13 @@ const postCreate = async (params) => {
       payment: params.payment || undefined,
       momo_payment: params.momo_payment || false,
       direct_payment: params.direct_payment || false,
-      is_paid: false,
+      ticket_status: 0,
       is_deleted: false,
       created_at: moment.now(),
       updated_at: moment.now()
     };
-    let data = await Model.createByLambda(lambda);
-    return resSuccess(data[0]);
+    let data1 = await Model.createByLambda(lambda);
+    return resSuccess(data1[0]);
   } catch (error) {
     console.log('error booking', error);
     throw error;
@@ -163,7 +195,7 @@ const putUpdate = async (id, params) => {
         payment: params.payment || undefined,
         momo_payment: params.momo_payment || undefined,
         direct_payment: params.direct_payment || undefined,
-        is_paid: params.is_paid || undefined,
+        ticket_status: params.ticket_status || undefined,
         updated_at: moment.now()
       }
     };
@@ -201,7 +233,6 @@ const getTicketBySchedule = async (film_schedule_id) => {
     console.log('film_schedule_id', film_schedule_id);
     let conditions = {
       film_schedule_id: film_schedule_id,
-      is_paid: true,
       is_deleted: false
     };
     let data = await Model.getTicketBySchedule(conditions);
@@ -231,6 +262,29 @@ const getTicketBySchedule = async (film_schedule_id) => {
     throw {status: 400, detail: error};
   }
 };
+
+const triggeringTicket = async (id) => {
+  try {
+    let lambda = {
+      conditions: {_id: id, is_deleted: false},
+      params: {
+        ticket_status: 2,
+        updated_at: moment.now()
+      }
+    };
+    lambda.params = omitBy(lambda.params, isNil);
+    let data = await Model.updateByLambda(lambda);
+    if (data.ok) {
+      let result = await findById(id);
+      return result;
+    } else {
+      throw {status: 400, detail: data};
+    }
+  } catch (error) {
+    throw {status: 400, detail: error};
+  }
+};
+
 module.exports = {
   getList,
   getListDetail,
@@ -238,5 +292,6 @@ module.exports = {
   postCreate,
   putUpdate,
   deleteData,
-  getTicketBySchedule
+  getTicketBySchedule,
+  triggeringTicket
 };

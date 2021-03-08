@@ -55,7 +55,7 @@ const postCreate = async (params) => {
       updated_at: moment.now()
     };
     let data = await Model.createByLambda(lambda);
-    return resSuccess(data);
+    return resSuccess(data[0]);
   } catch (error) {
     throw {status: 400, detail: error};
   }
@@ -96,7 +96,12 @@ const deleteData = async (id) => {
       }
     };
     let data = await Model.updateByLambda(lambda);
-    return resSuccess(data);
+    if (data.ok) {
+      let result = await Model.findByLambda({conditions: {_id: id}});
+      return resSuccess(result[0]);
+    } else {
+      throw {status: 400, detail: data};
+    }
   } catch (error) {
     throw {status: 400, detail: error};
   }

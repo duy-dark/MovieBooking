@@ -28,8 +28,11 @@ const io = socketio(server, {
 });
 
 // app.use(authen) check token
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(
+  bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000})
+);
 app.use(cookieParser('login123123'));
 app.use(
   session({
@@ -86,7 +89,7 @@ app.use((req, res) => {
 // app.use() error
 
 // call connection socket
-io.on('connection', (socket) => connection(socket, io));
+io.on('connect', (socket) => connection(socket, io));
 
 const startSever = async () => {
   server.listen(port, async () => {

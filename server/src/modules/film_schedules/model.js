@@ -93,11 +93,23 @@ module.exports = {
   getNowShowing: async function (lambda) {
     return await Collection.aggregate([
       {
+        // $match: {
+        //   time_start: {
+        //     $gte: lambda.conditions.time_start,
+        //     $lte: lambda.conditions.time_end7
+        //   }
+        // },
+
         $match: {
-          time_start: {
-            $gte: lambda.conditions.time_start,
-            $lte: lambda.conditions.time_end7
-          }
+          $and: [
+            {
+              time_start: {
+                $gte: lambda.conditions.time_start,
+                $lte: lambda.conditions.time_end7
+              }
+            },
+            {is_deleted: false}
+          ]
         }
       },
       {
@@ -156,9 +168,6 @@ module.exports = {
                 _id: '$_id',
                 name: {
                   $first: '$name'
-                },
-                content: {
-                  $first: '$content'
                 }
               }
             }

@@ -79,6 +79,7 @@ router.get('/list', verifyUser.requireByUser, (req, res, next) => {
 });
 
 router.get('/:id/detail', verifyUser.requireGetPerson, (req, res, next) => {
+  console.log('req:', req.params.id);
   let id = require('mongodb').ObjectId(req.params.id);
   handler
     .findById(id, req.token)

@@ -148,7 +148,7 @@ const getFilm7Day = async (id) => {
     let time_end = new Date(
       moment()
         .subtract(hour + 7, 'hour')
-        .subtract(minute + 1, 'minutes')
+        .subtract(minute, 'minutes')
         .add(1, 'days')
     );
 
@@ -214,6 +214,11 @@ const postCreate = async (params) => {
       actors: params.actors || undefined,
       trailer: params.trailer || undefined,
       rates: {
+        star10: 0,
+        star9: 0,
+        star8: 0,
+        star7: 0,
+        star6: 0,
         star5: 0,
         star4: 0,
         star3: 0,
@@ -288,7 +293,12 @@ const deleteData = async (id) => {
       }
     };
     let data = await Model.updateByLambda(lambda);
-    return resSuccess(data);
+    if (data.ok) {
+      let result = await Model.findByLambda({conditions: {_id: id}});
+      return resSuccess(result[0]);
+    } else {
+      throw {status: 400, detail: data};
+    }
   } catch (error) {
     throw {status: 400, detail: error};
   }
@@ -298,25 +308,21 @@ const getNowShowing = async (customer_id) => {
   try {
     let time_start = new Date(moment());
 
-    let date = new Date(moment().add(1, 'days')).getDate();
+    let hour = new Date(moment()).getHours();
+    let minute = new Date(moment()).getMinutes();
 
-    let month = new Date(moment().add(1, 'days')).getMonth();
-    let year = new Date(moment().add(1, 'days')).getFullYear();
+    let now = moment.now();
 
-    let time_end1 = new Date(
-      moment(
-        `${year}-${month > 8 ? month + 1 : '0' + (month + 1)}-${
-          date > 9 ? date : '0' + date
-        }`,
-        moment.ISO_8601
-      )
-    );
+    let time_end = moment(now)
+      .add(1, 'days')
+      .subtract(hour + 7, 'hour')
+      .subtract(minute, 'minutes');
 
+    console.log('hour:', hour);
     console.log('time_start: ', time_start);
-    console.log('time_end1:   ', time_end1);
-    console.log('date:       ', date);
-    console.log('month:      ', month + 1);
-    console.log('year:       ', year);
+    console.log('time_end:   ', time_end);
+
+    let time_end1 = new Date(moment(time_end).add(0, 'days'));
 
     let lambda = {
       conditions: {
@@ -331,6 +337,7 @@ const getNowShowing = async (customer_id) => {
         is_deleted: false
       }
     };
+    console.log('lambda', lambda);
 
     let data;
     if (customer_id) {
@@ -362,25 +369,21 @@ const getCommingSoon = async (customer_id) => {
   try {
     let time_start = new Date(moment());
 
-    let date = new Date(moment().add(7, 'days')).getDate();
+    let hour = new Date(moment()).getHours();
+    let minute = new Date(moment()).getMinutes();
 
-    let month = new Date(moment().add(7, 'days')).getMonth();
-    let year = new Date(moment().add(7, 'days')).getFullYear();
+    let now = moment.now();
 
-    let time_end1 = new Date(
-      moment(
-        `${year}-${month > 8 ? month + 1 : '0' + (month + 1)}-${
-          date > 9 ? date : '0' + date
-        }`,
-        moment.ISO_8601
-      )
-    );
+    let time_end = moment(now)
+      .add(1, 'days')
+      .subtract(hour + 7, 'hour')
+      .subtract(minute, 'minutes');
 
+    console.log('hour:', hour);
     console.log('time_start: ', time_start);
-    console.log('time_end1:   ', time_end1);
-    console.log('date:       ', date);
-    console.log('month:      ', month + 1);
-    console.log('year:       ', year);
+    console.log('time_end:   ', time_end);
+
+    let time_end1 = new Date(moment(time_end).add(6, 'days'));
 
     let lambda = {
       conditions: {
@@ -395,6 +398,7 @@ const getCommingSoon = async (customer_id) => {
         is_deleted: false
       }
     };
+    console.log('lambda', lambda);
 
     let data;
     if (customer_id) {

@@ -24,12 +24,13 @@ const getList = async (params) => {
     let data = await Model.findByLambda(lambda);
     if (data.length === 0)
       throw {
-        status: 204,
+        status: 203,
+        errCode: 204,
         detail: "Doesn't exist any admin"
       };
     return resSuccess(data);
   } catch (error) {
-    throw {status: 400, detail: error};
+    throw error;
   }
 };
 
@@ -51,12 +52,13 @@ const getDetail = async (params) => {
     let data = await Model.getDetail(lambda);
     if (data.length === 0)
       throw {
-        status: 204,
+        status: 203,
+        errCode: 204,
         detail: "Doesn't exist any admin"
       };
     return resSuccess(data);
   } catch (error) {
-    throw {status: 400, detail: error};
+    throw error;
   }
 };
 
@@ -72,18 +74,20 @@ const findById = async (id) => {
         email: 1,
         permission_id: 1,
         avatar: 1,
-        adress: 1
+        adress: 1,
+        permissions: '$permissions'
       }
     };
-    let data = await Model.findByLambda(lambda);
+    let data = await Model.getDetail(lambda);
     if (data.length === 0)
       throw {
-        status: 204,
+        status: 203,
+        errCode: 204,
         detail: 'Admin not found'
       };
-    return resSuccess(data);
+    return resSuccess(data[0]);
   } catch (error) {
-    throw {status: 400, detail: error};
+    throw error;
   }
 };
 
@@ -95,7 +99,8 @@ const postCreate = async (params) => {
     if (adminExisted && adminExisted.length) {
       console.log('adminExisted: ', adminExisted);
       throw {
-        status: 204,
+        status: 203,
+        errCode: 204,
         detail: 'This email is registered! Please pick other email!'
       };
     }
@@ -117,7 +122,7 @@ const postCreate = async (params) => {
     let data = await Model.createByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
-    throw {status: 400, detail: error};
+    throw error;
   }
 };
 
@@ -147,10 +152,14 @@ const putUpdate = async (id, params) => {
       let result = await findById(id);
       return result;
     } else {
-      throw {status: 400, detail: data};
+      throw {
+        status: 203,
+        errCode: 204,
+        detail: 'This email is registered! Please pick other email!'
+      };
     }
   } catch (error) {
-    throw {status: 400, detail: error};
+    throw error;
   }
 };
 
@@ -166,7 +175,7 @@ const deleteData = async (id) => {
     let data = await Model.updateByLambda(lambda);
     return resSuccess(data);
   } catch (error) {
-    throw {status: 400, detail: error};
+    throw error;
   }
 };
 
@@ -176,7 +185,7 @@ const deleteData = async (id) => {
 //     let update = await Model.updateByLambda(id, adminUpdate);
 //     if (update.affectedRows < 1) {
 //       throw {
-//         status: 204,
+//         status: 203, errCode: 204,
 //         message: 'Admin update fails!'
 //       };
 //     }
@@ -196,7 +205,8 @@ const postLogin = async (params) => {
     let data = await Model.findByLambda({conditions: {email: params.email}});
     if (!data || !data.length) {
       throw {
-        status: 204,
+        status: 203,
+        errCode: 204,
         detail: 'Admin is not existed!'
       };
     }
@@ -211,21 +221,23 @@ const postLogin = async (params) => {
     await checkPassword.then((result) => {
       if (!result) {
         throw {
-          status: 204,
+          status: 203,
+          errCode: 204,
           detail: 'Wrong password!'
         };
       }
     });
     if (data[0].is_deleted) {
       throw {
-        status: 204,
+        status: 203,
+        errCode: 204,
         detail: 'Admin is deleted!'
       };
     }
     delete data[0].password;
     return resSuccess({token: jwt.encode(data[0]), admin: data[0]});
   } catch (error) {
-    throw {status: 400, detail: error};
+    throw error;
   }
 };
 

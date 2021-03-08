@@ -48,10 +48,20 @@ const momoApi = async (params) => {
 
     console.log(lambda);
     let data = await TicketHandle.postCreate(lambda);
-
-    if (data.code !== 200) {
-      throw {status: 400, detail: 'Create ticket failure'};
+    console.log('data:', data);
+    if (data.code === 204) {
+      // throw {status: 203, detail: 'The seats which your choice is pending'};
+      throw {
+        status: 203,
+        errCode: 204,
+        detail: `Thông cảm! Ghế ${data.seats.join(
+          `, `
+        )} của bạn đã được người khác chọn`
+      };
+    } else if (data.code !== 200) {
+      throw {status: 203, detail: 'Thông cảm! Hệ thống gặp lỗi!'};
     }
+
     ticket_id = data.data._id;
 
     if (is_mobile === 1) {
@@ -106,7 +116,7 @@ const momoApi = async (params) => {
     var url1 = await getPayurl();
     return resSuccess({url1: url1, url2: ticket_id});
   } catch (error) {
-    throw {status: 400, detail: error};
+    throw error;
   }
 };
 
@@ -124,7 +134,7 @@ const checkStatusMomoApi = async (params) => {
     if (newsignature == params.signature) {
       if (params.errorCode == '0') {
         let update = await TicketHandle.putUpdate(ticket_id, {
-          is_paid: true,
+          ticket_status: 1,
           momo_payment: true
         });
         // console.log('update:', update);
@@ -168,8 +178,9 @@ const checkStatusMomoApi = async (params) => {
             time_start: time_start,
             time_end: time_end
           };
+          console.log('ticket.data._id', ticket.data._id);
 
-          var qr_code_png = qr.imageSync(ticket.data._id, {
+          var qr_code_png = qr.imageSync(ticket.data._id.toString(), {
             type: 'png'
           });
 
@@ -190,7 +201,7 @@ const checkStatusMomoApi = async (params) => {
             if (err) {
               console.log('err:', err);
               throw {
-                status: 204,
+                status: 203,
                 detail: 'not send mail'
               };
             }
@@ -204,10 +215,16 @@ const checkStatusMomoApi = async (params) => {
 
           return {result: 'Success'};
         } else {
+          let update = await TicketHandle.putUpdate(ticket_id, {
+            ticket_status: -1
+          });
           console.log('Transaction Fail!');
           return {result: 'Transaction Fail!'};
         }
       } else {
+        let update = await TicketHandle.putUpdate(ticket_id, {
+          ticket_status: -1
+        });
         console.log('Transaction Fail!');
         return {result: 'Transaction Fail!'};
       }

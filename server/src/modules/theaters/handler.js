@@ -47,27 +47,18 @@ const getFilmToDay = async () => {
     let time_start = new Date(moment());
 
     let hour = new Date(moment()).getHours();
-    let date = new Date(moment().add(1, 'days')).getDate();
-    // if (hour > 17) {
-    //   date -= 1;
-    // }
-    let month = new Date(moment().add(1, 'days')).getMonth();
-    let year = new Date(moment().add(1, 'days')).getFullYear();
+    let minute = new Date(moment()).getMinutes();
 
     let time_end = new Date(
-      moment(
-        `${year}-${month > 8 ? month + 1 : '0' + (month + 1)}-${
-          date > 9 ? date : '0' + date
-        }`,
-        moment.ISO_8601
-      )
+      moment()
+        .subtract(hour + 7, 'hour')
+        // .subtract(7, 'hour')
+        .subtract(minute, 'minutes')
+        .add(1, 'days')
     );
 
     console.log('time_start: ', new Date(moment()));
     console.log('time_end:   ', time_end);
-    console.log('date:       ', date);
-    console.log('month:      ', month + 1);
-    console.log('year:       ', year);
 
     let lambda = {
       conditions: {
@@ -76,30 +67,9 @@ const getFilmToDay = async () => {
         is_deleted: false
       }
     };
-
+    console.log('lambda:', lambda);
     let data = await Model.getFilmToDay(lambda);
 
-    // data = data.map((theater) => {
-    //   return {
-    //     ...theater,
-    //     films:
-    //       theater.films &&
-    //       theater.films.map((film) => {
-    //         return {
-    //           ...film,
-    //           film_schedules:
-    //             film.film_schedules.length > 0 &&
-    //             film.film_schedules.filter((schedule) => {
-    //               let timeStart = moment(schedule.time_start);
-    //               return (
-    //                 timeStart.diff(moment(time_start)) >= 0 &&
-    //                 timeStart.diff(moment(time_end)) <= 0
-    //               );
-    //             })
-    //         };
-    //       })
-    //   };
-    // });
     return resSuccess(data);
   } catch (error) {
     // throw {status: 400, detail: error};
@@ -119,7 +89,7 @@ const postCreate = async (params) => {
       updated_at: moment.now()
     };
     let data = await Model.createByLambda(lambda);
-    return resSuccess(data);
+    return resSuccess(data[0]);
   } catch (error) {
     throw {status: 400, detail: error};
   }
@@ -160,39 +130,60 @@ const deleteData = async (id) => {
       }
     };
     let data = await Model.updateByLambda(lambda);
-    return resSuccess(data);
+    if (data.ok) {
+      let result = await Model.findByLambda({conditions: {_id: id}});
+      return resSuccess(result[0]);
+    } else {
+      throw {status: 400, detail: data};
+    }
   } catch (error) {
     throw {status: 400, detail: error};
   }
 };
 const getTheater7Day = async (id) => {
   try {
-    let time_start = new Date(moment().subtract(0, 'hour'));
+    let hour1 = new Date(moment()).getHours();
+    let minute1 = new Date(moment()).getMinutes();
+
+    let start = moment.now();
+    console.log('start:', new Date(start));
+    console.log('start:', start);
+    let start1 = moment(start).add(1, 'days');
+    console.log('start1:', start1);
+    let start2 = moment(start1)
+      .subtract(hour1 + 7, 'hour')
+      .subtract(minute1, 'minutes');
+    console.log('start2:', start2);
+
+    let time_start = new Date(moment());
 
     let hour = new Date(moment()).getHours();
     let minute = new Date(moment()).getMinutes();
-    console.log('hour', hour);
-    let time_end = new Date(
-      moment()
-        .subtract(hour + 7, 'hour')
-        .subtract(minute + 1, 'minutes')
-        .add(1, 'days')
-    );
 
+    let now = moment.now();
+
+    let time_end = moment(now)
+      .add(1, 'days')
+      .subtract(hour + 7, 'hour')
+      .subtract(minute, 'minutes');
+
+    console.log('hour:', hour);
     console.log('time_start: ', time_start);
     console.log('time_end:   ', time_end);
+
+    let time_end1 = new Date(moment(time_end).add(0, 'days'));
 
     let lambda = {
       conditions: {
         _id: id,
         time_start: time_start,
-        time_end: time_end,
-        time_end2: new Date(moment(time_end).add(1, 'days')),
-        time_end3: new Date(moment(time_end).add(2, 'days')),
-        time_end4: new Date(moment(time_end).add(3, 'days')),
-        time_end5: new Date(moment(time_end).add(4, 'days')),
-        time_end6: new Date(moment(time_end).add(5, 'days')),
-        time_end7: new Date(moment(time_end).add(6, 'days')),
+        time_end: time_end1,
+        time_end2: new Date(moment(time_end1).add(1, 'days')),
+        time_end3: new Date(moment(time_end1).add(2, 'days')),
+        time_end4: new Date(moment(time_end1).add(3, 'days')),
+        time_end5: new Date(moment(time_end1).add(4, 'days')),
+        time_end6: new Date(moment(time_end1).add(5, 'days')),
+        time_end7: new Date(moment(time_end1).add(6, 'days')),
         is_deleted: false
       }
     };

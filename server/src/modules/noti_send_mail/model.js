@@ -3,10 +3,7 @@ const mongoose = require('mongoose');
 let schema = new mongoose.Schema(
   {
     customers: [Object],
-    content_web: String,
-    content_mobile: String,
     content_mail: String,
-    content_sms: String,
     type: String,
     is_deleted: Boolean,
     created_at: Date,

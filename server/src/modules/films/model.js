@@ -269,7 +269,7 @@ module.exports = {
 
   getFilm7Day: async function (lambda) {
     return await Collection.aggregate([
-      {$match: {_id: lambda.conditions._id}},
+      {$match: {$and: [{_id: lambda.conditions._id}, {is_deleted: false}]}},
       {
         $unset: ['is_deleted', 'created_at', 'updated_at']
       },
@@ -288,28 +288,82 @@ module.exports = {
           'categories.updated_at'
         ]
       },
+      // {
+      //   $lookup: {
+      //     from: 'film_schedules',
+      //     localField: '_id',
+      //     foreignField: 'film_id',
+      //     as: 'theaters'
+      //   }
+      // },
       {
         $lookup: {
           from: 'film_schedules',
-          localField: '_id',
-          foreignField: 'film_id',
+          let: {
+            film_id: '$_id',
+            is_deleted: false
+          },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    {
+                      $eq: ['$film_id', '$$film_id']
+                    },
+                    {
+                      $eq: ['$is_deleted', '$$is_deleted']
+                    }
+                  ]
+                }
+              }
+            }
+          ],
           as: 'theaters'
         }
       },
+
       {
         $unwind: {
           path: '$theaters',
           preserveNullAndEmptyArrays: true
         }
       },
+      // {
+      //   $lookup: {
+      //     from: 'theaters',
+      //     localField: 'theaters.theater_id',
+      //     foreignField: '_id',
+      //     as: 'theaters'
+      //   }
+      // },
       {
         $lookup: {
           from: 'theaters',
-          localField: 'theaters.theater_id',
-          foreignField: '_id',
+          let: {
+            theater_id: '$theaters.theater_id',
+            is_deleted: false
+          },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    {
+                      $eq: ['$_id', '$$theater_id']
+                    },
+                    {
+                      $eq: ['$is_deleted', '$$is_deleted']
+                    }
+                  ]
+                }
+              }
+            }
+          ],
           as: 'theaters'
         }
       },
+
       {
         $unset: [
           'theaters.rooms',
@@ -459,7 +513,8 @@ module.exports = {
                 from: 'film_schedules',
                 let: {
                   film_id: '$_id',
-                  theaters_id: '$theaters._id'
+                  theaters_id: '$theaters._id',
+                  is_deleted: false
                 },
                 pipeline: [
                   {
@@ -471,6 +526,9 @@ module.exports = {
                           },
                           {
                             $eq: ['$theater_id', '$$theaters_id']
+                          },
+                          {
+                            $eq: ['$is_deleted', '$$is_deleted']
                           },
                           {
                             $gte: ['$time_start', lambda.conditions.time_start]
@@ -505,6 +563,7 @@ module.exports = {
                 }
               }
             },
+            {$sort: {'theaters.film_schedules.time_start': -1}},
 
             {
               $group: {
@@ -522,7 +581,8 @@ module.exports = {
                 from: 'film_schedules',
                 let: {
                   film_id: '$_id',
-                  theaters_id: '$theaters._id'
+                  theaters_id: '$theaters._id',
+                  is_deleted: false
                 },
                 pipeline: [
                   {
@@ -531,6 +591,9 @@ module.exports = {
                         $and: [
                           {
                             $eq: ['$film_id', '$$film_id']
+                          },
+                          {
+                            $eq: ['$is_deleted', '$$is_deleted']
                           },
                           {
                             $eq: ['$theater_id', '$$theaters_id']
@@ -568,6 +631,7 @@ module.exports = {
                 }
               }
             },
+            {$sort: {'theaters.film_schedules.time_start': -1}},
 
             {
               $group: {
@@ -584,7 +648,8 @@ module.exports = {
                 from: 'film_schedules',
                 let: {
                   film_id: '$_id',
-                  theaters_id: '$theaters._id'
+                  theaters_id: '$theaters._id',
+                  is_deleted: false
                 },
                 pipeline: [
                   {
@@ -593,6 +658,9 @@ module.exports = {
                         $and: [
                           {
                             $eq: ['$film_id', '$$film_id']
+                          },
+                          {
+                            $eq: ['$is_deleted', '$$is_deleted']
                           },
                           {
                             $eq: ['$theater_id', '$$theaters_id']
@@ -630,6 +698,7 @@ module.exports = {
                 }
               }
             },
+            {$sort: {'theaters.film_schedules.time_start': -1}},
 
             {
               $group: {
@@ -646,7 +715,8 @@ module.exports = {
                 from: 'film_schedules',
                 let: {
                   film_id: '$_id',
-                  theaters_id: '$theaters._id'
+                  theaters_id: '$theaters._id',
+                  is_deleted: false
                 },
                 pipeline: [
                   {
@@ -655,6 +725,9 @@ module.exports = {
                         $and: [
                           {
                             $eq: ['$film_id', '$$film_id']
+                          },
+                          {
+                            $eq: ['$is_deleted', '$$is_deleted']
                           },
                           {
                             $eq: ['$theater_id', '$$theaters_id']
@@ -692,6 +765,7 @@ module.exports = {
                 }
               }
             },
+            {$sort: {'theaters.film_schedules.time_start': -1}},
 
             {
               $group: {
@@ -708,7 +782,8 @@ module.exports = {
                 from: 'film_schedules',
                 let: {
                   film_id: '$_id',
-                  theaters_id: '$theaters._id'
+                  theaters_id: '$theaters._id',
+                  is_deleted: false
                 },
                 pipeline: [
                   {
@@ -717,6 +792,9 @@ module.exports = {
                         $and: [
                           {
                             $eq: ['$film_id', '$$film_id']
+                          },
+                          {
+                            $eq: ['$is_deleted', '$$is_deleted']
                           },
                           {
                             $eq: ['$theater_id', '$$theaters_id']
@@ -754,6 +832,7 @@ module.exports = {
                 }
               }
             },
+            {$sort: {'theaters.film_schedules.time_start': -1}},
 
             {
               $group: {
@@ -770,7 +849,8 @@ module.exports = {
                 from: 'film_schedules',
                 let: {
                   film_id: '$_id',
-                  theaters_id: '$theaters._id'
+                  theaters_id: '$theaters._id',
+                  is_deleted: false
                 },
                 pipeline: [
                   {
@@ -779,6 +859,9 @@ module.exports = {
                         $and: [
                           {
                             $eq: ['$film_id', '$$film_id']
+                          },
+                          {
+                            $eq: ['$is_deleted', '$$is_deleted']
                           },
                           {
                             $eq: ['$theater_id', '$$theaters_id']
@@ -816,6 +899,7 @@ module.exports = {
                 }
               }
             },
+            {$sort: {'theaters.film_schedules.time_start': -1}},
 
             {
               $group: {
@@ -832,7 +916,8 @@ module.exports = {
                 from: 'film_schedules',
                 let: {
                   film_id: '$_id',
-                  theaters_id: '$theaters._id'
+                  theaters_id: '$theaters._id',
+                  is_deleted: false
                 },
                 pipeline: [
                   {
@@ -841,6 +926,9 @@ module.exports = {
                         $and: [
                           {
                             $eq: ['$film_id', '$$film_id']
+                          },
+                          {
+                            $eq: ['$is_deleted', '$$is_deleted']
                           },
                           {
                             $eq: ['$theater_id', '$$theaters_id']
@@ -878,6 +966,7 @@ module.exports = {
                 }
               }
             },
+            {$sort: {'theaters.film_schedules.time_start': -1}},
 
             {
               $group: {
@@ -916,13 +1005,13 @@ module.exports = {
 
   getNowShowing: async function (lambda) {
     return await Collection.aggregate([
+      {$match: {is_deleted: false}},
       {
         $unset: [
           'is_deleted',
           'created_at',
           'updated_at',
           'countries',
-          'start_date',
           'actors',
           'is_blockbuster',
           'directors'
@@ -932,7 +1021,8 @@ module.exports = {
         $lookup: {
           from: 'film_schedules',
           let: {
-            film_id: '$_id'
+            film_id: '$_id',
+            is_deleted: false
           },
           pipeline: [
             {
@@ -941,6 +1031,9 @@ module.exports = {
                   $and: [
                     {
                       $eq: ['$film_id', '$$film_id']
+                    },
+                    {
+                      $eq: ['$is_deleted', '$$is_deleted']
                     },
                     {
                       $gte: ['$time_start', lambda.conditions.time_start]
@@ -954,6 +1047,11 @@ module.exports = {
             }
           ],
           as: 'film_schedules'
+        }
+      },
+      {
+        $match: {
+          $expr: {$gt: [{$size: '$film_schedules'}, 0]}
         }
       },
       {$unset: ['film_schedules']},
@@ -979,10 +1077,20 @@ module.exports = {
   getNowShowing_Favourite: async function (lambda) {
     return await Collection.aggregate([
       {
+        // $match: {
+        //   category_ids: {
+        //     $in: lambda.categories
+        //   }
+        // }
         $match: {
-          category_ids: {
-            $in: lambda.categories
-          }
+          $and: [
+            {is_deleted: false},
+            {
+              category_ids: {
+                $in: lambda.categories
+              }
+            }
+          ]
         }
       },
       {
@@ -991,7 +1099,6 @@ module.exports = {
           'created_at',
           'updated_at',
           'countries',
-          'start_date',
           'actors',
           'is_blockbuster',
           'directors'
@@ -1001,7 +1108,8 @@ module.exports = {
         $lookup: {
           from: 'film_schedules',
           let: {
-            film_id: '$_id'
+            film_id: '$_id',
+            is_deleted: false
           },
           pipeline: [
             {
@@ -1010,6 +1118,9 @@ module.exports = {
                   $and: [
                     {
                       $eq: ['$film_id', '$$film_id']
+                    },
+                    {
+                      $eq: ['$is_deleted', '$$is_deleted']
                     },
                     {
                       $gte: ['$time_start', lambda.conditions.time_start]
@@ -1025,13 +1136,88 @@ module.exports = {
           as: 'film_schedules'
         }
       },
+      {
+        $match: {
+          $expr: {$gt: [{$size: '$film_schedules'}, 0]}
+        }
+      },
       {$unset: ['film_schedules']},
+      // {
+      //   $lookup: {
+      //     from: 'categories',
+      //     localField: 'category_ids',
+      //     foreignField: '_id',
+      //     as: 'categories'
+      //   }
+      // },
+      {$unwind: '$category_ids'},
       {
         $lookup: {
           from: 'categories',
-          localField: 'category_ids',
-          foreignField: '_id',
+          let: {
+            category_ids: '$category_ids',
+            is_deleted: false
+          },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    {
+                      $eq: ['$_id', '$$category_ids']
+                    },
+                    {
+                      $eq: ['$is_deleted', '$$is_deleted']
+                    }
+                  ]
+                }
+              }
+            }
+          ],
           as: 'categories'
+        }
+      },
+      {$unwind: '$categories'},
+      {
+        $group: {
+          _id: '$_id',
+          name: {
+            $first: '$name'
+          },
+          trailer: {
+            $first: '$trailer'
+          },
+
+          long_time: {
+            $first: '$long_time'
+          },
+          start_date: {
+            $first: '$start_date'
+          },
+          rates: {
+            $first: '$rates'
+          },
+          rate_average: {
+            $first: '$rate_average'
+          },
+          rate_count: {
+            $first: '$rate_count'
+          },
+          imdb: {
+            $first: '$imdb'
+          },
+          digitals: {
+            $first: '$digitals'
+          },
+          url_avatar: {
+            $first: '$url_avatar'
+          },
+          url_background: {
+            $first: '$url_background'
+          },
+          categories: {
+            $addToSet: '$categories'
+          }
         }
       },
       {

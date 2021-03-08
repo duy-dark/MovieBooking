@@ -7,26 +7,28 @@ const getNowShowing = async () => {
   try {
     let time_start = new Date(moment());
 
-    let date = new Date(moment().add(1, 'days')).getDate();
+    let hour = new Date(moment()).getHours();
+    let minute = new Date(moment()).getMinutes();
 
-    let month = new Date(moment().add(1, 'days')).getMonth();
-    let year = new Date(moment().add(1, 'days')).getFullYear();
+    // let time_end1 = new Date(
+    //   moment()
+    //     .add(1, 'days')
+    //     .subtract(hour + 7, 'hour')
+    //     .subtract(minute, 'minutes')
+    // );
 
-    let time_end1 = new Date(
-      moment(
-        `${year}-${month > 8 ? month + 1 : '0' + (month + 1)}-${
-          date > 9 ? date : '0' + date
-        }`,
-        moment.ISO_8601
-      )
-    );
+    let now = moment.now();
 
+    let time_end = moment(now)
+      .add(1, 'days')
+      .subtract(hour + 7, 'hour')
+      .subtract(minute, 'minutes');
+
+    console.log('hour:', hour);
     console.log('time_start: ', time_start);
-    console.log('time_end1:   ', time_end1);
-    console.log('date:       ', date);
-    console.log('month:      ', month + 1);
-    console.log('year:       ', year);
+    console.log('time_end1:   ', time_end);
 
+    let time_end1 = new Date(moment(time_end).add(0, 'days'));
     let lambda = {
       conditions: {
         time_start: time_start,
@@ -40,7 +42,7 @@ const getNowShowing = async () => {
         is_deleted: false
       }
     };
-
+    console.log('lambda', lambda);
     let data = await Model.getNowShowing(lambda);
     data[0].theaters = data[0].theaters.filter((item) => item._id !== null);
     data[0].films = data[0].films.filter((item) => item._id !== null);
@@ -112,6 +114,7 @@ const postCreate = async (params) => {
 
     let schedule_old = await Model.findByLambda({
       conditions: {
+        is_deleted: false,
         theater_id: lambda.theater_id,
         room_id: lambda.room_id
       }
@@ -122,7 +125,11 @@ const postCreate = async (params) => {
     let long_time = time_end - time_start;
     schedule_old.forEach((element) => {
       if (Math.abs(moment(element.time_start) - time_start) <= long_time) {
-        throw {status: 204, detail: {message: 'This time frame is existed'}};
+        throw {
+          status: 203,
+          errCode: 204,
+          detail: {message: 'This time frame is existed'}
+        };
       }
     });
 
@@ -153,6 +160,7 @@ const putUpdate = async (id, params) => {
       console.log(lambda.params.time_start, lambda.params.time_end);
       let schedule_old = await Model.findByLambda({
         conditions: {
+          is_deleted: false,
           theater_id: lambda.params.theater_id,
           room_id: lambda.params.room_id
         }
@@ -166,7 +174,11 @@ const putUpdate = async (id, params) => {
           Math.abs(moment(element.time_start) - time_start) <= long_time &&
           element._id != id
         ) {
-          throw {status: 204, detail: {message: 'This time frame is existed'}};
+          throw {
+            status: 203,
+            errCode: 204,
+            detail: {message: 'This time frame is existed'}
+          };
         }
       });
     }
@@ -227,7 +239,12 @@ const deleteData = async (id) => {
       }
     };
     let data = await Model.updateByLambda(lambda);
-    return resSuccess(data);
+    if (data.ok) {
+      let result = await Model.findByLambda({conditions: {_id: id}});
+      return resSuccess(result[0]);
+    } else {
+      throw {status: 400, detail: data};
+    }
   } catch (error) {
     throw {status: 400, detail: error};
   }

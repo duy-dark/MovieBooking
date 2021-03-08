@@ -28,20 +28,6 @@ router.get('/:id/getcomment', (req, res, next) => {
     .catch((err) => next(err));
 });
 
-// router.get('/commingsoon', (req, res, next) => {
-//   let gte_start_date = new Date(moment.now());
-//   let lte_start_date = new Date(moment('2030-01-01', moment.ISO_8601));
-//   let params = {
-//     gte_start_date: gte_start_date,
-//     lte_start_date: lte_start_date
-//   };
-
-//   handler
-//     .getCommingSoon(params)
-//     .then((val) => res.json(val))
-//     .catch((err) => next(err));
-// });
-
 router.get('/', (req, res, next) => {
   const {_id = undefined} = req.query;
 

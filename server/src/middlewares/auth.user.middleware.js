@@ -10,14 +10,14 @@ module.exports = {
         req.query.token ||
         req.headers.authorization ||
         req.session.passport.user.data.token;
-      console.log('token:', token);
+      // console.log('token:', token);
       if (token && token.startsWith('Bearer ')) {
         token = token.slice(7, token.length).trimLeft();
       }
       if (token) {
         let payload = await jwt.decode(token);
         req.payload = payload;
-        console.log('payload:', payload);
+        // console.log('payload:', payload);
         next();
       } else {
         res.status(403).json(resFail(1, 'Do not send token'));

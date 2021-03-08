@@ -28,7 +28,8 @@ router.get('/detail', (req, res, next) => {
     film_schedule_id = undefined,
     film_id = undefined,
     theater_id = undefined,
-    voucher_id = undefined
+    voucher_id = undefined,
+    ticket_status = undefined
   } = req.query;
 
   let conditions = {
@@ -51,7 +52,10 @@ router.get('/detail', (req, res, next) => {
     voucher_id: !voucher_id
       ? undefined
       : require('mongodb').ObjectId(req.query.voucher_id),
-    seats: req.query.seats
+    seats: req.query.seats,
+    limit: req.query.limit,
+    ticket_status: ticket_status ? Number(req.query.ticket_status) : undefined,
+    is_mobile: req.query.is_mobile
   };
   conditions = omitBy(conditions, isNil);
   handler
@@ -96,6 +100,14 @@ router.put('/:id', (req, res, next) => {
   let id = require('mongodb').ObjectId(req.params.id);
   handler
     .putUpdate(id, params)
+    .then((val) => res.json(val))
+    .catch((err) => next(err));
+});
+
+router.put('/trigger/:id', (req, res, next) => {
+  let id = require('mongodb').ObjectId(req.params.id);
+  handler
+    .triggeringTicket(id)
     .then((val) => res.json(val))
     .catch((err) => next(err));
 });
