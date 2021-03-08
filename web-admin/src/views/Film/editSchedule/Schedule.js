@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { Table, Input, InputNumber, Form, TimePicker ,DatePicker, Button ,Select} from 'antd';
 import Api from "../../../api/api"
-
+import Delete from "./Delete"
 import moment from 'moment';
 import EditSchedulePopup from './EditSchedulePopup'
 import { useSelector, useDispatch } from "react-redux";
@@ -46,7 +46,9 @@ const EditableCell = ({
     </td>
   );
 };
-
+const deleteSchedule = (schedule)=>{
+  console.log(schedule)
+}
 export default function ShowSchedule  (props) {
   const [form] = Form.useForm();
   const [data, setData] = useState();
@@ -67,8 +69,8 @@ export default function ShowSchedule  (props) {
       const key=index;
       const timestart=moment(item.time_start);
       const timeend=moment(item.time_end);
-      const time_start = timestart.hour()+":"+timestart.minute();
-      const time_end =timeend.hour()+":"+timeend.minute();
+      const time_start = timestart.hours()+":"+timestart.minutes();
+      const time_end =timeend.hours()+":"+timeend.minutes();
       const room = item.room.name;
       let theater =item.theater.name;
       const filmid=item.film_id;
@@ -148,6 +150,15 @@ const updateScheulde =()=>{
         )
       },
     },
+    {
+      title: 'Delete',
+      dataIndex: 'Detele',
+      render: (_, record) => <Delete schedule={record}/>
+     
+      
+        
+    
+    },
   ];
   const mergedColumns = columns.map((col) => {
     if (!col.editable) {
@@ -177,9 +188,9 @@ const updateScheulde =()=>{
         dataSource={data1}
         columns={mergedColumns}
         rowClassName="editable-row"
-        pagination={false}
+        pagination={true}
       />
-      <Button style={{marginLeft:872,marginTop:10}} onClick={updateScheulde} >SUBMIT</Button>
+    
     </Form>
   );
 };

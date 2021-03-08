@@ -1,11 +1,11 @@
-import { Form, Input, Button ,Upload,message,DatePicker} from 'antd';
+import { Form, Input, Button ,Upload,message,DatePicker,Select} from 'antd';
 import Api from './../../../api/api'
 import { UploadOutlined } from '@ant-design/icons';
 import React from 'react';
-import { addNewFilm } from "../../../redux/films/actions";
-import { Select } from 'antd';
-import { useDispatch } from "react-redux";
-// import moment from 'moment'
+import { updateFilmDetail } from "../../../redux/films/actions";
+
+import { useDispatch , useSelector} from "react-redux";
+import moment from 'moment'
 const { Option } = Select;
 
 const layout = {
@@ -50,47 +50,60 @@ export default function AddFilm  (props) {
   let formDataAvatar = new FormData();
   let formDataBackground = new FormData();
   let selectCategories=[];
-  let start_day;
+  let start_day=props.detail[0].start_date;
+
   const dispatch = useDispatch();
   const getTime = (date,dateString)=>{
     start_day=dateString;
     
   }
   const onFinish = async(values) => {
+
+  for (let item in values.film)  {
     
-    values.film.start_date=new Date(start_day)
+    if(values.film[item]==undefined) {
+      values.film[item]=props.detail[0][item]
+     }
+  }
+
+   values.film.start_date=moment(start_day)
 
     // categories
-    selectCategories=props.categories.filter((item,index)=> values.film.category_ids.includes(index.toString())==true?item:null);
+   selectCategories=props.categories.filter((item,index)=> values.film.category_ids.includes(index.toString())==true?item:null);
     let idCategories=[]
     for(let item of selectCategories)
     idCategories.push(item._id)
     values.film.category_ids=idCategories;
+   
     //save file to db and return url online image
-    let file_background = values.film.url_background.file.originFileObj; 
-    formDataBackground.append('file', file_background)
+    if(typeof(values.film.url_background)!=="string"){
+      console.log(values.film.url_background)
+        let file_background = values.film.url_background.file.originFileObj; 
+        formDataBackground.append('file', file_background)
+       await Api.post(
+        '/api/file/upload',
+        formDataBackground,
+        { headers: { 'Content-Type': 'multipart/form-data' } }
+      ).then(res => {
+        values.film.url_background=res.data.data
+      })
+    }
+  if(typeof(values.film.url_avatar)!=="string"){
+    console.log(values.film.url_avatar)
     let file_avatar = values.film.url_avatar.file.originFileObj; 
      formDataAvatar.append('file', file_avatar)
-  await Api.post(
-    '/api/file/upload',
-    formDataBackground,
-    { headers: { 'Content-Type': 'multipart/form-data' } }
-  ).then(res => {
-    values.film.url_background=res.data.data
-  })
- await Api.post(
-    '/api/file/upload',
-    formDataAvatar,
-    { headers: { 'Content-Type': 'multipart/form-data' } }
-  ).then(res => {
-    values.film.url_avatar=res.data.data
-  })
- 
-  
+      await Api.post(
+        '/api/file/upload',
+        formDataAvatar,
+        { headers: { 'Content-Type': 'multipart/form-data' } }
+      ).then(res => {
+        values.film.url_avatar=res.data.data
+      })
+  }    
  //add new film
-    dispatch(addNewFilm(values.film))
-      
-    props.onCancel();
+   dispatch(updateFilmDetail(props.detail[0]._id,values.film))
+   props.onCancel();
+   props.onCancelDetail();
    
 
     
@@ -102,99 +115,56 @@ export default function AddFilm  (props) {
       <Form.Item
         name={['film', 'name']}
         label="Name"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
+        
       >
-        <Input />
+        <Input defaultValue={props.detail[0].name}/>
       </Form.Item>
       <Form.Item
         name={['film', 'long_time']}
         label="Time Long"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
+       
       >
-        <Input />
+        <Input defaultValue={props.detail[0].long_time}/>
       </Form.Item>
       <Form.Item
         name={['film', 'countries']}
         label="Country"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
+        
       >
-        <Input />
+        <Input defaultValue={props.detail[0].countries}/>
       </Form.Item>
       <Form.Item
         name={['film', 'directors']}
         label="Directors"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
+        
       >
-        <Input />
+        <Input defaultValue={props.detail[0].directors} />
       </Form.Item>
       <Form.Item
         name={['film', 'actors']}
         label="Actors"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
+       
       >
-        <Input />
+        <Input defaultValue={props.detail[0].actors} />
       </Form.Item>
       <Form.Item
         name={['film', 'start_date']}
         label="start_date"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
+       
       >
-        <DatePicker onChange={getTime} />
-      </Form.Item>
-      <Form.Item
-        name={['film', 'trailer']}
-        label="Trailer"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
-        <Input />
+        <DatePicker defaultValue={moment(props.detail[0].start_date)} onChange={getTime} />
       </Form.Item>
       <Form.Item
         name={['film', 'digitals']}
         label="Digitals"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
+       
       >
-        <Input /> 
+        <Input defaultValue={props.detail[0].digitals}/> 
       </Form.Item>
       <Form.Item
         name={['film', 'url_avatar']}
         label="Url_avatar"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
+       
       >
          <Upload {...avatar}>
       <Button icon={<UploadOutlined />}>Upload</Button>
@@ -204,11 +174,7 @@ export default function AddFilm  (props) {
       <Form.Item
         name={['film', 'category_ids']}
         label="Category"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
+        rules={[{ required: true }]}
       >
         
         <Select
@@ -224,7 +190,7 @@ export default function AddFilm  (props) {
   >
      { props.categories.map((item,index)=>{
        return(
-    <Option key={index} value1={item.name} value2={item._id}label={item.name}>
+    <Option key={index} value1={item.name} value2={item._id} label={item.name}  >
       <div className="demo-option-label-item">
       { `${item.name}` }
     
@@ -237,11 +203,6 @@ export default function AddFilm  (props) {
       <Form.Item
         name={['film', 'url_background']}
         label="Url_background"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
       >
    <Upload {...background}>
       <Button icon={<UploadOutlined />}>Upload</Button>
@@ -249,19 +210,17 @@ export default function AddFilm  (props) {
     </Upload>
    
       </Form.Item>
-      <Form.Item name={['film', 'rates']} label="rates">
-        <Input />
-      </Form.Item>
+  
       <Form.Item name={['film', 'rate_count']} label="rate_count">
-        <Input/>
+        <Input defaultValue={props.detail[0].rate_count}/>
       </Form.Item>
       <Form.Item name={['film', 'imdb']} label="imdb">
-        <Input/>
+        <Input defaultValue={props.detail[0].imdb}/>
       </Form.Item>
       <Form.Item name={['film', 'content']} label="Introduction">
-        <Input.TextArea />
+        <Input.TextArea defaultValue={props.detail[0].content}/>
       </Form.Item>
-      <Form.Item style={{marginLeft:990+'px'}}wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+      <Form.Item style={{marginLeft:915+'px'}}wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
         <Button type="primary" htmlType="submit">
           Submit
         </Button>
