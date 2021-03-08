@@ -67,11 +67,7 @@ const routes = [
     exact: true,
     component: () => <DetailRoom/>
   },
-  {
-    path: "/thongke",
-    exact: true,
-    component: () => <ChartExample/>
-  }
+
 ];
 
 export default routes;

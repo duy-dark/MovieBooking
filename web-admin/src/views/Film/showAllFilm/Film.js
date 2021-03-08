@@ -36,7 +36,7 @@ const columns = [
     render: (text, record,index) => (
       <Space size="middle">
        <DetailPopUp index={index} detail={record} categories={categories} />
-        <a>Delete</a>
+      
        <Schedule schedule={record} theaters={theaters}/>
         <AddSchedulePopup theaters={theaters} schedule={record}/>
       </Space>

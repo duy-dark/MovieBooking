@@ -51,9 +51,6 @@ export default function MenuHome(props) {
             <Menu.Item key="8">Danh sách bị cấm</Menu.Item>
           </SubMenu>
         </SubMenu>
-        <SubMenu key="sub3" icon={<SettingOutlined />} title="Thống Kê">
-        <Menu.Item key="9">Thống Kê<Link to='/thongke'></Link></Menu.Item>
-        </SubMenu>
         <Menu.Item key="10" icon={<LoginOutlined />} title="Đăng Xuất">
           <button onClick={logout} style={{border: 'none', background: 'transparent'}}>Đăng Xuất</button>
         </Menu.Item>
