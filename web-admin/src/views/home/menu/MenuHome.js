@@ -11,11 +11,18 @@ import {
   LinkOutlined,
   LoginOutlined,
 } from "@ant-design/icons";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux"
+import {signOut} from "../../../redux/users/actions"
 
 const { SubMenu } = Menu;
 
 export default function MenuHome(props) {
-
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const logout = () => {
+    dispatch(signOut(history))
+  }
   return (
     <>
       <Menu
@@ -35,7 +42,7 @@ export default function MenuHome(props) {
         </SubMenu>
       
          
-        <SubMenu key="sub2" icon={<SettingOutlined />} title="Người dùng">
+        {/* <SubMenu key="sub2" icon={<SettingOutlined />} title="Người dùng">
           <SubMenu key="sub2-1" title="Quản trị viên">
             <Menu.Item key="5">Danh sách</Menu.Item>
             <Menu.Item key="6">Danh sách bị cấm</Menu.Item>
@@ -44,10 +51,9 @@ export default function MenuHome(props) {
             <Menu.Item key="7">Danh sách</Menu.Item>
             <Menu.Item key="8">Danh sách bị cấm</Menu.Item>
           </SubMenu>
-        </SubMenu>
-       
-        <Menu.Item key="10" icon={<LoginOutlined />} title="Đăng Nhập">
-        <a>Đăng Nhập<Link to='/login'/></a>  
+        </SubMenu> */}
+        <Menu.Item key="10" icon={<LoginOutlined />} title="Đăng Xuất">
+          <button onClick={logout} style={{border: 'none', background: 'transparent'}}>Đăng Xuất</button>
         </Menu.Item>
       </Menu>
     </>

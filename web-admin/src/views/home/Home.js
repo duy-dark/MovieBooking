@@ -38,13 +38,9 @@ export default function Home () {
            hello1[index] = {...hello1[index], money: item.cost + hello1[index].money,ticket:item.count + hello1[index].ticket}
           }
     })
-    console.log(hello1)
-  
-
-
 
     return (
-        <div style={{marginTop:10}}>
+        <div style={{ padding: 20, backgroundColor: 'white'}}>
         <a style={{marginLeft:50}}>THỐNG KÊ THEO RẠP</a>
       <ResponsiveContainer className="chart" height={200}>
         <LineChart 

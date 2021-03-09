@@ -41,18 +41,6 @@ import EditPopUp from './EditPopup'
  
   export default function Detail (props) {
     const [form] = Form.useForm();
-  //   const [data, setData] = useState([props.detail]);
-  //   useEffect(()=>{
-  //     let arr=[];
-  //     arr.push(props.detail);
-  //     setData(arr);
-  //   },[])
-
-  //  console.log(data)
-
-  console.log(props.detail)
-
-
   
     const columns = [
       {

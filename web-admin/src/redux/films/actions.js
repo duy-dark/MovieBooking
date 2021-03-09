@@ -175,3 +175,17 @@ export function createRoom(params, history) {
     history: history
   }
 }
+
+export function deleteRoom(params) {
+  return {
+    type: FilmTypes.DELETE_ROOM,
+    payload: params
+  }
+}
+
+export function deleteTheater(params) {
+  return {
+    type: FilmTypes.DELETE_THEATER,
+    payload: params
+  }
+}

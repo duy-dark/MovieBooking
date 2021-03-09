@@ -14,7 +14,6 @@ const Schedule = (props) => {
 
   
   const handleCancel = () => {
-    console.log('Clicked cancel button');
     setVisible(false);
   };
 

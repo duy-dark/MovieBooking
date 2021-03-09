@@ -14,7 +14,6 @@ const AddSchedulePopup = (props) => {
 
  
   const handleCancel = () => {
-    console.log('Clicked cancel button');
     setConfirmLoading(true);
     setTimeout(() => {
       setVisible(false);

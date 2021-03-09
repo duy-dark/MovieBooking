@@ -19,7 +19,7 @@ export default function userReducer(state = initialState, action) {
       localStorage.setItem("token", payload.token);
       localStorage.setItem("userID", payload.admin._id);
       newState = Object.assign({}, state, {
-        user: payload.customer,
+        user: payload.admin ,
         token: payload.token,
       });
       break;
