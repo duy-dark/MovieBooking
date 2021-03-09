@@ -14,7 +14,6 @@ const Delete = (props) => {
   
 
   const deleteSchedule = () => {
-    //console.log(props.schedule.FilmScheduleid)
     dispatch(deleteFilmSchedules(props.schedule.FilmScheduleid));
   };
 

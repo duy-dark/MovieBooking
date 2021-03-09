@@ -1,18 +1,100 @@
-.components-form-demo-normal-login,
-.login-form {
-  max-width: 500px;
-  margin-left: 350px;
-  margin-top: 100px;
+.login {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+
+  .login__content {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    margin-top: 50px;
+    height: 500px;
+
+    &.register__content {
+      width: 480px;
+    }
+
+    .login-title {
+      font-size: 62px;
+      font-weight: 700;
+      color: #7E57C2;
+      text-align: center;
+    }
+
+    .login-form {
+      padding: 20px;
+      height: 100%;
+
+      .form-group {
+        display: flex;
+        height: 40px;
+        flex-direction: column;
+  
+        input {
+          height: inherit;
+          width: 100%;
+          border: none;
+          border-bottom: 1px solid #d8d2cf;
+          padding: 5px 10px;
+          border-radius: 6px;
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+
+      .form-group--email {
+        margin-bottom: 30px;
+      }
+
+      .form-group--pass {
+        margin-bottom: 30px;
+      }
+
+      .form-group--forget-pass {
+        display: flex;
+        justify-content: flex-end;
+      }
+
+      .form-group--gender {
+        display: flex;
+        flex-direction: row;
+
+        .form-gender {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          &:not(:last-child) {
+            margin-right: 15px;
+          }
+        }
+
+        input {
+          width: 32px;
+          height: 32px;
+          margin-right: 10px;
+        }
+      }
+
+      .group-btns {
+        display: flex;
+        flex-direction: column;
+
+      }
+    }
+  }
 }
-.components-form-demo-normal-login,
-.login-form-forgot {
-  float: right;
+
+.login__err {
+  color: red;
+  padding: 0 20px;
+  font-size: 16px;
 }
-.components-form-demo-normal-login,
-.ant-col-rtl .login-form-forgot {
-  float: left;
+
+.login__success {
+  color: green;
+  padding: 0 20px;
+  font-size: 16px;
 }
-.components-form-demo-normal-login,
-.login-form-button {
-  width: 100%;
-}
+

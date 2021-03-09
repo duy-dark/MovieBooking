@@ -11,42 +11,43 @@ import io from 'socket.io-client';
 import Countdown from 'react-countdown';
 import xor from 'lodash/xor';
 
-const POINT = 'https://servermoviebooking.herokuapp.com/';
+// const POINT = 'https://servermoviebooking.herokuapp.com/';
 
 const SeatEl = (props) => {
+  const { seats = [], seatsSelected = [], type, isBuy, seat, vip } = props;
   const [status, setStatus] = useState();
   const selectSeat = (seat) => {
-    if (props.seats.length < 10) {
+    if (seats.length < 10) {
       !status ? setStatus(seat) : setStatus("");
       props.onSelect(seat);
-    } else if (props.seats.includes(seat)) {
+    } else if (seats.includes(seat)) {
       !status ? setStatus(seat) : setStatus("");
       props.onSelect(seat);
     } else {
       alert("không được mua quá 10 vé");
     }
   };
-  let arr = xor(props.seatsSelected, props.seats)
-  console.log(arr);
+  // let arr = xor(props.seatsSelected, props.seats)
+  // console.log(arr);
   const formatSeat = (seat) => seat && seat.slice(-2);
   let classSeatPar = () => {
     let str = "seat-wrapper"
-    if (props.seatsSelected .includes(props.seat)) str += " seat-wrapper--hide"
-    if (props.type === "2-1") str += " seat-wrapper--two1"
-    if (props.type === "2-2") str += " seat-wrapper--two2"
-    if (props.isBuy === "1") str += " seat-wrapper--isBuy"
+    if (seatsSelected.includes(seat)) str += " seat-wrapper--hide"
+    if (type === "2-1") str += " seat-wrapper--two1"
+    if (type === "2-2") str += " seat-wrapper--two2"
+    if (isBuy === "1") str += " seat-wrapper--isBuy"
 
     return str
   }
   let classSeatChil = () => {
     let str = "seat"
-    if (props.seatsSelected.includes(props.seat)) str += " seat--hide"
-    if (props.seats.includes(props.seat)) {
+    if (seatsSelected.includes(seat)) str += " seat--hide"
+    if (seats.includes(seat)) {
       str += " seat--selected"
     }
-    if (props.vip === "1") str += " seat--vip"
-    if (props.type === "2-1") str += " seat--together seat--two-1"
-    if (props.type === "2-2") str += " seat--together seat--two-2"
+    if (vip === "1") str += " seat--vip"
+    if (type === "2-1") str += " seat--together seat--two-1"
+    if (type === "2-2") str += " seat--together seat--two-2"
     return str
   }
 
@@ -60,7 +61,7 @@ const SeatEl = (props) => {
   return (
     <span className={classSeatPar()} onClick={() => clickSeat(props)}>
       <span className={classSeatChil()}>
-        <span className="s-img">{ props.seats.includes(props.seat) ? formatSeat(props.seat) : ''}</span>
+        <span className="s-img">{ seats.includes(seat) ? formatSeat(seat) : ''}</span>
       </span>
     </span>
   );
@@ -93,8 +94,6 @@ function validateEmail(email) {
 const words = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 const Completionist = () => <span>Bạn đã hết thời gian!</span>;
 export default function Booking(props) {
-  const socket = io(POINT);
-
   const location = useLocation();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -167,7 +166,6 @@ export default function Booking(props) {
       }
     }
 
-    socket.emit("sellect_seat", { name: movies.schedule_id }, arrSeatAll);
   };
 
   useEffect(() => {
@@ -219,8 +217,6 @@ export default function Booking(props) {
 
   const renderer = ({ hours, minutes, seconds, completed }) => {
     if (completed) {
-      // Render a completed state
-      socket.emit("sellect_seat", { name: movies.schedule_id }, []);
       history.push(`/${id}/detail/`)
       return <Completionist />;
     } else {
@@ -249,12 +245,6 @@ export default function Booking(props) {
     } else {
       history.push("/login")
     }
-    
-    socket.emit('john_room', { name: movies.schedule_id })
-
-    socket.on('seats_existed', res => {
-      // setSelectSS([...listSeatsSelected, ...res])
-    })
   }, [])
 
   const formatDate = (date) => {

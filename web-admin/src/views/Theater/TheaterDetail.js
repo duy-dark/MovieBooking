@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getTheaterDetail, updateTheater } from "../../redux/films/actions"
+import { getTheaterDetail, updateTheater, deleteRoom } from "../../redux/films/actions"
 import { Link } from 'react-router-dom'
 import { useDispatch , useSelector } from 'react-redux';
 import { useParams } from "react-router-dom";
@@ -44,6 +44,10 @@ export default function TheaterDetail() {
     setTheater(theaterDetail)
   }
 
+  const onDeleteRoom = (id) => {
+    dispatch(deleteRoom(id))
+  }
+
   return (
     <div className="layout-detail layout-detail__theater">
       <div className="theater-detail">
@@ -71,7 +75,12 @@ export default function TheaterDetail() {
           <div className="theater-content__item theater-content__rooms">
             <label>Danh sách Room</label>
             <div className="theater-content__rooms__list">
-              {rooms.length > 0 && rooms.map(room => (<Link key={room._id} to={`/room/${room._id}`}>{room.name}</Link>))}
+              {rooms.length > 0 && rooms.map(room => (
+                <div key={room._id} className="theater-content__rooms__list__item">
+                  <Link to={`/room/${room._id}`}>{room.name}</Link>
+                  <button onClick={() => onDeleteRoom(room._id)}>delete</button>
+                </div>
+              ))}
             </div>
           </div>
         </div>

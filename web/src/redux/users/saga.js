@@ -7,9 +7,9 @@ function* fetchLogin(action) {
     yield put({ type: UsersTypes.LOADING_SHOW});
     let { history } = action;
     const res = yield call(httpUser.login, action.payload);
+    yield put({ type: UsersTypes.LOADING_HIDE});
     if (res.status === "ok") {
       yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: res.data });
-      yield put({ type: UsersTypes.LOADING_HIDE});
 
       history.push("/");
     }
@@ -34,10 +34,10 @@ function* fetchUserInfo(action) {
   try {
     yield put({ type: UsersTypes.LOADING_SHOW});
     const res = yield call(httpUser.getUserInfo, action.payload);
+    yield put({ type: UsersTypes.LOADING_HIDE});
 
     if (res.status === "ok") {
       yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: res.data });
-      yield put({ type: UsersTypes.LOADING_HIDE});
     }
   } catch (err) {
     throw err;

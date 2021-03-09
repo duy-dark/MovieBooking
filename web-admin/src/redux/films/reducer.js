@@ -61,15 +61,12 @@ export default function filmsReducer(state = initialState, action) {
       newState = Object.assign({},state,{filmSchedule :[...payload,state.filmSchedule]})
       break;
     case FilmTypes.UPDATE_FILM_SCHEDULE_SUCCESS:
-       console.log(payload)
       newState = Object.assign({},state,{filmSchedule : state.filmSchedule.map(item=>{ return item._id === payload._id ? item = payload : item})})
       break;
       case FilmTypes.DELETE_FILM_SCHEDULE_SUCCESS:
-        console.log(payload)
        newState = Object.assign({},state,{filmSchedule : state.filmSchedule.filter((item,key)=>{ return  item._id == payload._id ? null : item})})
        break;
       case FilmTypes.CREATE_FILM_SCHEDULE_SUCCESS:
-        console.log(payload)
        newState = Object.assign({},state,{filmSchedule :[...payload,state.filmSchedule]})
        break;
     case FilmTypes.LIST_THEATER_SUCCESS:
@@ -110,6 +107,22 @@ export default function filmsReducer(state = initialState, action) {
       break;
     case FilmTypes.ROOM_CREATE_SUCCESS:
       newState = Object.assign({}, state, { roomDetail: {...payload} })
+      break;
+    case FilmTypes.DELETE_THEATER_SUCCESS:
+      let indenA = findIndex(state.theaters, item => item._id === payload._id)
+      let arrA = [...state.theaters]
+      if (indenA > -1) {
+        arrA.splice(indenA, 1);
+      }
+      newState = Object.assign({}, state, { theaters: [...arrA] })
+      break;
+    case FilmTypes.DELETE_ROOM_SUCCESS:
+      let indenQ = findIndex(state.theaterDetail.rooms, item => item._id === payload._id)
+      let arrQ = [...state.theaterDetail.rooms]
+      if (indenQ > -1) {
+        arrQ.splice(indenQ, 1);
+      }
+      newState = Object.assign({}, state, { theaterDetail: {...state.theaterDetail, rooms: arrQ } })
       break;
     default:
       newState = state;

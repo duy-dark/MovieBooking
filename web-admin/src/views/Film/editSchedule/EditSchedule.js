@@ -36,10 +36,7 @@ export default function EditSchedule(props){
   const dispatch = useDispatch();
   useEffect(()=>{
 
-    // setTheater(props.schedule.Theaterid)
-    // setRoom(props.schedule.Roomid)
-    // setFilm(props.schedule.Filmid)
-   // console.log(starttime,endtime,date,theaterid,roomid,filmid)
+    
   },[starttime,endtime,date,theaterid,roomid,filmid])
   
   let roomOfTheater=[];
@@ -52,10 +49,8 @@ export default function EditSchedule(props){
   function getRoom(value,record){
   
   setRoom(record.id)
-  console.log(record)
   }
   function handleChange(value,record){
-    console.log(record)
     // setFilm(record.key)
     setTheater(record.key)
 
@@ -68,7 +63,6 @@ export default function EditSchedule(props){
 
     }
     const update = ()=>{
-    console.log(props.schedule.Time_Start,long_time)
      const x=Time_End_Change(starttime,long_time);
      const data={"time_start":new Date(starttime+" "+date),
                 "time_end":new Date(x+" "+date),
