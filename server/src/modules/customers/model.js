@@ -39,7 +39,12 @@ module.exports = {
           $and: [lambda.conditions]
         }
       },
-      {$unwind: '$favorite_ids'},
+      {
+        $unwind: {
+          path: '$favorite_ids',
+          preserveNullAndEmptyArrays: true
+        }
+      },
       {
         $lookup: {
           from: 'categories',
@@ -66,7 +71,12 @@ module.exports = {
           as: 'categories'
         }
       },
-      {$unwind: '$categories'},
+      {
+        $unwind: {
+          path: '$categories',
+          preserveNullAndEmptyArrays: true
+        }
+      },
       {
         $group: {
           _id: '$_id',

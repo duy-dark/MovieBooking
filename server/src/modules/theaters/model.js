@@ -830,7 +830,7 @@ module.exports = {
           ]
         }
       },
-      {$unwind: '$theater'},
+      {$unwind: {path: '$theater', preserveNullAndEmptyArrays: true}},
       {$unwind: '$day1'},
       {$unwind: '$day1'},
       {$unwind: '$day2'},
@@ -1001,7 +1001,12 @@ module.exports = {
           as: 'rooms'
         }
       },
-      {$unwind: '$rooms'},
+      {
+        $unwind: {
+          path: '$rooms',
+          preserveNullAndEmptyArrays: true
+        }
+      },
       {$sort: {'rooms.name': 1}},
       {
         $group: {

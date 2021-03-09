@@ -40,7 +40,6 @@ module.exports = {
           $and: [lambda.conditions]
         }
       },
-      // {$unwind: '$category_ids'},
       {
         $lookup: {
           from: 'categories',
@@ -90,7 +89,12 @@ module.exports = {
       {
         $unset: ['trailer', '_id']
       },
-      {$unwind: {path: '$comment', preserveNullAndEmptyArrays: true}},
+      {
+        $unwind: {
+          path: '$comment',
+          preserveNullAndEmptyArrays: true
+        }
+      },
       {
         $lookup: {
           from: 'customers',
@@ -1150,7 +1154,12 @@ module.exports = {
       //     as: 'categories'
       //   }
       // },
-      {$unwind: '$category_ids'},
+      {
+        $unwind: {
+          path: '$category_ids',
+          preserveNullAndEmptyArrays: true
+        }
+      },
       {
         $lookup: {
           from: 'categories',
@@ -1177,7 +1186,12 @@ module.exports = {
           as: 'categories'
         }
       },
-      {$unwind: '$categories'},
+      {
+        $unwind: {
+          path: '$categories',
+          preserveNullAndEmptyArrays: true
+        }
+      },
       {
         $group: {
           _id: '$_id',

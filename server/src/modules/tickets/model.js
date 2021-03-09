@@ -115,8 +115,14 @@ module.exports = {
           }
         }
       },
-      {$unwind: '$film_schedules'},
-      {$unwind: '$customers'},
+      // {$unwind: '$film_schedules'},
+      // {$unwind: '$customers'},
+      {
+        $unwind: {path: '$film_schedules', preserveNullAndEmptyArrays: true}
+      },
+      {
+        $unwind: {path: '$customers', preserveNullAndEmptyArrays: true}
+      },
       {
         $project: lambda.views
       }
@@ -172,7 +178,10 @@ module.exports = {
           }
         }
       },
-      {$unwind: '$film_schedules'},
+      // {$unwind: '$film_schedules'},
+      {
+        $unwind: {path: '$film_schedules', preserveNullAndEmptyArrays: true}
+      },
       {
         $lookup: {
           from: 'films',
@@ -227,10 +236,31 @@ module.exports = {
           }
         }
       },
-      {$unwind: '$film_schedules.films'},
-      {$unwind: '$film_schedules.theaters'},
-      {$unwind: '$film_schedules.rooms'},
-      {$unwind: '$customers'},
+      // {$unwind: '$film_schedules.films'},
+      // {$unwind: '$film_schedules.theaters'},
+      // {$unwind: '$film_schedules.rooms'},
+      // {$unwind: '$customers'},
+      {
+        $unwind: {
+          path: '$film_schedules.films',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $unwind: {
+          path: '$film_schedules.theaters',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $unwind: {
+          path: '$film_schedules.rooms',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $unwind: {path: '$customers', preserveNullAndEmptyArrays: true}
+      },
       {$sort: {created_at: -1}},
       {$limit: lambda.limit}
     ]);

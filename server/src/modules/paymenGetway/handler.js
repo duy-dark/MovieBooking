@@ -152,14 +152,14 @@ const checkStatusMomoApi = async (params) => {
             .replace('0', '84');
           console.log('phone_number:', phone_number);
 
-          let time_start = moment(ticket.data.film_schedules.time_start).format(
-            'DD/MM/YYYY, HH:mm'
-          );
+          let time_start = moment(ticket.data.film_schedules.time_start)
+            .add(7, 'hour')
+            .format('DD/MM/YYYY, HH:mm');
           console.log('time_start:', time_start);
 
-          let time_end = moment(ticket.data.film_schedules.time_end).format(
-            'DD/MM/YYYY, HH:mm'
-          );
+          let time_end = moment(ticket.data.film_schedules.time_end)
+            .add(7, 'hour')
+            .format('DD/MM/YYYY, HH:mm');
           console.log('time_end:', time_end);
 
           const objSender = {

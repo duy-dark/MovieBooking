@@ -28,7 +28,7 @@ const getNowShowing = async () => {
     console.log('time_start: ', time_start);
     console.log('time_end1:   ', time_end);
 
-    let time_end1 = new Date(moment(time_end).add(0, 'days'));
+    let time_end1 = new Date(moment(time_end).add(hour > 17 ? 1 : 0, 'days'));
     let lambda = {
       conditions: {
         time_start: time_start,

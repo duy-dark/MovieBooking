@@ -115,11 +115,38 @@ module.exports = {
       {
         $facet: {
           theaters: [
+            // {
+            //   $lookup: {
+            //     from: 'theaters',
+            //     localField: 'theater_id',
+            //     foreignField: '_id',
+            //     as: 'theaters'
+            //   }
+            // },
+
             {
               $lookup: {
                 from: 'theaters',
-                localField: 'theater_id',
-                foreignField: '_id',
+                let: {
+                  theater_id: '$theater_id',
+                  is_deleted: false
+                },
+                pipeline: [
+                  {
+                    $match: {
+                      $expr: {
+                        $and: [
+                          {
+                            $eq: ['$_id', '$$theater_id']
+                          },
+                          {
+                            $eq: ['$is_deleted', '$$is_deleted']
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ],
                 as: 'theaters'
               }
             },
@@ -147,11 +174,38 @@ module.exports = {
             }
           ],
           films: [
+            // {
+            //   $lookup: {
+            //     from: 'films',
+            //     localField: 'film_id',
+            //     foreignField: '_id',
+            //     as: 'films'
+            //   }
+            // },
+
             {
               $lookup: {
                 from: 'films',
-                localField: 'film_id',
-                foreignField: '_id',
+                let: {
+                  film_id: '$film_id',
+                  is_deleted: false
+                },
+                pipeline: [
+                  {
+                    $match: {
+                      $expr: {
+                        $and: [
+                          {
+                            $eq: ['$_id', '$$film_id']
+                          },
+                          {
+                            $eq: ['$is_deleted', '$$is_deleted']
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ],
                 as: 'films'
               }
             },
@@ -209,11 +263,37 @@ module.exports = {
               }
             },
             {$sort: {'schedules.time_start': 1}},
+            // {
+            //   $lookup: {
+            //     from: 'rooms',
+            //     localField: 'schedules.room_id',
+            //     foreignField: '_id',
+            //     as: 'schedules.rooms'
+            //   }
+            // },
             {
               $lookup: {
                 from: 'rooms',
-                localField: 'schedules.room_id',
-                foreignField: '_id',
+                let: {
+                  schedules_room_id: '$schedules.room_id',
+                  is_deleted: false
+                },
+                pipeline: [
+                  {
+                    $match: {
+                      $expr: {
+                        $and: [
+                          {
+                            $eq: ['$_id', '$$schedules_room_id']
+                          },
+                          {
+                            $eq: ['$is_deleted', '$$is_deleted']
+                          }
+                        ]
+                      }
+                    }
+                  }
+                ],
                 as: 'schedules.rooms'
               }
             },
@@ -264,11 +344,37 @@ module.exports = {
           $and: [lambda.conditions]
         }
       },
+      // {
+      //   $lookup: {
+      //     from: 'rooms',
+      //     localField: 'room_id',
+      //     foreignField: '_id',
+      //     as: 'room'
+      //   }
+      // },
       {
         $lookup: {
           from: 'rooms',
-          localField: 'room_id',
-          foreignField: '_id',
+          let: {
+            room_id: '$room_id',
+            is_deleted: false
+          },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    {
+                      $eq: ['$_id', '$$room_id']
+                    },
+                    {
+                      $eq: ['$is_deleted', '$$is_deleted']
+                    }
+                  ]
+                }
+              }
+            }
+          ],
           as: 'room'
         }
       },

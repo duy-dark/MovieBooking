@@ -44,7 +44,7 @@ module.exports = {
           as: 'theaters'
         }
       },
-      {$unwind: '$theaters'},
+      {$unwind: {path: '$theaters', preserveNullAndEmptyArrays: true}},
       {$unset: ['theaters.rooms']}
     ]);
   }
