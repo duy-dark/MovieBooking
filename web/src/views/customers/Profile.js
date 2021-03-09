@@ -101,9 +101,9 @@ function createCard(ticket) {
           <span className="tickets_card_attr-label">Trạng thái:</span>
           <span
             className="tickets_card_attr-text"
-            style={{ color: ticket.is_paid ? "#05CA05" : "red", fontStyle: "italic" }}
+            style={{ color: ticket.is_paid  === 1 || ticket.is_paid  === 2 ? "#05CA05" : "red", fontStyle: "italic" }}
           >
-            {ticket.is_paid ? "Thành công" : "Thất bại"}
+            {ticket.ticket_status === 1 || ticket.is_paid  === 2 ? "Thành công" : "Thất bại"}
           </span>
         </span>
       </div>

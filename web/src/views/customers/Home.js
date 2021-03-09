@@ -80,7 +80,7 @@ export default function Home() {
   const disabledBtn = selectFilm && selectThreater && selectDate && selectTime;
 
   const formatTime = (time) => {
-    return moment(time).format('hh-mm')
+    return moment(time).format('HH-mm')
   }
 
   const formatDate = (time) => {

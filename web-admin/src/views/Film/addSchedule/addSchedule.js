@@ -37,10 +37,6 @@ export default function AddSchedule(props){
   const dispatch = useDispatch();
   useEffect(()=>{
 
-    // setTheater(props.schedule.Theaterid)
-    // setRoom(props.schedule.Roomid)
-    // setFilm(props.schedule.Filmid)
-   // console.log(starttime,endtime,date,theaterid,roomid,filmid)
   },[starttime,endtime,date,theaterid,roomid,filmid])
   
   let roomOfTheater=[];
@@ -56,9 +52,7 @@ export default function AddSchedule(props){
 
   }
   function handleChange(value,record){
-    // setFilm(record.key)
     setTheater(record.key)
-  //  console.log(record)
     options=[]
    
     props.theaters.filter(theater=>theater.name==value?roomOfTheater=[...theater.rooms]:false)
@@ -76,8 +70,7 @@ export default function AddSchedule(props){
                 "theater_id":theaterid,
                 "room_id":roomid
     }
- // console.log(long_time,starttime,x)
-dispatch(createFilmSchedules(data))
+    dispatch(createFilmSchedules(data))
     props.onCancel();
       
     }

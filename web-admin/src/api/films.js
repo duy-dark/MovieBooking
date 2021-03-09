@@ -109,6 +109,14 @@ const createTheater = (params) => {
   return Api.post(`/api/theater`, params).then(res => res.data)
 }
 
+const deleteTheater = (params) => {
+  return Api.delete(`/api/theater/${params}`).then(res => res.data)
+}
+
+const deleteRoom = (params) => {
+  return Api.delete(`/api/room/${params}`).then(res => res.data)
+}
+
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
@@ -138,5 +146,7 @@ export default {
   getListTicket,
   deleteFilmSchedule,
   createTheater,
-  createRoom
+  createRoom,
+  deleteTheater,
+  deleteRoom
 };

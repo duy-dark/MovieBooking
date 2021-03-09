@@ -6,7 +6,7 @@ export default function CardTime(props) {
   let history = useHistory();
   const formatDate = (date) => {
     let d = new Date(date)
-    return moment(d).format("hh:mm")
+    return moment(d).format("HH:mm")
   }
   const clickTime = () => {
     history.push({

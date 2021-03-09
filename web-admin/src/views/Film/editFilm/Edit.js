@@ -77,7 +77,6 @@ export default function AddFilm  (props) {
    
     //save file to db and return url online image
     if(typeof(values.film.url_background)!=="string"){
-      console.log(values.film.url_background)
         let file_background = values.film.url_background.file.originFileObj; 
         formDataBackground.append('file', file_background)
        await Api.post(
@@ -89,7 +88,6 @@ export default function AddFilm  (props) {
       })
     }
   if(typeof(values.film.url_avatar)!=="string"){
-    console.log(values.film.url_avatar)
     let file_avatar = values.film.url_avatar.file.originFileObj; 
      formDataAvatar.append('file', file_avatar)
       await Api.post(
