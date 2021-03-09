@@ -38,7 +38,7 @@ export default function Login(props) {
     <div className="login">
       <div className="login__content">
         <div className="login-title">
-          Caro
+          Admin
         </div>
         <div className="login__success">{message}</div>
         <div className="login__err">{err}</div>

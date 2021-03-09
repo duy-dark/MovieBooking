@@ -11,7 +11,6 @@ function* fetchLogin(action) {
       history.push("/");
     }
   } catch (err) {
-    console.log(err);
     throw err;
   }
 }
@@ -20,7 +19,6 @@ function* fetchLogin(action) {
 
 function* fetchUserInfo(action) {
   try {
-    console.log(action.payload)
     const res = yield call(httpUser.getAdminInfo, action.payload);
 
     if (res.status === "ok") {

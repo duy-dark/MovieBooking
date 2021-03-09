@@ -50,6 +50,18 @@
         .theater-content__rooms__list {
           display: flex;
           flex-direction: column;
+          min-width: 200px;
+
+          &__item {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            justify-content: space-between;
+
+            &:not(:last-child) {
+              margin-bottom: 10px;
+            }
+          }
 
           a {
             overflow: hidden;

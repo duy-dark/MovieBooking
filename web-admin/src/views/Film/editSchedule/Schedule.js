@@ -46,9 +46,7 @@ const EditableCell = ({
     </td>
   );
 };
-const deleteSchedule = (schedule)=>{
-  console.log(schedule)
-}
+
 export default function ShowSchedule  (props) {
   const [form] = Form.useForm();
   const [data, setData] = useState();
@@ -88,18 +86,6 @@ export default function ShowSchedule  (props) {
     
   setData(data1);
 },[])
-
-const updateScheulde =()=>{
-   let update=[];
-  data.map((item,index)=>{
-    if(item.Time_Start!=data1[index].Time_Start||item.Time_End!=data1[index].Time_End||
-      item.Room!=data1[index].Room||item.Date!=data1[index].Date){
-        filmschedules.map(itemchange=>itemchange._id==item.id?console.log(item):false)
-      
-      }
-  })
- 
-}
 
   const isEditing = (record) => record.key === editingKey;
 

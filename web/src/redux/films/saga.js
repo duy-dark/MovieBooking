@@ -25,9 +25,9 @@ function* fetchFilmDetails(action) {
     yield put({ type: FilmsType.LOADING_SHOW });
     const { payload } = action;
     const res = yield call(httpFilms.getDetail, payload);
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
-      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.FILM_DETAIL_SUCCESS, payload: data });
     }
 
@@ -38,10 +38,10 @@ function* fetchListFilmsNow() {
   try {
     yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.getListFilmNow, {});
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
       yield put({ type: FilmsType.LIST_FILM_NOW_SUCCESS, payload: data });
-      yield put({ type: FilmsType.LOADING_HIDE });
     }
 
   } catch (error) { console.log(error); }
@@ -51,9 +51,9 @@ function* fetchListFilmsFuture() {
   try {
     yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.getListFilmFuture, {});
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
-      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.LIST_FILM_FUTURE_SUCCESS, payload: data });
     }
 
@@ -64,9 +64,9 @@ function* fetchListFilmsToday() {
   try {
     yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.getListFilmToday, {});
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
-      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.LIST_FILM_TODAY_SUCCESS, payload: data });
     }
 
@@ -78,9 +78,9 @@ function* fetchSeats(action) {
     yield put({ type: FilmsType.LOADING_SHOW });
     const { payload } = action
     const res = yield call(httpFilms.getSeats, payload);
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
-      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.LIST_SEATS_SUCCESS, payload: data });
     }
 
@@ -91,9 +91,9 @@ function* fetchSearch() {
   try {
     yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.search, {});
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
-      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.SEARCH_SUCCESS, payload: data });
     }
 
@@ -105,9 +105,9 @@ function* fetchComments(action) {
     yield put({ type: FilmsType.LOADING_SHOW });
     const { payload } = action
     const res = yield call(httpFilms.getComments, payload);
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
-      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.COMMENT_SUCCESS, payload: data });
     }
   } catch (error) { console.log(error); }
@@ -118,9 +118,9 @@ function* fetchCreateComment(action) {
     yield put({ type: FilmsType.LOADING_SHOW });
     const { payload } = action
     const res = yield call(httpFilms.createComment, payload);
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
-      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.CREATE_COMMENT_SUCCESS, payload: data.comment });
     }
 
@@ -131,7 +131,6 @@ function* fetchPaymentGate(action) {
   try {
     yield put({ type: FilmsType.LOADING_SHOW });
     const { payload, history } = action
-    // console.log(history)
 
     const res = yield call(httpFilms.paymentMomo, payload);
     yield put({ type: FilmsType.LOADING_HIDE });
@@ -152,9 +151,9 @@ function* fetchListNew(action) {
   try {
     yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.getAllNews, {})
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
-      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.LIST_NEW_SUCCESS, payload: data });
     }
   } catch (error) { console.log(error); }
@@ -165,9 +164,9 @@ function* fetchNewDetail(action) {
     const { payload } = action
     yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.getNewDetail, payload)
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
-      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.NEW_DETAIL_SUCCESS, payload: data });
     }
   } catch (error) { console.log(error); }
@@ -178,9 +177,9 @@ function* fetchListFilmLike(action) {
     const { payload } = action
     yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.getListFilmLike, payload)
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
-      yield put({ type: FilmsType.LOADING_HIDE });
       yield put({ type: FilmsType.LIST_FILM_LIKE_SUCCESS, payload: data });
     }
 

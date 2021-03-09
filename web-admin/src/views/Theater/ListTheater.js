@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import { Layout, Menu, Breadcrumb } from "antd";
-import { getTheaters } from "../../redux/films/actions"
+import { getTheaters, deleteTheater } from "../../redux/films/actions"
 import { useHistory } from 'react-router-dom'
 import { useDispatch , useSelector } from 'react-redux';
 import * as moment from "moment"
@@ -23,7 +23,7 @@ export default function ListTheater() {
   }
 
   const onDelete = id => {
-    console.log(id)
+    dispatch(deleteTheater(id))
   }
   
   return (
@@ -42,8 +42,8 @@ export default function ListTheater() {
           <div className="td list-film__header__btns"></div>
         </div>
         { listTheater.length > 0 && listTheater.map(item => (
-          <div key={item._id} className="tr  list-film__item" onClick={() => goDetail(item._id)}>
-            <div className="td list-film__item__title">{item.name}</div>
+          <div key={item._id} className="tr  list-film__item">
+            <div className="td list-film__item__title" onClick={() => goDetail(item._id)}>{item.name}</div>
             <div className="td list-film__item__date">{moment(item.created_at).format("DD-MM-YYYY")}</div>
             <div className="td list-film__item__btns">
               <button className="btn btn-default" onClick={() => onDelete(item._id)}>delete</button>

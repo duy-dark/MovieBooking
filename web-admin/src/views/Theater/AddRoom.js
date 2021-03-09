@@ -44,7 +44,6 @@ export default function AddRoom() {
       theater_id: selectTheater._id,
       seats: files
     }
-    console.log(params)
     dispatch(createRoom(params, history))
   }
 
