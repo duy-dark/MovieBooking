@@ -38,6 +38,8 @@ function* fetchUserInfo(action) {
 
     if (res.status === "ok") {
       yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: res.data });
+    } else {
+      yield put({ type: UsersTypes.LOGOUT_SUCCESS });
     }
   } catch (err) {
     throw err;
