@@ -1,11 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import { Layout, Menu, Breadcrumb } from "antd";
+import { getTheaters } from "../../redux/films/actions"
+import { useHistory } from 'react-router-dom'
+import { useDispatch , useSelector } from 'react-redux';
+import * as moment from "moment"
+import "../../styles/new/list-new.scss";
 
 const { Header } = Layout;
-
-
+  
 export default function ListTheater() {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  let listTheater = useSelector(state =>state.films.theaters)
+
+  useEffect(() => {
+    dispatch(getTheaters())
+  }, [])
+
+  const goDetail = id => {
+    history.push(`/theater/${id}`)
+  }
+
+  const onDelete = id => {
+    console.log(id)
+  }
+  
   return (
     <Layout className="layout">
       <Header style={{ background: "#FFFFFF" }}>
@@ -15,8 +35,21 @@ export default function ListTheater() {
           <Menu.Item key="3"><Link to="/room/create">Add Room</Link></Menu.Item>
         </Menu>
       </Header>
-      <div className="create-new">
-        list theater
+      <div className="list-film">
+        <div className="tr list-film__header">
+          <div className="td list-film__header__title">Title</div>
+          <div className="td list-film__header__date">Date Created</div>
+          <div className="td list-film__header__btns"></div>
+        </div>
+        { listTheater.length > 0 && listTheater.map(item => (
+          <div key={item._id} className="tr  list-film__item" onClick={() => goDetail(item._id)}>
+            <div className="td list-film__item__title">{item.name}</div>
+            <div className="td list-film__item__date">{moment(item.created_at).format("DD-MM-YYYY")}</div>
+            <div className="td list-film__item__btns">
+              <button className="btn btn-default" onClick={() => onDelete(item._id)}>delete</button>
+            </div>
+          </div>
+        ))}
       </div>
     </Layout>
   )

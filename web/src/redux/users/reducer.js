@@ -9,6 +9,7 @@ const initialState = {
   isRegister: false,
   header: true,
   footer: true,
+  tickets:[]
 };
 
 export default function userReducer(state = initialState, action) {
@@ -65,6 +66,9 @@ export default function userReducer(state = initialState, action) {
     case UsersTypes.LOADING_HIDE:
       newState = Object.assign({}, state, { loading: state.loading-- });
       break;
+    case UsersTypes.TICKET_INFO_SUCCESS:
+      newState = Object.assign({}, state, { tickets: payload }); 
+      break
     default:
       newState = state;
   }

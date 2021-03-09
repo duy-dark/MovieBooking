@@ -1,11 +1,11 @@
-import { Form, Input, Button ,Upload,message,DatePicker, Space} from 'antd';
+import { Form, Input, Button ,Upload,message,DatePicker} from 'antd';
 import Api from './../../../api/api'
 import { UploadOutlined } from '@ant-design/icons';
 import React from 'react';
 import { addNewFilm } from "../../../redux/films/actions";
 import { Select } from 'antd';
-import { useDispatch , useSelector} from "react-redux";
-import moment from 'moment'
+import { useDispatch } from "react-redux";
+// import moment from 'moment'
 const { Option } = Select;
 
 const layout = {
@@ -88,7 +88,7 @@ export default function AddFilm  (props) {
  
   
  //add new film
-    setTimeout( dispatch(addNewFilm(values.film)),2000)
+    dispatch(addNewFilm(values.film))
       
     props.onCancel();
    
@@ -164,6 +164,17 @@ export default function AddFilm  (props) {
         ]}
       >
         <DatePicker onChange={getTime} />
+      </Form.Item>
+      <Form.Item
+        name={['film', 'trailer']}
+        label="Trailer"
+        rules={[
+          {
+            required: true,
+          },
+        ]}
+      >
+        <Input />
       </Form.Item>
       <Form.Item
         name={['film', 'digitals']}

@@ -1,13 +1,24 @@
 import routes from "./router";
 import React,{ Component } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Layout } from 'antd';
 import { connect } from 'react-redux';
+import { push } from 'react-router-redux'
 import MenuHome from "./views/home/menu/MenuHome";
+import Login from "./views/login/Login"
 import "./styles/styles.scss"
+import { getUserInfo } from "./redux/users/actions";
 
-const { Header, Footer, Sider, Content } = Layout; 
+
+const { Sider } = Layout; 
+
 class App extends Component {
+  constructor(props){
+    super(props)
+    this.props.getUser()
+
+  }
+ // const { history } = this.props;
   render(){
   function showRouteComponent(routes) {
     let result = null;
@@ -28,8 +39,14 @@ class App extends Component {
 
   return (
     <Router>
+       <Route
+            path='/login'
+            exact={true}
+            component={() =><Login/>}
+          />
       <Layout>
         <Sider className="left-sidebar"><MenuHome/></Sider>
+     
         <Layout>
           <Switch>{showRouteComponent(routes)}</Switch>
         </Layout>
@@ -37,9 +54,24 @@ class App extends Component {
     </Router>
   );}
 }
+
+const mapDispatchToProps=(dispatch)=>({
+  getUser:()=>{
+    const token = localStorage.getItem("token");
+    const userID = localStorage.getItem("userID");
+    
+    if (token && userID) {
+      dispatch(getUserInfo({ token, userID }));
+    }
+    else {
+        dispatch(push('/login'))
+    
+    }
+  }
+})
 const mapStateToProps = state => {
   return {
   header: !!state.users.header,
   footer: !!state.users.footer
 }};
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps,mapDispatchToProps)(App);

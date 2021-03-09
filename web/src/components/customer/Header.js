@@ -24,6 +24,10 @@ export default function Header(props) {
     dispatch(signOut(history))
   }
 
+  const goProfile=()=>{
+    history.push('/profile')
+  }
+
   const showNavbar = () => {
     let element = document.getElementById('burger')
     let body = document.getElementsByTagName('body')[0]
@@ -55,9 +59,14 @@ export default function Header(props) {
                   <img src={`${user.avatar ? user.avatar : '/assets/avatar.png'}`} alt="avatar"/><span>{user.name}</span>
                 </div>
                 <div className="hl-dropdown" style={showLogout ? { display: 'block' } : {}}>
-                  <div className="hl-dropdown__item">
+                    <div className="hl-dropdown__item">
+                      <button type="button" className="btn btn-light">
+                    <div className="header__profile" onClick={() => goProfile()}>Hồ sơ</div>
+                    </button>
+                    <button type="button" className="btn btn-light">
                     <div className="header__logout" onClick={() => onLogout()}>Đăng Xuất</div>
-                  </div>
+                      </button>
+                    </div>
                 </div>
               </>
               ) : (

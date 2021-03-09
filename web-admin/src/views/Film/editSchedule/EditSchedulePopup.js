@@ -11,7 +11,7 @@ const EditSchedulePopup = (props) => {
   const [modalText, setModalText] = React.useState();
 
   
-  
+
   const showModal = () => {
     setVisible(true);
   };
@@ -20,7 +20,11 @@ const EditSchedulePopup = (props) => {
 
   const handleCancel = () => {
     console.log('Clicked cancel button');
-    setVisible(false);
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setVisible(false);
+      setConfirmLoading(false);
+    }, 500);
   };
 
   return (

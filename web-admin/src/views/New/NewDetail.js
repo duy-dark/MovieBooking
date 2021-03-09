@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch , useSelector } from 'react-redux'
 import { getNewDetail, updateNewDetail } from '../../redux/films/actions'
 import { useParams } from "react-router-dom";
+import httpFilm from '../../api/films';
 import "../../styles/new/create-new.scss";
-import httpFilm from '../../api/films'
 
 
 export default function NewDetail() {

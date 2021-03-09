@@ -2,7 +2,7 @@ import Api from "./api";
 
 
 const updateFilmDetail = (params,data)=>{
-  return Api.put(`api/film/${params.id}`,data).then((res) => res.data);
+  return Api.put(`api/film/${params}`,data).then((res) => res.data);
 }
 const getListFilmNow = () => {
   return Api.get("/api/film").then((res) => res.data);
@@ -61,6 +61,10 @@ const getListNewpapers = (params) => {
   return Api.get('').then((res) => res.data)
 }
 
+const createSchedule = (params)=>{
+  return Api.post('/api/film_schedule',params).then((res) => res.data)
+}
+// eslint-disable-next-line import/no-anonymous-default-export
 const getTheater = ()=>{
   return Api.get(`/api/theater`).then((res)=>res.data)
 }
@@ -68,18 +72,44 @@ const getTheater = ()=>{
 const getListNews = () => {
   return Api.get(`/api/news`).then(res => res.data)
 }
-
+const getListTicket = () => {
+  return Api.get(`api/ticket/detail?is_mobile=1`).then(res => res.data)
+}
 const getNewDetail = (params) => {
   return Api.get(`/api/news/${params}`).then(res => res.data)
 }
-
+const deleteFilmSchedule = (params) => {
+  return Api.delete(`api/film_schedule/${params}`).then(res => res.data)
+}
 const updateNewDetail = (params) => {
   return Api.put(`/api/news/${params.id}`, params).then(res => res.data)
 }
 
+const getTheaterDetail = (params) => {
+  return Api.get(`/api/theater/detail/${params}`).then(res => res.data)
+}
+
+const updateTheaterDetail = (params) => {
+  return Api.put(`/api/theater/${params._id}`, params).then(res => res.data)
+}
+
+const getRoomDetail = (params) => {
+  return Api.get(`/api/room/${params}`).then(res => res.data)
+}
+
+const createRoom = (params) => {
+  return Api.post(`/api/room`, params).then(res => res.data)
+}
+
+const updateRoomDetail = (params) => {
+  return Api.put(`/api/room/${params._id}`, params).then(res => res.data)
+}
+
+const createTheater = (params) => {
+  return Api.post(`/api/theater`, params).then(res => res.data)
+}
 
 
-// eslint-disable-next-line import/no-anonymous-default-export
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   postBookingInfo,
@@ -98,6 +128,15 @@ export default {
   getListNewpapers,
   getListNews,
   getNewDetail,
+  createSchedule,
   updateNewDetail,
-  updateFilmSchedule
+  updateFilmSchedule,
+  getTheaterDetail,
+  updateTheaterDetail,
+  getRoomDetail,
+  updateRoomDetail,
+  getListTicket,
+  deleteFilmSchedule,
+  createTheater,
+  createRoom
 };

@@ -9,7 +9,7 @@ import {
   AppstoreOutlined,
   SettingOutlined,
   LinkOutlined,
-  VideoCameraFilled,
+  LoginOutlined,
 } from "@ant-design/icons";
 
 const { SubMenu } = Menu;
@@ -45,17 +45,9 @@ export default function MenuHome(props) {
             <Menu.Item key="8">Danh sách bị cấm</Menu.Item>
           </SubMenu>
         </SubMenu>
-        <SubMenu key="sub3" icon={<SettingOutlined />} title="Thống Kê">
-        <Menu.Item key="9">Thống Kê</Menu.Item>
-        </SubMenu>
-        <Menu.Item key="link" icon={<LinkOutlined />}>
-          <a
-            href="https://ant.design"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Thông tin cá nhân
-          </a>
+       
+        <Menu.Item key="10" icon={<LoginOutlined />} title="Đăng Nhập">
+        <a>Đăng Nhập<Link to='/login'/></a>  
         </Menu.Item>
       </Menu>
     </>

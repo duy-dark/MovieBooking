@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import { Layout, Menu, Breadcrumb } from "antd";
+import { useHistory } from 'react-router-dom'
 import { useDispatch , useSelector } from 'react-redux';
 import { getListNew } from '../../redux/films/actions';
-import { useHistory } from 'react-router-dom'
 import "../../styles/new/list-new.scss";
 import * as moment from "moment"
 
@@ -27,6 +27,10 @@ export default function ListNewPage() {
     history.push(`/new/${id}`)
   }
 
+  const onDelete = (id) => {
+
+  }
+
   return (
     <Layout className="layout">
       <Header style={{ background: "#FFFFFF" }}>
@@ -39,11 +43,15 @@ export default function ListNewPage() {
         <div className="tr list-film__header">
           <div className="td list-film__header__title">Title</div>
           <div className="td list-film__header__date">Date Created</div>
+          <div className="td list-film__header__btns"></div>
         </div>
         { listNews.length > 0 && listNews.map(item => (
           <div key={item._id} className="tr  list-film__item" onClick={() => goDetail(item._id)}>
             <div className="td list-film__item__title">{item.title}</div>
             <div className="td list-film__item__date">{moment(item.created_at).format("DD-MM-YYYY")}</div>
+            <div className="td list-film__item__btns">
+              <button className="btn btn-default" onClick={() => onDelete(item._id)}>delete</button>
+            </div>
           </div>
         ))}
         

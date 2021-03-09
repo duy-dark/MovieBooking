@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Table, Tag, Space } from 'antd';
 import "./../../../styles/Film/film.scss";
-import Detail from "../editFilm/DetailPopup"
+import DetailPopUp from "../editFilm/DetailPopup"
 import AddNewFilm from "../addFilm/AddFilmPopUp"
 import Schedule from "../editSchedule/SchedulePopup"
 import { useSelector, useDispatch } from "react-redux";
@@ -16,13 +16,13 @@ export default function Film(){
     dispatch((getTheaters()))
   }, []);
 
- 
   
   const theaters = useSelector((state) => state.films.theaters);
   const filmsNow = useSelector((state) => state.films.filmsNow);
   const categories = useSelector((state) => state.films.categories);
   const data = filmsNow.map((item,index)=>({...item, key: index}))
-
+  
+  
 const columns = [
   {
     title: 'Name',
@@ -35,10 +35,10 @@ const columns = [
     key: 'action',
     render: (text, record,index) => (
       <Space size="middle">
-       <Detail index={index} detail={record} />
-        <a>Delete</a>
+       <DetailPopUp index={index} detail={record} categories={categories} />
+      
        <Schedule schedule={record} theaters={theaters}/>
-        <a>Add Schedules</a>
+        <AddSchedulePopup theaters={theaters} schedule={record}/>
       </Space>
     ),
   },
