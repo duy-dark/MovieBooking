@@ -300,7 +300,7 @@ module.exports = {
             {
               $unwind: {
                 path: '$schedules.rooms',
-                preserveNullAndEmptyArrays: true
+                preserveNullAndEmptyArrays: false
               }
             },
             {

@@ -14,10 +14,11 @@ const getList = async (params) => {
         film_name: 1,
         date_send: 1,
         content: 1,
-        is_sent: 1
+        is_sent: 1,
+        created_at: 1
       }
     };
-    let data = await Model.findByLambda(lambda);
+    let data = await Model.getByCustomerID(lambda);
     return resSuccess(data);
   } catch (error) {
     throw {status: 400, detail: error};

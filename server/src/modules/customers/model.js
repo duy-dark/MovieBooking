@@ -107,5 +107,22 @@ module.exports = {
         }
       }
     ]);
+  },
+
+  getByFavorite: async function (favorite_ids) {
+    return await Collection.aggregate([
+      {
+        $match: {
+          $and: [
+            {is_deleted: false},
+            {
+              favorite_ids: {
+                $in: favorite_ids
+              }
+            }
+          ]
+        }
+      }
+    ]);
   }
 };

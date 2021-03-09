@@ -2,6 +2,13 @@ let Model = require('./model');
 const resSuccess = require('../../responses/res-success');
 const {omitBy, isNil} = require('lodash');
 const moment = require('moment');
+const {
+  transporter,
+  contentMail,
+  contentCode,
+  contentCreateFilm
+} = require('../../util/mail');
+const {nexmo, sendSMS} = require('../../util/sms');
 
 const getList = async (params) => {
   try {
@@ -237,8 +244,73 @@ const postCreate = async (params) => {
       created_at: moment.now(),
       updated_at: moment.now()
     };
-    console.log('lambda', lambda);
+    // console.log('lambda', lambda);
     let data = await Model.createByLambda(lambda);
+
+    //Notifications
+    if (data[0]._id) {
+      console.log('data[0]._id:', data[0]._id);
+      let arrayCat = [];
+      params.category_ids.forEach((element) => {
+        arrayCat.push(require('mongodb').ObjectId(element));
+      });
+
+      let customers = await require('../customers/model').getByFavorite(
+        arrayCat
+      );
+      // console.log('customers:', customers);
+      customers.forEach(async (element) => {
+        // console.log('cus_id', element._id);
+        let noti = await require('../notifications/model').createByLambda({
+          customer_id: element._id,
+          film_id: data[0]._id,
+          film_name: params.name,
+          film_avatar: params.url_avatar,
+          content: `Phim ${
+            params.name
+          } thuộc thể loại bạn thích sắp được công chiếu. Hãy đến rạp thưởng thức vào ngày ${moment(
+            params.start_date
+          )
+            .add(7, 'hour')
+            .format('DD/MM/YYYY')}`,
+          is_sent: false,
+          is_deleted: false,
+          created_at: moment.now(),
+          updated_at: moment.now()
+        });
+        // console.log('noti', noti);
+
+        //Send Mail
+
+        if (element.email) {
+          const objSender = {
+            film: params.name,
+            startDate: moment(params.start_date)
+              .add(7, 'hour')
+              .format('DD/MM/YYYY'),
+            film_avatar: params.url_avatar
+          };
+
+          let mainOptions = {
+            // thiết lập đối tượng, nội dung gửi mail
+            from: 'doantotnghiepthang9@gmail.com',
+            to: element.email,
+            generateTextFromHTML: true,
+            subject: 'Thông báo từ MovieBooking',
+            html: contentCreateFilm(objSender) //Nội dung html mình đã tạo trên kia :))
+          };
+
+          console.log('Bat dau gui email');
+          let rs = await transporter.sendMail(mainOptions, (err, info) => {
+            if (err) {
+              console.log('err:', err);
+            }
+            console.log('info:', info);
+            transporter.close();
+          });
+        }
+      });
+    }
     return resSuccess(data[0]);
   } catch (error) {
     throw {status: 400, detail: error};

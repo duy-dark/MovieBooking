@@ -87,8 +87,20 @@ let contentCode = (code) => {
   `;
 };
 
+let contentCreateFilm = (objSender) => {
+  return `
+  <div style="display: flex; width: 800px; flex-direction: column;">
+    <h2 style="display: flex; justify-content: center; width: 80%; font-size: 30px;">Thông báo từ MovieBooking</h2>
+    <div style="width: 100%;">
+      <p style="width: 100%; text-align: center; font-size: 20px;">Phim ${objSender.film} thuộc thể loai bạn thích sẽ chiếu vào ngày ${objSender.startDate}. Hãy kêu gọi bạn bè cùng thưởng thức nào!</p>
+      <img style="width: 100%; height: auto;" src="${objSender.film_avatar}" alt="">
+    </div>
+  </div>`;
+};
+
 module.exports = {
   transporter,
   contentMail,
-  contentCode
+  contentCode,
+  contentCreateFilm
 };
