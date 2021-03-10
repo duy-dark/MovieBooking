@@ -182,6 +182,7 @@ export default function Booking(props) {
   };
 
   const bookingTicket = () => {
+    const { schedule: { film_id, theater_id, room_id } = {}} = movies
     const bookingInfo = {
       count: seats.length,
       cost: seats.length * 80000,
@@ -191,7 +192,10 @@ export default function Booking(props) {
       email: email,
       phone_number: phone,
       payment: "momo",
-      voucher_id: null
+      voucher_id: null,
+      film_id: film_id,
+      theater_id: theater_id,
+      room_id: room_id
     };
     dispatch(paymentGateway({ params: bookingInfo, history: window}));
     setDisabledBtn(true);
