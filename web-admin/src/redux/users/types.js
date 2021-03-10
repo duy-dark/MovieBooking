@@ -12,5 +12,6 @@ export default {
   LOGOUT_SUCCESS: _prefix + 'LOGOUT_SUCCESS',
   LOGIN_TEST: _prefix + 'LOGIN_TEST',
   LOGIN_TEST_SUCCESS: _prefix + 'LOGIN_TEST_SUCCESS',
-
+  LOADING_SHOW: _prefix + 'LOADING_SHOW',
+  LOADING_HIDE: _prefix + 'LOADING_HIDE'
 };

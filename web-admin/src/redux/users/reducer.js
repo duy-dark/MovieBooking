@@ -8,6 +8,7 @@ const initialState = {
   isRegister: false,
   header: true,
   footer: true,
+  loading: 0
 };
 
 export default function userReducer(state = initialState, action) {
@@ -46,6 +47,12 @@ export default function userReducer(state = initialState, action) {
         footer: payload.footer,
       });
       break;
+      case UsersTypes.LOADING_SHOW:
+        newState = Object.assign({}, state, { loading: state.loading++ });
+        break;
+      case UsersTypes.LOADING_HIDE:
+        newState = Object.assign({}, state, { loading: state.loading-- });
+        break;
     default:
       newState = state;
   }

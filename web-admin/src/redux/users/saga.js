@@ -5,7 +5,9 @@ import httpUser from "../../api/customers";
 function* fetchLogin(action) {
   try {
     let { history } = action;
+    yield put({ type: UsersTypes.LOADING_SHOW});  
     const res = yield call(httpUser.Login, action.payload);
+    yield put({ type: UsersTypes.LOADING_HIDE});
     if (res.status === "ok") {
       yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: res.data });
       history.push("/");

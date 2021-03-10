@@ -21,7 +21,8 @@ const initialState = {
   newDetail: {},
   theaterDetail: {},
   roomDetail: {},
-  tickets:[]
+  tickets:[],
+  loading: 0
 }
 
 export default function filmsReducer(state = initialState, action) {
@@ -124,6 +125,14 @@ export default function filmsReducer(state = initialState, action) {
       }
       newState = Object.assign({}, state, { theaterDetail: {...state.theaterDetail, rooms: arrQ } })
       break;
+      case FilmTypes.LOADING_SHOW:
+        let newLoading1 = state.loading + 1
+        newState = Object.assign({}, state, { loading: newLoading1 < 0 ? 0 : newLoading1 });
+        break;
+      case FilmTypes.LOADING_HIDE:
+        let newLoading2 = state.loading - 1
+        newState = Object.assign({}, state, { loading: newLoading2 < 0 ? 0 : newLoading2  });
+        break;
     default:
       newState = state;
   }
