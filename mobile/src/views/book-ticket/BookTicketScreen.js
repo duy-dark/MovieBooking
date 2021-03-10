@@ -56,6 +56,10 @@ const validateEmail = (email) => {
   const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(String(email).toLowerCase());
 };
+const validatePhone = (phone) => {
+  const phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+  return phone.match(phoneno)
+}
 const formatMoney = (number) => {
   if (number === 0) return 0;
   var number = number / 1000;
@@ -71,9 +75,10 @@ const BookTicketScreen = (props) => {
 
   const arrSeatsModel = useSelector((state) => state.films.seats);
   const arrSeatsSelected = useSelector((state) => state.films.seated);
-
-  const room = film_schedule.room;
-  console.log("iddddd", film_schedule._id);
+  const room = useSelector((state) => state.films.roomBooking);
+  
+  // console.log("film_schedule", film_schedule)
+  // console.log("iddddd", film_schedule._id);
   const iconMomo = { uri: "https://static.mservice.io/img/logo-momo.png" };
 
   const [payment, setPayment] = useState("momo");
@@ -188,21 +193,31 @@ const BookTicketScreen = (props) => {
     }
   }, [showError]);
   useEffect(() => {
-    let invalid = 0;
-    for (let i = 0; i < seats.length - 1; i++) {
-      for (let j = i + 1; j < seats.length; j++) {
-        if (seats[i][0] != seats[j][0]) continue;
-        function getRowId(chair) {
-          console.log(+chair.slice(1, chair.length));
-          return +chair.slice(1, chair.length);
-        }
-        if (Math.abs(getRowId(seats[i]) - getRowId(seats[j])) == 2) {
-          invalid = seats[j];
-          break;
-        }
+    let rows={}
+    function getRowId(chair){
+      return ""+chair.slice(1,chair.length)
+    }
+    seats.forEach(seat=>{
+      const rowName=seat[0]
+      rows[rowName]=rows[rowName]?[...rows[rowName],getRowId(seat)]:[getRowId(seat)]
+    })
+    let invalidChair=false
+    const rowNames=Object.keys(rows)
+    for(let i=0;i<rowNames.length;i++){
+      let rowName=rowNames[i]
+      let row=rows[rowName]
+      row.sort((a,b)=>(+a)-(+b))
+      for(let j=0;j<row.length-1;j++){
+        if(+row[j+1]-(+row[j])==2){invalidChair=true;break}
       }
     }
-    if (invalid) alert("ghe " + invalid + " ko hop le");
+
+    if(invalidChair) {
+      alert("ghe "+seats[seats.length-1]+ " ko hop le")
+      setIsSelectBug(true)
+    } else {
+      setIsSelectBug(false)
+    }
   }, [seats]);
   useEffect(() => {
     setDisabledBtn(
@@ -210,7 +225,7 @@ const BookTicketScreen = (props) => {
         seats.length > 0 &&
         !isSelectBug &&
         validateEmail(email) &&
-        phone &&
+        validatePhone(phone) &&
         payment
       )
     );

@@ -25,7 +25,7 @@ const CardFilmSchedule = (props) => {
           </View>
         </View>
         <Text style={{marginLeft:10,marginTop:10,color:'grey'}}>{props.film.digitals}</Text>
-        <View style={{ flexDirection: "row",marginLeft:10}}>
+        <View style={{ flexDirection: "row",marginLeft:10,  flexWrap: "wrap"}}>
           {props.film.film_schedules.map((film_schedule, index) => { 
             return (
               <TouchableOpacity onPress={() => onPress(film_schedule)}

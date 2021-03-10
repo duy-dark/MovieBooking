@@ -50,7 +50,8 @@ const getListFilmNowFavorite = (id_user) => {
 
 
 const getListFilmFutureFavorite = (id_user) => {
-  return Api.get(`/api/film/commingsoon?customer_id=${id_user}`).then((res) => res.data);
+  // return Api.get(`/api/film/commingsoon?customer_id=${id_user}`).then((res) => res.data);
+  return Api.get(`/api/notification?customer_id=${id_user}&is_sent=true`).then((res) => res.data);
 }
 
 const paymentMomo = (params) => {

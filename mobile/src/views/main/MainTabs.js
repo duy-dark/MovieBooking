@@ -6,7 +6,7 @@ import CinemaStack from "../cinema/CinemaStack";
 import NewsStack from "../news/NewsStack";
 import SearchStack from "../search/SearchStack";
 import AccountStack from "../account/AccountStack";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSocket } from "../../redux/users/actions";
 
 import * as Notifications from "expo-notifications";
@@ -15,12 +15,21 @@ import Constants from "expo-constants";
 const io = require("socket.io-client");
 
 const SocketEndpoint = "https://servermoviebooking.herokuapp.com";
+// const SocketEndpoint = "https://b4a3cfe22d32.ngrok.io";
 
-async function schedulePushNotification() {
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
+
+async function schedulePushNotification(noti) {
   await Notifications.scheduleNotificationAsync({
     content: {
-      title: "You've got mail! 📬",
-      body: "Here is the notification body",
+      title: "Bạn có thông báo mới 📬",
+      body: noti.content,
       data: { data: "goes here" },
     },
     trigger: { seconds: 2 },
@@ -63,42 +72,46 @@ async function registerForPushNotificationsAsync() {
 const Tab = createBottomTabNavigator();
 
 const MainTabs = () => {
-  // const [expoPushToken, setExpoPushToken] = useState("");
-  // const [notification, setNotification] = useState(false);
-  // const notificationListener = useRef();
-  // const responseListener = useRef();
+  const [expoPushToken, setExpoPushToken] = useState("");
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+  const user = useSelector((state) => state.users.user);
+  const dispatch = useDispatch();
 
-  // const dispatch = useDispatch();
+  useEffect(() => {
+    const socket = io(SocketEndpoint, {
+      transports: ["websocket"],
+    });
+    dispatch(setSocket(socket));
 
-  // useEffect(() => {
-    // const socket = io(SocketEndpoint, {
-    //   transports: ["websocket"],
-    // });
-    // dispatch(setSocket(socket));
-    
-    // registerForPushNotificationsAsync().then((token) =>
-    //   setExpoPushToken(token)
-    // );
-    // notificationListener.current = Notifications.addNotificationReceivedListener(
-    //   (notification) => {
-    //     setNotification(notification);
-    //   }
-    // );
-    // responseListener.current = Notifications.addNotificationResponseReceivedListener(
-    //   (response) => {
-    //     console.log(response);
-    //   }
-    // );
+    registerForPushNotificationsAsync().then((token) =>
+      setExpoPushToken(token)
+    );
+    notificationListener.current = Notifications.addNotificationReceivedListener(
+      (notification) => {
+        setNotification(notification);
+      }
+    );
+    responseListener.current = Notifications.addNotificationResponseReceivedListener(
+      (response) => {
+        console.log(response);
+      }
+    );
 
-    // socket.on("notification-all", async (res) => {
-    //   await schedulePushNotification();
-    // });
-    
-    // return () => {
-    //   Notifications.removeNotificationSubscription(notificationListener);
-    //   Notifications.removeNotificationSubscription(responseListener);
-    // };
-  // }, []);
+    socket.emit("get_notifications", user._id);
+    socket.on("revice_data", (res) => {
+      res.forEach( async (noti) => 
+      await schedulePushNotification(noti)
+      )
+      console.log("resssssss",res)
+    });
+  
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener);
+      Notifications.removeNotificationSubscription(responseListener);
+    };
+  }, []);
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
