@@ -7,7 +7,6 @@ export default function MyLoading({active}) {
   } else {
     let body =  document.getElementById('root')
     body.style.overflow = 'auto'
-
   }
   return (
     <div className={`my-loading ${active ? 'my-loading--show' : ''}`} style={{width: window.innerWidth + 'px', height: window.innerHeight + 'px'}}>

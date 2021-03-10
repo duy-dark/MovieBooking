@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import { Layout, Menu, Breadcrumb } from "antd";
-import { getTheaters, deleteTheater } from "../../redux/films/actions"
+import { getTheaters, deleteTheater,getListFilmNow } from "../../redux/films/actions"
 import { useHistory } from 'react-router-dom'
 import { useDispatch , useSelector } from 'react-redux';
 import * as moment from "moment"

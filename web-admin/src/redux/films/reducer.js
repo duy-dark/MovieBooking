@@ -23,9 +23,9 @@ const initialState = {
   roomDetail: {},
   tickets:[],
   loading: 0,
-  theaterChart: [],
+  theaterChart: {},
   statistic:[],
-  loading: 0
+  customerChart: {}
 }
 
 export default function filmsReducer(state = initialState, action) {
@@ -45,8 +45,6 @@ export default function filmsReducer(state = initialState, action) {
     case FilmTypes.LIST_FILM_TODAY_SUCCESS:
       newState = Object.assign({}, state, { filmsToday: payload })
       break;
-      case FilmTypes.LIST_TICKET_SUCCESS:
-        newState = Object.assign({}, state, { tickets: payload })
     case FilmTypes.LIST_TICKET_SUCCESS:
       newState = Object.assign({}, state, { tickets: payload })
       break;
@@ -143,6 +141,9 @@ export default function filmsReducer(state = initialState, action) {
         break;
       case FilmTypes.THEATER_CHART_SUCCESS:
         newState = Object.assign({}, state, { theaterChart: payload })
+        break;
+      case FilmTypes.CUSTOMER_CHART_SUCCESS:
+        newState = Object.assign({}, state, { customerChart: payload })
         break;
     default:
       newState = state;

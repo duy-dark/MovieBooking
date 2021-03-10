@@ -49,3 +49,16 @@ export function updateHeaderFooter(status) {
     status,
   };
 }
+
+export function getListCustomer() {
+  return {
+    type: UsersTypes.LIST_CUSTOMER
+  }
+}
+
+export function updateCustomer(id) {
+  return {
+    type: UsersTypes.UPDATE_CUSTOMER,
+    payload: id,
+  }
+}
