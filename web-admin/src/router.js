@@ -10,17 +10,11 @@ import AddTheater from "./views/Theater/AddTheater"
 import AddRoom from "./views/Theater/AddRoom"
 import TheaterDetail from "./views/Theater/TheaterDetail"
 import DetailRoom from "./views/Theater/DetailRoom"
-import Daystatistic from "./views/Statistic/dayStatitis"
 const routes = [
   {
     path: "/",
     exact: true,
     component: () => <Home />,
-  },
-  {
-    path: "/day",
-    exact: true,
-    component: () => <Daystatistic/>,
   },
   {
     path: "/ManageFilm",

@@ -72,8 +72,8 @@ const getTheater = ()=>{
 const getListNews = () => {
   return Api.get(`/api/news`).then(res => res.data)
 }
-const Statistic = (params) => {
-  return Api.get(`api/ticket/statistical?type=${params}`).then(res => res.data)
+const getListTicket = () => {
+  return Api.get(`api/ticket/detail?is_mobile=1`).then(res => res.data)
 }
 const getNewDetail = (params) => {
   return Api.get(`/api/news/${params}`).then(res => res.data)
@@ -143,7 +143,7 @@ export default {
   updateTheaterDetail,
   getRoomDetail,
   updateRoomDetail,
-  Statistic,
+  getListTicket,
   deleteFilmSchedule,
   createTheater,
   createRoom,
