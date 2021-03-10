@@ -64,6 +64,36 @@ router.get('/detail', (req, res, next) => {
     .catch((err) => next(err));
 });
 
+router.get('/statistical', (req, res, next) => {
+  const {
+    _id = undefined,
+    ticket_status = undefined,
+    customer_id = undefined,
+    film_id = undefined,
+    theater_id = undefined
+  } = req.query;
+
+  let conditions = {
+    _id: !_id ? undefined : require('mongodb').ObjectId(req.query._id),
+    customer_id: !customer_id
+      ? undefined
+      : require('mongodb').ObjectId(req.query.customer_id),
+    film_id: !film_id
+      ? undefined
+      : require('mongodb').ObjectId(req.query.film_id),
+    theater_id: !theater_id
+      ? undefined
+      : require('mongodb').ObjectId(req.query.theater_id),
+    ticket_status: ticket_status ? Number(req.query.ticket_status) : undefined,
+    type: req.query.type
+  };
+  conditions = omitBy(conditions, isNil);
+  handler
+    .statistical(conditions)
+    .then((val) => res.json(val))
+    .catch((err) => next(err));
+});
+
 router.get('/:id/detail', (req, res, next) => {
   let checkId = require('mongodb').ObjectId.isValid(req.params.id);
   if (!checkId) {

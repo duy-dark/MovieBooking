@@ -75,6 +75,38 @@ const getListDetail = async (params) => {
   }
 };
 
+const statistical = async (params) => {
+  try {
+    let conditions = {...params, is_deleted: false};
+    let type = params.type;
+    console.log('type = ', type);
+    delete conditions.type;
+
+    now = moment();
+    let time_end = new Date(now);
+    // let time_start = new Date(now.startOf('year'));
+
+    if (Number(type) === 1) {
+      time_start = new Date(now.startOf('day'));
+    } else if (Number(type) === 2) {
+      time_start = new Date(now.startOf('week'));
+    } else if (Number(type) === 3) {
+      time_start = new Date(now.startOf('month'));
+    } else {
+      time_start = new Date(now.startOf('year'));
+    }
+
+    console.log('conditions', conditions);
+    console.log('time_start', time_start);
+    console.log('time_end', time_end);
+
+    let data = await Model.statistical(conditions, time_start, time_end);
+    return resSuccess(data[0]);
+  } catch (error) {
+    throw {status: 400, detail: error};
+  }
+};
+
 const findById = async (id) => {
   try {
     let lambda = {
@@ -155,6 +187,7 @@ const postCreate = async (params) => {
       customer_id: params.customer_id || undefined,
       film_schedule_id: params.film_schedule_id || undefined,
       film_id: params.film_id || undefined,
+      room_id: params.room_id || undefined,
       theater_id: params.theater_id || undefined,
       voucher_id: params.voucher_id || undefined,
       seats: params.seats || undefined,
@@ -187,6 +220,7 @@ const putUpdate = async (id, params) => {
         customer_id: params.customer_id || undefined,
         film_schedule_id: params.film_schedule_id || undefined,
         film_id: params.film_id || undefined,
+        room_id: params.room_id || undefined,
         theater_id: params.theater_id || undefined,
         voucher_id: params.voucher_id || undefined,
         seats: params.seats || undefined,
@@ -288,6 +322,7 @@ const triggeringTicket = async (id) => {
 module.exports = {
   getList,
   getListDetail,
+  statistical,
   findById,
   postCreate,
   putUpdate,

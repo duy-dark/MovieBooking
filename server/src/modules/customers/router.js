@@ -57,11 +57,6 @@ router.get('/auth/logout', function (req, res) {
 });
 
 router.get('/list', verifyUser.requireByUser, (req, res, next) => {
-  console.log('req.session.passport111:', req.session.passport.user.data);
-  // console.log(
-  //   'passport.Authenticator.prototype.deserializeUser.arguments[0]:',
-  //   passport.Authenticator.prototype.deserializeUser.arguments[0].data[0]._id
-  // );
   let conditions = {
     _id: req.query._id,
     name: req.query.name,
@@ -78,8 +73,9 @@ router.get('/list', verifyUser.requireByUser, (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.get('/:id/detail', verifyUser.requireGetPerson, (req, res, next) => {
+router.get('/:id/detail', verifyUser.requireByUser, (req, res, next) => {
   console.log('req:', req.params.id);
+  console.log('token:', req.token);
   let id = require('mongodb').ObjectId(req.params.id);
   handler
     .findById(id, req.token)
@@ -104,7 +100,16 @@ router.put('/:id', (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.delete('/:id', (req, res, next) => {
+router.put('/bancustomer/:id', (req, res, next) => {
+  let id = require('mongodb').ObjectId(req.params.id);
+  let is_deleted = req.body.is_deleted;
+  handler
+    .putBanCustomer(id, is_deleted)
+    .then((val) => res.json(val))
+    .catch((err) => next(err));
+});
+
+router.delete('/:id', verifyUser.requireByUser, (req, res, next) => {
   let id = require('mongodb').ObjectId(req.params.id);
   handler
     .deleteData(id)

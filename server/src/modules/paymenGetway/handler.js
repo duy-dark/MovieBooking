@@ -37,6 +37,7 @@ const momoApi = async (params) => {
       customer_id: params.customer_id,
       film_schedule_id: params.film_schedule_id,
       film_id: params.film_id,
+      room_id: params.room_id,
       theater_id: params.theater_id,
       voucher_id: params.voucher_id,
       email: params.email,
@@ -180,6 +181,14 @@ const checkStatusMomoApi = async (params) => {
           };
           console.log('ticket.data._id', ticket.data._id);
 
+          let updateCustomer = require('../customers/model').updateByLambda({
+            conditions: {_id: ticket.data.customer_id},
+            params: {
+              point: ticket.data.customers.point + 1 * ticket.data.count,
+              count: ticket.data.customers.count + 1
+            }
+          });
+
           var qr_code_png = qr.imageSync(ticket.data._id.toString(), {
             type: 'png'
           });
@@ -207,11 +216,11 @@ const checkStatusMomoApi = async (params) => {
             }
 
             console.log('info:', info);
-            smtpTransport.close();
+            transporter.close();
           });
 
-          // let result = await sendSMS(objSender);
-          // console.log('result sms', result);
+          let result = await sendSMS(objSender);
+          console.log('result sms', result);
 
           return {result: 'Success'};
         } else {

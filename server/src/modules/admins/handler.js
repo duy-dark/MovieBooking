@@ -40,13 +40,13 @@ const getDetail = async (params) => {
       conditions: {...params, is_deleted: false},
       views: {
         _id: 1,
-        name: '$name',
-        phone: '$phone',
-        date_of_birth: '$date_of_birth',
-        email: '$email',
-        adress: '$adress',
-        avatar: '$avatar',
-        permissions: '$permissions'
+        name: 1,
+        phone: 1,
+        date_of_birth: 1,
+        email: 1,
+        adress: 1,
+        avatar: 1,
+        permissions: 1
       }
     };
     let data = await Model.getDetail(lambda);
@@ -75,7 +75,7 @@ const findById = async (id) => {
         permission_id: 1,
         avatar: 1,
         adress: 1,
-        permissions: '$permissions'
+        permissions: 1
       }
     };
     let data = await Model.getDetail(lambda);

@@ -1,8 +1,8 @@
 const Nexmo = require('nexmo');
 
 const nexmo = new Nexmo({
-  apiKey: '05dfc6fc',
-  apiSecret: 'VR1xFhIVah5ejYGO'
+  apiKey: 'b205e347',
+  apiSecret: '9OdHG942ax1DUkaz'
 });
 const sendSMS = (objectSms) => {
   const from = 'Vonage APIs';

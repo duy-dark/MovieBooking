@@ -12,7 +12,7 @@ const {google} = require('googleapis');
 const getList = async (params) => {
   try {
     let lambda = {
-      conditions: {...params, is_deleted: false},
+      conditions: {...params},
       views: {
         _id: 1,
         name: 1,
@@ -23,7 +23,8 @@ const getList = async (params) => {
         email: 1,
         gender: 1,
         avatar: 1,
-        address: 1
+        address: 1,
+        is_deleted: 1
       }
     };
     let data = await Model.findByLambda(lambda);
@@ -85,10 +86,16 @@ const postCreate = async (params) => {
       console.log('customer:', customerExisted);
 
       if (customerExisted && customerExisted.length) {
+        if (customerExisted[0].is_deleted === true) {
+          throw {
+            status: 203,
+            errCode: 204,
+            detail: 'Your account have been banned!'
+          };
+        }
         return resSuccess({
           token: jwt.encode(customerExisted[0]),
-          customer: customerExisted[0],
-          is_newbie: false
+          customer: customerExisted[0]
         });
       }
     }
@@ -99,6 +106,13 @@ const postCreate = async (params) => {
         }
       });
       if (customerExisted && customerExisted.length) {
+        if (customerExisted[0].is_deleted === true) {
+          throw {
+            status: 203,
+            errCode: 204,
+            detail: 'Your account have been banned!'
+          };
+        }
         return resSuccess({
           token: jwt.encode(customerExisted[0]),
           customer: customerExisted[0],
@@ -116,6 +130,8 @@ const postCreate = async (params) => {
       email: params.email || undefined,
       gender: params.gender || undefined,
       avatar: params.avatar || undefined,
+      point: 0,
+      count: 0,
       adress: params.adress || undefined,
       account_type: params.provider || undefined,
       is_deleted: false,
@@ -144,6 +160,7 @@ const putUpdate = async (id, params) => {
         phone: params.phone || undefined,
         date_of_birth: params.date_of_birth || undefined,
         email: params.email || undefined,
+        point: params.point || undefined,
         gender: params.gender || undefined,
         avatar: params.avatar || undefined,
         adress: params.adress || undefined,
@@ -163,14 +180,28 @@ const putUpdate = async (id, params) => {
     throw error;
   }
 };
-// const postLoginGoogle = async (req, res, next) => {
-//   passport.use(
-//     new GoogleStrategy(
-//       {
-//         clientID: key.web.client_id,
-//         clientSecret: key.web.client_secret,
-//         callbackURL: '/api/customer/auth/google/callback'
-//       },
+
+const putBanCustomer = async (id, is_deleted) => {
+  try {
+    let lambda = {
+      conditions: {_id: id},
+      params: {
+        is_deleted: is_deleted,
+        updated_at: moment.now()
+      }
+    };
+    lambda.params = omitBy(lambda.params, isNil);
+    let data = await Model.updateByLambda(lambda);
+    if (data.ok) {
+      let result = await Model.findByLambda({conditions: {_id: id}});
+      return resSuccess(result[0]);
+    } else {
+      throw {status: 203, errCode: 204, detail: data};
+    }
+  } catch (error) {
+    throw error;
+  }
+};
 
 const postLoginFacebook = async (req, res, next) => {
   passport.use(
@@ -304,7 +335,12 @@ const deleteData = async (id) => {
       }
     };
     let data = await Model.updateByLambda(lambda);
-    return resSuccess(data);
+    if (data.ok) {
+      let result = await Model.findByLambda({conditions: {_id: id}});
+      return resSuccess(result[0]);
+    } else {
+      throw {status: 400, detail: data};
+    }
   } catch (error) {
     throw error;
   }
@@ -315,6 +351,7 @@ module.exports = {
   findById,
   postCreate,
   putUpdate,
+  putBanCustomer,
   deleteData,
   postLoginFacebook,
   postLoginGoogle

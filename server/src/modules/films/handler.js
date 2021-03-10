@@ -159,6 +159,9 @@ const getFilm7Day = async (id) => {
         .add(1, 'days')
     );
 
+    //
+    time_end = new Date(moment(time_end).add(hour > 17 ? 1 : 0, 'days'));
+    //
     let lambda = {
       conditions: {
         _id: id,
@@ -394,7 +397,10 @@ const getNowShowing = async (customer_id) => {
     console.log('time_start: ', time_start);
     console.log('time_end:   ', time_end);
 
-    let time_end1 = new Date(moment(time_end).add(0, 'days'));
+    // let time_end1 = new Date(moment(time_end).add(0, 'days'));
+    //
+    let time_end1 = new Date(moment(time_end).add(hour > 17 ? 1 : 0, 'days'));
+    //
 
     let lambda = {
       conditions: {
@@ -455,7 +461,10 @@ const getCommingSoon = async (customer_id) => {
     console.log('time_start: ', time_start);
     console.log('time_end:   ', time_end);
 
-    let time_end1 = new Date(moment(time_end).add(6, 'days'));
+    // let time_end1 = new Date(moment(time_end).add(6, 'days'));
+    //
+    let time_end1 = new Date(moment(time_end).add(hour > 17 ? 7 : 6, 'days'));
+    //
 
     let lambda = {
       conditions: {

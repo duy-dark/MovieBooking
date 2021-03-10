@@ -13,6 +13,8 @@ let schema = new mongoose.Schema(
     avatar: String,
     address: String,
     favorite_ids: [require('mongodb').ObjectID],
+    point: Number,
+    count: Number,
     is_deleted: Boolean,
     created_at: Date,
     updated_at: Date
@@ -100,6 +102,12 @@ module.exports = {
           },
           updated_at: {
             $first: '$updated_at'
+          },
+          point: {
+            $first: '$point'
+          },
+          count: {
+            $first: '$count'
           },
           categories: {
             $push: '$categories'

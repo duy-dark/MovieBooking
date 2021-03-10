@@ -60,6 +60,10 @@ const getFilmToDay = async () => {
     console.log('time_start: ', new Date(moment()));
     console.log('time_end:   ', time_end);
 
+    //
+    time_end = new Date(moment(time_end).add(hour > 17 ? 1 : 0, 'days'));
+    //
+
     let lambda = {
       conditions: {
         time_start: time_start,
@@ -171,7 +175,11 @@ const getTheater7Day = async (id) => {
     console.log('time_start: ', time_start);
     console.log('time_end:   ', time_end);
 
-    let time_end1 = new Date(moment(time_end).add(0, 'days'));
+    // let time_end1 = new Date(moment(time_end).add(0, 'days'));
+
+    //
+    let time_end1 = new Date(moment(time_end).add(hour > 17 ? 1 : 0, 'days'));
+    //
 
     let lambda = {
       conditions: {
