@@ -369,6 +369,19 @@ function* fetchTheaterChart(action) {
   } catch (error) { console.log(error); }
 }
 
+function* fetchCustomerChart(action) {
+  try {
+    const { payload } = action
+    yield put({ type: FilmsType.LOADING_SHOW });
+    const res = yield call(httpFilms.getCustomerChart, payload)
+    yield put({ type: FilmsType.LOADING_HIDE });
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.CUSTOMER_CHART_SUCCESS, payload: data})
+    }
+  } catch (error) { console.log(error); }
+}
+
 
 function* postBookingInfo() {
   yield takeEvery(FilmsType.POST_BOOKING_INFO, fetchPostBookingInfo);
@@ -472,6 +485,10 @@ function* getTheaterChart() {
   yield takeEvery(FilmsType.THEATER_CHART, fetchTheaterChart)
 }
 
+function* getCustomerChart() {
+  yield takeEvery(FilmsType.CUSTOMER_CHART, fetchCustomerChart)
+}
+
 export default function* filmsSaga() {
   yield all([
     postBookingInfo(),
@@ -502,5 +519,6 @@ export default function* filmsSaga() {
     deteleTheater(),
     deteleRoom(),
     getTheaterChart(),
+    getCustomerChart()
   ]);
 }

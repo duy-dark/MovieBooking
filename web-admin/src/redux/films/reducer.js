@@ -25,6 +25,7 @@ const initialState = {
   loading: 0,
   theaterChart: [],
   statistic:[],
+  customerChart: {}
 }
 
 export default function filmsReducer(state = initialState, action) {
@@ -140,6 +141,9 @@ export default function filmsReducer(state = initialState, action) {
         break;
       case FilmTypes.THEATER_CHART_SUCCESS:
         newState = Object.assign({}, state, { theaterChart: payload })
+        break;
+      case FilmTypes.CUSTOMER_CHART_SUCCESS:
+        newState = Object.assign({}, state, { customerChart: payload })
         break;
     default:
       newState = state;

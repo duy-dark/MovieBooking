@@ -10,6 +10,7 @@ import AddTheater from "./views/Theater/AddTheater"
 import AddRoom from "./views/Theater/AddRoom"
 import TheaterDetail from "./views/Theater/TheaterDetail"
 import DetailRoom from "./views/Theater/DetailRoom"
+import ListUser from "./views/User/ListUser"
 const routes = [
   {
     path: "/",
@@ -65,6 +66,11 @@ const routes = [
     path: "/room/:id",
     exact: true,
     component: () => <DetailRoom/>
+  },
+  {
+    path: "/user/list",
+    exact: true,
+    component: () => <ListUser/>
   },
 
 ];

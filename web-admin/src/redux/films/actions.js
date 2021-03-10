@@ -196,3 +196,10 @@ export function getTheaterChart(params) {
     payload: params
   }
 }
+
+export function getCustomerChart(params) {
+  return {
+    type: FilmTypes.CUSTOMER_CHART,
+    payload: params
+  }
+}

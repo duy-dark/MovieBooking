@@ -1,5 +1,6 @@
 import UsersTypes from "./types";
 // import update from 'immutability-helper';
+import findIndex from "lodash/findIndex";
 
 const initialState = {
   status: true,
@@ -8,6 +9,7 @@ const initialState = {
   isRegister: false,
   header: true,
   footer: true,
+  listCustomer: [],
   loading: 0
 };
 
@@ -47,12 +49,21 @@ export default function userReducer(state = initialState, action) {
         footer: payload.footer,
       });
       break;
-      case UsersTypes.LOADING_SHOW:
-        newState = Object.assign({}, state, { loading: state.loading++ });
-        break;
-      case UsersTypes.LOADING_HIDE:
-        newState = Object.assign({}, state, { loading: state.loading-- });
-        break;
+    case UsersTypes.LOADING_SHOW:
+      newState = Object.assign({}, state, { loading: state.loading++ });
+      break;
+    case UsersTypes.LOADING_HIDE:
+      newState = Object.assign({}, state, { loading: state.loading-- });
+      break;
+    case UsersTypes.LIST_CUSTOMER_SUCCESS:
+      newState = Object.assign({}, state, { listCustomer: payload })
+      break;
+    case UsersTypes.UPDATE_CUSTOMER_SUCCESS:
+      let arr = [...state.listCustomer]
+      let index = findIndex(arr, item => item._id === payload._id)
+      arr[index] = payload
+      newState = Object.assign({}, state, { listCustomer: [...arr] })
+      break;
     default:
       newState = state;
   }
