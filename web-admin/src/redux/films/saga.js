@@ -202,7 +202,9 @@ function* fetchCreateNewPaper(action) {
 
 function* fetchListNew(action) {
   try {
+    yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.getListNews, {})
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
       yield put({ type: FilmsType.LIST_NEW_SUCCESS, payload: data})
