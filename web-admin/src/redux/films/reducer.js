@@ -22,6 +22,9 @@ const initialState = {
   theaterDetail: {},
   roomDetail: {},
   tickets:[],
+  loading: 0,
+  theaterChart: [],
+  statistic:[],
   loading: 0
 }
 
@@ -44,6 +47,11 @@ export default function filmsReducer(state = initialState, action) {
       break;
       case FilmTypes.LIST_TICKET_SUCCESS:
         newState = Object.assign({}, state, { tickets: payload })
+    case FilmTypes.LIST_TICKET_SUCCESS:
+      newState = Object.assign({}, state, { tickets: payload })
+      break;
+      case FilmTypes.STATISTIC_SUCCESS:
+        newState = Object.assign({}, state, { statistic: payload })
         break;
     case FilmTypes.LIST_SEATS_SUCCESS:
       newState = Object.assign({}, state, { seats: payload.seats })
@@ -64,15 +72,15 @@ export default function filmsReducer(state = initialState, action) {
     case FilmTypes.UPDATE_FILM_SCHEDULE_SUCCESS:
       newState = Object.assign({},state,{filmSchedule : state.filmSchedule.map(item=>{ return item._id === payload._id ? item = payload : item})})
       break;
-      case FilmTypes.DELETE_FILM_SCHEDULE_SUCCESS:
-       newState = Object.assign({},state,{filmSchedule : state.filmSchedule.filter((item,key)=>{ return  item._id == payload._id ? null : item})})
-       break;
-      case FilmTypes.CREATE_FILM_SCHEDULE_SUCCESS:
-       newState = Object.assign({},state,{filmSchedule :[...payload,state.filmSchedule]})
-       break;
+    case FilmTypes.DELETE_FILM_SCHEDULE_SUCCESS:
+      newState = Object.assign({},state,{filmSchedule : state.filmSchedule.filter((item,key)=>{ return  item._id == payload._id ? null : item})})
+      break;
+    case FilmTypes.CREATE_FILM_SCHEDULE_SUCCESS:
+      newState = Object.assign({},state,{filmSchedule :[...payload,state.filmSchedule]})
+      break;
     case FilmTypes.LIST_THEATER_SUCCESS:
-        newState = Object.assign({},state,{theaters : payload})
-        break;
+      newState = Object.assign({},state,{theaters : payload})
+      break;
     case FilmTypes.CREATE_NEW_SUCCESS:
       newState = Object.assign({},state,{ listNews: [payload, ...state.listNews]})
       break;
@@ -132,6 +140,9 @@ export default function filmsReducer(state = initialState, action) {
       case FilmTypes.LOADING_HIDE:
         let newLoading2 = state.loading - 1
         newState = Object.assign({}, state, { loading: newLoading2 < 0 ? 0 : newLoading2  });
+        break;
+      case FilmTypes.THEATER_CHART_SUCCESS:
+        newState = Object.assign({}, state, { theaterChart: payload })
         break;
     default:
       newState = state;

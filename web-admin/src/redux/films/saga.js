@@ -332,7 +332,6 @@ function* fetchCreateRoom(action) {
 
 function* fetchDeleteTheater(action) {
   try {
-    console.log("delele theater")
     const { payload } = action
     yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.deleteTheater, payload);
@@ -346,7 +345,6 @@ function* fetchDeleteTheater(action) {
 
 function* fetchDeleteRoom(action) {
   try {
-    console.log("delele room")
     const { payload } = action
     yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.deleteRoom, payload);
@@ -357,6 +355,20 @@ function* fetchDeleteRoom(action) {
     }
   } catch (error) { console.log(error); }
 }
+
+function* fetchTheaterChart(action) {
+  try {
+    const { payload } = action
+    yield put({ type: FilmsType.LOADING_SHOW });
+    const res = yield call(httpFilms.getTheaterChart, payload)
+    yield put({ type: FilmsType.LOADING_HIDE });
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: FilmsType.THEATER_CHART_SUCCESS, payload: data})
+    }
+  } catch (error) { console.log(error); }
+}
+
 
 function* postBookingInfo() {
   yield takeEvery(FilmsType.POST_BOOKING_INFO, fetchPostBookingInfo);
@@ -456,6 +468,10 @@ function* deteleRoom() {
   yield takeEvery(FilmsType.DELETE_ROOM, fetchDeleteRoom);
 }
 
+function* getTheaterChart() {
+  yield takeEvery(FilmsType.THEATER_CHART, fetchTheaterChart)
+}
+
 export default function* filmsSaga() {
   yield all([
     postBookingInfo(),
@@ -484,6 +500,7 @@ export default function* filmsSaga() {
     createTheater(),
     createRoom(),
     deteleTheater(),
-    deteleRoom()
+    deteleRoom(),
+    getTheaterChart(),
   ]);
 }

@@ -6,11 +6,15 @@
   overflow-y: scroll;
   align-items: center;
   padding: 10px;
+  background-color: #fff;
 
   .theater-create--form {
     width: 800px;
 
     .form-control {
+      &:not(:last-child) {
+        margin-bottom: 20px;
+      }
       .group-img {
         display: flex;
         justify-content: flex-start;

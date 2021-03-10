@@ -32,9 +32,8 @@ export default function Completed(props) {
       { myParam != 0 ? (<h1>Đặt vé không thành công</h1>) : (
         <>
         <h1>Đặt vé thành công</h1>
-        <a href="exp://expo.io/@community/with-webbrowser-redirect">Open my project</a>
         <h3>Xin kiểm tra</h3>
-        <h3>email {email}</h3>
+        <h3>email {email} và lưu mã QR Code để tới rạp xác nhận</h3>
         <h3>Cám ơn bạn đã sử dụng dịch vụ của chúng tôi</h3>
         </>
       ) }
