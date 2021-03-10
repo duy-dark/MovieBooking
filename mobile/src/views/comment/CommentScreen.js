@@ -18,7 +18,7 @@ const CommentScreen = () => {
     const [contentCm, setContentCm] = useState('')
 
     useEffect(() => {
-        setIsDisabled(contentCm.length > 0)
+        setIsDisabled(!(contentCm.length > 0))
     }, [contentCm])
 
     useEffect(() => {

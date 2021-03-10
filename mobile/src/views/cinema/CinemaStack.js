@@ -3,6 +3,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import CinemaScreen from './CinemaScreen';
 import CinemaDetailScreen from './CinemaDetailScreen';
 import BookTicketScreen from '../book-ticket/BookTicketScreen';
+import Screen from '../screen/Screen';
+
 
 const Stack = createStackNavigator();
 const CinemaStack = () => {
@@ -27,6 +29,17 @@ const CinemaStack = () => {
                 options={{
                     title: "Chọn chỗ ngồi"
                 }}
+            />
+            <Stack.Screen name="Screen" component={Screen}
+                options={({navigation}) =>
+                    ({
+                        title: "Tình trạng đặt vé",
+                        headerRight: () => <TouchableOpacity style={{marginRight: 20}}
+                            onPress={() => navigation.navigate("AccountStack")}>
+                            <Text style={{fontSize: 17, color: "#3b5998"}}>Xem vé</Text>
+                        </TouchableOpacity>
+                    })
+                }
             />
         </Stack.Navigator>
     )

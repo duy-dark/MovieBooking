@@ -8,9 +8,9 @@ import { getListFilmFuture } from "../../redux/films/actions"
 const TabFilmsComingSoon = (props) => {
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        dispatch(getListFilmFuture())
-    }, [])
+    // useEffect(() => {
+    //     dispatch(getListFilmFuture())
+    // }, [])
 
     const films = useSelector((state) => state.films.filmsFuture);
     const indicator = useSelector((state) => state.films.loading);

@@ -2,9 +2,11 @@
   "expo": {
     "name": "mobile",
     "slug": "mobile",
-    "version": "1.0.0",
+    "version": "40.0.0",
+    "sdkVersion": "40.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "scheme": "chrome",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -25,7 +27,8 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.khtn.moviebookingapp",
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "useNextNotificationsApi": true
     }
   }
 }
