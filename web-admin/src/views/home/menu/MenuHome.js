@@ -41,15 +41,8 @@ export default function MenuHome(props) {
           <Menu.Item key="sub1-3"><Link to="/new/list">New</Link></Menu.Item>
         </SubMenu>
       
-            <SubMenu key="sub2" icon={<SettingOutlined />} title="Thống Kê">
-        
-            <Menu.Item key="sub2-1">Thống Kê Theo Rạp</Menu.Item>
-            <Menu.Item key="suv2-2">Thống Kê Theo Phim</Menu.Item>
-   
-           
          
-        </SubMenu> 
-         <SubMenu key="sub2" icon={<SettingOutlined />} title="Người dùng">
+        {/* <SubMenu key="sub2" icon={<SettingOutlined />} title="Người dùng">
           <SubMenu key="sub2-1" title="Quản trị viên">
             <Menu.Item key="5">Danh sách</Menu.Item>
             <Menu.Item key="6">Danh sách bị cấm</Menu.Item>
@@ -58,7 +51,7 @@ export default function MenuHome(props) {
             <Menu.Item key="7">Danh sách</Menu.Item>
             <Menu.Item key="8">Danh sách bị cấm</Menu.Item>
           </SubMenu>
-        </SubMenu> 
+        </SubMenu> */}
         <Menu.Item key="10" icon={<LoginOutlined />} title="Đăng Xuất">
           <button onClick={logout} style={{border: 'none', background: 'transparent'}}>Đăng Xuất</button>
         </Menu.Item>

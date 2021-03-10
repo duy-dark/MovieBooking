@@ -71,14 +71,14 @@ function* fetchListFilmsFuture() {
   } catch (error) { console.log(error); }
 }
 
-function* fetchStatistic(action) {
+function* fetchListTicket() {
   try {
-   
-    const res = yield call(httpFilms.Statistic,action.payload );
-    
+    yield put({ type: FilmsType.LOADING_SHOW });
+    const res = yield call(httpFilms.getListTicket, {});
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
-      yield put({ type: FilmsType.STATISTIC_SUCCESS, payload: data });
+      yield put({ type: FilmsType.LIST_TICKET_SUCCESS, payload: data });
     }
 
   } catch (error) { console.log(error); }
@@ -437,8 +437,8 @@ function* updateNewDetail() {
 function* getTheaterDetail() {
   yield takeEvery(FilmsType.THEATER_DETAIL, fetchTheaterDetail);
 }
-function* Statistic() {
-  yield takeEvery(FilmsType.STATISTIC, fetchStatistic);
+function* getListTicket() {
+  yield takeEvery(FilmsType.LIST_TICKET, fetchListTicket);
 }
 function* updateTheater() {
   yield takeEvery(FilmsType.THEATER_UPDATE, fetchTheaterUpdate);
@@ -491,7 +491,7 @@ export default function* filmsSaga() {
     getListNew(),
     getNewDetail(),
     updateNewDetail(),
-    Statistic(),
+    getListTicket(),
     getTheaterDetail(),
     updateTheater(),
     getRoomDetail(),
