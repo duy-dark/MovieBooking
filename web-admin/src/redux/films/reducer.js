@@ -23,7 +23,7 @@ const initialState = {
   roomDetail: {},
   tickets:[],
   loading: 0,
-  theaterChart: [],
+  theaterChart: {},
   statistic:[],
   customerChart: {}
 }
