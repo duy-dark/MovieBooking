@@ -2,39 +2,105 @@ const express = require('express'),
   cors = require('cors'),
   bodyParser = require('body-parser'),
   ConnectDB = require('./db'),
-  errorHandler = require('./modules/middleware/error.middleware');
+  passport = require('passport'),
+  errorHandler = require('./middlewares/errors.middleware'),
+  cookieParser = require('cookie-parser'),
+  session = require('express-session'),
+  resFail = require('./responses/res-fail'),
+  config = require('./config');
 
-const resFail = require('./modules/response/res-fail')
-
-const config = require('./config');
-
+const socketio = require('socket.io');
 const {port} = config;
 
 const app = express();
-// app.use(authen) check token
-app.use(bodyParser.json());
-app.use(cors());
 
-app.get('/', (req, res) => {
-  res.json('hello world');
+const swaggerDocument = require('./swagger.json');
+const swaggerUI = require('swagger-ui-express');
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+
+//require socket server
+const connection = require('./util/socket_booking');
+const server = require('http').createServer(app);
+const io = socketio(server, {
+  cors: {
+    origin: '*'
+  }
 });
 
-app.use('/user', require('./modules/customers/users'));
+// app.use(authen) check token
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser('login123123'));
+app.use(
+  session({
+    secret: 'Insert randomized text here',
+    resave: false,
+    saveUninitialized: false
+  })
+);
+app.use(cors());
+app.use(passport.initialize());
+app.use(passport.session());
 
+const {Authenticator, authenticate} = require('passport');
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+  console.log(user);
+  done(null, user);
+});
+app.get('/', (req, res) => {
+  res.json('Hello world :)))');
+});
+
+app.use('/api/customer', require('./modules/customers'));
+app.use('/api/admin', require('./modules/admins'));
+app.use('/api/film', require('./modules/films'));
+app.use('/api/film_comment', require('./modules/film_comments'));
+app.use('/api/film_rate', require('./modules/film_rates'));
+// app.use('/api/film_category', require('./modules/old.film_category'));
+app.use('/api/film_schedule', require('./modules/film_schedules'));
+app.use('/api/category', require('./modules/categories'));
+app.use('/api/event', require('./modules/events'));
+app.use('/api/event_info', require('./modules/event_infos'));
+app.use('/api/news', require('./modules/news'));
+app.use('/api/notification', require('./modules/notifications'));
+app.use('/api/ticket', require('./modules/tickets'));
+// app.use('/api/ticket_queue', require('./modules/ticket_queues'));
+app.use('/api/seat', require('./modules/seats'));
+app.use('/api/theater', require('./modules/theaters'));
+app.use('/api/room', require('./modules/rooms'));
+app.use('/api/permission', require('./modules/permissions'));
+// app.use('/api/admin_permission', require('./modules/admins_permissions'));
+app.use('/api/voucher', require('./modules/vouchers'));
+app.use('/api/file', require('./util/file'));
+app.use('/api/payment', require('./modules/paymenGetway'));
 app.use(errorHandler);
 
 app.use((req, res) => {
   res.status(404).json(resFail());
 });
+
 // app.use() error
 
+// call connection socket
+io.on('connection', (socket) => connection(socket, io));
+
 const startSever = async () => {
-  app.listen(port, async () => {
-    console.log(`QLBH API is running on port ${port}`);
+  server.listen(port, async () => {
+    console.log(
+      `QLBH API is running on port ${port} - http://localhost:${port}`
+    );
   });
 };
-startSever();
 
-ConnectDB().then(() => {
-  console.log('MongoDb connected');
-});
+ConnectDB()
+  .then(() => {
+    console.log('MongoDb connected');
+    startSever();
+  })
+  .catch((err) => {
+    console.log('err: ', err);
+  });

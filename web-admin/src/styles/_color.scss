@@ -1,0 +1,1089 @@
+$amount_01b_uriage: #97D8E0;
+$amount_01uriage: #549EA7;
+$amount_02b_gaichu: #92BCD6;
+$amount_02gaichu: #83ABC3;
+$amount_03kousu: #5092EB;
+$amount_04genka: #64A27E;
+$amount_05eigyou: #BA7CA4;
+$amount_06kakutoku: #9380C9;
+$amount_07arari: #7F89CE;
+
+$label_01: #CBE2E4;
+$label_02: #D9E6ED;
+$label_03: #CADEF9;
+$label_04: #D0E3D8;
+$label_05: #EAD7E3;
+$label_06: #DED9EF;
+$label_07: #D8DBF0;
+
+$status_01usui: #AFE0FF;
+$status_02hassei: #B4EB4B;
+$status_03teian: #FAB03A;
+$status_04mikomi: #C5AEF8;
+$status_05kakutei: #63D6C9;
+$status_06kanryou: #5C68BE;
+$status_07shicchu: #D6D6D6;
+
+$bl_grey_01: #D6DEE6;
+$bl_grey_02: #B0BDCC;
+$bl_grey_03: #ACB8CE;
+$bl_grey_04: #808EA2;
+$bl_grey_05: #5B729D;
+$bl_grey_06: #546C8D;
+$bl_grey_07: #415876;
+$bl_grey_08: #254167;
+$bl_grey_09: #0F3153;
+$bl_grey_10: #859fb9;
+
+$grey_01: #F9FAFC;
+$grey_02: #F7F7F7;
+$grey_03: #F0F3F7;
+$grey_04: #EDF0F4;
+$grey_05: #EDEFF2;
+$grey_06: #EAEFF4;
+$grey_07: #E1E6EB;
+$grey_08: #E2E2E2;
+$grey_09: #D6DCE3;
+$grey_10: #D1D4D8;
+$grey_11: #EBEBEB;
+$grey_12: #FCFCFC;
+$grey_13: #EFF1F2;
+$grey_14: #F5FEFF;
+$grey_15: #D5D5D5;
+$grey_16: #F4F4F4;
+
+$blue_01: #E8F1FA;
+$blue_02: #EBF6FF;
+$blue_03: #E9F2F7;
+$blue_04: #D3E9FF;
+$blue_05: #D0E3F4;
+$blue_06: #C6DDEB;
+$blue_07: #B7D8F8;
+$blue_08: #7AB4ED;
+$blue_09: #5A81ED;
+$blue_10: #215ED0;
+$blue_11: #037BE2;
+$blue_12: #008AE0;
+$blue_13: #319CD6;
+
+$green_01: #F3F9F7;
+$green_02: #EAF7F6;
+$green_03: #D6F2EF;
+$green_04: #CCF0D9;
+$green_05: #1F737E;
+
+$font_grey_01: #808B96;
+$font_grey_02: #6A7784;
+$font_grey_03: #2C3E50;
+$font_grey_04: #475365;
+$font_grey_05: #6b7884;
+$font_grey_06: #DFE4E6;
+$font_grey_07: #657483;
+$font_grey_08: #cacfd8;
+$font_grey_09: #909AA2;
+$font_grey_10: #4D4F5C;
+$font_grey_11: #666C71;
+
+$alert: #E0003C;
+$alert_area: #FFF5F5;
+$necessary_area: #FFF2E8;
+
+$purple_01: #EBF0FC;
+$purple_02: #D6E1FB;
+$purple_03: #7E57C2;
+
+$yellow_01: #DDE2A6;
+$yellow_02: #FFDF99;
+
+$report_PJ_01: #F873D9;
+$report_PJ_02: #5ACCFF;
+$report_PJ_03: #C74CFD;
+$report_PJ_04: #9CD126;
+$report_PJ_05: #F2DA22;
+$report_PJ_06: #5184F7;
+
+$red_01: #FF6565;
+$red_02: #FF0000;
+
+$orange_01: #FF9F1D;
+
+$active_01: #00E2FF;
+
+
+$color_plan: #BDBDBD;
+$color_scrollbar_track: #B3B3B3;
+$search_sidebar_background: $bl_grey_01;
+$input_active_border_color: $blue_10;
+$grey11_form: #DFE3E9;
+
+$asm_cell_red: #F989A8;
+$asm_cell_yellow: #FFE6AD;
+$asm_cell_blue: #D7EDF5;
+
+%color_project_order_status_4 {
+  background-color: $status_01usui;
+  color: $font_grey_03;
+}
+
+%color_project_order_status_5 {
+  background-color: $status_02hassei;
+  color: $font_grey_03;
+}
+
+%color_project_order_status_6 {
+  background-color: $status_03teian;
+  color: $font_grey_03;
+}
+
+%color_project_order_status_7 {
+  background-color: $status_04mikomi;
+  color: $font_grey_03;
+}
+
+%color_project_order_status_1 {
+  background-color: $status_05kakutei;
+  color: $font_grey_03;
+}
+
+%color_project_order_status_2 {
+  background-color: $status_06kanryou;
+  color: #fff;
+}
+
+%color_project_order_status_3 {
+  background-color: $status_07shicchu;
+  color: $font_grey_03;
+}
+
+%color_approval_request_status_1 {
+  background-color: $grey_05;
+  color: $font_grey_03;
+}
+
+%color_approval_request_status_2 {
+  border-color: $green_05;
+  color: $green_05;
+}
+
+%color_approval_request_status_4 {
+  background-color: $green_03;
+  color: $green_05;
+}
+
+%color_approval_request_status_3 {
+  background-color: $alert_area;
+  border-color: #FFE2E9;
+  color: $alert;
+}
+
+%color_approval_request_status_5 {
+  border-color: $bl_grey_07;
+  color: $bl_grey_07;
+}
+
+%color_approval_request_status_7 {
+  background-color: $grey_06;
+  color: $bl_grey_07;
+}
+
+%color_approval_request_status_6 {
+  background-color: $alert_area;
+  border-color: #FFE2E9;
+  color: $alert;
+}
+
+%color_approval_request_status_8 {
+  border-color: $alert;
+  color: $alert;
+}
+
+%color_approval_request_status_10 {
+  background-color: $status_07shicchu;
+  color: $font_grey_03;
+}
+
+%color_approval_request_status_9 {
+  background-color: $alert_area;
+  border-color: #FFE2E9;
+  color: $alert;
+}
+
+%color_outsource_payment_status_1 {
+  background-color: $grey_05;
+  color: $font_grey_03;
+}
+
+%color_outsource_payment_status_2 {
+  background-color: $green_04;
+  color: $font_grey_03;
+}
+
+%color_billing_status_1 {
+  background-color: $grey_05;
+  color: $font_grey_03;
+}
+
+%color_billing_status_2 {
+  background-color: $yellow_02;
+  color: $font_grey_03;
+}
+
+%color_billing_status_3 {
+  background-color: $green_04;
+  color: $font_grey_03;
+}
+
+%color_billing_status_4 {
+  background-color: $grey_05;
+  color: $font_grey_03;
+}
+
+%color_invoice_payment_status_1 {
+  background-color: $yellow_02;
+  color: $font_grey_03;
+}
+
+%color_invoice_payment_status_2 {
+  background-color: $blue_01;
+  color: $font_grey_03;
+}
+
+%color_invoice_payment_status_3 {
+  background-color: $green_04;
+  color: $font_grey_03;
+}
+
+%color_card_title_proportion_gross_profit {
+  background-color: $label_06;
+  color: $font_grey_03;
+}
+
+%color_card_title_project {
+  background-color: $grey_05;
+  color: $font_grey_03;
+}
+
+%color_card_title_point {
+  background-color: $label_03;
+  color: $font_grey_03;
+}
+
+%color_card_title_sales_amount {
+  background-color: $label_01;
+  color: $font_grey_03;
+}
+
+%color_card_title_gross_profit {
+  background-color: $label_07;
+  color: $font_grey_03;
+}
+
+%color_card_title_compare {
+  background-color: $grey_05;
+  color: $font_grey_03;
+}
+
+%color_card_title_reading {
+  background-color: $grey_05;
+  color: $font_grey_03;
+}
+
+%color_card_title_profit {
+  background-color: $label_05;
+  color: $font_grey_03;
+}
+
+%color_card_title_schedule {
+  background-color: $grey_05;
+  color: $font_grey_03;
+}
+
+%color_card_title_outsource {
+  background-color: $label_02;
+  color: $font_grey_03;
+}
+
+%color_card_title_pcost_on_gprofit {
+  background-color: $label_04;
+  color: $font_grey_03;
+}
+
+
+%color_pie_chart_empty_area {
+  background-color: $grey_08;
+}
+
+%color_pie_chart_sales_amount {
+  stroke: $amount_01uriage;
+  background-color: $amount_01uriage;
+}
+
+%color_pie_chart_outsource {
+  stroke: $amount_02gaichu;
+}
+
+%color_pie_chart_point {
+  stroke: $amount_03kousu;
+}
+
+%color_pie_chart_personnel_cost {
+  background-color: $amount_04genka;
+}
+
+%color_pie_chart_profit {
+  stroke: $amount_05eigyou;
+}
+
+%color_pie_chart_proportion_gross_profit {
+  stroke: $amount_06kakutoku;
+}
+
+%color_pie_chart_gross_profit {
+  stroke: $amount_07arari;
+  background-color: $amount_07arari;
+}
+
+%color_pie_chart_pcost_on_gprofit {
+  stroke: $amount_04genka;
+}
+
+%color_pie_chart_negative {
+  color: $alert;
+  stroke: $alert;
+}
+
+%color_bar_chart_target {
+  background-color: $bl_grey_04;
+}
+
+%color_funnel_chart_order_status_4 {
+  background-color: $status_01usui;
+}
+
+%color_funnel_chart_order_status_5 {
+  background-color: $status_02hassei;
+}
+
+%color_funnel_chart_order_status_6 {
+  background-color: $status_03teian;
+}
+
+%color_button_save {
+  background-color: $blue_10;
+  color: #fff;
+}
+
+%color_button_save_hover {
+  background-color: $bl_grey_05;
+  color: #fff;
+}
+
+%color_button_add {
+  background-color: $blue_10;
+  color: #fff;
+}
+
+%color_button_add_hover {
+  background-color: $bl_grey_05;
+  color: #fff;
+}
+
+%color_button_edit {
+  border-color: $blue_10;
+  color: $blue_10;
+}
+
+%color_button_outline_danger {
+  border-color: $alert;
+  color: $alert;
+}
+
+%color_button_edit_hover {
+  border-color: $bl_grey_05;
+  color: $bl_grey_05;
+}
+
+%color_button_cancel {
+  background-color: $grey_05;
+  border-color: $grey_10;
+  color: $font_grey_03;
+}
+
+%color_button_cancel_hover {
+  background-color: $grey_09;
+  border-color: $grey_10;
+  color: $font_grey_03;
+}
+
+%color_inline_button_cancel {
+  background-color: $grey_03;
+  color: $font_grey_02;
+}
+
+%color_inline_button_cancel_hover {
+  background-color: $grey_09;
+  color: $font_grey_02;
+}
+
+%color_inline_button_delete {
+  background-color: $grey_03;
+  color: $font_grey_02;
+}
+
+%color_inline_button_delete_hover {
+  background-color: $grey_03;
+  color: $alert;
+}
+
+%color_button_search_reset {
+  background-color: $bl_grey_02;
+  color: $font_grey_03;
+}
+
+%color_button_search_reset_hover {
+  background-color: $bl_grey_03;
+  color: $font_grey_03;
+}
+
+%color_button_search_perform {
+  background-color: $purple_03;
+  color: #fff;
+}
+
+%color_button_search_perform_hover {
+  background-color: $bl_grey_07;
+  color: #fff;
+}
+
+%color_button_detail {
+  background-color: $grey_08;
+  color: $font_grey_03;
+}
+
+%color_button_detail_hover {
+  background-color: $grey_09;
+  color: $font_grey_03;
+}
+
+%color_button_create {
+  background-color: $blue_10;
+  color: #fff;
+}
+
+%color_button_create_hover {
+  background-color: $bl_grey_05;
+  color: #fff;
+}
+
+%color_button_download {
+  background-color: $grey_05;
+  color: $bl_grey_07;
+}
+
+%color_button_download_hover {
+  background-color: $grey_09;
+  color: $bl_grey_07;
+}
+
+%color_button_download_disable {
+  background-color: $grey_05;
+  color: $bl_grey_03;
+}
+
+%color_navi_global_top {
+  background-color: $bl_grey_09;
+  color: #fff;
+}
+
+%color_breadcrumb_base {
+  background-color: #fff;
+}
+
+%color_breadcrumb_base_hover {
+  background-color: #fff;
+}
+
+%color_breadcrumb_active {
+  background-color: $blue_08;
+}
+
+%color_navi_global_left {
+  background-color: $bl_grey_08;
+  color: #fff;
+}
+
+%color_navi_text_base {
+  background-color: #fff;
+}
+
+%color_navi_text_base_hover {
+  background-color: $bl_grey_09;
+  color: #fff;
+}
+
+%color_navi_text_active {
+  background-color: $bl_grey_09;
+  color: #fff;
+}
+
+%color_tab_active {
+  border-color: $bl_grey_08;
+  color: $bl_grey_08;
+}
+
+%color_tab_inactive {
+  color: $font_grey_02;
+}
+
+%color_anchor_link_base {
+  background-color: $grey_01;
+  color: $font_grey_03;
+}
+
+%color_anchor_link_base_hover {
+  background-color: $grey_01;
+  color: $font_grey_03;
+}
+
+%color_anchor_link_active {
+  background-color: $grey_09;
+  color: $font_grey_03;
+}
+
+%color_anchor_link_active_hover {
+  /*no interaction;*/
+}
+
+%color_panel_header_edit {
+  background-color: $blue_07;
+  color: $font_grey_03;
+}
+
+%color_pagination_base {
+  border-color: $grey_05;
+  color: $bl_grey_05;
+}
+
+%color_pagination_active {
+  background-color: $bl_grey_08;
+  color: #fff;
+}
+
+%color_list_header {
+  background-color: $grey_07;
+  color: $font_grey_03;
+}
+
+%color_list_divider_line {
+  border-color: $grey_05;
+}
+
+%color_list_text {
+  color: $font_grey_03;
+}
+
+%color_list_inline_dropdown {
+  background-color: $blue_01;
+  color: $blue_10;
+}
+
+%color_list_inline_dropdown_approve {
+  &:hover {
+    background-color: $grey_06;
+  }
+
+  color: $font_grey_03;
+}
+
+%color_list_inline_dropdown_decline {
+  &:hover {
+    background-color: $alert_area;
+  }
+
+  color: $alert;
+}
+
+%color_list_inline_dropdown_other {
+  &:hover {
+    background-color: $grey_06;
+  }
+
+  color: $font_grey_03;
+}
+
+%color_accordion1_level1 {
+  background-color: $grey_02;
+  color: $font_grey_03;
+}
+
+%color_accordion2_level1 {
+  background-color: $grey_09;
+  color: $font_grey_03;
+}
+
+%color_accordion2_level2 {
+  background-color: $grey_03;
+  color: $font_grey_03;
+}
+
+%color_accordion3_level1 {
+  background-color: $grey_09; //$grey_02;
+  color: $font_grey_03;
+}
+
+%color_accordion3_level2 {
+  background-color: $grey_06;
+  color: $font_grey_03;
+}
+
+%color_accordion3_level3 {
+  background-color: $grey_03;
+  color: $font_grey_03;
+}
+
+%color_form_block_header {
+  background-color: $grey_02;
+  color: $font_grey_03;
+}
+
+%color_form_field_label {
+  color: $font_grey_03;
+}
+
+%color_input_outline {
+  border-color: $bl_grey_03;
+}
+
+%color_input_placeholder {
+  color: $bl_grey_05;
+}
+
+%color_input_text {
+  color: $font_grey_03;
+}
+
+%color_increment_selectbox_outline {
+  background-color: $blue_01;
+  border: 1px solid #DFE3E9;
+}
+
+%color_dropdown_outline {
+  background-color: $grey_01;
+  border: 1px solid $bl_grey_03;
+}
+
+%color_increment_selectbox_placeholder {
+  color: $bl_grey_05;
+}
+
+%color_increment_selectbox_text {
+  color: $font_grey_03;
+}
+
+%color_increment_selectbox_clear {
+  color: $bl_grey_05;
+}
+
+%color_selectbox_outline {
+  background-color: $grey_01;
+  border-color: $bl_grey_03;
+}
+
+%color_selectbox_placeholder {
+  color: $bl_grey_05;
+}
+
+%color_selectbox_text {
+  color: $font_grey_03;
+}
+
+%color_format1_input_outline {
+  border-color: $bl_grey_03;
+}
+
+%color_format1_input_placeholder {
+  color: $bl_grey_05;
+}
+
+%color_format_date_outline {
+  border-color: $bl_grey_03;
+  background-color: $grey_01;
+}
+
+%color_format_input_text {
+  color: $font_grey_03;
+}
+
+%color_format2_input_outline {
+  border-color: $green_02;
+  background-color: $green_02;
+}
+
+%color_format2_input_placeholder {
+  color: $green_05;
+}
+
+%color_format2_input_text {
+  background-color: $green_02;
+  color: $font_grey_03;
+}
+
+%color_checkbox_uncheck {
+  border-color: $bl_grey_03;
+  color: $bl_grey_03;
+}
+
+%color_checkbox_checked {
+  color: $blue_10;
+}
+
+%color_tag {
+  background-color: $grey_05;
+  color: $font_grey_03;
+}
+
+%color_tag_add {
+  background-color: #fff;
+  color: $blue_10;
+}
+
+%color_tag_empty {
+  border-color: $font_grey_02;
+  background-color: #fff;
+  color: $font_grey_02;
+}
+
+%color_form_field_label_readonly {
+  color: $font_grey_02;
+}
+
+%color_form_field_text_readonly {
+  border-color: $grey_07;
+  color: $font_grey_03;
+}
+
+%color_checkbox_readonly {
+  background-color: $font_grey_02;
+  color: #fff;
+}
+
+%color_textarea_text_readonly {
+  background-color: $grey_01;
+  color: $font_grey_03;
+}
+
+%color_tag_readonly {
+  background-color: $yellow_01;
+  color: $font_grey_03;
+}
+
+
+%color_slideout_accounting_header {
+  background-color: $blue_09;
+  color: #fff;
+}
+
+%color_slideout_accounting_submit_button {
+  background-color: $blue_09;
+  color: #fff;
+}
+
+%color_accounting_tax_bg {
+  background-color: $purple_01;
+}
+
+%color_accounting_tax_bg_readonly {
+  background-color: $grey_01;
+}
+
+%color_slideout_billing_header {
+  background-color: $amount_01uriage; /*$amount_02uriage;*/
+  color: $bl_grey_09;
+}
+
+%color_slideout_billing_submit_button {
+  background-color: $amount_01uriage; /*$amount_02uriage;*/
+  color: $bl_grey_09;
+}
+
+%color_billing_tax_bg {
+  background-color: $green_01;
+}
+
+%color_billing_tax_bg_readonly {
+  background-color: $grey_01;
+}
+
+%color_slideout_outsource_header {
+  background-color: $amount_01b_uriage; /*$amount_02b_uriage;*/
+  color: $font_grey_03;
+}
+
+%color_slideout_outsource_submit_button {
+  background-color: $amount_01b_uriage; /*$amount_02b_uriage;*/
+  color: $font_grey_03;
+}
+
+%color_outsource_tax_bg {
+  background-color: $blue_03; /*blue_06 (dk-area);*/
+}
+
+%color_outsource_tax_bg_readonly {
+  background-color: $grey_01;
+}
+
+%color_list_pane_bg {
+  background-color: $bl_grey_06;
+}
+
+%color_list_pane_pj_name {
+  color: #fff;
+}
+
+%color_list_pane_pj_number {
+  color: $purple_01;
+}
+
+%color_list_panel_hover {
+  background-color: $bl_grey_08;
+  color: #fff;
+}
+
+%color_list_pane_view_more_button {
+  background-color: $bl_grey_08;
+  color: #fff;
+}
+
+%color_list_pane_open_button {
+  background-color: $blue_09;
+  color: #fff;
+}
+
+%color_list_pane_close_button {
+  background-color: $blue_09;
+  color: #fff;
+}
+
+%color_modal_default {
+  background-color: $grey_02;
+  color: $font_grey_03;
+}
+
+%color_modal_alert {
+  background-color: $alert;
+  color: #fff;
+}
+
+%color_moddal_error {
+  background-color: $alert;
+  color: #fff;
+}
+
+%color_modal_info {
+  background-color: $blue_04;
+  color: $font_grey_03;
+}
+
+%color_modal_register {
+  background-color: $grey_02;
+  color: $font_grey_03;
+}
+
+%color_system_setting_title_bg {
+  background-color: $blue_02;
+  color: $font_grey_03;
+}
+
+%color_system_setting_tab_base {
+  background-color: #9DCDFC;
+  color: $font_grey_03;
+}
+
+%color_system_setting_tab_active {
+  background-color: $blue_05;
+  color: $font_grey_03;
+}
+
+%color_daily_report_1 {
+  border-left-color: $report_PJ_01;
+  background-color: $report_PJ_01;
+}
+
+%color_daily_report_2 {
+  border-left-color: $report_PJ_02;
+  background-color: $report_PJ_02;
+}
+
+%color_daily_report_3 {
+  border-left-color: $report_PJ_03;
+  background-color: $report_PJ_03;
+}
+
+%color_daily_report_4 {
+  border-left-color: $report_PJ_04;
+  background-color: $report_PJ_04;
+}
+
+%color_daily_report_5 {
+  border-left-color: $report_PJ_05;
+  background-color: $report_PJ_05;
+}
+
+%color_daily_report_6 {
+  border-left-color: $report_PJ_06;
+  background-color: $report_PJ_06;
+}
+
+%color_daily_report_7 {
+  border-left-color: $report_PJ_01;
+  background-color: $report_PJ_01;
+}
+
+%color_daily_report_8 {
+  border-left-color: $report_PJ_02;
+  background-color: $report_PJ_02;
+}
+
+%color_daily_report_9 {
+  border-left-color: $report_PJ_03;
+  background-color: $report_PJ_03;
+}
+
+%color_daily_report_10 {
+  border-left-color: $report_PJ_04;
+  background-color: $report_PJ_04;
+}
+
+%color_daily_report_11 {
+  border-left-color: $report_PJ_05;
+  background-color: $report_PJ_05;
+}
+
+%color_daily_report_12 {
+  border-left-color: $report_PJ_06;
+  background-color: $report_PJ_06;
+}
+
+%color_daily_report_13 {
+  border-left-color: $report_PJ_01;
+  background-color: $report_PJ_01;
+}
+
+%color_daily_report_14 {
+  border-left-color: $report_PJ_02;
+  background-color: $report_PJ_02;
+}
+
+%color_daily_report_15 {
+  border-left-color: $report_PJ_03;
+  background-color: $report_PJ_03;
+}
+
+%color_daily_report_16 {
+  border-left-color: $report_PJ_04;
+  background-color: $report_PJ_04;
+}
+
+%color_daily_report_17 {
+  border-left-color: $report_PJ_05;
+  background-color: $report_PJ_05;
+}
+
+%color_daily_report_18 {
+  border-left-color: $report_PJ_06;
+  background-color: $report_PJ_06;
+}
+
+%color_daily_report_19 {
+  border-left-color: $report_PJ_01;
+  background-color: $report_PJ_01;
+}
+
+%color_daily_report_20 {
+  border-left-color: $report_PJ_02;
+  background-color: $report_PJ_02;
+}
+
+%color_daily_report_calendar_empty {
+  background-color: $grey_10;
+}
+
+%color_daily_report_calendar_nonempty {
+  background-color: $status_03teian;
+}
+
+%color_sum_total_amount_billed {
+  background-color: #D6D6D6;
+}
+
+%color_sum_calc_gross_profit {
+  background-color: #26416A;
+}
+
+%sort_arrow_default {
+  color: #a4afb7;
+}
+
+%sort_arrow_active {
+  color: $bl_grey_07;
+}
+
+%color_nav_item {
+  color: $bl_grey_09;
+}
+
+%color_nav_item_hover {
+  background-color: $grey_04;
+}
+
+%color_nav_btn_item {
+  background-color: $blue_10;
+  color: #ffffff;
+}
+
+%color_nav_btn_item_hover {
+  background-color: $bl_grey_05;
+}
+
+%color_table_row_editing {
+  background-color: $grey_01;
+}
+
+%color_term {
+  background-color: $grey_05;
+}
+
+%color_page_header {
+  background-color: $grey_03;
+  box-shadow: 0 1px 2px rgba(5, 24, 47, 0.3);
+}
+
+%color_dashboard_info_bg_overlay {
+  background-color: #D6DCE5;
+}
+
+%color_dashboard_info_bg {
+  background-color: #DFE4EB;
+}
+
+%color_sub_link {
+  color: $blue_10;
+}
+
+%color_sub_link_bg {
+  background-color: #F5F8F8;
+}
+
+%color_account {
+  color: $font_grey_04;
+}
+
+%color_account_check {
+  color: $font_grey_03;
+  background-color: $grey_11;
+}
+
+%color_account_check_hover {
+  background-color: $grey_09;
+  color: $font_grey_03;
+}

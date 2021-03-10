@@ -1,0 +1,85 @@
+.layout-detail__theater {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.theater-detail {
+  display: flex;
+  flex-direction: column;
+  width: 800px;
+
+  .theater-detail__edit {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .theater-detail__content {
+    margin-top: 20px;
+
+    .theater-content__item  {
+      display: flex;
+      flex-direction: row;
+      label {
+        width: 200px;
+        font-size: 20px;
+      }
+
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
+
+      &.theater-content__name {
+        font-weight: 500;
+      }
+
+      &.theater-content__image {
+        .theater-content__image__image {
+          display: flex;
+          flex-direction: column;
+
+          img {
+            margin-bottom: 5px;
+          }
+        }
+      }
+
+      &.theater-content__rooms {
+
+        .theater-content__rooms__list {
+          display: flex;
+          flex-direction: column;
+          min-width: 200px;
+
+          &__item {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            justify-content: space-between;
+
+            &:not(:last-child) {
+              margin-bottom: 10px;
+            }
+          }
+
+          a {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: 400;
+            padding-left: 0;
+            display: block;
+            text-decoration: none;
+            color: #000;
+            &:hover {
+              color: #1C78C7;
+            }
+          }
+        }
+      }
+    }
+  }
+}

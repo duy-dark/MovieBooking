@@ -1,0 +1,140 @@
+.ng-scope {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  cursor: auto;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333;
+  font-family: "SF Text Regular";
+  box-sizing: border-box;
+}
+
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+
+  @media only screen and (min-width: 1200px) {
+    width: 1140px;
+  }
+
+  @media only screen and (min-width: 768px) {
+    width: 700px;
+  }
+
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+
+    .col-sm-12 {
+      @media (min-width: 768px) {
+        width: 100%;
+      }
+
+      @media (min-width: 768px) {
+        float: left;
+      }
+
+      p.ng-binding {
+        max-width: 800px;
+        text-align: center;
+        margin: auto;
+        margin-top: auto;
+        margin-right: auto;
+        margin-bottom: auto;
+        margin-left: auto;
+        font-family: "Roboto Slab";
+        font-size: 48px;
+      }
+
+      .author {
+        position: absolute;
+        -moz-transform: rotate(-90deg);
+        -o-transform: rotate(-90deg);
+        -webkit-transform: rotate(-90deg);
+        color: #737576 !important;
+        font-size: 12px;
+        top: 86%;
+        right: -29%;
+
+        span.ng-binding {
+          color: #000;
+          font-family: "SF Medium";
+        }
+      }
+
+      p {
+        img {
+          width: 100%;
+          height: auto;
+          object-fit: cover;
+        }
+      }
+    }
+    .title {
+      position: relative;
+      margin-top: 9%;
+      p {
+        font-size: 48px;
+        text-align: center;
+        font-weight: bold;
+      }
+    }
+    .count {
+      margin-top: 3%;
+      display: flex;
+      justify-content: center;
+      .wrapIcon {
+        margin-right: 15px;
+        cursor: pointer;
+        .icon {
+          margin-right: 10px;
+          width: 16px;
+          height: auto;
+        }
+      }
+    }
+    .content {
+      margin-top: 40px;
+      font-size: 16px;
+    }
+    .line {
+      margin-top: 2%;
+      margin-bottom: 20px;
+    }
+    .detailReviewer {
+      max-width: 810px;
+      margin: auto;
+      position: relative;
+      .imageReviewer {
+        height: 36px;
+        width: 36px;
+        border-radius: 25px;
+        position: absolute;
+        top: 20%;
+        left: 2%;
+      }
+      .inputReviewer {
+        height: 60px;
+        width: 100%;
+        padding: 10px 10px 10px 60px;
+        border-radius: 4px;
+        color: #9b9b9b;
+        border: 1px solid #e8e8e9;
+
+      }
+    }
+  }
+  .list {
+    display: flex;
+    margin-bottom: 40px;
+    .column {
+      width: 33%;
+      padding: 15px;
+    }
+  }
+}

@@ -1,0 +1,58 @@
+@import "../mixin";
+@import "../color";
+
+@media only screen and (min-width: $breakpoint_sm) {
+  .navbar {
+    display: flex;
+    flex-direction: row;
+    margin-left: 175px;
+
+    .narbar__item {
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 20px;
+
+      a {
+        color: #000;
+        text-decoration: none;
+      }
+
+      &:not(:last-child) {
+        margin-right: 20px;
+      }
+
+      &::after {
+        content: '';
+        display: block;
+        width: 0;
+        height: 2px;
+        background: $alert;
+        transition: all .3s ease-in-out;
+      }
+
+      &:hover {
+        a {
+          color:$alert;
+        }
+        &::after {
+          width: 100%;
+        }
+      }
+
+      &.navbar__item--active {
+        a {
+          color: $alert;
+        }
+        &::after {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: $breakpoint_sm - 1px) {
+  .navbar {
+    display: none !important;
+  }
+}

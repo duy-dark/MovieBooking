@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "mobile",
+    "slug": "mobile",
+    "version": "40.0.0",
+    "sdkVersion": "40.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "chrome",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.khtn.moviebookingapp",
+      "googleServicesFile": "./google-services.json",
+      "useNextNotificationsApi": true
+    }
+  }
+}
