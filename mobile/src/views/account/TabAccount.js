@@ -19,6 +19,9 @@ const TabAccount = (props) => {
         props.navigation.navigate("EditCategories")
         // alert("Cập nhật sau")
     }
+    const setDiscount = () => {
+        props.navigation.navigate("DiscountScreen")
+    }
     if (user) return (
         <ScrollView style={styles.container}>
             <TouchableOpacity style={styles.user} onPress={editCategories}>
@@ -28,6 +31,13 @@ const TabAccount = (props) => {
                     <Text style={styles.note}>Chạm để chỉnh sửa thể loại phim yêu thích</Text>
                 </View>
                 <Ionicons style={styles.icon} name="chevron-forward-outline" size={15} color="black"/>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.discount} onPress={setDiscount}>
+                <View style={{flexDirection: "row"}}>
+                    <Image style={styles.iconDiscount} source={{ uri: "https://image.flaticon.com/icons/png/512/621/621535.png"}}/>
+                    <Text>Khuyến mãi</Text>
+                </View>
+                <Ionicons style={styles.icon} name="chevron-forward-outline" size={15} color="gray"/>
             </TouchableOpacity>
             <View>
                 <Text style={styles.titleArea}>Về Ứng Dụng</Text>

@@ -52,7 +52,6 @@ async function registerForPushNotificationsAsync() {
       return;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
   } else {
     alert("Must use physical device for Push Notifications");
   }
@@ -104,7 +103,6 @@ const MainTabs = () => {
       res.forEach( async (noti) => 
       await schedulePushNotification(noti)
       )
-      console.log("resssssss",res)
     });
   
     return () => {
