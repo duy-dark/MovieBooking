@@ -7,7 +7,6 @@ import Header from "./components/customer/Header";
 import Footer from "./components/customer/Footer";
 import MyLoading from './components/MyLoading'
 import NotFound from "./views/NotFound";
-import { useSelector, useDispatch } from 'react-redux';
 import {  getUserInfo } from "./redux/users/actions";
 class App extends Component {
   constructor(props){
@@ -51,7 +50,7 @@ const mapDispatchToProps=(dispatch)=>({
   getUser:()=>{
     const token = localStorage.getItem("token");
     const userID = localStorage.getItem("userID");
-    
+
     if (token && userID) {
       dispatch(getUserInfo({ token, userID }));
     }
