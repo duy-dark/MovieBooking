@@ -29,7 +29,15 @@
 
   .layout-ddt__content.react-tabs__tab-panel--selected {
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+
+    .layout-ddt__content-btn {
+      margin-top: 20px;
+      width: 200px;
+      margin-bottom: 10px;
+    }
   }
 }
 
