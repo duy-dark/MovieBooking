@@ -34,7 +34,9 @@ function* fetchAddNewFilm(action){
 function* fetchFilmDetails(action) {
   try {
     const { payload } = action;
+    yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.getDetail, payload);
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
       yield put({ type: FilmsType.FILM_DETAIL_SUCCESS, payload: data });
@@ -58,7 +60,9 @@ function* fetchListFilmsNow() {
 
 function* fetchListFilmsFuture() {
   try {
+    yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.getListFilmFuture, {});
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
       yield put({ type: FilmsType.LIST_FILM_FUTURE_SUCCESS, payload: data });
@@ -92,7 +96,9 @@ function* fetchListFilmsToday() {
 function* fetchSeats(action) {
   try {
     const { payload } = action
+    yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.getSeats, payload);
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
       yield put({ type: FilmsType.LIST_SEATS_SUCCESS, payload: data });
@@ -139,8 +145,9 @@ function* fetchFilmSchedule(action) {
 }
 function* fetchUpdateFilmSchedule(action) {
   try {
-    
+    yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.updateFilmSchedule,action.id,action.payload);
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
       yield put({ type: FilmsType.UPDATE_FILM_SCHEDULE_SUCCESS, payload: data });
@@ -195,7 +202,9 @@ function* fetchCreateNewPaper(action) {
 
 function* fetchListNew(action) {
   try {
+    yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.getListNews, {})
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
       yield put({ type: FilmsType.LIST_NEW_SUCCESS, payload: data})
