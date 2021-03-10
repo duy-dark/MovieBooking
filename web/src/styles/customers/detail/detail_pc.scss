@@ -117,7 +117,7 @@
 }
 
 .tab-detail {
-  min-width: 630px;
+  max-width: 630px;
   margin: 0 auto;
 
 
@@ -247,6 +247,7 @@
       .theater__item__header {
         display: flex;
         flex-direction: row;
+        cursor: pointer;
 
         .theater__item__image {
           img {
