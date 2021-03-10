@@ -89,7 +89,7 @@ export default function AddFilm  (props) {
   
  //add new film
     dispatch(addNewFilm(values.film))
-      
+    form.resetFields();  
     props.onCancel();
    
 
