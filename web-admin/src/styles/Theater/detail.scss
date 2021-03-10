@@ -1,13 +1,42 @@
 .layout-detail__theater {
   display: flex;
-  justify-content: center;
   padding: 20px;
+  background-color: #fff;
+}
+
+.layout-ddt {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .layout-ddt__header {
+    display: flex;
+    flex-direction: row;
+    list-style: none;
+    height: 40px;
+    background-color: #FFF;
+    align-items: center;
+    justify-content: center;
+
+    .layout-ddt__header__item {
+      font-size: 25px;
+      font-weight: bold;
+      &:not(:last-child) {
+        margin-right: 20px;
+      }
+    }
+  }
+
+  .layout-ddt__content.react-tabs__tab-panel--selected {
+    display: flex;
+    justify-content: center;
+  }
 }
 
 .theater-detail {
   display: flex;
   flex-direction: column;
-  width: 800px;
+  max-width: 800px;
 
   .theater-detail__edit {
     width: 100%;
