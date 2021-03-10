@@ -17,14 +17,14 @@ function* fetchLogin(action) {
   try {
     yield put({ type: UsersTypes.LOADING_SHOW });
     const res = yield call(httpUser.login, action.payload);
+    yield put({ type: UsersTypes.LOADING_HIDE });
     if (res.status === "ok") {
-      yield put({ type: UsersTypes.LOADING_HIDE });
       yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: res.data });
       if(res.data.is_newbie) {
         navigation.navigate("SelectCategories")
       }
       else navigation.navigate("MainTabs")
-    }
+    } 
   } catch (err) {
     throw err;
   }
@@ -50,17 +50,9 @@ function* fetchUserInfo(action) {
 
     yield put({ type: UsersTypes.LOADING_HIDE });
     if (res.status === "ok") {
-    
       yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: res.data });
       navigation.navigate("MainTabs")
     }
-    else {
-      removeData(action.payload.token)
-    }
-    // else {
-    //   yield put({ type: UsersTypes.LOADING_HIDE });
-    //   navigation.navigate("LoginScreen")
-    // }
   } catch (err) {
     throw err;
   }

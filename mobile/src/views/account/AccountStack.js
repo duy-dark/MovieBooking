@@ -4,6 +4,8 @@ import AccountScreen from './AccountScreen';
 import TabInfomation from '../film/TabInfomation'
 import QRCodeScreen from './QRCodeScreen';
 import EditCategories from './EditCategories';
+import DiscountScreen from './DiscountScreen';
+import QRCodeDiscount from './QRCodeDiscount';
 
 const Stack = createStackNavigator();
 const AccountStack = () => {
@@ -37,6 +39,20 @@ const AccountStack = () => {
                 options={{ 
                     title: "Chỉnh sửa thể loại yêu thích"
                 }} 
+            />
+            <Stack.Screen 
+                name="DiscountScreen"
+                component={DiscountScreen}
+                options={{
+                    title: "Lựa chọn khuyến mãi"
+                }}
+            />
+            <Stack.Screen 
+                name="QRCodeDiscount"
+                component={QRCodeDiscount}
+                options={{
+                    title: "Mã QR khuyến mãi"
+                }}
             />
         </Stack.Navigator>
     )

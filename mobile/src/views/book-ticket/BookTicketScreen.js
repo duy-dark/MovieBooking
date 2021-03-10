@@ -246,6 +246,7 @@ const BookTicketScreen = (props) => {
       is_mobile: 1,
       film_id: film._id,
       theater_id: cinema._id,
+      room_id: film_schedule.room_id
     };
     dispatch(paymentGateway({ params: bookingInfo, Linking, navigation }));
     setDisabledBtn(true);
