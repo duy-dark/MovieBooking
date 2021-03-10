@@ -25,7 +25,6 @@ const initialState = {
   loading: 0,
   theaterChart: {},
   statistic:[],
-  loading: 0
 }
 
 export default function filmsReducer(state = initialState, action) {
@@ -45,8 +44,6 @@ export default function filmsReducer(state = initialState, action) {
     case FilmTypes.LIST_FILM_TODAY_SUCCESS:
       newState = Object.assign({}, state, { filmsToday: payload })
       break;
-      case FilmTypes.LIST_TICKET_SUCCESS:
-        newState = Object.assign({}, state, { tickets: payload })
     case FilmTypes.LIST_TICKET_SUCCESS:
       newState = Object.assign({}, state, { tickets: payload })
       break;
