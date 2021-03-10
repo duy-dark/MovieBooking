@@ -8,12 +8,12 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { createComment } from "../../redux/films/actions";
 import { useSelector, useDispatch } from "react-redux"
-
+import concat from 'lodash/concat'
 
 const days = ['CN', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7']
 export default function TabsSchedule(props) {
   const dispatch = useDispatch();
-  const [activeIndex, setActiveIndex] = useState([1, 2, 3]);
+  const [activeIndex, setActiveIndex] = useState([]);
   const [listDate, setListDate] = useState([{}, {}, {}, {}, {}, {}, {}])
   const user = useSelector(state => state.users.user)
 
@@ -30,6 +30,13 @@ export default function TabsSchedule(props) {
   }
 
   useEffect(() => {
+    if (props.dayOfWeeks.length > 0) {
+      let arrIds = concat(...props.dayOfWeeks).map(item => item._id)
+      setActiveIndex(arrIds)
+    }
+  }, [props.dayOfWeeks])
+
+  useEffect(() => {
 
     let arr = []
     for(let i = 0; i < 7; i++) {
@@ -41,7 +48,6 @@ export default function TabsSchedule(props) {
         dayofweek: date.day()
       })
     }
-
     setListDate(arr)
 
   }, [])
@@ -80,7 +86,7 @@ export default function TabsSchedule(props) {
       return item.map(theater => {
         return (
           <div key={theater._id} className="theater__item">
-            <div className="theater__item__header" onClick={() => changeCollapse(1)}>
+            <div className="theater__item__header" onClick={() => changeCollapse(theater._id)}>
               <div className="theater__item__image">
                 <img src={`${theater.url_image}`} alt=""/>
               </div>
@@ -89,7 +95,7 @@ export default function TabsSchedule(props) {
               <span>{`${theater.address}`}</span>
               </div>
             </div>
-            <Collapse className="theater__item__schedule" isOpened={activeIndex.includes(1)}>
+            <Collapse className="theater__item__schedule" isOpened={activeIndex.includes(theater._id)}>
               <div className="theater__item__title">2D Digital</div>
               <div className="theater__item__schedules">
                { theater.film_schedules.map(film => <CardTime key={film._id} schedule={film} name={props.detail.name} theater_url_image={theater.url_image} theater_name={theater.name} film={props.detail} />)}
