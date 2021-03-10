@@ -100,9 +100,10 @@ export function getTheaters(){
     type: FilmTypes.LIST_THEATER,
   };
 }
-export function getTickets(){
+export function Statistic(data){
   return {
-    type: FilmTypes.LIST_TICKET,
+    type: FilmTypes.STATISTIC,
+    payload: data
   };
 }
 export function createNewPaper(params) {
