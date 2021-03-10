@@ -3,9 +3,6 @@ import { View, Text, ScrollView, TouchableOpacity, Image, ActivityIndicator } fr
 import Discount from '../../components/discount/Discount'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import { useSelector } from 'react-redux'
-import { useFocusEffect } from '@react-navigation/native'
-import { getUserInfo } from '../../redux/users/actions'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Dialog from "react-native-dialog";
 import Api from '../../api/api'
 
