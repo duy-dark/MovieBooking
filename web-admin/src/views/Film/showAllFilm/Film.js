@@ -1,23 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { Table, Tag, Space } from 'antd';
 import "./../../../styles/Film/film.scss";
-import Detail from "../editFilm/DetailPopup"
+import DetailPopUp from "../editFilm/DetailPopup"
 import AddNewFilm from "../addFilm/AddFilmPopUp"
 import Schedule from "../editSchedule/SchedulePopup"
 import { useSelector, useDispatch } from "react-redux";
-import {  getListFilmNow,getCategories } from "../../../redux/films/actions";
-
+import {  getListFilmNow,getCategories ,getTheaters} from "../../../redux/films/actions";
+import AddSchedulePopup from "../addSchedule/addSchedulePopup"
 export default function Film(){
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getListFilmNow());
     dispatch((getCategories()))
+    dispatch((getTheaters()))
   }, []);
+
+  
+  const theaters = useSelector((state) => state.films.theaters);
   const filmsNow = useSelector((state) => state.films.filmsNow);
   const categories = useSelector((state) => state.films.categories);
   const data = filmsNow.map((item,index)=>({...item, key: index}))
-
+  
+  
 const columns = [
   {
     title: 'Name',
@@ -30,10 +35,10 @@ const columns = [
     key: 'action',
     render: (text, record,index) => (
       <Space size="middle">
-       <Detail index={index} detail={record} />
-        <a>Delete</a>
-       <Schedule schedule={record}/>
-        <a>Add Schedules</a>
+       <DetailPopUp index={index} detail={record} categories={categories} />
+      
+       <Schedule schedule={record} theaters={theaters}/>
+        <AddSchedulePopup theaters={theaters} schedule={record}/>
       </Space>
     ),
   },

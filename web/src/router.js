@@ -6,6 +6,7 @@ import MovieDetail from "./views/customers/FilmDetail.js";
 import Booking from "./views/customers/Booking.js";
 import New from "./views/customers/New.js"
 import Completed from "./views/customers/Completed.js"
+import Profile from "./views/customers/Profile.js"
 const routes = [
   {
     path: "/",
@@ -28,7 +29,7 @@ const routes = [
     component: () => <Booking />,
   },
   {
-    path: "/new",
+    path: "/new/:id",
     exact: true,
     component: () => <New />
   },
@@ -36,6 +37,11 @@ const routes = [
     path: "/complete",
     exact: true,
     component: () => <Completed />
+  },
+  {
+    path: "/profile",
+    exact: true,
+    component: () => <Profile />
   }
 ];
 

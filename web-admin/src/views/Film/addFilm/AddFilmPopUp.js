@@ -15,8 +15,11 @@ const AddNewFilm = (props) => {
   
 
   const handleCancel = () => {
-    console.log('Clicked cancel button');
-    setVisible(false);
+    setConfirmLoading(true);
+    
+      setVisible(false);
+      setConfirmLoading(false);
+
   };
 
   return (

@@ -9,10 +9,11 @@ const styles = StyleSheet.create({
     image: {
         height: 75,
         width: 75,
-        borderRadius: 10,
+        borderRadius: 10
     },
     content: {
-        marginLeft: 10
+        marginLeft: 10,
+        flex: 1
     },
     form: {
         fontSize: 12,
@@ -23,7 +24,8 @@ const styles = StyleSheet.create({
     //     color: "gray"
     // },
     title: {
-        fontSize: 16
+        fontSize: 15,
+        color: "gray"
     }
 });
 

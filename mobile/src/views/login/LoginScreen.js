@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Text, ImageBackground, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
 import styles from '../../styles/views/login/login-screen'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as Google from 'expo-google-app-auth';
 import * as Facebook from 'expo-facebook';
-import { useDispatch } from "react-redux";
-import { signIn } from '../../redux/users/actions';
+import { useDispatch, useSelector } from "react-redux";
+import { getUserInfo, signIn } from '../../redux/users/actions';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
- 
+
 const signInWithGoogleAsync = async() => {
     try {
       const result = await Google.logInAsync({
@@ -50,15 +51,32 @@ const signInWithFacebook = async() => {
   }
 }
 
-
 const LoginScreen = (props) => {
     const imageBackground = { uri: "https://tix.vn/app/assets/img/icons/backapp.jpg" }
     const logo = { uri: "https://tix.vn/app/assets/img/login/group@2x.png" }
     const iconGoogle = { uri: "https://ai.devoteam.com/wp-content/uploads/sites/91/2018/05/google-logo-icon-png-transparent-background.png"}
-    // const avatarDefaul = "https://1.bp.blogspot.com/-A7UYXuVWb_Q/XncdHaYbcOI/AAAAAAAAZhM/hYOevjRkrJEZhcXPnfP42nL3ZMu4PvIhgCLcBGAsYHQ/s1600/Trend-Avatar-Facebook%2B%25281%2529.jpg"
-    const [indicator, setIndicator] = useState(false)
+    const avatarDefault = "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
 
     const dispatch = useDispatch()
+
+    useEffect(() => {  
+      async function getDataToken() {
+        try {
+          const token = await AsyncStorage.getItem("token")
+          const userID = await AsyncStorage.getItem("userID")
+          if(token !== null) {
+            const payload = {
+              token: token,
+              userID: userID
+            }
+            dispatch(getUserInfo(payload, props.navigation))
+          }
+        } catch(e) {
+          // error reading value
+        }
+      }
+      getDataToken()
+    }, [])
 
     const loginFaceBook = async() => {
       const response = await signInWithFacebook()
@@ -66,12 +84,12 @@ const LoginScreen = (props) => {
         const user = {
           facebook_id: response.id,
           name: response.name,
-          // avatar: avatarDefaul,
+          email: '',
+          avatar: avatarDefault,
           account_type: "facebook",
         }
         dispatch(signIn(user, props.navigation));
       }
-      setIndicator(true)
     }
 
     const loginGoogle = async() => {  
@@ -86,9 +104,8 @@ const LoginScreen = (props) => {
             };
             dispatch(signIn(user, props.navigation));
         }
-        setIndicator(true)
     };
-    
+    const indicator = useSelector((state) => state.users.loading)
     return (
         <View style={styles.container}>
           {indicator ? <ActivityIndicator style={{alignSelf: 'center', marginTop: 200}} size="large" color="orangered" /> : 

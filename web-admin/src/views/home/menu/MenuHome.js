@@ -9,13 +9,20 @@ import {
   AppstoreOutlined,
   SettingOutlined,
   LinkOutlined,
-  VideoCameraFilled,
+  LoginOutlined,
 } from "@ant-design/icons";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux"
+import {signOut} from "../../../redux/users/actions"
 
 const { SubMenu } = Menu;
 
 export default function MenuHome(props) {
-
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const logout = () => {
+    dispatch(signOut(history))
+  }
   return (
     <>
       <Menu
@@ -29,13 +36,13 @@ export default function MenuHome(props) {
         </div>
         <SubMenu key="sub1" icon={<AppstoreOutlined />} title="Phim">
       <Menu.Item key="sub1-1">Danh sách phim   <Link to="/ManageFilm" /></Menu.Item>
-          <Menu.Item key="sub1-2">Thể loại</Menu.Item>
-          <Menu.Item key="sub1-3">Rạp</Menu.Item>
-          <Menu.Item key="sub1-4"><Link to="/new">New</Link></Menu.Item>
+        
+          <Menu.Item key="sub1-2"><Link to="/theater/list">Rạp</Link></Menu.Item>
+          <Menu.Item key="sub1-3"><Link to="/new/list">New</Link></Menu.Item>
         </SubMenu>
       
          
-        <SubMenu key="sub2" icon={<SettingOutlined />} title="Người dùng">
+        {/* <SubMenu key="sub2" icon={<SettingOutlined />} title="Người dùng">
           <SubMenu key="sub2-1" title="Quản trị viên">
             <Menu.Item key="5">Danh sách</Menu.Item>
             <Menu.Item key="6">Danh sách bị cấm</Menu.Item>
@@ -44,18 +51,9 @@ export default function MenuHome(props) {
             <Menu.Item key="7">Danh sách</Menu.Item>
             <Menu.Item key="8">Danh sách bị cấm</Menu.Item>
           </SubMenu>
-        </SubMenu>
-        <SubMenu key="sub3" icon={<SettingOutlined />} title="Thống Kê">
-        <Menu.Item key="9">Thống Kê</Menu.Item>
-        </SubMenu>
-        <Menu.Item key="link" icon={<LinkOutlined />}>
-          <a
-            href="https://ant.design"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Thông tin cá nhân
-          </a>
+        </SubMenu> */}
+        <Menu.Item key="10" icon={<LoginOutlined />} title="Đăng Xuất">
+          <button onClick={logout} style={{border: 'none', background: 'transparent'}}>Đăng Xuất</button>
         </Menu.Item>
       </Menu>
     </>

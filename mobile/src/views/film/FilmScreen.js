@@ -1,29 +1,42 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useCallback } from 'react'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
 import TabSchedules from './TabSchedules';
 import TabComments from './TabComments';
 import TabInfomation from './TabInfomation';
 import { useSelector, useDispatch } from "react-redux";
 import { getComments, getFilmDetails } from '../../redux/films/actions';
+import { useFocusEffect } from '@react-navigation/native'
 
 const Tab = createMaterialTopTabNavigator();
 const FilmScreen = (props) => {
     const idFilm = props.route.params.idFilm
 
     const dispatch = useDispatch()
-
-    useEffect(() => {
-      const info = { 
-        id: idFilm
-      }
-      dispatch(getFilmDetails(info))
-      dispatch(getComments(idFilm))
-    }, [])
+    useFocusEffect(
+      useCallback(() => {
+        // Do something when the screen is focused
+        const info = { 
+          id: idFilm
+        }
+        dispatch(getFilmDetails(info))
+        dispatch(getComments(idFilm))
+        return () => {
+          // Do something when the screen is unfocused
+          // Useful for cleanup functions
+        }
+      }, [])
+    )
+    // useEffect(() => {
+    //   const info = { 
+    //     id: idFilm
+    //   }
+    //   dispatch(getFilmDetails(info))
+    //   dispatch(getComments(idFilm))
+    // }, [])
 
     const film = useSelector((state) => state.films.filmDetail)
     const dayOfWeeks = useSelector((state) => state.films.dayOfWeeks)
-    const comments = useSelector((state) => state.films.comments)
- 
+    // const listComment = useSelector((state) => state.films.comments)
     return (
       <Tab.Navigator 
         tabBarOptions={{
@@ -37,7 +50,7 @@ const FilmScreen = (props) => {
           {() => <TabSchedules film={film} dayOfWeeks={dayOfWeeks} navigation={props.navigation} />}
         </Tab.Screen>
         <Tab.Screen name="TabComments" options={{title: "Bình luận"}}>
-          {() => <TabComments comments={comments} rate_average={film.rate_average} rate_count={film.rate_count} filmId={film._id} navigation={props.navigation} />}
+          {() => <TabComments filmId={film._id} navigation={props.navigation} />}
         </Tab.Screen>
         <Tab.Screen name="TabInfomation" options={{title: "Thông tin"}}>
           {() => <TabInfomation film={film} />}

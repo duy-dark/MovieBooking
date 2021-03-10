@@ -6,6 +6,9 @@ import BookTicketScreen from '../book-ticket/BookTicketScreen'
 import TabInfomation from '../film/TabInfomation';
 import CommentScreen from '../comment/CommentScreen';
 import ReviewFilmScreen from '../comment/ReviewFilmScreen';
+import NewsDetails from '../../components/news/NewsDetails';
+import Screen from '../screen/Screen';
+import { TouchableOpacity, Text } from 'react-native'
 
 const Stack = createStackNavigator();
 const HomeStack = () => {
@@ -14,7 +17,8 @@ const HomeStack = () => {
             <Stack.Screen name="HomeScreen" component={HomeScreen} 
                 options={{ 
                     title: "Khám Phá", 
-                    headerLeft: null
+                    headerLeft: null,
+                    
                 }} 
             />
             <Stack.Screen name="FilmScreen" component={FilmScreen}
@@ -41,7 +45,24 @@ const HomeStack = () => {
                 options={{
                     title: "Viết bình luận"
                 }}
-            
+            />
+            <Stack.Screen 
+                name="NewsDetails" 
+                component={NewsDetails} 
+                options={{ 
+                    title: "Nội dung tin tức"
+                }} 
+            />
+            <Stack.Screen name="Screen" component={Screen}
+                options={({navigation}) =>
+                    ({
+                        title: "Tình trạng đặt vé",
+                        headerRight: () => <TouchableOpacity style={{marginRight: 20}}
+                            onPress={() => navigation.navigate("AccountStack")}>
+                            <Text style={{fontSize: 17, color: "#3b5998"}}>Xem vé</Text>
+                        </TouchableOpacity>
+                    })
+                }
             />
         </Stack.Navigator>
     )

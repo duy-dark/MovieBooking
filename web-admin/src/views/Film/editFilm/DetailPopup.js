@@ -1,12 +1,13 @@
 import { Modal, Button } from 'antd';
 import React from "react";
-import EditableTable from './EditFilm'
+import Detail from './Detail'
 import "./../../../styles/Film/detailPopup.scss";
-const Detail = (props) => {
+const DetailPopUp = (props) => {
   const [visible, setVisible] = React.useState(false);
   const [confirmLoading, setConfirmLoading] = React.useState(false);
   const [modalText, setModalText] = React.useState();
-
+   
+  
   const showModal = () => {
 
     setVisible(true);
@@ -18,12 +19,15 @@ const Detail = (props) => {
     setTimeout(() => {
       setVisible(false);
       setConfirmLoading(false);
-    }, 2000);
+    }, 1000);
   };
 
   const handleCancel = () => {
-    console.log('Clicked cancel button');
-    setVisible(false);
+    setConfirmLoading(true);
+    setTimeout(() => {
+      setVisible(false);
+      setConfirmLoading(false);
+    }, 500);
   };
 
   return (
@@ -34,16 +38,17 @@ const Detail = (props) => {
       <Modal 
         width={720}
         marginLeft={180}
-        title="Edit Film Detail"
+        title="Film Detail"
         visible={visible}
         onOk={handleOk}
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
         pagination={false}
+        okButtonProps={{ style: { display: 'none' } }}  
       >
-        <EditableTable detail={props.detail}/>
+        <Detail detail={props.detail} categories={props.categories} onCancel={handleCancel}/>
       </Modal>
     </>
   );
 };
-export default Detail
+export default DetailPopUp

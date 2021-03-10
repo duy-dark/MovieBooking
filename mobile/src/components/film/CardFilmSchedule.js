@@ -25,13 +25,13 @@ const CardFilmSchedule = (props) => {
           </View>
         </View>
         <Text style={{marginLeft:10,marginTop:10,color:'grey'}}>{props.film.digitals}</Text>
-        <View style={{ flexDirection: "row",marginLeft:10}}>
+        <View style={{ flexDirection: "row",marginLeft:10,  flexWrap: "wrap"}}>
           {props.film.film_schedules.map((film_schedule, index) => { 
             return (
               <TouchableOpacity onPress={() => onPress(film_schedule)}
               key={index} style={{ flexDirection: "column",flexWrap: 'wrap',backgroundColor:'lightgrey',borderRadius:3,borderWidth: 0.01,overflow:"hidden",padding:8,marginTop:5,marginBottom: 15,marginRight:10}}>
-                <Text style={{fontSize:20,textAlign:'center'}}>{moment(film_schedule.time_start).format('hh:mm')}</Text>
-                <Text style={{fontSize:10,textAlign:'center'}}>{moment(film_schedule.time_end).format('hh:mm')}</Text>
+                <Text style={{fontSize:20,textAlign:'center'}}>{moment(film_schedule.time_start).format('LT')}</Text>
+                <Text style={{fontSize:10,textAlign:'center'}}>{moment(film_schedule.time_end).format('LT')}</Text>
               </TouchableOpacity>
             )
           })}

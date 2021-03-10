@@ -6,9 +6,8 @@ import Icon from "react-native-vector-icons/FontAwesome"
 import moment from "moment"
 
 const CardCommentFilm = (props) => {
-    const avatarReviewer = { uri: props.comment.customers.avatar}
-    const imageFilm = { uri: "https://media.vov.vn/sites/default/files/styles/large/public/2021-01/tch_poster_vn_final.jpg.jpg" }
-    const icon = { uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png"}
+    const { comment: { customers : { avatar = '', name = ''} = {}, created_at = '' } = {}} = props
+    const avatarReviewer = { uri: avatar ? avatar : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"}
     const handleClickComment = () => {
         alert("Cập nhật sắp tới")
     }
@@ -21,8 +20,8 @@ const CardCommentFilm = (props) => {
                         {/* <Image style={styles.icon} source={icon} /> */}
                     </View>
                     <View style={styles.reviewerInfo}>
-                        <Text style={styles.nameReviewer}>{props.comment.customers.name}</Text>
-                        <Text style={styles.timeReviewer}>{moment(props.comment.customers.created_at).startOf('day').fromNow()}</Text>
+                        <Text style={styles.nameReviewer}>{name}</Text>
+                        <Text style={styles.timeReviewer}>{moment(created_at).format("DD-MM-YYYY")}</Text>
                     </View>
                 </View>           
                 <View style={styles.review}>

@@ -21,17 +21,18 @@ export function updateStatusFriend(user) {
   };
 }
 
-export function getUserInfo(payload) {
+export function getUserInfo(payload, navigation) {
   return {
     payload: payload,
     type: UsersTypes.USER_INFO,
+    navigation: navigation
   };
 }
 
-export function signOut(history) {
+export function signOut(navigation) {
   return {
     type: UsersTypes.LOGOUT,
-    history,
+    navigation: navigation
   };
 }
 
@@ -49,3 +50,26 @@ export function updateHeaderFooter(status) {
     status,
   };
 }
+
+export function getCategories() {
+  return {
+    type: UsersTypes.GET_CATEGORIES,
+  }
+}
+
+export function postCategories(user, navigation, sc) {
+  return {
+    type: UsersTypes.POST_CATEGORIES,
+    payload: user,
+    navigation: navigation,
+    sc: sc
+  };
+}
+
+export function setSocket(socket){
+  return {
+    type: UsersTypes.SET_SOCKET,
+    payload: socket
+  }
+}
+

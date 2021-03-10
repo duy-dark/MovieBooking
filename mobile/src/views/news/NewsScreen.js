@@ -5,7 +5,7 @@ import TabPromotions from './TabPromotions';
 
 
 const Tab = createMaterialTopTabNavigator();
-const NewsScreen = () => {
+const NewsScreen = (props) => {
     return (
         <Tab.Navigator 
             tabBarOptions={{
@@ -15,8 +15,12 @@ const NewsScreen = () => {
             indicatorStyle: { backgroundColor: "orangered" },
         }}
         >
-            <Tab.Screen name="TabReview" component={TabNews} options={{title: "News"}}/>
-            <Tab.Screen name="TabPromotions" component={TabPromotions} options={{title: "Khuyến mãi"}}/>
+            <Tab.Screen name="TabReview" options={{title: "News"}}>
+                {() => <TabNews navigation={props.navigation} />}
+            </Tab.Screen>
+            <Tab.Screen name="TabPromotions" options={{title: "Khuyến mãi"}}>
+                {() => <TabPromotions navigation={props.navigation} />}
+            </Tab.Screen>
         </Tab.Navigator>
     )
 }

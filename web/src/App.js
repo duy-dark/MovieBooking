@@ -6,11 +6,14 @@ import "./styles/styles.scss";
 import Header from "./components/customer/Header";
 import Footer from "./components/customer/Footer";
 import MyLoading from './components/MyLoading'
-import { useSelector } from "react-redux";
 import NotFound from "./views/NotFound";
+import {  getUserInfo } from "./redux/users/actions";
 class App extends Component {
+  constructor(props){
+    super(props)
+    this.props.getUser()
+  }
   render() {
-
     let showRouteComponent = (routes) => {
       let result = null;
       if (routes.length > 0) {
@@ -43,4 +46,15 @@ const mapStateToProps = state => {
   isLoading: state.users.loading + state.films.loading > 0 ? true : false
 }};
 
-export default connect(mapStateToProps)(App);
+const mapDispatchToProps=(dispatch)=>({
+  getUser:()=>{
+    const token = localStorage.getItem("token");
+    const userID = localStorage.getItem("userID");
+
+    if (token && userID) {
+      dispatch(getUserInfo({ token, userID }));
+    }
+  }
+})
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);

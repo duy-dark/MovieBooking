@@ -17,5 +17,7 @@ export default {
   UPDATE_HF: _prefix + 'UPDATE_HF',
   UPDATE_HF_SUCCESS: _prefix + 'UPDATE_HF_SUCCESS',
   LOADING_SHOW: _prefix + 'LOADING_SHOW',
-  LOADING_HIDE: _prefix + 'LOADING_HIDE'
+  LOADING_HIDE: _prefix + 'LOADING_HIDE',
+  TICKET_INFO: _prefix + 'TICKET_INFO',
+  TICKET_INFO_SUCCESS: _prefix + 'TICKET_INFO_SUCCESS',
 };

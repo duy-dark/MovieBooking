@@ -1,0 +1,32 @@
+.theater-create {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 66px);
+  overflow-y: scroll;
+  align-items: center;
+  padding: 10px;
+
+  .theater-create--form {
+    width: 800px;
+
+    .form-control {
+      .group-img {
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+
+        .group-img__img {
+          width: 100%;
+          height: auto;
+        }
+      }
+    }
+
+    .layout-detail__group-btn {
+      margin-top: 20px;
+      justify-content: center;
+      display: flex;
+    }
+  }
+}

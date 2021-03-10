@@ -7,8 +7,8 @@ import { useSelector } from 'react-redux'
 
 const CommentScreen = () => {
     const user = useSelector((state) => state.users.user)
-
-    const avatarReviewer = { uri: user.avatar}
+    let avatar = user.avatar ? user.avatar : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
+    const avatarReviewer = { uri: avatar}
     
     const icon = { uri: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png"}
 
@@ -18,8 +18,7 @@ const CommentScreen = () => {
     const [contentCm, setContentCm] = useState('')
 
     useEffect(() => {
-        alert("a")
-        setIsDisabled(contentCm.length > 0)
+        setIsDisabled(!(contentCm.length > 0))
     }, [contentCm])
 
     useEffect(() => {

@@ -1,6 +1,7 @@
 const resSuccess = require('../../responses/res-success');
 let path = require('path');
 let cloudinary = require('cloudinary').v2;
+const fs = require('fs');
 
 cloudinary.config({
   cloud_name: 'dkpv3a73a',
@@ -24,7 +25,9 @@ const postCreate = async (filename) => {
         return {error: error, result: result};
       }
     );
-
+    if (uploadFile.url) {
+      fs.unlinkSync(path.join(`${process.cwd()}/uploads/${filename}`));
+    }
     // console.log('uploadFile', uploadFile);
     return resSuccess(uploadFile.url);
   } catch (error) {

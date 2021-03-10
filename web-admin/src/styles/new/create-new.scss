@@ -4,42 +4,32 @@
   flex-direction: column;
   height: calc(100% - 66px);
   max-width: 840px;
+  overflow: scroll;
+
+  &.new-detail {
+    max-width: 100%;
+    height: 100%;
+
+    .create-new__submit {
+      padding: 0 20px;
+
+      .btn-add-new {
+        right: 20px;
+      }
+    }
+
+    .new-detail__edit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+    }
+  }
 
   .create-new__list {
     display: flex;
     flex-direction: column;
-    padding: 10px;
-
-    .form-control {
-      label {
-        min-width: 200px;
-        max-width: 200px;
-        font-size: 20px;
-        font-weight: 500;
-      }
-
-      input:not([type='file']) {
-        display: block;
-        width: 100%;
-        padding: .375rem .75rem;
-        font-size: 1rem;
-        line-height: 1.5;
-        color: #495057;
-        background-color: #fff;
-        background-clip: padding-box;
-        border: 1px solid #ced4da;
-        border-radius: .25rem;
-        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-
-        &:focus {
-          color: #495057;
-          background-color: #fff;
-          border-color: #80bdff;
-          outline: 0;
-        }
-      }
-
-    }
+    padding: 20px;
 
     .create-new__title {
       display: flex;
@@ -62,7 +52,22 @@
       }
 
       .card-addnew__form-text {
+        display: flex;
+        flex-direction: row;
         margin-bottom: 6px;
+      }
+
+      .card-addnew__form-image {
+
+        .group-img {
+          display: flex;
+          flex-direction: column;
+        }
+        img {
+          margin-bottom: 5px;
+          width: 250px;
+          height: auto;
+        }
       }
     }
 
@@ -73,35 +78,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
-
-    .btn {
-      font-size: 14px;
-      color: #CADEF9;
-      border: 1px solid #949494;
-      border-radius: 4px;
-      text-align: center;
-      background: 0 0;
-      padding: 7px 25px;
-      transition: all .2s;
-      margin: auto;
-      margin-top: 35px;
-      margin-bottom: 20px;
-      display: block;
-      transition: all .3s ease-in-out;
-      color: #000;
-      box-shadow: 0 0 10px rgba(0,0,0,.3);
-
-      &:hover {
-        background-color: #fb4226;
-        border-color: #fb4226;
-        color: #fff!important;
-      }
-
-      &:focus {
-        outline: none;
-      }
-    }
+    margin-top: 50px;
 
     .btn-add-new {
       position: absolute;

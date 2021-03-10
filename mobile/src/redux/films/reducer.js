@@ -3,7 +3,7 @@ import FilmTypes from './types';
 
 const initialState = {
   status: true,
-  loading: true,
+  loading: false, 
   filmsNow: [],
   filmsFuture: [],
   filmsToday: [],
@@ -14,12 +14,16 @@ const initialState = {
   dayOfWeeks:[[], [], [], [], [], [], []],
   comments: [],
   search: null,
-  roomBooking: ''
+  roomBooking: '',
+  tickets: [],
+  filmsNowFavorite: [],
+  filmsFutureFavorie: [],
+  ticketDetail: {},
 }
 
 export default function filmsReducer(state = initialState, action) {
   let newState;
-
+  let { comments = [] } = state
   const { type, payload = {} } = action;
   switch (type) {
     case FilmTypes.FILM_DETAIL_SUCCESS:
@@ -45,14 +49,25 @@ export default function filmsReducer(state = initialState, action) {
       newState = Object.assign({}, state, { comments: payload })
       break;
     case FilmTypes.CREATE_COMMENT_SUCCESS:
-      let { comments } = state;
-      newState = Object.assign({}, state, { comments: [payload, ...comments]})
+      newState = Object.assign({}, state, {})
       break;
     case FilmTypes.LOADING_SHOW:
       newState = Object.assign({}, state, { loading: true });
       break;
     case FilmTypes.LOADING_HIDE:
       newState = Object.assign({}, state, { loading: false });
+      break;
+    case FilmTypes.GET_TICKETS_SUCCESS:
+      newState = Object.assign({}, state, { tickets: payload});
+      break;
+    case FilmTypes.LIST_FILM_NOW_FAVORITE_SUCCESS:
+      newState = Object.assign({}, state, { filmsNowFavorite: payload })
+      break;
+    case FilmTypes.LIST_FILM_FUTURE_FAVORITE_SUCCESS:
+      newState = Object.assign({}, state, { filmsFutureFavorite: payload })
+      break;
+    case FilmTypes.GET_TICKETDETAIL_SUCCESS:
+      newState = Object.assign({}, state, { ticketDetail: payload })
       break;
     default:
       newState = state;

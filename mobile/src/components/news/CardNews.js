@@ -2,16 +2,22 @@ import React from 'react'
 import { View, Text, Image, TouchableOpacity } from 'react-native'
 import styles from '../../styles/components/news/cardnews'
 
-const CardNews = () => {
-    const image = { uri: "https://s3img.vcdn.vn/123phim/2020/11/tix-1k-ve-ngai-chi-gia-ve-16045662877511.jpg" }
+const CardNews = (props) => {
+    const image = { uri: props.news.image }
+    const onPress = () => {
+        props.navigation.navigate("NewsDetails", {
+            idNews: props.news._id
+        })
+    }
+
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={onPress}>
             <Image style={styles.image} source={image} />
             <View style={styles.content}>
-                <Text style={styles.form}>KHUYẾN MÃI</Text>
+                {/* <Text style={styles.form}>KHUYẾN MÃI</Text> */}
                 {/* <Text style={styles.date}>01:48 HÔM NAY</Text> */}
-                <Text style={styles.title}>TIX 1K/VÉ NGẠI CHI GIÁ VÉ</Text>
-                <Text style={styles.detail}>Đồng giá 1k/vé cả tuần tất cả các rạp trên TIX + Nhận thêm 02 voucher thanh toán ZaloPay thả ga</Text>
+                <Text style={styles.title} numberOfLines={2}>{props.news.title}</Text>
+                <Text style={styles.detail} numberOfLines={2}>{props.news.subtitle}</Text>
             </View>
         </TouchableOpacity>
     )

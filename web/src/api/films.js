@@ -5,7 +5,12 @@ const getListFilmShowing = (params) => {
 };
 
 const getListFilmNow = () => {
+  console.log('https://servermoviebooking.herokuapp.com/')
   return Api.get("/api/film/nowshowing").then((res) => res.data);
+};
+
+const getListFilmLike = (params) => {
+  return Api.get(`/api/film/nowshowing?customer_id=${params}`).then((res) => res.data);
 };
 
 const getListFilmFuture = () => {
@@ -44,6 +49,14 @@ const paymentMomo = (params) => {
   return Api.post('/api/payment/momoPayment', params).then(res => res.data)
 }
 
+const getAllNews = () => {
+  return Api.get('/api/news').then(res => res.data)
+}
+
+const getNewDetail = (params) => {
+  return Api.get(`/api/news/${params}`).then(res => res.data)
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   getListFilmShowing,
@@ -56,5 +69,8 @@ export default {
   search,
   getComments,
   paymentMomo,
-  createComment
+  createComment,
+  getAllNews,
+  getNewDetail,
+  getListFilmLike
 };

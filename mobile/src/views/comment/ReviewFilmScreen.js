@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native'
 import styles from '../../styles/views/comment/reviewfilm-screen'
 import StarRating from 'react-native-star-rating'
 import { useSelector, useDispatch } from 'react-redux'
@@ -9,8 +9,8 @@ import { createComment } from '../../redux/films/actions'
 const ReviewFilmScreen = (props) => {
     const user = useSelector((state) => state.users.user)
     const filmId = props.route.params.filmId
-
-    const avatarReviewer = { uri: user.avatar}
+    let avatar = user.avatar ? user.avatar : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
+    const avatarReviewer = { uri: avatar}
 
     const [starCount, setStarCount] = useState(0)
     const [isDisabled, setIsDisabled] = useState(false)
@@ -30,12 +30,15 @@ const ReviewFilmScreen = (props) => {
             film_id: filmId,
             customer_id: user._id,
             content: value,
-            rate: starCount*2,
+            rate: starCount * 2,
         }
-        dispatch(createComment(params, props.navigation))
+        dispatch(createComment({ params, navigation: props.navigation }))
     }
 
-    return (
+    const indicator = useSelector((state) => state.films.loading)
+    
+    if(indicator) return <ActivityIndicator style={{alignSelf: 'center', marginTop: 200}} size="large" color="orangered" /> 
+    else return (
         <View style={styles.container}>
             <View style={styles.areaReview}>
                 {/* <Image source={image} /> */}

@@ -29,7 +29,7 @@ const getSeats = (id) => {
 }
 
 const getComments = (params) => {
-  return Api.get(`/api/film_comment?film_id=${params}&limit=1`).then(res => res.data)
+  return Api.get(`/api/film_comment?film_id=${params}&limit=1&is_mobile=1`).then(res => res.data)
 }
 
 const createComment = (params) => {
@@ -38,6 +38,29 @@ const createComment = (params) => {
 
 const search = () => {
   return Api.get('/api/film_schedule/nowshowing').then(res => res.data)
+}
+
+const getTickets = (id_user) => {
+  return Api.get(`/api/ticket/detail?customer_id=${id_user}`).then((res) => res.data);
+}
+
+const getListFilmNowFavorite = (id_user) => {
+  return Api.get(`/api/film/nowshowing?customer_id=${id_user}`).then((res) => res.data);
+}
+
+
+const getListFilmFutureFavorite = (id_user) => {
+  // return Api.get(`/api/film/commingsoon?customer_id=${id_user}`).then((res) => res.data);
+  return Api.get(`/api/notification?customer_id=${id_user}&is_sent=true`).then((res) => res.data);
+}
+
+const paymentMomo = (params) => {
+  return Api.post('/api/payment/momoPayment', params).then(res => res.data)
+}
+
+const getTicketDetail = (id_ticket) => {
+  // alert(id_ticket)
+  return Api.get(`api/ticket/${id_ticket}/detail`).then(res => res.data)
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -51,5 +74,10 @@ export default {
   getSeats,
   search,
   getComments,
-  createComment
+  createComment,
+  getTickets,
+  getListFilmFutureFavorite,
+  paymentMomo,
+  getTicketDetail,
+  getListFilmNowFavorite
 };
