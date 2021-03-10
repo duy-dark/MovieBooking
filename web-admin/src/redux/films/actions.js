@@ -189,3 +189,17 @@ export function deleteTheater(params) {
     payload: params
   }
 }
+
+export function getTheaterChart(params) {
+  return {
+    type: FilmTypes.THEATER_CHART,
+    payload: params
+  }
+}
+
+export function getCustomerChart(params) {
+  return {
+    type: FilmTypes.CUSTOMER_CHART,
+    payload: params
+  }
+}

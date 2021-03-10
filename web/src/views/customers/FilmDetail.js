@@ -56,7 +56,7 @@ export default function FilmDetail() {
         <div className="detail-slider__wrapper">
           <div className="detail-slider__image">
             <img className="detail-slider__image__movie" src={`${data.url_avatar}`} alt=""/>
-            <img className="detail-slider__image__play" onClick={() => showTrailerSlider(data._id)} src={`/assets/film/play-video.png`} alt=""/>
+            <img className="detail-slider__image__play" onClick={() => showTrailerSlider(data._id)} src={`/assets/images/film/play-video.png`} alt=""/>
           </div>
           <div className="detail-slider__content">
             <div className="detail-slider__date">{moment('2021/01/02').format('DD-MM-YYYY')}</div>
@@ -81,6 +81,7 @@ export default function FilmDetail() {
       </div>
       <ModalTrailer
         show={modalShow}
+        trailer={data.trailer}
         onHide={() => setModalShow(false)}
         id={modalId}
       />

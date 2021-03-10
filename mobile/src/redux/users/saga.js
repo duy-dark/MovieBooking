@@ -2,16 +2,29 @@ import { all, takeEvery, put, call } from "redux-saga/effects";
 import UsersTypes from "./types";
 import httpUser from "../../api/customers";
 
+const removeData = async (storage) => {
+  try {
+      await AsyncStorage.removeItem(storage);
+      return true;
+  }
+  catch(exception) {
+      return false;
+  }
+}
+
 function* fetchLogin(action) {
   const { navigation } = action
   try {
     yield put({ type: UsersTypes.LOADING_SHOW });
     const res = yield call(httpUser.login, action.payload);
+    yield put({ type: UsersTypes.LOADING_HIDE });
     if (res.status === "ok") {
-      yield put({ type: UsersTypes.LOADING_HIDE });
       yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: res.data });
-      navigation.navigate("MainTabs")
-    }
+      if(res.data.is_newbie) {
+        navigation.navigate("SelectCategories")
+      }
+      else navigation.navigate("MainTabs")
+    } 
   } catch (err) {
     throw err;
   }
@@ -35,8 +48,8 @@ function* fetchUserInfo(action) {
     yield put({ type: UsersTypes.LOADING_SHOW });
     const res = yield call(httpUser.getUserInfo, action.payload);
 
+    yield put({ type: UsersTypes.LOADING_HIDE });
     if (res.status === "ok") {
-      yield put({ type: UsersTypes.LOADING_HIDE });
       yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: res.data });
       navigation.navigate("MainTabs")
     }
@@ -83,6 +96,40 @@ function* fetchLoginTest(action) {
   }
 }
 
+function* fetchCategories() {
+  try {
+    yield put({ type: UsersTypes.LOADING_SHOW });
+    const res = yield call(httpUser.getCategories, {});
+    const { status, data } = res
+    if (status === "ok") {
+      yield put({ type: UsersTypes.LOADING_HIDE });
+      yield put({ type: UsersTypes.GET_CATEGORIES_SUCCESS, payload: data });
+    }
+
+  } catch (error) { throw error; }
+}
+
+function* fetchPostCategories(action) {
+  try {
+    yield put({ type: UsersTypes.LOADING_SHOW });
+    const { payload, navigation, sc } = action
+    const res = yield call(httpUser.postCategories, payload);
+    const { status, data } = res
+
+    if (status === "ok") {
+      if(sc===1) {
+        navigation.navigate("MainTabs")
+      } else navigation.goBack()
+      yield put({ type: UsersTypes.LOADING_HIDE });
+      yield put({ type: UsersTypes.POST_CATEGORIES_SUCCESS, payload: data.customer});
+
+    }
+  } catch (err) {
+    throw err;
+  }
+}
+
+
 function* signIn() {
   yield takeEvery(UsersTypes.LOGIN, fetchLogin);
 }
@@ -111,6 +158,14 @@ function* updateHF() {
   yield takeEvery(UsersTypes.UPDATE_HF, fetchUpdateHF);
 }
 
+function* getCategories() {
+  yield takeEvery(UsersTypes.GET_CATEGORIES, fetchCategories);
+}
+
+function* postCategories() {
+  yield takeEvery(UsersTypes.POST_CATEGORIES, fetchPostCategories);
+}
+
 export default function* usersSaga() {
   yield all([
     signIn(),
@@ -120,5 +175,7 @@ export default function* usersSaga() {
     signOut(),
     signTest(),
     updateHF(),
+    getCategories(),
+    postCategories()
   ]);
 }

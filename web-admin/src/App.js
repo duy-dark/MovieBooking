@@ -9,6 +9,7 @@ import Login from "./views/login/Login"
 import "./styles/styles.scss"
 import { getUserInfo } from "./redux/users/actions";
 import { PrivateRoute } from "./components/PrivateRoute"
+import MyLoading from './components/MyLoading'
 const { Sider } = Layout; 
 
 class App extends Component {
@@ -36,6 +37,8 @@ class App extends Component {
   }
 
   return (
+    <>
+    <MyLoading active={this.props.isLoading}/>
     <Router>
       <Layout>
       { this.props.isLogin && (<Sider className="left-sidebar"><MenuHome/></Sider>)}
@@ -46,7 +49,8 @@ class App extends Component {
       </Layout>
       
     </Router>
-  );}
+    </>
+  )}
 }
 
 const mapDispatchToProps=(dispatch)=>({
@@ -61,6 +65,7 @@ const mapDispatchToProps=(dispatch)=>({
 })
 const mapStateToProps = state => {
   return {
-  isLogin: !!state.users.user
+  isLogin: !!state.users.user,
+  isLoading: state.users.loading + state.films.loading > 0 ? true : false
 }};
 export default connect(mapStateToProps,mapDispatchToProps)(App);

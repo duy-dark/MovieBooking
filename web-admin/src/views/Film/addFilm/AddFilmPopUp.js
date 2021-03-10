@@ -16,10 +16,10 @@ const AddNewFilm = (props) => {
 
   const handleCancel = () => {
     setConfirmLoading(true);
-    setTimeout(() => {
+    
       setVisible(false);
       setConfirmLoading(false);
-    }, 200);
+
   };
 
   return (

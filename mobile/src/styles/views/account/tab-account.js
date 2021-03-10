@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         marginHorizontal: 10,
-        paddingVertical: 15 
+        paddingVertical: 15
     },
     hotline: {
         padding: 10,
@@ -69,6 +69,25 @@ const styles = StyleSheet.create({
         height: 50,
         width: 130,
         marginVertical: 20
+    },
+    discount: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginHorizontal: 10,
+        paddingVertical: 15,
+        backgroundColor: "white",
+        paddingHorizontal: 10, 
+        marginTop: 15, 
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: "lightgray",
+        
+    },
+    iconDiscount: {
+        height: 20,
+        width: 20,
+        marginRight: 10
     }
 
 });

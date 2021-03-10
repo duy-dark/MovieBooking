@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 import styles from '../../styles/components/seat/seat'
-
+// import xor from 'lodash/xor'
 const Seat = (props) => {
   
     const array1 = [styles.seat], array2= [styles.seatImage]
     const [status, setStatus] = useState();
+    // let arr1 = xor(props.arrSeatsSelected, props.seats)
     if (props.type === "2-1") {
         array1.push(styles.seatTogether)
         array1.push(styles.seatTogether1)

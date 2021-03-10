@@ -91,6 +91,11 @@ function validateEmail(email) {
   return re.test(String(email).toLowerCase());
 }
 
+function validatePhone(phone) {
+  const phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+  return phone.match(phoneno)
+}
+
 const words = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 const Completionist = () => <span>Bạn đã hết thời gian!</span>;
 export default function Booking(props) {
@@ -112,7 +117,7 @@ export default function Booking(props) {
   let { id } = useParams();
   const [isSelectBug, setIsSelectBug] = useState(false);
   useEffect(() => {
-    setDisabledBtn(!(seats.length > 0 && !isSelectBug && validateEmail(email) && phone && payment));
+    setDisabledBtn(!(seats.length > 0 && !isSelectBug && validateEmail(email) && validatePhone(phone) && payment));
   }, [seats, email, phone, payment, isSelectBug]);
 
   const selectSeat = (seat) => {
@@ -177,6 +182,7 @@ export default function Booking(props) {
   };
 
   const bookingTicket = () => {
+    const { schedule: { film_id, theater_id, room_id } = {}} = movies
     const bookingInfo = {
       count: seats.length,
       cost: seats.length * 80000,
@@ -186,29 +192,37 @@ export default function Booking(props) {
       email: email,
       phone_number: phone,
       payment: "momo",
-      voucher_id: null
+      voucher_id: null,
+      film_id: film_id,
+      theater_id: theater_id,
+      room_id: room_id
     };
     dispatch(paymentGateway({ params: bookingInfo, history: window}));
     setDisabledBtn(true);
   };
 
   useEffect(() => {
-    let invalid=0
-    for(let i=0;i<seats.length-1;i++){
-      for(let j=i+1;j<seats.length;j++){
-        if(seats[i][0]!=seats[j][0])continue;
-        function getRowId(chair){
-          console.log(+chair.slice(1,chair.length))
-          return +chair.slice(1,chair.length)
-        }
-        if(Math.abs(getRowId(seats[i])-getRowId(seats[j]))==2){
-          invalid=seats[j]
-          break
-        }
+    let rows={}
+    function getRowId(chair){
+      return ""+chair.slice(1,chair.length)
+    }
+    seats.forEach(seat=>{
+      const rowName=seat[0]
+      rows[rowName]=rows[rowName]?[...rows[rowName],getRowId(seat)]:[getRowId(seat)]
+    })
+    let invalidChair=false
+    const rowNames=Object.keys(rows)
+    for(let i=0;i<rowNames.length;i++){
+      let rowName=rowNames[i]
+      let row=rows[rowName]
+      row.sort((a,b)=>(+a)-(+b))
+      for(let j=0;j<row.length-1;j++){
+        if(+row[j+1]-(+row[j])==2){invalidChair=true;break}
       }
     }
-    if(invalid) {
-      alert("ghe "+invalid+ " ko hop le")
+
+    if(invalidChair) {
+      alert("ghe "+seats[seats.length-1]+ " ko hop le")
       setIsSelectBug(true)
     } else {
       setIsSelectBug(false)

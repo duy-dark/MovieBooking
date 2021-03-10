@@ -6,25 +6,38 @@ import { useSelector, useDispatch } from 'react-redux'
 import { signOut } from '../../redux/users/actions'
 
 const TabAccount = (props) => {
-    
-    const user = useSelector((state) => state.users.user)
+   // const {} = props
+    const user = props.user
     const logoUni = { uri: "https://truyenthongdaiphuc.files.wordpress.com/2015/09/dai_hoc_khoa_hoc_tu_nhien_dhqg-hcm.png" }
     const logo = { uri: "https://s3img.vcdn.vn/123phim/2020/03/d1e6bd560daa9e20131ea8a0f62e87f8.png" }
-    const avatar = user.avatar ? user.avatar : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
+    // const avatar = user.avatar ? user.avatar : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"
     const dispatch = useDispatch()
     const logOut = () => {
         dispatch(signOut(props.navigation))
     }
-
+    const editCategories = () => {
+        props.navigation.navigate("EditCategories")
+        // alert("Cập nhật sau")
+    }
+    const setDiscount = () => {
+        props.navigation.navigate("DiscountScreen")
+    }
     if (user) return (
         <ScrollView style={styles.container}>
-            <TouchableOpacity style={styles.user}>
-                <Image style={styles.avatar} source={{uri: avatar}} />
+            <TouchableOpacity style={styles.user} onPress={editCategories}>
+                <Image style={styles.avatar} source={{uri: user.avatar}} />
                 <View style={{flex: 1}}>
                     <Text style={styles.name}>{user.name}</Text>
-                    {/* <Text style={styles.note}>Chạm để thêm số điện thoại</Text> */}
+                    <Text style={styles.note}>Chạm để chỉnh sửa thể loại phim yêu thích</Text>
                 </View>
                 <Ionicons style={styles.icon} name="chevron-forward-outline" size={15} color="black"/>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.discount} onPress={setDiscount}>
+                <View style={{flexDirection: "row"}}>
+                    <Image style={styles.iconDiscount} source={{ uri: "https://image.flaticon.com/icons/png/512/621/621535.png"}}/>
+                    <Text>Khuyến mãi</Text>
+                </View>
+                <Ionicons style={styles.icon} name="chevron-forward-outline" size={15} color="gray"/>
             </TouchableOpacity>
             <View>
                 <Text style={styles.titleArea}>Về Ứng Dụng</Text>

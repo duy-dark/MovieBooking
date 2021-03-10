@@ -6,11 +6,17 @@
   overflow-y: scroll;
   align-items: center;
   padding: 10px;
-
+  background-color: #fff;
   .create-room__form {
     width: 800px;
 
     .form-control {
+      label {
+        margin-right: 20px;
+      }
+      &:not(:last-child) {
+        margin-bottom: 10px;
+      }
       .group-img {
         display: flex;
         justify-content: flex-start;

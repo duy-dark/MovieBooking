@@ -12,7 +12,7 @@ function* fetchListCinemas() {
         yield put({ type: CinemaType.LIST_CINEMAS_SUCCESS, payload: data });
       }
   
-    } catch (error) { console.log(error); }
+    } catch (error) { throw error; }
 }
 
 function* fetchCinemaDetails(action) {
@@ -26,7 +26,7 @@ function* fetchCinemaDetails(action) {
         yield put({ type: CinemaType.CINEMA_DETAIL_SUCCESS, payload: data });
       }
   
-    } catch (error) { console.log(error); }
+    } catch (error) { throw error; }
 }
 
 function* getListCinemas() {

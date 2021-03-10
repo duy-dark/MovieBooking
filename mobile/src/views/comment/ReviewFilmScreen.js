@@ -30,9 +30,9 @@ const ReviewFilmScreen = (props) => {
             film_id: filmId,
             customer_id: user._id,
             content: value,
-            rate: starCount*2,
+            rate: starCount * 2,
         }
-        dispatch(createComment({ params: params, navigation: props.navigation}))
+        dispatch(createComment({ params, navigation: props.navigation }))
     }
 
     const indicator = useSelector((state) => state.films.loading)

@@ -10,6 +10,9 @@ const initialState = {
   isRegister: false,
   header: true,
   footer: true,
+  categories: [],
+  categories_favorite: [],
+  socket: null
 };
 
 const storeData = async (storage, value) => {
@@ -41,6 +44,7 @@ export default function userReducer(state = initialState, action) {
       newState = Object.assign({}, state, {
         user: payload.customer,
         token: payload.token,
+        categories_favorite: payload.customer.favorite_ids
       });
       break;
     case UsersTypes.LIST_FRIEND_SUCCESS:
@@ -78,11 +82,20 @@ export default function userReducer(state = initialState, action) {
         footer: payload.footer,
       });
       break;
+    case UsersTypes.GET_CATEGORIES_SUCCESS:
+      newState = Object.assign({}, state, {categories: payload})
+      break
+    case UsersTypes.POST_CATEGORIES_SUCCESS:
+      newState = Object.assign({}, state, {categories_favorite: payload.favorite_ids})
+      break;
     case UsersTypes.LOADING_SHOW:
       newState = Object.assign({}, state, { loading: true });
       break;
     case UsersTypes.LOADING_HIDE:
       newState = Object.assign({}, state, { loading: false });
+      break;
+    case UsersTypes.SET_SOCKET: 
+      newState = Object.assign({}, state, { socket: payload });
       break;
     default:
       newState = state;

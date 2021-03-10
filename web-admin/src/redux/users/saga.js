@@ -5,7 +5,9 @@ import httpUser from "../../api/customers";
 function* fetchLogin(action) {
   try {
     let { history } = action;
+    yield put({ type: UsersTypes.LOADING_SHOW});  
     const res = yield call(httpUser.Login, action.payload);
+    yield put({ type: UsersTypes.LOADING_HIDE});
     if (res.status === "ok") {
       yield put({ type: UsersTypes.LOGIN_SUCCESS, payload: res.data });
       history.push("/");
@@ -19,8 +21,9 @@ function* fetchLogin(action) {
 
 function* fetchUserInfo(action) {
   try {
+    yield put({ type: UsersTypes.LOADING_SHOW});  
     const res = yield call(httpUser.getAdminInfo, action.payload);
-
+    yield put({ type: UsersTypes.LOADING_HIDE});
     if (res.status === "ok") {
       yield put({ type: UsersTypes.USER_INFO_SUCCESS, payload: res.data });
     }
@@ -53,11 +56,34 @@ function* fetchLoginTest(action) {
   }
 }
 
+function* fetchListCustomer() {
+  try {
+    yield put({ type: UsersTypes.LOADING_SHOW});  
+    const res = yield call(httpUser.getListCustomers, {});
+    const { status, data } = res
+    yield put({ type: UsersTypes.LOADING_HIDE});
+    if (status === "ok") {
+      yield put({ type: UsersTypes.LIST_CUSTOMER_SUCCESS, payload: data });
+    }
+  } catch (err) { throw err; }
+}
+
 function* signIn() {
   yield takeEvery(UsersTypes.LOGIN, fetchLogin);
 }
 
-
+function* fetchUpdateCustomer(action) {
+  try {
+    const { payload } = action
+    yield put({ type: UsersTypes.LOADING_SHOW});  
+    const res = yield call(httpUser.updateCustomer, payload);
+    const { status, data } = res
+    yield put({ type: UsersTypes.LOADING_HIDE});
+    if (status === "ok") {
+      yield put({ type: UsersTypes.UPDATE_CUSTOMER_SUCCESS, payload: data });
+    }
+  } catch(err) { throw err; }
+}
 
 function* getUserInfo() {
   yield takeEvery(UsersTypes.USER_INFO, fetchUserInfo);
@@ -72,16 +98,21 @@ function* signTest() {
   yield takeEvery(UsersTypes.LOGIN_TEST, fetchLoginTest);
 }
 
+function* getListCustomer() {
+  yield takeEvery(UsersTypes.LIST_CUSTOMER, fetchListCustomer);
+}
 
+function* updateCustomer() {
+  yield takeEvery(UsersTypes.UPDATE_CUSTOMER, fetchUpdateCustomer);
+}
 
 export default function* usersSaga() {
   yield all([
     signIn(),
-
     getUserInfo(),
-    
+    getListCustomer(),
     signOut(),
     signTest(),
-   
+    updateCustomer()
   ]);
 }

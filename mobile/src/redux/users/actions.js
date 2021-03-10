@@ -50,3 +50,26 @@ export function updateHeaderFooter(status) {
     status,
   };
 }
+
+export function getCategories() {
+  return {
+    type: UsersTypes.GET_CATEGORIES,
+  }
+}
+
+export function postCategories(user, navigation, sc) {
+  return {
+    type: UsersTypes.POST_CATEGORIES,
+    payload: user,
+    navigation: navigation,
+    sc: sc
+  };
+}
+
+export function setSocket(socket){
+  return {
+    type: UsersTypes.SET_SOCKET,
+    payload: socket
+  }
+}
+

@@ -6,7 +6,7 @@ import Icon from "react-native-vector-icons/FontAwesome"
 import moment from "moment"
 
 const CardCommentFilm = (props) => {
-    const { comment: { customers : { avatar = '', name = '', created_at = ''} = {}} = {}} = props
+    const { comment: { customers : { avatar = '', name = ''} = {}, created_at = '' } = {}} = props
     const avatarReviewer = { uri: avatar ? avatar : "https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png"}
     const handleClickComment = () => {
         alert("Cập nhật sắp tới")
@@ -21,7 +21,7 @@ const CardCommentFilm = (props) => {
                     </View>
                     <View style={styles.reviewerInfo}>
                         <Text style={styles.nameReviewer}>{name}</Text>
-                        <Text style={styles.timeReviewer}>{moment(created_at).startOf('day').fromNow()}</Text>
+                        <Text style={styles.timeReviewer}>{moment(created_at).format("DD-MM-YYYY")}</Text>
                     </View>
                 </View>           
                 <View style={styles.review}>

@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { View, Button } from 'react-native'
+import { View, Button, ActivityIndicator } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker';
 import { useSelector } from "react-redux"
 import moment from "moment"
 
 
-const days = ['chủ nhật', 'thứ 2', 'thứ 3', 'thứ 4', 'thứ 5', 'thứ 6', 'thứ 7']
+const days = ['Chủ Nhật', 'Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7']
 
 
 const TabFindByDate = (props) => {
 
     const search = useSelector((state) => state.films.search);
+    const indicator = useSelector((state) => state.films.loading);
+
     const formatTime = (time) => {
         return moment(time).format('hh-mm')
     }
@@ -25,6 +27,9 @@ const TabFindByDate = (props) => {
     const [optionTime, setOptionTime] = useState([]);
 
     const [isDisabled, setIsDisabled] = useState(true)
+
+    useEffect(() => {
+    }, [isDisabled])
 
     useEffect(() => {
         setIsDisabled(!(selectFilm && selectThreater && selectDate && selectTime));
@@ -51,9 +56,8 @@ const TabFindByDate = (props) => {
         }
     }, [selectFilm])
     useEffect(() => {
-
-        if (selectThreater) {
-            let arrTime = selectDate.schedules.filter(schedule => schedule.film_id === selectFilm._id && schedule.theater_id === selectThreater._id)
+        if (selectDate && selectThreater) {
+            let arrTime = selectDate?.schedules.filter(schedule => schedule.film_id === selectFilm._id && schedule.theater_id === selectThreater._id)
             setOptionTime(arrTime.map(val => ({ ...val, label: formatTime(val.time_start) + '~' + formatTime(val.time_end), value: val._id })))
             setSelectTime()
         }
@@ -67,17 +71,25 @@ const TabFindByDate = (props) => {
             setOptionFilm(option.map(val => ({ ...val, label: val.name, value: val._id })))
             setSelectFilm()
             setSelectThreater()
-            // // eslint-disable-next-line
+            // eslint-disable-next-line
             setSelectTime()
         }
     }, [selectDate])
 
     useEffect(() => {
         if (search) {
-            setOptionDate(search.dayOfWeek.map((val, index) => ({ ...val, label: days[moment(val.date).day()], value: index })))
+            setOptionDate(search.dayOfWeek.map((val, index) => ({ ...val, label: days[moment(val.date).day()] + " - " + moment(val.date).format("DD/MM"), value: index })))
         }
     }, [search])
-
+    if (indicator)
+    return (
+      <ActivityIndicator
+        style={{ alignSelf: "center", marginTop: 200 }}
+        size="large"
+        color="orangered"
+      />
+    );
+    else
     return (
         <View style={{ paddingHorizontal: 30 }}>
             <DropDownPicker

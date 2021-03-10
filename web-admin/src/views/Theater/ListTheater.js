@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import { Layout, Menu, Breadcrumb } from "antd";
-import { getTheaters, deleteTheater } from "../../redux/films/actions"
+import { getTheaters, deleteTheater,getListFilmNow } from "../../redux/films/actions"
 import { useHistory } from 'react-router-dom'
 import { useDispatch , useSelector } from 'react-redux';
 import * as moment from "moment"
@@ -28,8 +28,8 @@ export default function ListTheater() {
   
   return (
     <Layout className="layout">
-      <Header style={{ background: "#FFFFFF" }}>
-        <Menu theme="light" mode="horizontal" defaultSelectedKeys={["1"]}>
+      <Header style={{ background: "#FFFFFF", borderBottom: '1px solid #ccc', marginBottom: 1}}>
+        <Menu style={{border: 'none', height: '100%'}} theme="light" mode="horizontal" defaultSelectedKeys={["1"]}>
           <Menu.Item key="1"><Link to="/theater/list">List Theater</Link></Menu.Item>
           <Menu.Item key="2"><Link to="/theater/create">Add Theater</Link></Menu.Item>
           <Menu.Item key="3"><Link to="/room/create">Add Room</Link></Menu.Item>
