@@ -22,7 +22,9 @@ function* fetchPostBookingInfo(action) {
 }
 function* fetchAddNewFilm(action){
   try {
+    yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.addNewFilm,action.payload);
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
       yield put({ type: FilmsType.ADD_NEW_FILM_SUCCESS, payload: data });
@@ -43,7 +45,9 @@ function* fetchFilmDetails(action) {
 
 function* fetchListFilmsNow() {
   try {
+    yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.getListFilmNow, {});
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
       yield put({ type: FilmsType.LIST_FILM_NOW_SUCCESS, payload: data });
@@ -99,8 +103,9 @@ function* fetchSeats(action) {
 
 function* fetchFilmUpdate(action){
   try{
-    
+    yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.updateFilmDetail, action.id,action.payload);
+    yield put({ type: FilmsType.LOADING_HIDE});
     const { status, data } = res
     if (status === "ok") {
       yield put({ type: FilmsType.UPDATE_FILM_DETAIL_SUCCESS, payload: data });
@@ -122,7 +127,9 @@ function* fetchListCategory() {
 function* fetchFilmSchedule(action) {
   try {
     const { payload } = action
+    yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.getFilmSchedule, payload);
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
       yield put({ type: FilmsType.FILM_SCHEDULE_SUCCESS, payload: data });
@@ -199,7 +206,9 @@ function* fetchListNew(action) {
 function* fetchNewDetail(action) {
   try {
     const { payload } = action
+    yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.getNewDetail, payload)
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
       yield put({ type: FilmsType.NEW_DETAIL_SUCCESS, payload: data})
@@ -210,7 +219,9 @@ function* fetchNewDetail(action) {
 function* fetchUpdateNewDetail(action) {
   try {
     const { payload } = action
+    yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.updateNewDetail, payload)
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
       yield put({ type: FilmsType.UPDATE_NEW_SUCCESS, payload: data})
@@ -221,7 +232,9 @@ function* fetchUpdateNewDetail(action) {
 function* fetchTheaterDetail(action) {
   try {
     const { payload } = action
+    yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.getTheaterDetail, payload)
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
       yield put({ type: FilmsType.THEATER_DETAIL_SUCCESS, payload: data})
@@ -232,7 +245,9 @@ function* fetchTheaterDetail(action) {
 function* fetchTheaterUpdate(action) {
   try {
     const { payload } = action
+    yield put({ type: FilmsType.LOADING_SHOW });
     const res = yield call(httpFilms.updateTheaterDetail, payload)
+    yield put({ type: FilmsType.LOADING_HIDE });
     const { status, data } = res
     if (status === "ok") {
       yield put({ type: FilmsType.THEATER_UPDATE_SUCCESS, payload: data})
