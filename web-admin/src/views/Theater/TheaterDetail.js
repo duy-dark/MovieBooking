@@ -60,30 +60,95 @@ export default function TheaterDetail() {
   const [chartData,setChartData]= useState([])
   const [chartDataCompare,setChartDataCompare]= useState([])
  
-
-  useEffect(()=>{
-    const {success=[],failure=[]}=theaterChart
-    if(success.length>0){
-    
-    let arr=formatdata(filmsNow,success)
-    arr=arr.filter(item=>item.y>0)
-    setChartData(arr)
-    }
-    if(failure.length>0){
-    let failarr=failureandsuccess(filmsNow,failure,success)
-    failarr=failarr.filter(item=>item.y>0)
-    setChartDataCompare(failarr)
-    }
-  },[theaterChart])
   const [theater, setTheater] = useState({});
   const [rooms, setRooms] = useState([]);
   const { id } = useParams();
   const [type,setType]=useState(1)
+
   useEffect(() => {
     dispatch(getTheaterDetail(id))
     dispatch(getTheaterChart({id: id, type: 1}))
     dispatch(getListFilmNow());
   }, [])
+
+  useEffect(()=>{
+    const {success=[],failure=[]}=theaterChart
+    if(success.length>0){
+    
+      let arr=formatdata(filmsNow,success)
+      arr=arr.filter(item=>item.y>0)
+      setChartData(
+        {
+          title: {
+            text: ""
+          },
+          toolTip: {
+            shared: true,
+            contentFormatter: function (e) {
+              var content = " ";
+              for (var i = 0; i < e.entries.length; i++) {
+                content += e.entries[i].dataPoint.label + " " + "<strong>" + e.entries[i].dataPoint.y + "</strong>";
+                content += "<br/>";
+              }
+              return content;
+            }
+          },
+          axisX: {
+            gridColor: "Silver",
+        
+          },
+          axisY: {
+            includeZero: false
+          },
+          data: [
+            {
+              type: "column",
+              showInLegend: true,
+              name: "Unique Visits",
+              dataPoints: arr
+            }
+          ]
+        }
+      )
+    }
+    if(failure.length>0){
+      let failarr=failureandsuccess(filmsNow,failure,success)
+      failarr=failarr.filter(item=>item.y>0)
+      setChartDataCompare({
+        title: {
+          text: ""
+        },
+        toolTip: {
+          shared: true,
+          contentFormatter: function (e) {
+            var content = " ";
+            for (var i = 0; i < e.entries.length; i++) {
+              content += e.entries[i].dataPoint.label + " " + "<strong>" + e.entries[i].dataPoint.y + "</strong>";
+              content += "<br/>";
+            }
+            return content;
+          }
+        },
+        axisX: {
+          gridColor: "Silver",
+      
+        },
+        axisY: {
+          includeZero: false
+        },
+        data: [
+          {
+          
+            type: "pie",
+            showInLegend: true,
+            name: "Unique Visits",
+            dataPoints: failarr
+          }
+        ]
+      })
+    }
+  },[theaterChart])
+
 
   useEffect(() => {
     if (theaterDetail) {
@@ -114,80 +179,82 @@ export default function TheaterDetail() {
   const onDeleteRoom = (id) => {
     dispatch(deleteRoom(id))
   }
-  const datachart=
-	{
-		title: {
-			text: ""
-		},
-		toolTip: {
-			shared: true,
-			contentFormatter: function (e) {
-				var content = " ";
-				for (var i = 0; i < e.entries.length; i++) {
-					content += e.entries[i].dataPoint.label + " " + "<strong>" + e.entries[i].dataPoint.y + "</strong>";
-					content += "<br/>";
-				}
-				return content;
-			}
-		},
-		axisX: {
-			gridColor: "Silver",
-	
-		},
-		axisY: {
-			includeZero: false
-		},
-		data: [
-		{
-		
-			type: "column",
-			showInLegend: true,
-			name: "Unique Visits",
-			dataPoints: chartData
-		}
-		]
-  }
-  const datachart1=
-	{
-		title: {
-			text: ""
-		},
-		toolTip: {
-			shared: true,
-			contentFormatter: function (e) {
-				var content = " ";
-				for (var i = 0; i < e.entries.length; i++) {
-					content += e.entries[i].dataPoint.label + " " + "<strong>" + e.entries[i].dataPoint.y + "</strong>";
-					content += "<br/>";
-				}
-				return content;
-			}
-		},
-		axisX: {
-			gridColor: "Silver",
-	
-		},
-		axisY: {
-			includeZero: false
-		},
-		data: [
-		{
-		
-			type: "pie",
-			showInLegend: true,
-			name: "Unique Visits",
-			dataPoints: chartDataCompare
-		}
-		]
-  }
-const getStatistic = (value,record)=>{
-
-  setType(record.id)
-  dispatch(getTheaterChart({id: id, type: record.id}))
+  // let datachartTemp = {
+  //   title: {
+  //     text: ""
+  //   },
+  //   toolTip: {
+  //     shared: true,
+  //     contentFormatter: function (e) {
+  //       var content = " ";
+  //       for (var i = 0; i < e.entries.length; i++) {
+  //         content += e.entries[i].dataPoint.label + " " + "<strong>" + e.entries[i].dataPoint.y + "</strong>";
+  //         content += "<br/>";
+  //       }
+  //       return content;
+  //     }
+  //   },
+  //   axisX: {
+  //     gridColor: "Silver",
   
- 
+  //   },
+  //   axisY: {
+  //     includeZero: false
+  //   },
+  //   data: [
+  //     {
+  //       type: "column",
+  //       showInLegend: true,
+  //       name: "Unique Visits",
+  //       // dataPoints: chartData
+  //       dataPoints: [
+  //         { y: 20, label: "Airfare" },
+  //         { y: 24, label: "Food & Drinks" },
+  //         { y: 20, label: "Accomodation" },
+  //         { y: 14, label: "Transportation" },
+  //         { y: 12, label: "Activities" },
+  //         { y: 10, label: "Misc" }	
+  //       ]
+  //     }
+  //   ]
+  // }
+  // let datachartTemp1 = {
+  //   title: {
+  //     text: ""
+  //   },
+  //   toolTip: {
+  //     shared: true,
+  //     contentFormatter: function (e) {
+  //       var content = " ";
+  //       for (var i = 0; i < e.entries.length; i++) {
+  //         content += e.entries[i].dataPoint.label + " " + "<strong>" + e.entries[i].dataPoint.y + "</strong>";
+  //         content += "<br/>";
+  //       }
+  //       return content;
+  //     }
+  //   },
+  //   axisX: {
+  //     gridColor: "Silver",
   
-}
+  //   },
+  //   axisY: {
+  //     includeZero: false
+  //   },
+  //   data: [
+  //     {
+      
+  //       type: "pie",
+  //       showInLegend: true,
+  //       name: "Unique Visits",
+  //       dataPoints: chartDataCompare
+  //     }
+  //   ]
+  // }
+  const getStatistic = (value,record)=>{
+    setType(record.id)
+    dispatch(getTheaterChart({id: id, type: record.id}))
+  }
+  const [status, setStatus] = useState(true)
   return (
     <div className="layout-detail layout-detail__theater">
       <Tabs className="layout-ddt">
@@ -195,16 +262,13 @@ const getStatistic = (value,record)=>{
           <Tab className="layout-ddt__header__item">Thống kê</Tab>
           <Tab className="layout-ddt__header__item">Thông tin</Tab>
         </TabList>
-        <TabPanel className="layout-ddt__content">
+        <TabPanel className="layout-ddt__content layout-ddt__content-chart">
           <div style={{width:100}}> 
             <Select options={optionStatistic} defaultValue={'Ngày'} onChange={getStatistic}/>
           </div>
-          
-          <CanvasJSChart options = {datachart}/>
-          
-          <div>
-          <CanvasJSChart options = {datachart1}/> 
-          </div>
+          <button className="layout-ddt__content-btn" onClick={() => setStatus(!status)}>change chart</button>
+          { status ? (<CanvasJSChart options = {chartData}/>) : 
+            (<CanvasJSChart options = {chartDataCompare}/>) }
         </TabPanel>
         <TabPanel className="layout-ddt__content">
           <div className="theater-detail">
