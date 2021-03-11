@@ -3,7 +3,6 @@ import React,{ Component } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { Layout } from 'antd';
 import { connect } from 'react-redux';
-import { push } from 'react-router-redux'
 import MenuHome from "./views/home/menu/MenuHome";
 import Login from "./views/login/Login"
 import "./styles/styles.scss"
