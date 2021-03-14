@@ -418,5 +418,24 @@ module.exports = {
         $project: lambda.views
       }
     ]);
+  },
+
+  statisticByDay: async function (room_id, time_start, time_end) {
+    return await Collection.aggregate([
+      {
+        $match: {
+          $and: [
+            {room_id: room_id},
+            {is_deleted: false},
+            {
+              time_start: {
+                $gte: time_start,
+                $lte: time_end
+              }
+            }
+          ]
+        }
+      }
+    ]);
   }
 };

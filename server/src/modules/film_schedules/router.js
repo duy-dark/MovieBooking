@@ -49,6 +49,20 @@ router.get('/detail/:id', (req, res, next) => {
     .catch((err) => next(err));
 });
 
+router.get('/statistic/room_id/:room_id', (req, res, next) => {
+  let room_id = require('mongodb').ObjectId(req.params.room_id);
+  console.log('day:', req.query.day);
+  let day = moment(req.query.day);
+  console.log('day:', new Date(day));
+
+  console.log('day:', day);
+
+  handler
+    .statisticByday(room_id, day)
+    .then((val) => res.json(val))
+    .catch((err) => next(err));
+});
+
 router.post('/', (req, res, next) => {
   let params = req.body;
   handler

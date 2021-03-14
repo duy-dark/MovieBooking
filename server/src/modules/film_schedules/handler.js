@@ -195,40 +195,6 @@ const putUpdate = async (id, params) => {
   }
 };
 
-// const putUpdateSchedule = async (film_id, long_time) => {
-//   try {
-//     console.log(film_id);
-//     let film_schedules = await require('./model').findByLambda({
-//       conditions: {film_id: film_id}
-//     });
-//     // console.log('film_schedules:', film_schedules);
-
-//     await film_schedules.forEach(async (element) => {
-//       console.log('time_start', element.time_start);
-
-//       // let time_end = element.time_start.add(long_time, 'minutes');
-//       let time_end = moment(element.time_start).add(100, 'minute');
-//       console.log('time_end:', Date(time_end));
-//       let rs = await Model.updateByLambda(
-//         {conditions: {film_id: film_id}},
-//         {params: {time_end: Date(time_end)}}
-//       );
-//       console.log('rs:', rs);
-//     });
-
-//     return {data: 'ok'};
-//     // let data = await Model.updateByLambda(lambda);
-//     // if (data.ok) {
-//     //   let result = await findById(id);
-//     //   return result;
-//     // } else {
-//     //   throw {status: 400, detail: data};
-//     // }
-//   } catch (error) {
-//     throw {status: 400, detail: error};
-//   }
-// };
-
 const deleteData = async (id) => {
   try {
     let lambda = {
@@ -250,12 +216,27 @@ const deleteData = async (id) => {
   }
 };
 
+const statisticByday = async (room_id, day) => {
+  try {
+    let time_start = new Date(day.startOf('day'));
+    let time_end = new Date(day.endOf('day'));
+    console.log('start:', time_start);
+    console.log('end:', time_end);
+
+    let data = await Model.statisticByDay(room_id, time_start, time_end);
+    return resSuccess(data);
+  } catch (error) {
+    throw {status: 400, detail: error};
+  }
+};
+
 module.exports = {
   getNowShowing,
   getList,
   findById,
   postCreate,
   putUpdate,
-  deleteData
+  deleteData,
+  statisticByday
   // putUpdateSchedule
 };
