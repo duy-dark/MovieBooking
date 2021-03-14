@@ -11,6 +11,7 @@ import AddRoom from "./views/Theater/AddRoom"
 import TheaterDetail from "./views/Theater/TheaterDetail"
 import DetailRoom from "./views/Theater/DetailRoom"
 import ListUser from "./views/User/ListUser"
+import UserStatistic from "./views/User/UserStatistic"
 const routes = [
   {
     path: "/",
@@ -72,7 +73,11 @@ const routes = [
     exact: true,
     component: () => <ListUser/>
   },
-
+  {
+    path: "/user/:id",
+    exact: true,
+    component: () => <UserStatistic/>
+  },
 ];
 
 export default routes;
