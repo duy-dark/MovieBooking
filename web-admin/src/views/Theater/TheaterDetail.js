@@ -202,9 +202,8 @@ const getStatistic = (value,record)=>{
           
           <CanvasJSChart options = {datachart}/>
           
-          <div>
           <CanvasJSChart options = {datachart1}/> 
-          </div>
+          
         </TabPanel>
         <TabPanel className="layout-ddt__content">
           <div className="theater-detail">
