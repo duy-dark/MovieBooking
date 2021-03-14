@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { useDispatch , useSelector } from 'react-redux'
 import {getListCustomer, updateCustomer} from "../../redux/users/actions"
 import { getCustomerChart } from '../../redux/films/actions'
-
+import UserStatistic from './UserStatistic'
 export default function ListUser() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -18,6 +18,7 @@ export default function ListUser() {
 
   const onClickTT = (user) => {
     dispatch(getCustomerChart({id: user._id, type: 1}))
+    history.push(`/user/${user._id}`)
   }
   return (
     <div className="list-customer">
